@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {Inventory} from "../../../../interface/Inventory";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
 
 
 @Component({
@@ -35,9 +36,11 @@ export class CategoryComponent {
   dataSource = new MatTableDataSource(this.Listado);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {

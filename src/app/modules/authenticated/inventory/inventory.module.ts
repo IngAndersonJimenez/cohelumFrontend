@@ -8,6 +8,8 @@ import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSortModule} from "@angular/material/sort";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
         MatTableModule,
         MatIconModule,
         MatInputModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatSortModule,
+        MatButtonModule
     ]
 })
 export class InventoryModule { }

@@ -8,3 +8,15 @@ h1{
   font-size: 14px;
   width: 100%;
 }
+.space{
+  flex: 1 1 auto;
+}
+.title-button{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+  }
+}
