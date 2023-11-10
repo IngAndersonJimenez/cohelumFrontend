@@ -6,7 +6,7 @@ import { CategoryComponent } from './inventory/category/category.component';
 
 const routes: Routes = [
   {
-    path: 'content-user',
+    path: 'corporate',
     component: ContentUserComponent,
     children: [
       {

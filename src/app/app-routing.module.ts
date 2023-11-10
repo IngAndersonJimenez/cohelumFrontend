@@ -1,28 +1,43 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ContentComponent } from './layout/content/content.component';
 
 const routes: Routes = [
+
   {
     path: '',
-    redirectTo: 'cohelum',
+    redirectTo: 'home',
     pathMatch: 'full'
+  },{
+    path: '',
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/public/public.module').then((m) => m.PublicModule)
+      }
+    ]
   },
   {
     path: 'cohelum',
     children: [
       {
-        path: 'auth',
+        path: '',
         loadChildren: () =>
           import('./modules/auth/auth.module').then((m) => m.AuthModule)
       },
       {
-        path: 'authenticated',
+        path: '',
         loadChildren: () =>
           import('./modules/authenticated/authenticated.module').then((m) => m.AuthenticatedModule)
       },
     ]
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
+    pathMatch: 'full'
   }
+
 
 ];
 
