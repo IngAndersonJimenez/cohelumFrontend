@@ -20,18 +20,18 @@
           ></i>
         </a>
         <a  class="sidenav-nav-link" [routerLink]="data.routerLink"
-           *ngIf="!data.items  || (data.items && data.items.length === 0)"
-           routerLinkActive="active"
+            *ngIf="!data.items  || (data.items && data.items.length === 0)"
+            routerLinkActive="active"
             [routerLinkActiveOptions]="{exact:true}">
           <i class="sidenav-link-icon" [class]="data.icon"></i>
           <span class="sidenav-link-text"  *ngIf="collapsed">{{data.label}}</span>
         </a>
         <div *ngIf="collapsed && data.items">
           <app-sublevel-menu
-            [data]="data"
-            [collapsed]="collapsed"
-            [multiple]="multiple"
-            [expanded]="data.expanded"
+                  [data]="data"
+                  [collapsed]="collapsed"
+                  [multiple]="multiple"
+                  [expanded]="data.expanded"
           ></app-sublevel-menu>
         </div>
       </li>

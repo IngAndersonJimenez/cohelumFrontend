@@ -10,7 +10,6 @@ const routes: Routes = [
   },
   {
     path: 'cohelum',
-    component: ContentComponent,
     children: [
       {
         path: 'auth',

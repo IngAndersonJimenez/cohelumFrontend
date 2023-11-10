@@ -7,10 +7,12 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { InventoryModule } from './inventory/inventory.module';
 import {CdkMenu, CdkMenuItem, CdkMenuTrigger} from "@angular/cdk/menu";
 import {OverlayModule} from "@angular/cdk/overlay";
+import {DashboardContentComponent} from "./dashboard/dashboard-content/dashboard-content.component";
 
 @NgModule({
   declarations: [
-    ContentUserComponent
+    ContentUserComponent,
+    DashboardContentComponent
   ],
   imports: [
     CommonModule,

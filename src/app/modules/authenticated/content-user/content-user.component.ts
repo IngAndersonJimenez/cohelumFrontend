@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-
-interface SideNavToggle{
+interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
 }
@@ -12,13 +11,24 @@ interface SideNavToggle{
   styleUrls: ['./content-user.component.scss']
 })
 export class ContentUserComponent {
+  @Input() collapsed = false;
+  @Input() screenWidth = 0;
 
   isSideNavCollapsed = false;
-  screenWidth = 0;
 
-  onToggleSideNav(data:SideNavToggle){
+  onToggleSideNav(data: SideNavToggle) {
     this.screenWidth = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
   }
 
+  getBodyclass(): string {
+    let styleClass = '';
+
+    if (this.isSideNavCollapsed && this.screenWidth > 768) {
+      styleClass = 'body-trimmed';
+    } else if (this.isSideNavCollapsed && this.screenWidth <= 768 && this.screenWidth > 0) {
+      styleClass = 'body-md-screen';
+    }
+    return styleClass;
+  }
 }
