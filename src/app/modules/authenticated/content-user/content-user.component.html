@@ -1,0 +1,3 @@
+<app-dashboard-header [collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth"></app-dashboard-header>
+<router-outlet></router-outlet>
+<app-dashboard-side (onToggleSideNav)="onToggleSideNav($event)"></app-dashboard-side>
