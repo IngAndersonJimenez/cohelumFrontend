@@ -1,0 +1,58 @@
+<h1>Crear producto</h1>
+<div class="container-product">
+    <mat-card>
+
+        <mat-card-content>
+            <form >
+                <mat-grid-list cols="4" rowHeight="70px">
+                    <mat-grid-tile [colspan]="1"  [rowspan]="1">
+                        <mat-form-field class="form-input">
+                            <mat-label>Nombre del producto</mat-label>
+                            <input matInput autocomplete="off">
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="3"  [rowspan]="7">
+                        <img src="assets/image/Carrusel1.jpg" alt="Imagen de cocina">
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1"  [rowspan]="1" >
+                        <mat-form-field class="form-input">
+                            <mat-label>Precio</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1"  [rowspan]="1" >
+                        <mat-form-field class="form-input">
+                            <mat-label>Unidades disponibles</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1"  [rowspan]="1" >
+                        <mat-form-field class="form-input">
+                            <mat-label>Caracteristica</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1"  [rowspan]="1" >
+                        <mat-form-field class="form-input">
+                            <mat-label>Ficha técnica</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1"  [rowspan]="1" >
+                        <mat-form-field>
+                            <mat-label>Estado</mat-label>
+                            <mat-select>
+                                <mat-option value="one">Activo</mat-option>
+                                <mat-option value="two">Desactivado</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1"  [rowspan]="1" >
+                        BOTON VOLVER Y ACEPTAR
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
+

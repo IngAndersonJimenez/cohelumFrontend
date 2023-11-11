@@ -10,12 +10,19 @@ import {MatInputModule} from "@angular/material/input";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import {MatButtonModule} from "@angular/material/button";
+import { CreateProductComponent } from './products/create-product/create-product.component';
+import { ListProductsComponent } from './products/list-products/list-products.component';
+import {MatCardModule} from "@angular/material/card";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
   declarations: [
     CategoryComponent,
-    GridCategoryComponent
+    GridCategoryComponent,
+    CreateProductComponent,
+    ListProductsComponent
   ],
     imports: [
         CommonModule,
@@ -28,7 +35,10 @@ import {MatButtonModule} from "@angular/material/button";
         MatInputModule,
         MatPaginatorModule,
         MatSortModule,
-        MatButtonModule
+        MatButtonModule,
+        MatCardModule,
+        MatGridListModule,
+        MatSelectModule
     ]
 })
 export class InventoryModule { }

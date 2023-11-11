@@ -1,8 +1,9 @@
 import {Component, ViewChild} from '@angular/core';
-import {Inventory} from "../../../../interface/Inventory";
-import {MatTableDataSource} from "@angular/material/table";
+import {Category} from "../../../../interface/Category";
+import {MatTable, MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import {NgForm} from "@angular/forms";
 
 
 @Component({
@@ -14,27 +15,26 @@ import {MatSort} from "@angular/material/sort";
 export class CategoryComponent {
 
 
-  Listado: Inventory[] = [
-    {position: 1, name: 'Hydrogen', price: 5000, unitsAvailable: 500, status: 'activo'},
-    {position: 2, name: 'Helium', price: 2000, unitsAvailable: 200, status: 'desactivado'},
-    {position: 3, name: 'Oxygen', price: 3500, unitsAvailable: 300, status: 'activo'},
-    {position: 4, name: 'Carbon', price: 10000, unitsAvailable: 150, status: 'activo'},
-    {position: 5, name: 'Nitrogen', price: 4000, unitsAvailable: 400, status: 'desactivado'},
-    {position: 6, name: 'Neon', price: 1800, unitsAvailable: 250, status: 'activo'},
-    {position: 7, name: 'Argon', price: 6000, unitsAvailable: 180, status: 'desactivado'},
-    {position: 8, name: 'Krypton', price: 9000, unitsAvailable: 120, status: 'activo'},
-    {position: 9, name: 'Xenon', price: 12000, unitsAvailable: 90, status: 'activo'},
-    {position: 10, name: 'Radon', price: 3000, unitsAvailable: 350, status: 'desactivado'},
-    {position: 11, name: 'Fluorine', price: 7000, unitsAvailable: 220, status: 'activo'},
-    {position: 12, name: 'Chlorine', price: 2500, unitsAvailable: 280, status: 'activo'},
-    {position: 13, name: 'Bromine', price: 8000, unitsAvailable: 160, status: 'desactivado'},
-    {position: 14, name: 'Iodine', price: 11000, unitsAvailable: 100, status: 'activo'},
-    {position: 15, name: 'Astatine', price: 1600, unitsAvailable: 300, status: 'activo'},
+  Listado: Category[] = [
+    {position: 1, description:'Hydrogen', status: 'activo'},
+    {position: 2, description:'Helium',   status: 'desactivado'},
+    {position: 3, description:'Oxygen',   status: 'activo'},
+    {position: 4, description:'Carbon',   status: 'activo'},
+    {position: 5, description:'Nitrogen', status: 'desactivado'},
+    {position: 6, description:'Neon',     status: 'activo'},
+    {position: 7, description:'Argon',    status: 'desactivado'},
+    {position: 8, description:'Krypton',  status: 'activo'},
+    {position: 9, description:'Xenon',    status: 'activo'},
+    {position: 10,description: 'Radon',   status: 'desactivado'},
+    {position: 11,description: 'Fluorine',status: 'activo'},
+    {position: 12,description: 'Chlorine',status: 'activo'},
+    {position: 13,description: 'Bromine', status: 'desactivado'},
+    {position: 14,description: 'Iodine',  status: 'activo'},
+    {position: 15,description: 'Astatine',status: 'activo'},
   ];
 
-  displayedColumns: string[] = ['position', 'name', 'price','unitsAvailable','status','action'];
+  displayedColumns: string[] = ['position', 'description','status','action'];
   dataSource = new MatTableDataSource(this.Listado);
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -47,4 +47,8 @@ export class CategoryComponent {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+  isEditMode = false;
+  editedRowIndex = -1;
+    editedRow: Category = { position: 0, description: '', status: '' };
+
 }
