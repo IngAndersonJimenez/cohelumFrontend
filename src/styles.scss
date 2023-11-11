@@ -1,3 +1,19 @@
+
+@use '@angular/material' as mat;
+@include mat.core();
+$cohelum_frontend-primary: mat.define-palette(mat.$indigo-palette);
+$cohelum_frontend-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$cohelum_frontend-warn: mat.define-palette(mat.$red-palette);
+$cohelum_frontend-theme: mat.define-light-theme((
+  color: (
+    primary: $cohelum_frontend-primary,
+    accent: $cohelum_frontend-accent,
+    warn: $cohelum_frontend-warn,
+  )
+));
+
+@include mat.all-component-themes($cohelum_frontend-theme);
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 @import "@angular/cdk/overlay-prebuilt.css";
 
@@ -34,6 +50,9 @@ body {
     padding: 1rem 1.5rem;
   }
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

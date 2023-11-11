@@ -1,7 +1,5 @@
-export interface Inventory{
+export interface Category {
   position:number;
-  name:string;
-  price:number;
-  unitsAvailable:number;
+  description:string;
   status:string;
 }

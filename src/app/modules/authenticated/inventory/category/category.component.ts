@@ -3,7 +3,7 @@ import {Category} from "../../../../interface/Category";
 import {MatTable, MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {NgForm} from "@angular/forms";
+
 
 
 @Component({
