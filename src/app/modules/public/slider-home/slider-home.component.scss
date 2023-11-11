@@ -1,0 +1,41 @@
+#homeSection {
+    width: 100vw;
+    height: 100vh;
+    background-image: url(~src/assets/image/slide/Slide1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    .innerCover {
+        position: absolute;
+        width: 40vw;
+        bottom: 5%;
+        left: 5%;
+        padding: 2em 4em;
+        background-color: white;
+
+        h1 {
+            color: #0F2137;
+            font-size: 48px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 75px;
+            letter-spacing: -1.5px;
+        }
+
+        p {
+            color: #0F2137;
+
+            font-family: DM Sans;
+            font-size: 17px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 42px;
+            /* 247.059% */
+        }
+
+        button {
+            border-radius: 4px;
+            background: #02073E;
+        }
+    }
+}

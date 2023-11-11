@@ -66,3 +66,40 @@ section {
         }
     }
 }
+
+.cohelum-Content {
+    display: grid;
+    grid-template-areas:
+        'header'
+        'main'
+        'footer';
+    grid-template-columns: 100%;
+    grid-template-rows:  auto auto auto ;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.cohelum-header {
+    grid-area: header;
+}
+
+.cohelum-side {
+    grid-area: sidebar;
+    display: grid;
+    padding-left: 4%;
+    padding-right: 4%;
+    border-left: 2px groove white;
+    border-right: 2px groove white;
+    box-shadow: 0px 10px 20px rgb(26, 60, 64);
+    /*background-color: rgb(17, 43, 60);*/
+    color: white;
+    font-size: calc(0.8em + 0.2vw);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 8%, rgb(17, 43, 60) 50%);
+}
+
+.cohelum-main {
+    grid-area: main;
+}
+
+.cohelum-footer {
+    grid-area: footer;
+}
