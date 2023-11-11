@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./slider-home.component.scss']
 })
 export class SliderHomeComponent {
+	images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
 
 }

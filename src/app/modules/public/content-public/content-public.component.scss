@@ -72,9 +72,10 @@ section {
     grid-template-areas:
         'header'
         'allies'
+        'teams'
         'footer';
-    grid-template-columns: 100%;
-    grid-template-rows:  auto auto auto ;
+    grid-template-columns: 100vw;
+    grid-template-rows:  45vw 20vw 20vw 20vw;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
@@ -106,4 +107,8 @@ section {
 
 .cohelum-allies {
     grid-area: allies;
+}
+
+.cohelum-teams {
+    grid-area: teams;
 }

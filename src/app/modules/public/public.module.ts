@@ -10,7 +10,6 @@ import { AlliesPublicComponent } from './allies-public/allies-public.component';
 import { ProductPublicComponent } from './product-public/product-public.component';
 import { TeamPublicComponent } from './team-public/team-public.component';
 
-
 @NgModule({
   declarations: [
     ContentPublicComponent,

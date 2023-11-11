@@ -1,22 +1,20 @@
-<section id="ourAlliesSection" class="ourAllies">
-    <div class="section_header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col">
-                    <div class="section_header__subtitle">
-                        <h2>Our Allies</h2>
-                    </div>
-                    <div class="section_header__title">
-                        <h1>Nuestros Aliados</h1>
-                    </div>
-                </div>
-            </div>
+<section class="allies-content">
+    <div class="container">
+        <div class="row">
+            <div class="allies-subtitle"><b>Our allies</b></div>
+        </div>
+        <div class="row">
+            <div class="allies-title">Nuestros Aliados</div>
         </div>
     </div>
+</section>
+
+
+<section id="ourAlliesSection" class="ourAllies">
     <div class="section_body">
         <div class="container">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-2" *ngFor="let aliado of listaAliados">
                     <figure class="snipAllies">
                         <img src="./assets/image/ourAllies/Catemar_180x.avif" alt="sample81" />
                         <i class="fa fa-solid fa-globe"></i>
@@ -25,54 +23,7 @@
                         </figcaption><a href="#"></a>
                     </figure>
                 </div>
-                <div class="col-md-2">
-                    <figure class="snipAllies">
-                        <img src="./assets/image/ourAllies/Cementdesign_180x.webp" alt="sample81" />
-                        <i class="fa fa-solid fa-globe"></i>
-                        <figcaption>
-                            <h3>Ver<span> más</span></h3>
-                        </figcaption><a href="#"></a>
-                    </figure>
-                </div>
-                <div class="col-md-2">
-                    <figure class="snipAllies">
-                        <img src="./assets/image/ourAllies/Corian_180x.avif" alt="sample81" />
-                        <i class="fa fa-solid fa-globe"></i>
-                        <figcaption>
-                            <h3>Ver<span> más</span></h3>
-                        </figcaption><a href="#"></a>
-                    </figure>
-                </div>
-                <div class="col-md-2">
-                    <figure class="snipAllies">
-                        <img src="./assets/image/ourAllies/Dekton_180x.webp" alt="sample81" />
-                        <i class="fa fa-solid fa-globe"></i>
-                        <figcaption>
-                            <h3>Ver<span> más</span></h3>
-                        </figcaption><a href="#"></a>
-                    </figure>
-                </div>
-                <div class="col-md-2">
-                    <figure class="snipAllies">
-                        <img src="./assets/image/ourAllies/Neolith_180x.avif" alt="sample81" />
-                        <i class="fa fa-solid fa-globe"></i>
-                        <figcaption>
-                            <h3>Ver<span> más</span></h3>
-                        </figcaption><a href="#"></a>
-                    </figure>
-                </div>
-                <div class="col-md-2">
-                    <figure class="snipAllies">
-                        <img src="./assets/image/ourAllies/Parador_180x.avif" alt="sample81" />
-                        <i class="fa fa-solid fa-globe"></i>
-                        <figcaption>
-                            <h3>Ver<span> más</span></h3>
-                        </figcaption><a href="#"></a>
-                    </figure>
-                </div>
-
             </div>
         </div>
     </div>
-
 </section>
