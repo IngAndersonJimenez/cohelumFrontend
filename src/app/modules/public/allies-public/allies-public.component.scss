@@ -1,0 +1,122 @@
+$base-color: #0F2137;
+
+#ourAlliesSection {
+    .snipAllies {
+        font-family: 'Raleway', Arial, sans-serif;
+        position: relative;
+        float: left;
+        overflow: hidden;
+        margin: 10px 1%;
+        min-width: 160px;
+        max-width: 315px;
+        width: 100%;
+        background: #ffffff;
+        color: #ffffff;
+        text-align: left;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+
+        * {
+            box-sizing: border-box;
+            transition: all 0.35s ease-out;
+        }
+
+        img {
+            max-width: 100%;
+            vertical-align: top;
+        }
+
+        i {
+            position: absolute;
+            left: 15px;
+            bottom: 15px;
+            font-size: 28px;
+            color: #ffffff;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            z-index: 1;
+            text-align: center;
+        }
+
+        figcaption {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            z-index: 1;
+            max-width: 250px;
+        }
+
+        h3,
+        p {
+            opacity: 0;
+            margin: 0 0 5px;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            font-weight: 400;
+            text-transform: uppercase;
+            transform: translateX(-40px);
+        }
+
+        h3 span {
+            font-weight: 800;
+        }
+
+        p {
+            font-size: 0.9em;
+            font-size: 500;
+            transition-delay: 0;
+        }
+
+        &:after {
+            background: $base-color;
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            left: 15px;
+            bottom: 15px;
+            content: '';
+            border-radius: 50%;
+            transition: all 0.35s ease;
+        }
+
+        a {
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            position: absolute;
+            z-index: 1;
+        }
+
+        &:hover img,
+        &.hover img {
+            opacity: 0.4;
+        }
+
+        &:hover:after,
+        &.hover:after {
+            transform: scale(10);
+            opacity: 0.75;
+        }
+
+        &:hover i,
+        &.hover i {
+            transform: scale(0.5) translate(-45px, 50px);
+        }
+
+        &:hover h3,
+        &.hover h3 {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        &:hover p,
+        &.hover p {
+            opacity: 1;
+            transition-delay: 0.25s;
+        }
+    }
+}

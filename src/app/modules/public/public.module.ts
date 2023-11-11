@@ -6,6 +6,9 @@ import { ContentPublicComponent } from './content-public/content-public.componen
 import { HeaderPublicComponent } from './header-public/header-public.component';
 import { FooterPublicComponent } from './footer-public/footer-public.component';
 import { SliderHomeComponent } from './slider-home/slider-home.component';
+import { AlliesPublicComponent } from './allies-public/allies-public.component';
+import { ProductPublicComponent } from './product-public/product-public.component';
+import { TeamPublicComponent } from './team-public/team-public.component';
 
 
 @NgModule({
@@ -13,7 +16,10 @@ import { SliderHomeComponent } from './slider-home/slider-home.component';
     ContentPublicComponent,
     HeaderPublicComponent,
     FooterPublicComponent,
-    SliderHomeComponent
+    SliderHomeComponent,
+    AlliesPublicComponent,
+    ProductPublicComponent,
+    TeamPublicComponent
   ],
   imports: [
     CommonModule,

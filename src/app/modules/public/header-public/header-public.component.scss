@@ -1,18 +1,4 @@
-.header-public-content {
-    display: grid;
-    grid-template-areas:
-        'header'
-        'slide';
-    grid-template-rows: auto 87vh;
-}
 
-.header-public-header {
-    grid-template-columns: 'header';
-}
-
-.header-public-slide {
-    grid-template-columns: 'slide';
-}
 
 .header-nav {
     opacity: 0.8;
