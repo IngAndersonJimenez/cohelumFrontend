@@ -9,6 +9,7 @@ import { SliderHomeComponent } from './slider-home/slider-home.component';
 import { AlliesPublicComponent } from './allies-public/allies-public.component';
 import { ProductPublicComponent } from './product-public/product-public.component';
 import { TeamPublicComponent } from './team-public/team-public.component';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TeamPublicComponent } from './team-public/team-public.component';
   ],
   imports: [
     CommonModule,
-    PublicRoutingModule
+    PublicRoutingModule,
+    CarouselModule
   ]
 })
 export class PublicModule { }

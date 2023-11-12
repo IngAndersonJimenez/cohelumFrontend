@@ -14,15 +14,27 @@
     <div class="section_body">
         <div class="container">
             <div class="row">
-                <div class="col-md-2" *ngFor="let aliado of listaAliados">
-                    <figure class="snipAllies">
-                        <img src="./assets/image/ourAllies/Catemar_180x.avif" alt="sample81" />
-                        <i class="fa fa-solid fa-globe"></i>
-                        <figcaption>
-                            <h3>Ver<span> más</span></h3>
-                        </figcaption><a href="#"></a>
-                    </figure>
-                </div>
+                <p-carousel [value]="listaAliados" [numVisible]="4" [numScroll]="3" [circular]="true"
+                    [responsiveOptions]="responsiveOptions">
+                    <ng-template let-aliado pTemplate="item">
+                        <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+                            <div class="mb-3">
+                                <figure class="snipAllies">
+                                    <img [src]="aliado.getUrlLogo()" alt="DECORALVAREZ logo" />
+                                    <i class="fa fa-solid fa-globe"></i>
+                                    <figcaption>
+                                        <h3>Ver<span> más</span></h3>
+                                        <p>
+                                            <span>{{aliado.getDireccion()}} </span>
+                                            <span>{{aliado.getCiudad()}} &nbsp;&nbsp;&nbsp;</span>
+                                            <span>{{aliado.getTelefono()}}</span>
+                                        </p>
+                                    </figcaption><a href="{{aliado.getUrlPaginaWeb()}}" target="_blank"></a>
+                                </figure>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-carousel>
             </div>
         </div>
     </div>
