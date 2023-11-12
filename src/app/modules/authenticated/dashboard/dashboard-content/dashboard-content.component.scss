@@ -1,3 +1,154 @@
-h1{
-  color: #495057;
+.card-container.box-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-gap: 24px;
+  margin-top: 36px;
+}
+.card-container .box-info li {
+  padding: 24px;
+  background: var(--light);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  grid-gap: 24px;
+}
+.card-container .box-info li .bx {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  font-size: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card-container .box-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-gap: 24px;
+  margin-top: 36px;
+}
+.card-container .box-info li:nth-child(1) .bx {
+  background: #CFE8FF; /* Reemplazado --light-blue con el valor correspondiente */
+  color: #3C91E6; /* Reemplazado --blue con el valor correspondiente */
+}
+.card-container .box-info li:nth-child(2) .bx {
+  background: #FFF2C6; /* Reemplazado --light-yellow con el valor correspondiente */
+  color: #FFCE26; /* Reemplazado --yellow con el valor correspondiente */
+}
+.card-container .box-info li:nth-child(3) .bx {
+  background: #FFE0D3; /* Reemplazado --light-orange con el valor correspondiente */
+  color: #FD7238; /* Reemplazado --orange con el valor correspondiente */
+}
+.card-container .box-info li .text h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #342E37; /* Reemplazado --dark con el valor correspondiente */
+}
+.card-container .box-info li .text p {
+  color: #342E37; /* Reemplazado --dark con el valor correspondiente */
+}
+.card-container  .table-data {
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 24px;
+  margin-top: 24px;
+  width: 100%;
+  color: var(--dark);
+}
+.card-container .table-data > div {
+  border-radius: 20px;
+  background: var(--light);
+  padding: 24px;
+  overflow-x: auto;
+}
+.card-container .table-data .head {
+  display: flex;
+  align-items: center;
+  grid-gap: 16px;
+  margin-bottom: 24px;
+}
+.card-container .table-data .head h3 {
+  margin-right: auto;
+  font-size: 24px;
+  font-weight: 600;
+}
+.card-container .table-data .head .bx {
+  cursor: pointer;
+}
+.card-container .table-data .order {
+  flex-grow: 1;
+  flex-basis: 500px;
+}
+.card-container .table-data .order table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.card-container .table-data .order table th {
+  padding-bottom: 12px;
+  font-size: 13px;
+  text-align: left;
+  border-bottom: 1px solid var(--grey);
+}
+.card-container .table-data .order table td {
+  padding: 16px 0;
+}
+.card-container .table-data .order table tr td:first-child {
+  display: flex;
+  align-items: center;
+  grid-gap: 12px;
+  padding-left: 6px;
+}
+.card-container .table-data .order table td img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.card-container .table-data .order table tbody tr:hover {
+  background: var(--grey);
+}
+.card-container .table-data .order table tr td .status {
+  font-size: 10px;
+  padding: 6px 16px;
+  color: var(--light);
+  border-radius: 20px;
+  font-weight: 700;
+}
+.card-container .table-data .order table tr td .status.completed {
+  background: var(--blue);
+}
+.card-container .table-data .order table tr td .status.process {
+  background: var(--yellow);
+}
+.card-container .table-data .order table tr td .status.pending {
+  background: var(--orange);
+}
+.card-container .table-data .todo {
+  flex-grow: 1;
+  flex-basis: 300px;
+}
+.card-container .table-data .todo .todo-list {
+  width: 100%;
+}
+.card-container .table-data .todo .todo-list li {
+  width: 100%;
+  margin-bottom: 16px;
+  background: var(--grey);
+  border-radius: 10px;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-container .table-data .todo .todo-list li .bx {
+  cursor: pointer;
+}
+.card-container.table-data .todo .todo-list li.completed {
+  border-left: 10px solid var(--blue);
+}
+.card-container.table-data .todo .todo-list li.not-completed {
+  border-left: 10px solid var(--orange);
+}
+.card-container .table-data .todo .todo-list li:last-child {
+  margin-bottom: 0;
 }
