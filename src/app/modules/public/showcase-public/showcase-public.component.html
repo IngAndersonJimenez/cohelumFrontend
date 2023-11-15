@@ -1,0 +1,32 @@
+<div class="showcase-content">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col">
+                <p>{{titleInformative}}</p>
+                <div class="row">
+                    <div class="col">
+                        <p>{{description}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>Combinación perfecta entre diseño y funcionalidad</p>
+                    </div>
+                    <div class="col">
+                        <p>Combinación perfecta entre diseño y funcionalidad</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col">
+                <p-galleria [value]="gallery" [showIndicators]="true" [showThumbnails]="false"
+                    [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '540px' }"
+                    [(activeIndex)]="activeIndex" (click)="changeData(activeIndex)">
+                    <ng-template pTemplate="item" let-item>
+                        <img [src]="item.getSourceResorce()" style="width: 100%; display: block;" />
+                    </ng-template>
+                </p-galleria>
+            </div>
+        </div>
+    </div>
+</div>
