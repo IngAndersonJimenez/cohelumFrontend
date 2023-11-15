@@ -4,6 +4,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { InventoryService } from "../../../../../services/inventory.service";
 import { LoginService } from "../../../../../services/login.service";
 import { ResponseLogin } from "../../../../../interface/ResponseLogin";
+import {Inventory} from "../../../../../interface/products/Inventory";
 
 @Component({
   selector: 'app-create-product',
@@ -28,40 +29,23 @@ export class CreateProductComponent implements OnInit{
       image: [null, Validators.required]
     });
   }
-  onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imageUrl = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
+  onSubmit() {
+    const formData = this.productForm.value;
+    this.inventoryService.createProduct(formData).subscribe(
+        result => {
+          console.log('Product created successfully', result);
+          // Puedes manejar la respuesta según tus necesidades
+        },
+        error => {
+          console.error('Error creating product', error);
+          // Puedes manejar el error según tus necesidades
+        }
+    );
   }
 
-  onSubmit() {
-    if (this.productForm.valid) {
-      const userCurrent = this.loginService.userCurrent;
-
-      if (userCurrent) {
-        const formData = this.productForm.value;
-
-        console.log("Form Data:", this.productForm.value);
-        console.log("Image Data:", formData.image);
-
-        this.inventoryService.createProduct(formData).subscribe(
-            result => {
-              console.log("Producto creado exitosamente", result);
-            },
-            error => {
-              console.error("Error al crear el producto", error);
-            }
-        );
-      } else {
-        console.error("Usuario actual no disponible");
-      }
-    }
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.productForm.patchValue({ image: file });
   }
 
   ngOnInit(): void {

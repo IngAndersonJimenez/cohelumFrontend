@@ -18,11 +18,21 @@ export class InventoryService {
   }
 
     createProduct(inventory: Inventory): Observable<Inventory> {
+        const formData: FormData = new FormData();
+        console.log('Inventory object:', inventory);
+        formData.append('name', inventory.name);
+        formData.append('price', inventory.price.toString());
+        formData.append('unitsAvailable', inventory.unitsAvailable.toString());
+        formData.append('characteristic', inventory.characteristic);
+        formData.append('datasheet', inventory.datasheet);
+        formData.append('image', inventory.image);
+
         const headers = new HttpHeaders({
-            'Authorization': `${this.getToken()}`
+            'Authorization': `${this.getToken()}`,
+
         });
 
-        return this.http.post<Inventory>(environment.apiUrl + 'api/v1/inventory/createFull', inventory, { headers }).pipe(
+        return this.http.post<Inventory>(`${environment.apiUrl}api/v1/inventory/createFull`, formData, { headers }).pipe(
             map(result => {
                 console.log(result);
                 if (result != null) {
