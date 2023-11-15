@@ -20,8 +20,8 @@ export class CategoryComponent implements OnInit{
   listCategory!: InventoryCategory[];
   displayedColumns: string[] = ['idCategory', 'description','active','action'];
   dataSource = new MatTableDataSource<InventoryCategory>(this.listCategory);
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -41,19 +41,13 @@ export class CategoryComponent implements OnInit{
 
   loadData() {
 
-      let result :any;
+      this.inventoryService.getCategory().subscribe(
+          (data: any) => {
+              console.log(data);
+              this.listCategory = data.responseDTO;
+              this.dataSource = new MatTableDataSource<InventoryCategory>(this.listCategory);
+          }
+      );
 
-    this.inventoryService.getCategory().subscribe(
-        data =>{
-            console.log(data)
-            result = data;
-            this.listCategory = result.responseDTO;
-            console.log('this.listCategory')
-            console.log(this.listCategory)
-            console.log(this.dataSource)
-            console.log(result.responseDTO)
-            console.log(result.responseDTO[0].idCategory)
-        }
-    );
   }
 }
