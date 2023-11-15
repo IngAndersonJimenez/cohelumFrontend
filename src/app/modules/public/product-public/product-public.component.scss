@@ -1,4 +1,5 @@
 .categories {
+    
     figure.snip0067 {
         font-family: 'Raleway', Arial, sans-serif;
         position: relative;
@@ -162,4 +163,22 @@
         -webkit-transform: skewX(-30deg) translateX(0px);
         transform: skewX(-30deg) translateX(0px);
     }
+}
+
+.category-content {
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+
+.category-subtitle {
+    text-align: center;
+    font-size: 1vw;
+    color: #0F2137;
+}
+
+.category-title {
+    text-align: center;
+    font-size: 2vw;
+    color: #0F2137;
 }

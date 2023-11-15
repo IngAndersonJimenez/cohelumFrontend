@@ -10,6 +10,8 @@ import { AlliesPublicComponent } from './allies-public/allies-public.component';
 import { ProductPublicComponent } from './product-public/product-public.component';
 import { TeamPublicComponent } from './team-public/team-public.component';
 import { CarouselModule } from 'primeng/carousel';
+import { ShowcasePublicComponent } from './showcase-public/showcase-public.component';
+import { GalleriaModule } from 'primeng/galleria';
 
 @NgModule({
   declarations: [
@@ -19,12 +21,14 @@ import { CarouselModule } from 'primeng/carousel';
     SliderHomeComponent,
     AlliesPublicComponent,
     ProductPublicComponent,
-    TeamPublicComponent
+    TeamPublicComponent,
+    ShowcasePublicComponent
   ],
   imports: [
     CommonModule,
     PublicRoutingModule,
-    CarouselModule
+    CarouselModule,
+    GalleriaModule
   ]
 })
 export class PublicModule { }
