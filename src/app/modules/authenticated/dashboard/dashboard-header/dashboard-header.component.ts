@@ -1,6 +1,10 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { notifications, userItems } from 'src/app/interface/header-dummy-data';
+import {Router} from "@angular/router";
 
+interface RouteMapping {
+  [key: string]: string;
+}
 @Component({
   selector: 'app-dashboard-header',
   templateUrl: './dashboard-header.component.html',
@@ -14,7 +18,7 @@ export class DashboardHeaderComponent implements OnInit {
   canShowSearchAsOverlay = false;
   notifications = notifications;
   userItems = userItems;
-  constructor() {
+  constructor(private router:Router) {
   }
 
   ngOnInit(): void {
@@ -41,6 +45,23 @@ export class DashboardHeaderComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.checkCanShowSearchAsOverlay(window.innerWidth)
+  }
+
+  navigateTo(route: string) {
+    const routeMapping: RouteMapping = {
+      'Profile': '/profile',
+      'Settings': '/settings',
+      'Lock screen': '/lock-screen',
+      'Logout': '/cohelum/login'
+    };
+
+    const targetRoute = routeMapping[route];
+
+    if (targetRoute) {
+      this.router.navigate([targetRoute]);
+    } else {
+      console.error(`No se encontró una ruta para ${route}`);
+    }
   }
 
 }

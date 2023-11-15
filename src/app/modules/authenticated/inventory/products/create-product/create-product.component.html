@@ -1,54 +1,54 @@
 <h1>Crear producto</h1>
 <div class="container-product">
-    <mat-card>
+    <mat-card >
 
         <mat-card-content>
-            <form >
+            <form [formGroup]="productForm">
                 <mat-grid-list cols="4" rowHeight="70px">
                     <mat-grid-tile [colspan]="1"  [rowspan]="1">
                         <mat-form-field class="form-input">
                             <mat-label>Nombre del producto</mat-label>
-                            <input matInput autocomplete="off">
+                            <input matInput autocomplete="off" formControlName="name" required>
                         </mat-form-field>
                     </mat-grid-tile>
-                    <mat-grid-tile [colspan]="3"  [rowspan]="7">
-                        <img src="assets/image/Carrusel1.jpg" alt="Imagen de cocina">
+                    <mat-grid-tile [colspan]="3"  [rowspan]="8">
+                        <img src="assets/image/slide/1_carrusel.jpg" alt="Imagen de cocina">
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1"  [rowspan]="1" >
                         <mat-form-field class="form-input">
                             <mat-label>Precio</mat-label>
-                            <input matInput>
+                            <input matInput formControlName="price" required>
                         </mat-form-field>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1"  [rowspan]="1" >
                         <mat-form-field class="form-input">
                             <mat-label>Unidades disponibles</mat-label>
+                            <input matInput formControlName="unitsAvailable" required>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1"  [rowspan]="1" >
+                        <mat-form-field class="form-input">
+                            <mat-label>Descripción del producto</mat-label>
                             <input matInput>
                         </mat-form-field>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1"  [rowspan]="1" >
                         <mat-form-field class="form-input">
                             <mat-label>Caracteristica</mat-label>
-                            <input matInput>
+                            <input matInput  formControlName="characteristic" required >
                         </mat-form-field>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1"  [rowspan]="1" >
                         <mat-form-field class="form-input">
                             <mat-label>Ficha técnica</mat-label>
-                            <input matInput>
+                            <input matInput formControlName="datasheet" required>
                         </mat-form-field>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1"  [rowspan]="1" >
-                        <mat-form-field>
-                            <mat-label>Estado</mat-label>
-                            <mat-select>
-                                <mat-option value="one">Activo</mat-option>
-                                <mat-option value="two">Desactivado</mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                        <input class="file" type="file" (change)="onFileSelected($event)" #fileInput formControlName="image" required>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1"  [rowspan]="1" >
-                        <button mat-raised-button color="primary">ACEPTAR</button>
+                        <button mat-raised-button color="primary" (click)="onSubmit()">ACEPTAR</button>
                     </mat-grid-tile>
                 </mat-grid-list>
             </form>

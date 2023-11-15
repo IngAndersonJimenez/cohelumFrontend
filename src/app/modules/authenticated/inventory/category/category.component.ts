@@ -1,10 +1,9 @@
-import {Component, ViewChild} from '@angular/core';
-import {Category} from "../../../../interface/Category";
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTable, MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-
-
+import {InventoryService} from "../../../../services/inventory.service";
+import {InventoryCategory} from "../../../../interface/products/inventoryCategory";
 
 @Component({
   selector: 'app-category',
@@ -12,29 +11,15 @@ import {MatSort} from "@angular/material/sort";
   styleUrls: ['./category.component.scss'],
 
 })
-export class CategoryComponent {
+export class CategoryComponent implements OnInit{
 
+  constructor(private inventoryService:InventoryService) {
 
-  Listado: Category[] = [
-    {position: 1, description:'Hydrogen', status: 'activo'},
-    {position: 2, description:'Helium',   status: 'desactivado'},
-    {position: 3, description:'Oxygen',   status: 'activo'},
-    {position: 4, description:'Carbon',   status: 'activo'},
-    {position: 5, description:'Nitrogen', status: 'desactivado'},
-    {position: 6, description:'Neon',     status: 'activo'},
-    {position: 7, description:'Argon',    status: 'desactivado'},
-    {position: 8, description:'Krypton',  status: 'activo'},
-    {position: 9, description:'Xenon',    status: 'activo'},
-    {position: 10,description: 'Radon',   status: 'desactivado'},
-    {position: 11,description: 'Fluorine',status: 'activo'},
-    {position: 12,description: 'Chlorine',status: 'activo'},
-    {position: 13,description: 'Bromine', status: 'desactivado'},
-    {position: 14,description: 'Iodine',  status: 'activo'},
-    {position: 15,description: 'Astatine',status: 'activo'},
-  ];
+  }
 
-  displayedColumns: string[] = ['position', 'description','status','action'];
-  dataSource = new MatTableDataSource(this.Listado);
+  listCategory!: InventoryCategory[];
+  displayedColumns: string[] = ['idCategory', 'description','active','action'];
+  dataSource = new MatTableDataSource<InventoryCategory>(this.listCategory);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -47,8 +32,28 @@ export class CategoryComponent {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  isEditMode = false;
-  editedRowIndex = -1;
-    editedRow: Category = { position: 0, description: '', status: '' };
 
+
+
+  ngOnInit(): void {
+      this.loadData()
+  }
+
+  loadData() {
+
+      let result :any;
+
+    this.inventoryService.getCategory().subscribe(
+        data =>{
+            console.log(data)
+            result = data;
+            this.listCategory = result.responseDTO;
+            console.log('this.listCategory')
+            console.log(this.listCategory)
+            console.log(this.dataSource)
+            console.log(result.responseDTO)
+            console.log(result.responseDTO[0].idCategory)
+        }
+    );
+  }
 }

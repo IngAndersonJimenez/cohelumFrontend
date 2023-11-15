@@ -15,6 +15,7 @@ import { ListProductsComponent } from './products/list-products/list-products.co
 import {MatCardModule} from "@angular/material/card";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatSelectModule} from "@angular/material/select";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -38,7 +39,11 @@ import {MatSelectModule} from "@angular/material/select";
         MatButtonModule,
         MatCardModule,
         MatGridListModule,
-        MatSelectModule
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatTableModule,
     ]
 })
 export class InventoryModule { }

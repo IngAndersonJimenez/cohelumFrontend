@@ -1,3 +1,5 @@
+<!-- tu-componente.component.html -->
+
 <div class="title-button">
   <h1>Categorías</h1>
   <div class="demo-button-container">
@@ -6,29 +8,27 @@
 </div>
 
 <div class="card">
-  <div class="card-head">Lorem Ipsum-inventario 1</div>
+  <div class="card-head">Lista de categorías</div>
   <div class="card-body">
     <mat-form-field>
-    <mat-label>Filtro</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input autocomplete="off">
+      <mat-label>Filtro</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtro por descripción o estado" #input autocomplete="off">
     </mat-form-field>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
-        <ng-container matColumnDef="position">
+        <ng-container matColumnDef="idCategory">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.idCategory}} </td>
         </ng-container>
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
           <td mat-cell *matCellDef="let element"> {{element.description}} </td>
         </ng-container>
-        <ng-container matColumnDef="status">
+        <ng-container matColumnDef="active">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
           <td mat-cell *matCellDef="let element">
-             {{element.status}} </td>
+            {{element.active ? 'Activo' : 'Inactivo'}} </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>Editar</th>
           <td mat-cell *matCellDef="let element">
@@ -37,12 +37,11 @@
             </a>
           </td>
         </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                     showFirstLastButtons
-                     aria-label="Select page of periodic elements">
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
       </mat-paginator>
     </div>
-
   </div>
 </div>

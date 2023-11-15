@@ -90,7 +90,7 @@
   <ng-template #userOverlay>
     <div class="overlay overlay-user overlay-fall" cdkMenu>
       <ul>
-        <li *ngFor="let item of userItems" cdkMenuItem>
+        <li *ngFor="let item of userItems" cdkMenuItem (click)="navigateTo(item.label)">
           <a class="icon" [ngClass]="item.icon"></a>
           <span>{{item.label}}</span>
         </li>
