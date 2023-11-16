@@ -34,7 +34,8 @@ export class ShowcasePublicComponent {
 
     this.gallery.push(
       new ShowCaseGallery(
-        '1', 'assets/image/showcase/showcase3.jpg', 'Acabados de vanguardia y última generación para la familia',
+        '1', 'assets/image/showcase/showcase3.jpg', 
+        '¡Explora la distinción y resistencia: sumérgete en la elegancia duradera para una cocina impecable!',
         'Descubre la elegancia y durabilidad que solo un pozuelo en acero puede ofrecer.' +
         '💎 Con un brillo que perdura y una resistencia inigualable, nuestros pozuelos de acero son la elección inteligente para tu cocina.'
       )
@@ -42,7 +43,7 @@ export class ShowcasePublicComponent {
 
     this.gallery.push(
       new ShowCaseGallery('2',
-        'assets/image/showcase/showcase4.jpg', 'Acabados de vanguardia y última generación para la oficina',
+        'assets/image/showcase/showcase4.jpg', 'Transforma tu espacio colinario: Grifería en Acero para una Cocina de Belleza y Funcionalidad Inigualables.',
         'Eleva tu cocina a otro nivel con la belleza y funcionalidad de una grifería en acero.' +
         '✨ Descubre la diferencia que hace la calidad en cada detalle.'
       )
