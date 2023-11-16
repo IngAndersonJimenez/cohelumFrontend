@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Router} from "@angular/router";
-import {NotificationService} from "../notifications/notification.service";
-import {environment} from "../environments/environment";
-import {Inventory} from "../interface/products/Inventory";
-import {catchError, map, Observable} from "rxjs";
-import {LoginService} from "./login.service";
-import {InventoryCategory} from "../interface/products/inventoryCategory";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Router } from "@angular/router";
+import { NotificationService } from "../notifications/notification.service";
+import { environment } from "../environments/environment";
+import { Inventory } from "../interface/products/Inventory";
+import { catchError, map, Observable } from "rxjs";
+import { LoginService } from "./login.service";
+import { InventoryCategory } from "../interface/products/inventoryCategory";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class InventoryService {
 
-  constructor(private http: HttpClient,private router:Router, private notificationService:NotificationService, private loginService:LoginService) {
+    constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService, private loginService: LoginService) {
 
-  }
+    }
 
     createProduct(inventory: Inventory): Observable<Inventory> {
         const formData: FormData = new FormData();
@@ -51,9 +51,9 @@ export class InventoryService {
         );
     }
 
-    getToken():string{
-        let token:string ='';
-        this.loginService.userCurrent.subscribe(data =>{
+    getToken(): string {
+        let token: string = '';
+        this.loginService.userCurrent.subscribe(data => {
             console.log("Token: ")
             console.log(data)
             token = data.token
@@ -61,10 +61,20 @@ export class InventoryService {
         return token;
     }
 
-    getCategory(): Observable<InventoryCategory[]> {
-        const headers = new HttpHeaders({
-            'Authorization': `${this.getToken()}`
-        });
-        return this.http.get<InventoryCategory[]>(environment.apiUrl + 'api/v1/inventoryCategory', { headers });
+    getCategory(token?: string): Observable<InventoryCategory[]> {
+
+        let headers = new HttpHeaders({})
+
+        if (token != null) {
+            headers = new HttpHeaders({
+                'Authorization': `${token}`
+            });
+        } else {
+            headers = new HttpHeaders({
+                'Authorization': `${this.getToken()}`
+            });
+        }
+
+        return this.http.get<InventoryCategory[]>(environment.apiUrl + 'api/v1/inventoryCategory/getAll', { headers });
     }
 }
