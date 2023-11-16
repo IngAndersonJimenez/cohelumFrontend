@@ -17,19 +17,9 @@ export class InventoryService {
 
     }
 
-    createProduct(inventory: Inventory): Observable<Inventory> {
-        const formData: FormData = new FormData();
-        console.log('Inventory object:', inventory);
-        formData.append('name', inventory.name);
-        formData.append('price', inventory.price.toString());
-        formData.append('unitsAvailable', inventory.unitsAvailable.toString());
-        formData.append('characteristic', inventory.characteristic);
-        formData.append('description', inventory.description)
-        formData.append('datasheet', inventory.datasheet);
-        formData.append('image', inventory.image);
+    createProduct(formData: FormData): Observable<Inventory> {
         const headers = new HttpHeaders({
             'Authorization': `${this.getToken()}`,
-
         });
 
         return this.http.post<Inventory>(`${environment.apiUrl}api/v1/inventory/createFull`, formData, { headers }).pipe(
@@ -54,6 +44,7 @@ export class InventoryService {
     getToken(): string {
         let token: string = '';
         this.loginService.userCurrent.subscribe(data => {
+
             console.log("Token: ")
             console.log(data)
             token = data.token

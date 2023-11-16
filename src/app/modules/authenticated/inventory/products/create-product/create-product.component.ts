@@ -4,6 +4,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { InventoryService } from "../../../../../services/inventory.service";
 import { LoginService } from "../../../../../services/login.service";
 import { ResponseLogin } from "../../../../../interface/ResponseLogin";
+import {NotificationService} from "../../../../../notifications/notification.service";
 
 @Component({
   selector: 'app-create-product',
@@ -12,13 +13,11 @@ import { ResponseLogin } from "../../../../../interface/ResponseLogin";
 })
 export class CreateProductComponent implements OnInit{
 
-  imageUrl: string | undefined;
   public productForm!: FormGroup;
-  public userCurrent!: ResponseLogin;
   selectedPDFName: string | undefined;
   selectedImage: string | undefined;
 
-  constructor(private router: Router, private inventoryService: InventoryService, private formBuilder: FormBuilder, private loginService: LoginService) {}
+  constructor(private notificationService:NotificationService, private inventoryService: InventoryService, private formBuilder: FormBuilder, private loginService: LoginService) {}
 
   private buildForm() {
     this.productForm = this.formBuilder.group({
@@ -31,12 +30,21 @@ export class CreateProductComponent implements OnInit{
       image: [null, Validators.required]
     });
   }
-  onSubmit() {
-    const formData = this.productForm.value;
-    console.log('Tipo de inventory.image:', typeof formData.image);
-    const isImageAttached = this.productForm.get('image')?.value !== null;
 
-    if (isImageAttached) {
+  onSubmit() {
+    if (this.productForm.valid) {
+      const formData = new FormData();
+      formData.append('name', this.productForm.get('name')?.value);
+      formData.append('price', this.productForm.get('price')?.value);
+      formData.append('unitsAvailable', this.productForm.get('unitsAvailable')?.value);
+      formData.append('description', this.productForm.get('description')?.value);
+      formData.append('characteristic', this.productForm.get('characteristic')?.value);
+      formData.append('datasheet', this.productForm.get('datasheet')?.value);
+      const isImageAttached = this.productForm.get('image')?.value !== null;
+      if (isImageAttached) {
+        formData.append('image', this.productForm.get('image')?.value);
+      }
+
       this.inventoryService.createProduct(formData).subscribe(
           result => {
             this.productForm.reset();
@@ -49,25 +57,39 @@ export class CreateProductComponent implements OnInit{
           }
       );
     } else {
-      console.log('No se seleccionó ninguna imagen. No se llama al servicio.');
+      console.log('El formulario no está completo. No se llama al servicio.');
     }
   }
-
 
 
   onFileSelected(event: any, type: string): void {
     const input = event.target;
     const newFile = input.files ? input.files[0] : null;
 
-    if (type === 'image' && newFile !== this.productForm.get('image')?.value) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.selectedImage = e.target.result;
-      };
-      reader.readAsDataURL(newFile);
-      const imageFile = new File([newFile], newFile.name);
-      this.productForm.patchValue({ image: imageFile });
+    if (newFile) {
+      const fileSizeInBytes = newFile.size;
+      const maxSizeInBytes = 6 * 1024 * 1024;
+
+      if (fileSizeInBytes > maxSizeInBytes) {
+        console.error('El archivo excede el tamaño permitido (6 megabytes).');
+        this.notificationService.showError("El archivo excede el tamaño permitido (6 megabytes).", "Vuelve a intentar");
+        input.value = null;
+        return;
+      }
+
+      if (type === 'image' && newFile !== this.productForm.get('image')?.value) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.selectedImage = e.target.result;
+        };
+        reader.readAsDataURL(newFile);
+
+        const formData = new FormData();
+        formData.append('image', newFile);
+        this.productForm.patchValue({ image: formData.get('image') });
+      }
     }
+
   }
 
   ngOnInit(): void {
