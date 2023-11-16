@@ -4,7 +4,8 @@ import { ContentUserComponent } from './content-user/content-user.component';
 import { DashboardContentComponent } from './dashboard/dashboard-content/dashboard-content.component';
 import { CategoryComponent } from './inventory/category/category.component';
 import {CreateProductComponent} from "./inventory/products/create-product/create-product.component";
-import {ListProductsComponent} from "./inventory/products/list-products/list-products.component";
+import {ConsultProductComponent} from "./inventory/products/consult-product/consult-product.component";
+
 
 const routes: Routes = [
   {
@@ -24,8 +25,8 @@ const routes: Routes = [
         component: CreateProductComponent
       },
       {
-        path: 'List-category',
-        component: ListProductsComponent
+        path: 'Consult-product',
+        component: ConsultProductComponent
       },
 
     ]

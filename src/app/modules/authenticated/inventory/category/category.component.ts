@@ -23,10 +23,6 @@ export class CategoryComponent implements OnInit{
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -46,8 +42,9 @@ export class CategoryComponent implements OnInit{
               console.log(data);
               this.listCategory = data.responseDTO;
               this.dataSource = new MatTableDataSource<InventoryCategory>(this.listCategory);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
           }
       );
-
   }
 }

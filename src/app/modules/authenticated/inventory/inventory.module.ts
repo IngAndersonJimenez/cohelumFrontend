@@ -11,11 +11,11 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import {MatButtonModule} from "@angular/material/button";
 import { CreateProductComponent } from './products/create-product/create-product.component';
-import { ListProductsComponent } from './products/list-products/list-products.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatSelectModule} from "@angular/material/select";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { ConsultProductComponent } from './products/consult-product/consult-product.component';
 
 
 
@@ -24,7 +24,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     CategoryComponent,
     GridCategoryComponent,
     CreateProductComponent,
-    ListProductsComponent
+    ConsultProductComponent
   ],
     imports: [
         CommonModule,
@@ -44,7 +44,9 @@ import {ReactiveFormsModule} from "@angular/forms";
         ReactiveFormsModule,
         MatPaginatorModule,
         MatSortModule,
-        MatTableModule
+        MatTableModule,
+        FormsModule,
+        ReactiveFormsModule,
     ]
 })
 export class InventoryModule { }

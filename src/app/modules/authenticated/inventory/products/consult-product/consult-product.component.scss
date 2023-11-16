@@ -1,0 +1,99 @@
+.search-container{
+  position: relative;
+
+  .normal-search{
+    .search{
+      border: none;
+      height: 2.375rem;
+      padding-left: 2.5rem;
+      padding-right: 1.25rem;
+      background-color: #cacad7;
+      box-shadow: none;
+      border-radius: 1.875rem;
+      outline: 0;
+    }
+    .search-icon{
+      position: absolute;
+      font-size: 1rem;
+      line-height: 2.375rem;
+      left: 0.813rem;
+      top: 0;
+      color: #74788d;
+    }
+  }
+  .search-menu-btn{
+    font-size: 18px;
+    height: 42px;
+    width: 42px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    outline: 0;
+  }
+  .search-menu-btn:hover,
+  .search-menu-btn:focus{
+    .search-icon{
+      color:#699dfa;
+    }
+  }
+}
+.card-body {
+  form {
+    display: flex;
+    justify-content: space-between; // O ajusta según sea necesario
+    margin-top: 20px;
+    .normal-search {
+      .buscar {
+        left: 1rem;
+        bottom: 0.2rem;
+      }
+    }
+
+    .overlay-search {
+      .search-btn { }
+    }
+  }
+  h3 {
+    margin-top: 20px; // Ajusta según sea necesario para separar el título de los resultados
+    font-size: 1.5rem; // Tamaño de fuente para el título
+    color: #333; // Color del texto
+  }
+
+  mat-card {
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    mat-card-content {
+      padding: 16px;
+    }
+
+    h4 {
+      margin-bottom: 8px;
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    img {
+      max-width: 100%;
+      margin-top: 10px;
+    }
+  }
+
+  p {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #666;
+  }
+}
+
+

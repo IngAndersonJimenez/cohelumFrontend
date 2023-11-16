@@ -24,8 +24,8 @@ export const navbarData:INavbarData[] = [
             label: 'Crear producto'
           },
           {
-            routerLink: 'List-category',
-            label: 'Listar producto'
+            routerLink: 'Consult-product',
+            label: 'Consultar producto'
           }
         ]
       }

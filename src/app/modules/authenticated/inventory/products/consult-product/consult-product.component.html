@@ -1,0 +1,60 @@
+<div class="card-head">
+    <h2>Consultar productos</h2>
+</div>
+<div class="card-body">
+    <form [formGroup]="consultaForm" (ngSubmit)="onSubmit()">
+        <div class="search-container">
+            <div *ngIf="!canShowSearchAsOverlay" class="normal-search">
+                <input type="search" name="search" id="search" class="search"
+                       placeholder="Consultar producto"
+                >
+                <i class="fa fa-search search-icon"></i>
+                <button mat-raised-button color="primary" class="buscar">BUSCAR</button>
+            </div>
+            <div *ngIf="canShowSearchAsOverlay">
+                <button
+                        [cdkMenuTriggerFor]="searchOverlay"
+                        class="search-menu-btn ripple"
+                >
+                    <i class="fa fa-search search-icon"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr />
+    <h3>Resultados de la consulta</h3>
+    <ng-container *ngIf="resultConsult">
+        <mat-card>
+            <mat-card-content>
+                <h4>Nombre del producto: {{ resultConsult.name }}</h4>
+                <h4>Precio: {{ resultConsult.price }}</h4>
+                <h4>Unidades disponibles: {{ resultConsult.unitsAvailable }}</h4>
+                <h4>Descripción: {{ resultConsult.description }}</h4>
+                <h4>Característica: {{ resultConsult.characteristic }}</h4>
+                <h4>Ficha técnica: {{ resultConsult.datasheet }}</h4>
+                <h4>Imagen: {{ resultConsult.image }}</h4>
+            </mat-card-content>
+        </mat-card>
+    </ng-container>
+    <ng-container *ngIf="!resultConsult && products.length === 0">
+        <p>No hay resultados para mostrar.</p>
+    </ng-container>
+    <ng-container *ngIf="products.length > 0">
+        <h3>Productos encontrados</h3>
+        <ng-container *ngFor="let product of products">
+            <mat-card>
+                <mat-card-content>{{ product.name }}</mat-card-content>
+                <!-- Puedes agregar más campos aquí -->
+            </mat-card>
+        </ng-container>
+    </ng-container>
+</div>
+
+<ng-template #searchOverlay>
+    <div class="overlay overlay-search overlay-fall" cdkMenu>
+        <input type="search" class="search" name="search" placeholder="Search...">
+        <button class="search-btn">
+            <i class="fa fa-search search-icon"></i>
+        </button>
+    </div>
+</ng-template>
