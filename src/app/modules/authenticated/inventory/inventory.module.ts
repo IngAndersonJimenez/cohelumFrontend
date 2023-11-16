@@ -18,6 +18,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {ReactiveFormsModule} from "@angular/forms";
 
 
+
 @NgModule({
   declarations: [
     CategoryComponent,
@@ -43,7 +44,7 @@ import {ReactiveFormsModule} from "@angular/forms";
         ReactiveFormsModule,
         MatPaginatorModule,
         MatSortModule,
-        MatTableModule,
+        MatTableModule
     ]
 })
 export class InventoryModule { }

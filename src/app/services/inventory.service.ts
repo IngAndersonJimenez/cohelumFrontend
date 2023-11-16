@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 import {NotificationService} from "../notifications/notification.service";
 import {environment} from "../environments/environment";
 import {Inventory} from "../interface/products/Inventory";
-import {map, Observable} from "rxjs";
+import {catchError, map, Observable} from "rxjs";
 import {LoginService} from "./login.service";
 import {InventoryCategory} from "../interface/products/inventoryCategory";
 
@@ -24,15 +24,20 @@ export class InventoryService {
         formData.append('price', inventory.price.toString());
         formData.append('unitsAvailable', inventory.unitsAvailable.toString());
         formData.append('characteristic', inventory.characteristic);
+        formData.append('description', inventory.description)
         formData.append('datasheet', inventory.datasheet);
         formData.append('image', inventory.image);
-
         const headers = new HttpHeaders({
             'Authorization': `${this.getToken()}`,
 
         });
 
         return this.http.post<Inventory>(`${environment.apiUrl}api/v1/inventory/createFull`, formData, { headers }).pipe(
+            catchError(error => {
+                console.error('Error en la solicitud:', error);
+                this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
+                throw error;
+            }),
             map(result => {
                 console.log(result);
                 if (result != null) {
