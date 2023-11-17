@@ -64,7 +64,7 @@
                             </div>
                         </mat-form-field>
                     </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+<!--                    <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-form-field class="form-input">
                             <mat-label>Ficha técnica</mat-label>
                             <input matInput formControlName="datasheet"  (keypress)="validateEnter($event, 'letras')" required>
@@ -72,15 +72,15 @@
                                 <i *ngIf="productForm.controls['datasheet'].valid" class="far fa-circle-check icon-check"></i>
                             </div>
                         </mat-form-field>
-                    </mat-grid-tile>
-<!--                    <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
-                        <input class="file" type="file" (change)="onFileSelected($event, 'pdf')" #pdfFileInput
-                               formControlName="datasheet" required style="display: none;">
+                    </mat-grid-tile>-->
+                    <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
+                        <input class="file" type="file" (change)="onFileSelected($event, 'pdf')" #pdfFileInput formControlName="datasheet" required style="display: none;">
                         <div class="icon-container">
                             <i *ngIf="productForm.controls['datasheet'].valid" class="far fa-circle-check icon-check image"></i>
                         </div>
                         <button mat-raised-button color="primary" (click)="pdfFileInput.click()">Ficha técnica</button>
-                    </mat-grid-tile>-->
+                    </mat-grid-tile>
+
                     <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
                         <input class="file" type="file" (change)="onFileSelected($event, 'image')" #imageFileInput
                                formControlName="image" required style="display: none;">

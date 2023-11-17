@@ -16,6 +16,7 @@ export class CreateProductComponent implements OnInit{
   selectedPDFName: string | undefined;
   selectedImage: string | undefined;
   categories!: InventoryCategory[];
+  pdfBase64: string | null = null;
   constructor(private notificationService:NotificationService, private inventoryService: InventoryService, private formBuilder: FormBuilder, private loginService: LoginService) {}
 
   private buildForm() {
@@ -76,6 +77,24 @@ export class CreateProductComponent implements OnInit{
         return;
       }
 
+      // Verificar la extensión del archivo
+      const allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+      const allowedPDFExtensions = ['pdf'];
+
+      const fileExtension = newFile.name.split('.').pop().toLowerCase();
+
+      if (type === 'image' && !allowedImageExtensions.includes(fileExtension)) {
+        console.error('Solo se permiten archivos de imagen (jpg, jpeg, png, gif).');
+        this.notificationService.showError("Solo se permiten archivos de imagen (jpg, jpeg, png, gif).", "Vuelve a intentar");
+        input.value = null;
+        return;
+      } else if (type === 'pdf' && !allowedPDFExtensions.includes(fileExtension)) {
+        console.error('Solo se permiten archivos PDF.');
+        this.notificationService.showError("Solo se permiten archivos PDF.", "Vuelve a intentar");
+        input.value = null;
+        return;
+      }
+
       if (type === 'image' && newFile !== this.productForm.get('image')?.value) {
         const reader = new FileReader();
         reader.onload = (e: any) => {
@@ -86,9 +105,19 @@ export class CreateProductComponent implements OnInit{
         const formData = new FormData();
         formData.append('image', newFile);
         this.productForm.patchValue({ image: formData.get('image') });
+      } else if (type === 'pdf' && newFile !== this.productForm.get('datasheet')?.value) {
+        this.selectedPDFName = newFile.name;
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          // Puedes usar e.target.result si necesitas la representación en base64 del archivo PDF
+        };
+        reader.readAsDataURL(newFile);
+
+        const formData = new FormData();
+        formData.append('datasheet', newFile);
+        this.productForm.patchValue({ datasheet: formData.get('datasheet') });
       }
     }
-
   }
 
   ngOnInit(): void {
