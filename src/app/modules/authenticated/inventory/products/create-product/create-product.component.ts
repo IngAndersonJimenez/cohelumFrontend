@@ -16,7 +16,7 @@ export class CreateProductComponent implements OnInit{
   selectedPDFName: string | undefined;
   selectedImage: string | undefined;
   categories!: InventoryCategory[];
-  pdfBase64: string | null = null;
+  isLoading = false;
   constructor(private notificationService:NotificationService, private inventoryService: InventoryService, private formBuilder: FormBuilder, private loginService: LoginService) {}
 
   private buildForm() {
@@ -32,6 +32,7 @@ export class CreateProductComponent implements OnInit{
   }
 
   onSubmit() {
+    this.isLoading = true;
     if (this.productForm.valid) {
       const formData = new FormData();
       formData.append('name', this.productForm.get('name')?.value);
@@ -47,12 +48,14 @@ export class CreateProductComponent implements OnInit{
 
       this.inventoryService.createProduct(formData).subscribe(
           result => {
+            this.isLoading = false;
             this.productForm.reset();
             this.selectedImage = undefined;
             this.selectedPDFName = undefined;
             console.log('Producto creado correctamente', result);
           },
           error => {
+            this.isLoading = false;
             console.error('Error al crear el producto', error);
           }
       );
@@ -109,7 +112,6 @@ export class CreateProductComponent implements OnInit{
         this.selectedPDFName = newFile.name;
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          // Puedes usar e.target.result si necesitas la representación en base64 del archivo PDF
         };
         reader.readAsDataURL(newFile);
 
@@ -133,12 +135,17 @@ export class CreateProductComponent implements OnInit{
     );
   }
   validateEnter(event: KeyboardEvent, tipo: string) {
-    let pattern: RegExp = /[a-zA-Z]/;
+    let pattern: RegExp;
 
     if (tipo === 'numeros') {
       pattern = /[0-9]/;
+    } else {
+      // Permitir letras y espacios
+      pattern = /[a-zA-Z\s]/;
     }
+
     const inputChar = String.fromCharCode(event.charCode);
+
     if (!pattern.test(inputChar)) {
       event.preventDefault();
     }
