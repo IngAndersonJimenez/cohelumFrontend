@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { InventoryService } from "../../../../../services/inventory.service";
 import { LoginService } from "../../../../../services/login.service";
 import {NotificationService} from "../../../../../notifications/notification.service";
+import {InventoryCategory} from "../../../../../interface/products/inventoryCategory";
 
 @Component({
   selector: 'app-create-product',
@@ -14,7 +15,7 @@ export class CreateProductComponent implements OnInit{
   public productForm!: FormGroup;
   selectedPDFName: string | undefined;
   selectedImage: string | undefined;
-
+  categories!: InventoryCategory[];
   constructor(private notificationService:NotificationService, private inventoryService: InventoryService, private formBuilder: FormBuilder, private loginService: LoginService) {}
 
   private buildForm() {
@@ -22,7 +23,7 @@ export class CreateProductComponent implements OnInit{
       name: ['', Validators.required],
       price: [null, Validators.required],
       unitsAvailable: [null, Validators.required],
-      description: ['',Validators.required],
+      categoryId: [null,Validators.required],
       characteristic: [''],
       datasheet: ['', Validators.required],
       image: [null, Validators.required]
@@ -35,7 +36,7 @@ export class CreateProductComponent implements OnInit{
       formData.append('name', this.productForm.get('name')?.value);
       formData.append('price', this.productForm.get('price')?.value);
       formData.append('unitsAvailable', this.productForm.get('unitsAvailable')?.value);
-      formData.append('description', this.productForm.get('description')?.value);
+      formData.append('categoryId', this.productForm.get('categoryId')?.value);
       formData.append('characteristic', this.productForm.get('characteristic')?.value);
       formData.append('datasheet', this.productForm.get('datasheet')?.value);
       const isImageAttached = this.productForm.get('image')?.value !== null;
@@ -92,6 +93,18 @@ export class CreateProductComponent implements OnInit{
 
   ngOnInit(): void {
     this.buildForm()
+    this.inventoryService.getCategory().subscribe(
+        (response: any) => {
+          this.categories = response.responseDTO;
+          console.log(this.categories); // Para verificar el contenido en la consola.
+        },
+        error => {
+          console.error('Error al obtener las categorías', error);
+        }
+    );
+
+
   }
+
 
 }

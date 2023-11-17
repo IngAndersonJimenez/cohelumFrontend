@@ -3,17 +3,27 @@
 <div class="title-button">
   <h1>Categorías</h1>
   <div class="demo-button-container">
-    <button mat-raised-button color="primary">AGREGAR</button>
+    <button mat-raised-button color="primary" (click)="addCategory()">AGREGAR</button>
   </div>
 </div>
 
 <div class="card">
   <div class="card-head">Lista de categorías</div>
   <div class="card-body">
-    <mat-form-field>
+    <mat-form-field *ngIf="!addingCategory">
       <mat-label>Filtro</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Filtro por descripción o estado" #input autocomplete="off">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtro por descripción" #input autocomplete="off">
     </mat-form-field>
+
+    <div *ngIf="addingCategory">
+      <mat-form-field>
+        <mat-label>Nueva Categoría</mat-label>
+        <input matInput [(ngModel)]="newCategory.description" placeholder="Ingresa una nueva descripción" autocomplete="off">
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="buttons-actions" (click)="saveCategory()">Guardar</button>
+      <button mat-raised-button color="warn" class="buttons-actions" (click)="cancelAdd()">Cancelar</button>
+    </div>
+
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="idCategory">
@@ -22,19 +32,37 @@
         </ng-container>
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
-          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="!element.editing; else editMode">
+              {{element.description}}
+            </ng-container>
+            <ng-template #editMode>
+              <input matInput [(ngModel)]="element.description" placeholder="Editar descripción" autocomplete="off">
+            </ng-template>
+          </td>
         </ng-container>
         <ng-container matColumnDef="active">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
           <td mat-cell *matCellDef="let element">
-            {{element.active ? 'Activo' : 'Inactivo'}} </td>
+            {{element.active ? 'Activo' : 'Inactivo'}}
+          </td>
         </ng-container>
         <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef>Editar</th>
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let element">
-            <a class="icon-edit" >
-              <mat-icon>edit</mat-icon>
-            </a>
+            <ng-container *ngIf="!element.editing; else editActions">
+              <a class="icon-edit" (click)="editCategory(element)">
+                <mat-icon>edit</mat-icon>
+              </a>
+            </ng-container>
+            <ng-template #editActions>
+              <button mat-icon-button color="primary" (click)="saveEditedCategory(element)">
+                <mat-icon>done</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="cancelEdit(element)">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </ng-template>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

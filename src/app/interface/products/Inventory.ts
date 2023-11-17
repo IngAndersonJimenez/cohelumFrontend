@@ -2,7 +2,7 @@ export interface Inventory{
     name: string;
     price: number;
     unitsAvailable: number;
-    description:string;
+    categoryId:number;
     characteristic: string;
     datasheet: string;
     image: File;

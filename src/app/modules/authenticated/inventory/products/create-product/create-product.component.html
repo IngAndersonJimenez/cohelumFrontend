@@ -45,12 +45,14 @@
                         </mat-form-field>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="form-input">
-                            <mat-label>Descripción del producto</mat-label>
-                            <input matInput formControlName="description" required>
-                            <div class="icon-container">
-                                <i *ngIf="productForm.controls['description'].valid" class="far fa-circle-check icon-check"></i>
-                            </div>
+                        <mat-form-field  class="form-input">
+                            <mat-label>Categoría</mat-label>
+                            <mat-select formControlName="categoryId" required>
+                                <mat-option *ngFor="let category of categories" [value]="category.idCategory">
+                                    {{ category.description }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="productForm.get('categoryId')?.hasError('required')">Selecciona una categoría</mat-error>
                         </mat-form-field>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1" [rowspan]="1">

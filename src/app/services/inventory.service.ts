@@ -66,6 +66,54 @@ export class InventoryService {
             });
         }
 
-        return this.http.get<InventoryCategory[]>(environment.apiUrl + 'api/v1/inventoryCategory/getAll', { headers });
+        return this.http.get<InventoryCategory[]>(environment.apiUrl + 'api/v1/inventoryCategory', { headers });
     }
+
+    createCategory(inventoryCategory:InventoryCategory):Observable<any>{
+        const headers = new HttpHeaders({
+            'Authorization': `${this.getToken()}`,
+        });
+        return this.http.post<InventoryCategory>(environment.apiUrl + 'api/v1/inventoryCategory/create',inventoryCategory,{ headers }).pipe(
+            catchError(error => {
+                console.error('Error en la solicitud:', error);
+                this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
+                throw error;
+            }),
+            map(result => {
+                console.log(result);
+                if (result != null) {
+                    console.log("Llego");
+                    this.notificationService.showSuccess("Registro exitoso", "Bienvenido");
+                } else {
+                    this.notificationService.showError("Registro fallido", "Vuelve a intentar");
+                }
+                return result;
+            })
+        );
+    }
+    updateCategory(inventoryCategory: InventoryCategory): Observable<any> {
+        const headers = new HttpHeaders({
+            'Authorization': `${this.getToken()}`,
+        });
+
+        const url = `${environment.apiUrl}api/v1/inventoryCategory/update?idCategory=${inventoryCategory.idCategory}`;
+
+        return this.http.put(url, {}, { headers }).pipe(
+            catchError(error => {
+                console.error('Error en la solicitud:', error);
+                this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
+                throw error;
+            }),
+            map(result => {
+                console.log(result);
+                if (result != null) {
+                    this.notificationService.showSuccess("Registro exitoso", "Bienvenido");
+                } else {
+                    this.notificationService.showError("Registro fallido", "Vuelve a intentar");
+                }
+                return result;
+            })
+        );
+    }
+
 }

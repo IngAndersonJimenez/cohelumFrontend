@@ -23,34 +23,69 @@
     </form>
     <hr />
     <h3>Resultados de la consulta</h3>
-    <ng-container *ngIf="resultConsult">
-        <mat-card>
-            <mat-card-content>
-                <h4>Nombre del producto: {{ resultConsult.name }}</h4>
-                <h4>Precio: {{ resultConsult.price }}</h4>
-                <h4>Unidades disponibles: {{ resultConsult.unitsAvailable }}</h4>
-                <h4>Descripción: {{ resultConsult.description }}</h4>
-                <h4>Característica: {{ resultConsult.characteristic }}</h4>
-                <h4>Ficha técnica: {{ resultConsult.datasheet }}</h4>
-                <h4>Imagen: {{ resultConsult.image }}</h4>
-            </mat-card-content>
-        </mat-card>
-    </ng-container>
-    <ng-container *ngIf="!resultConsult && products.length === 0">
-        <p>No hay resultados para mostrar.</p>
-    </ng-container>
-    <ng-container *ngIf="products.length > 0">
-        <h3>Productos encontrados</h3>
-        <ng-container *ngFor="let product of products">
-            <mat-card>
-                <mat-card-content>{{ product.name }}</mat-card-content>
-                <!-- Puedes agregar más campos aquí -->
-            </mat-card>
-        </ng-container>
-    </ng-container>
-</div>
+    <!-- Nombre del producto -->
+    <mat-form-field class="form-input">
+        <mat-label>Nombre del producto</mat-label>
+        <input matInput autocomplete="off" formControlName="name" required readonly>
+        <!-- Resto del código -->
+    </mat-form-field>
 
-<ng-template #searchOverlay>
+    <!-- Precio -->
+    <mat-form-field class="form-input">
+        <mat-label>Precio</mat-label>
+        <input matInput formControlName="price" required readonly>
+        <!-- Resto del código -->
+    </mat-form-field>
+
+    <!-- Unidades disponibles -->
+    <mat-form-field class="form-input">
+        <mat-label>Unidades disponibles</mat-label>
+        <input matInput formControlName="unitsAvailable" required readonly>
+        <!-- Resto del código -->
+    </mat-form-field>
+
+    <!-- Categoría -->
+    <mat-form-field class="form-input">
+        <mat-label>Categoría</mat-label>
+        <mat-select formControlName="categoryId" required readonly>
+<!--            <mat-option *ngFor="let category of categories" [value]="category.idCategory">
+                {{ category.description }}
+            </mat-option>-->
+        </mat-select>
+     <!--   <mat-error *ngIf="productForm.get('categoryId')?.hasError('required')">Selecciona una categoría</mat-error>-->
+    </mat-form-field>
+
+    <!-- Característica -->
+    <mat-form-field class="form-input">
+        <mat-label>Característica</mat-label>
+        <input matInput formControlName="characteristic" required readonly>
+        <!-- Resto del código -->
+    </mat-form-field>
+
+    <!-- Ficha técnica -->
+    <mat-form-field class="form-input">
+        <mat-label>Ficha técnica</mat-label>
+        <input matInput formControlName="datasheet" required readonly>
+        <!-- Resto del código -->
+    </mat-form-field>
+
+    <!-- Imagen del producto -->
+    <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
+        <input class="file" type="file" #imageFileInput
+               formControlName="image" required readonly style="display: none;">
+        <div class="icon-container">
+            <i *ngIf="consultaForm.controls['image'].valid" class="far fa-circle-check icon-check"></i>
+        </div>
+        <button mat-raised-button color="primary" (click)="imageFileInput.click()" [disabled]="consultaForm.controls['image'].valid">Imagen del producto</button>
+    </mat-grid-tile>
+
+    <!-- Botón Guardar -->
+    <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
+        <button mat-raised-button color="primary" type="submit">Guardar</button>
+    </mat-grid-tile>
+
+
+    <ng-template #searchOverlay>
     <div class="overlay overlay-search overlay-fall" cdkMenu>
         <input type="search" class="search" name="search" placeholder="Search...">
         <button class="search-btn">
