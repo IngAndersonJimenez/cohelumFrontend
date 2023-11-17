@@ -8,9 +8,10 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class ConsultProductComponent {
 
+  nombre: string = 'John Doe';
+  email: string = 'john@example.com';
   products: any[] = [];
   consultaForm: FormGroup;
-  resultConsult: any; // Aquí almacenarás la información consultada
   canShowSearchAsOverlay = false;
   constructor(private fb: FormBuilder) {
     this.consultaForm = this.fb.group({
@@ -24,16 +25,7 @@ export class ConsultProductComponent {
     });
   }
 
-  onSubmit() {
-    // Simulando una consulta a un servicio o API
-    // En la práctica, puedes llamar a un servicio para obtener los datos reales
-    const formData = this.consultaForm.value;
-    // Aquí podrías llamar a un servicio que devuelva la información basada en la consulta
-    this.resultConsult = {
-      nombre: formData.nombre,
-      // Otros campos...
-    };
-  }
+
 
 
 }

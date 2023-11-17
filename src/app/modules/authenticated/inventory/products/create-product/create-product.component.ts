@@ -96,15 +96,22 @@ export class CreateProductComponent implements OnInit{
     this.inventoryService.getCategory().subscribe(
         (response: any) => {
           this.categories = response.responseDTO;
-          console.log(this.categories); // Para verificar el contenido en la consola.
+          console.log(this.categories);
         },
         error => {
           console.error('Error al obtener las categorías', error);
         }
     );
-
-
   }
+  validateEnter(event: KeyboardEvent, tipo: string) {
+    let pattern: RegExp = /[a-zA-Z]/;
 
-
+    if (tipo === 'numeros') {
+      pattern = /[0-9]/;
+    }
+    const inputChar = String.fromCharCode(event.charCode);
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
 }

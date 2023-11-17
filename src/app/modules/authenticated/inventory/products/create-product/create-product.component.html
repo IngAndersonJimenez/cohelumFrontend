@@ -2,12 +2,12 @@
 <div class="container-product">
     <mat-card>
         <mat-card-content>
-            <form [formGroup]="productForm" (ngSubmit)="onSubmit()" >
+            <form [formGroup]="productForm" >
                 <mat-grid-list cols="4" rowHeight="70px">
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-form-field class="form-input">
                             <mat-label>Nombre del producto</mat-label>
-                            <input matInput autocomplete="off" formControlName="name" required>
+                            <input matInput autocomplete="off" formControlName="name" (keypress)="validateEnter($event, 'letras')" required>
                             <div class="icon-container">
                                 <i *ngIf="productForm.controls['name'].valid" class="far fa-circle-check icon-check"></i>
                             </div>
@@ -29,7 +29,7 @@
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-form-field class="form-input">
                             <mat-label>Precio</mat-label>
-                            <input matInput formControlName="price" required>
+                            <input matInput formControlName="price" (keypress)="validateEnter($event, 'numeros')" required>
                             <div class="icon-container">
                                 <i *ngIf="productForm.controls['price'].valid" class="far fa-circle-check icon-check"></i>
                             </div>
@@ -38,7 +38,7 @@
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-form-field class="form-input">
                             <mat-label>Unidades disponibles</mat-label>
-                            <input matInput formControlName="unitsAvailable" required>
+                            <input matInput formControlName="unitsAvailable" (keypress)="validateEnter($event, 'numeros')" required>
                             <div class="icon-container">
                                 <i *ngIf="productForm.controls['unitsAvailable'].valid" class="far fa-circle-check icon-check"></i>
                             </div>
@@ -58,7 +58,7 @@
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-form-field class="form-input">
                             <mat-label>Caracteristica</mat-label>
-                            <input matInput formControlName="characteristic" required>
+                            <input matInput formControlName="characteristic" (keypress)="validateEnter($event, 'letras')" required>
                             <div class="icon-container">
                                 <i *ngIf="productForm.controls['characteristic'].valid" class="far fa-circle-check icon-check"></i>
                             </div>
@@ -67,7 +67,7 @@
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-form-field class="form-input">
                             <mat-label>Ficha técnica</mat-label>
-                            <input matInput formControlName="datasheet" required>
+                            <input matInput formControlName="datasheet"  (keypress)="validateEnter($event, 'letras')" required>
                             <div class="icon-container">
                                 <i *ngIf="productForm.controls['datasheet'].valid" class="far fa-circle-check icon-check"></i>
                             </div>
@@ -90,7 +90,7 @@
                         <button mat-raised-button color="primary" (click)="imageFileInput.click()">Imagen del producto</button>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
-                        <button mat-raised-button color="primary" type="submit">Guardar</button>
+                        <button mat-raised-button color="primary" (click)="onSubmit()">Guardar</button>
                     </mat-grid-tile>
                 </mat-grid-list>
             </form>
