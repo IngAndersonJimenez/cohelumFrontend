@@ -150,4 +150,6 @@ export class CreateProductComponent implements OnInit{
       event.preventDefault();
     }
   }
+
+
 }

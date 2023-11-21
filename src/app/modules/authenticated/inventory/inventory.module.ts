@@ -17,6 +17,8 @@ import {MatSelectModule} from "@angular/material/select";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ConsultProductComponent } from './products/consult-product/consult-product.component';
 import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {PdfViewerModule} from "ng2-pdf-viewer";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 
@@ -49,6 +51,8 @@ import {ProgressSpinnerModule} from "primeng/progressspinner";
         FormsModule,
         ReactiveFormsModule,
         ProgressSpinnerModule,
+        PdfViewerModule,
+        MatCheckboxModule,
     ]
 })
 export class InventoryModule { }

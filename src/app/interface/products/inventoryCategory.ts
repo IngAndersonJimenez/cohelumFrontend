@@ -3,4 +3,5 @@ export interface InventoryCategory {
     description: string;
     active: boolean;
     editing?: boolean;
+    originalActive?: boolean;
 }

@@ -1,69 +1,70 @@
+<!-- consult-product.component.html -->
 
 <h1>Consultar producto</h1>
+
 <div class="card-head">
     <mat-card>
-        <form [formGroup]="consultaForm" readonly>
+        <form [formGroup]="consultaForm">
             <div class="search-container">
-                <div *ngIf="!canShowSearchAsOverlay" class="normal-search">
-                    <input type="search" name="search" id="search" class="search" placeholder="Consultar producto" autocomplete="off">
+                <div class="normal-search">
+                    <input type="search" name="search" id="search" class="search" placeholder="Consultar producto" autocomplete="off" formControlName="name">
                     <i class="fa fa-search search-icon"></i>
-                    <button mat-raised-button color="primary" class="buscar" >BUSCAR</button>
-                </div>
-                <div *ngIf="canShowSearchAsOverlay">
-                    <button class="search-menu-btn ripple" >
-                        <i class="fa fa-search search-icon"></i>
-                    </button>
+                    <button mat-raised-button color="primary" class="buscar" (click)="searchProduct()">BUSCAR</button>
+
                 </div>
             </div>
         </form>
     </mat-card>
 </div>
+
 <mat-card>
     <mat-grid-list cols="4">
-        <mat-card-content>
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card-content *ngIf="productData" >
+            <mat-grid-tile [colspan]="1" [rowspan]="1" >
                 <mat-form-field class="form-input">
                     <mat-label>Nombre del producto</mat-label>
-                    <input matInput [value]="nombre" disabled>
+                    <input matInput [value]="productData.responseDTO.getInventoryDTO.name" disabled >
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-form-field class="form-input">
                     <mat-label>Precio</mat-label>
-                    <input matInput [value]="email" disabled>
+                    <input matInput [value]="productData.responseDTO.getInventoryDTO.price.toString()" disabled>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-form-field class="form-input">
                     <mat-label>Unidades disponibles</mat-label>
-                    <input matInput [value]="email" disabled>
+                    <input matInput [value]="productData.responseDTO.getInventoryDTO.unitsAvailable.toString()" disabled>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-form-field class="form-input">
                     <mat-label>Categoría</mat-label>
-                    <input matInput [value]="email" disabled>
+                    <input matInput [value]="productData.responseDTO.getInventoryCategoryDTO.description" disabled>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="2" [rowspan]="1">
                 <mat-form-field class="form-email">
                     <mat-label>Caracteristica</mat-label>
-                    <input matInput [value]="email" disabled>
+                    <input matInput [value]="productData.responseDTO.getInventoryDetailsDTO.characteristic" disabled>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="2" [rowspan]="1" style="background-color: #f0f0f0; color: #333;">
-                <mat-form-field class="form-input">
+                <div>
                     <mat-label>Ficha técnica</mat-label>
-                    <input matInput [value]="email" disabled>
-                </mat-form-field>
+                    <div *ngIf="pdfSrc">
+                        <!-- Descargar la ficha técnica -->
+                        <a [href]="pdfSrc" download="ficha_tecnica.pdf">Descargar Ficha Técnica</a>
+                    </div>
+                </div>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="2" [rowspan]="1" style="background-color: #f0f0f0; color: #333;">
-                <mat-form-field class="form-input">
+                <div>
                     <mat-label>Imagen del producto</mat-label>
-                    <input matInput [value]="email" disabled>
-                </mat-form-field>
+                    <img [src]="productData.responseDTO.getInventoryImageDTO.image" alt="Imagen del Producto">
+                </div>
             </mat-grid-tile>
         </mat-card-content>
-
     </mat-grid-list>
 </mat-card>

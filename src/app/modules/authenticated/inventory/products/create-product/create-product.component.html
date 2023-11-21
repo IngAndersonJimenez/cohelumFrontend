@@ -81,8 +81,9 @@
                         <button mat-raised-button color="primary" (click)="imageFileInput.click()">Imagen del producto</button>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
-                        <button mat-raised-button color="primary" (click)="onSubmit()">Guardar</button>
-                        <p-progressSpinner *ngIf="isLoading"></p-progressSpinner>
+                        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!productForm.valid || isLoading">Guardar</button>
+                        <p-progressSpinner *ngIf="isLoading" strokeWidth="4" styleClass="custom-spinner"></p-progressSpinner>
+                        <span *ngIf="isLoading">Guardando...</span>
                     </mat-grid-tile>
 
                 </mat-grid-list>
