@@ -14,6 +14,7 @@ export class ConsultProductComponent implements OnInit {
   canShowSearchAsOverlay = false;
   productData: Product | undefined;
   pdfSrc: string = '';
+  imageR: String = '';
 
   constructor(private fb: FormBuilder, private inventoryService: InventoryService) {
     this.consultaForm = this.fb.group({
@@ -45,6 +46,10 @@ export class ConsultProductComponent implements OnInit {
             if (respuesta && respuesta.responseDTO) {
               // Asignar otros datos según sea necesario
               this.productData = respuesta;
+
+              if (respuesta.responseDTO.getInventoryImageDTO.image){
+                this.imageR = `data:image/jpg;base64, ${respuesta.responseDTO.getInventoryImageDTO.image}`;
+              }
 
               // Verificar que hay una ficha técnica y tiene datos antes de asignar a pdfSrc
               if (respuesta.responseDTO.getInventoryDetailsDTO.datasheet) {

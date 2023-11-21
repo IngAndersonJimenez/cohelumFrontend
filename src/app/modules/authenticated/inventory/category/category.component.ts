@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTable, MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatPaginator, MatPaginatorIntl} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {InventoryService} from "../../../../services/inventory.service";
 import {InventoryCategory} from "../../../../interface/products/inventoryCategory";
@@ -18,6 +18,7 @@ export class CategoryComponent implements OnInit{
     dataSource = new MatTableDataSource<InventoryCategory>(this.listCategory);
     @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
     @ViewChild(MatSort, { static: true }) sort!: MatSort;
+
   constructor(private inventoryService:InventoryService) {}
 
   applyFilter(event: Event) {
@@ -93,5 +94,6 @@ export class CategoryComponent implements OnInit{
     cancelEdit(category: InventoryCategory) {
         category.editing = false;
     }
+
 
 }

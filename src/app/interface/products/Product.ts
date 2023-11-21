@@ -15,7 +15,7 @@ export interface Product{
             description: string
         }
         getInventoryImageDTO:{
-            image?: File | null;
+            image?: string  | null;
         }
     }
 }
