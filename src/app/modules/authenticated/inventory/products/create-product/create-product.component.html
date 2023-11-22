@@ -64,15 +64,6 @@
                             </div>
                         </mat-form-field>
                     </mat-grid-tile>
-<!--                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="form-input">
-                            <mat-label>Ficha técnica</mat-label>
-                            <input matInput formControlName="datasheet"  (keypress)="validateEnter($event, 'letras')" required>
-                            <div class="icon-container">
-                                <i *ngIf="productForm.controls['datasheet'].valid" class="far fa-circle-check icon-check"></i>
-                            </div>
-                        </mat-form-field>
-                    </mat-grid-tile>-->
                     <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
                         <input class="file" type="file" (change)="onFileSelected($event, 'pdf')" #pdfFileInput formControlName="datasheet" required style="display: none;">
                         <div class="icon-container">
@@ -90,8 +81,11 @@
                         <button mat-raised-button color="primary" (click)="imageFileInput.click()">Imagen del producto</button>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
-                        <button mat-raised-button color="primary" (click)="onSubmit()">Guardar</button>
+                        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!productForm.valid || isLoading">Guardar</button>
+                        <p-progressSpinner *ngIf="isLoading" strokeWidth="4" styleClass="custom-spinner"></p-progressSpinner>
+                        <span *ngIf="isLoading">Guardando...</span>
                     </mat-grid-tile>
+
                 </mat-grid-list>
             </form>
         </mat-card-content>

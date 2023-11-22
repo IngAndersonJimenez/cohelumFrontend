@@ -16,6 +16,9 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatSelectModule} from "@angular/material/select";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ConsultProductComponent } from './products/consult-product/consult-product.component';
+import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {PdfViewerModule} from "ng2-pdf-viewer";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 
@@ -47,6 +50,9 @@ import { ConsultProductComponent } from './products/consult-product/consult-prod
         MatTableModule,
         FormsModule,
         ReactiveFormsModule,
+        ProgressSpinnerModule,
+        PdfViewerModule,
+        MatCheckboxModule,
     ]
 })
 export class InventoryModule { }

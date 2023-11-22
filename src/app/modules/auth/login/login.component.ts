@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/notifications/notification.service';
@@ -7,12 +7,10 @@ import { LoginService } from 'src/app/services/login.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.sass']
+  styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
-
-  //login: RequestLogin = {emailUser:'prueba@gmail.com', password :'1010'}
   public loginForm!: FormGroup;
 
   constructor(public loginService: LoginService, private formBuilder: FormBuilder, private router: Router,
@@ -31,15 +29,16 @@ export class LoginComponent {
   }
 
   login() {
-    this.router.navigate(['/cohelum/authenticated/content-user/dashboard']);
     if (this.loginForm.valid) {
-      console.log(this.loginForm)
-      this.loginService.login(this.loginForm.value).subscribe(data => console.log(data),
-        err => this.notificationService.showError("Login fallido", "Bienvenido"))
+      console.log(this.loginForm.value);
+      this.loginService.login(this.loginForm.value).subscribe(
+          data => console.log(data),
+          err => this.notificationService.showError('Error en las credenciales', 'Login Faliido')
+      );
 
+
+      this.router.navigate(['/cohelum/authenticated/content-user/dashboard']);
     }
-
   }
-
 
 }

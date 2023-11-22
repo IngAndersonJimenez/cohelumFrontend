@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTable, MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatPaginator, MatPaginatorIntl} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {InventoryService} from "../../../../services/inventory.service";
 import {InventoryCategory} from "../../../../interface/products/inventoryCategory";
@@ -18,6 +18,7 @@ export class CategoryComponent implements OnInit{
     dataSource = new MatTableDataSource<InventoryCategory>(this.listCategory);
     @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
     @ViewChild(MatSort, { static: true }) sort!: MatSort;
+
   constructor(private inventoryService:InventoryService) {}
 
   applyFilter(event: Event) {
@@ -68,27 +69,31 @@ export class CategoryComponent implements OnInit{
         );
     }
 
+
+
     editCategory(category: InventoryCategory) {
-        // Cambiar al modo de edición para la categoría seleccionada
         category.editing = true;
+        category.originalActive = true;
     }
 
     saveEditedCategory(category: InventoryCategory) {
-        // Aquí puedes agregar la lógica para guardar la categoría editada
-        // Por ejemplo, llamar al servicio para actualizarla en la base de datos
-        // Luego, recargar los datos y salir del modo de edición
+        console.log('Datos antes de la actualización:', category);
+
         this.inventoryService.updateCategory(category).subscribe(
-            (data: any) => {
-                console.log(data);
-                // Recargar los datos y salir del modo de edición
+            () => {
+                console.log('La categoría se actualizó correctamente.');
                 this.loadData();
+                category.editing = false;
+            },
+            error => {
+                console.error('Error al actualizar la categoría:', error);
             }
         );
     }
 
     cancelEdit(category: InventoryCategory) {
-        // Salir del modo de edición y cancelar los cambios
         category.editing = false;
     }
+
 
 }
