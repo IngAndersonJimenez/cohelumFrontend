@@ -66,7 +66,7 @@ export class InventoryService {
             });
         }
 
-        return this.http.get<InventoryCategory[]>(environment.apiUrl + 'api/v1/inventoryCategory', { headers });
+        return this.http.get<InventoryCategory[]>(environment.apiUrl + 'api/v1/inventoryCategory/getAll', { headers });
     }
 
     createCategory(inventoryCategory:InventoryCategory):Observable<any>{
