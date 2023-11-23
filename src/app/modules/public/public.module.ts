@@ -12,6 +12,8 @@ import { TeamPublicComponent } from './team-public/team-public.component';
 import { CarouselModule } from 'primeng/carousel';
 import { ShowcasePublicComponent } from './showcase-public/showcase-public.component';
 import { GalleriaModule } from 'primeng/galleria';
+import { MaterialModule } from '../material/material.module';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -22,13 +24,15 @@ import { GalleriaModule } from 'primeng/galleria';
     AlliesPublicComponent,
     ProductPublicComponent,
     TeamPublicComponent,
-    ShowcasePublicComponent
+    ShowcasePublicComponent,
+    ContactComponent
   ],
   imports: [
     CommonModule,
     PublicRoutingModule,
     CarouselModule,
-    GalleriaModule
+    GalleriaModule,
+    MaterialModule
   ]
 })
 export class PublicModule { }

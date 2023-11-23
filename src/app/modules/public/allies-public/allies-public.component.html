@@ -1,4 +1,4 @@
-<section class="allies-content">
+<section class="allies-content" #aliadoSeccion id="aliadoSeccion">
     <div class="container">
         <div class="row">
             <div class="allies-subtitle"><b>Our allies</b></div>
@@ -10,7 +10,7 @@
 </section>
 
 
-<section id="ourAlliesSection" class="ourAllies">
+<section #ourAlliesSection id="ourAlliesSection" class="ourAllies">
     <div class="section_body">
         <div class="container">
             <div class="row">
@@ -20,7 +20,7 @@
                         <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
                             <div class="mb-3">
                                 <figure class="snipAllies">
-                                    <img [src]="aliado.getUrlLogo()" alt="DECORALVAREZ logo" />
+                                    <img [src]="aliado.getUrlLogo()" alt="DECORALVAREZ logo" class="imagen-Aliado"/>
                                     <i class="fa fa-solid fa-globe"></i>
                                     <figcaption>
                                         <h3>Ver<span> más</span></h3>

@@ -24,6 +24,8 @@
     "ng2-pdf-viewer": "^10.0.0",
     "ngx-bootstrap": "^11.0.2",
     "ngx-lottie": "^10.0.0",
+    "ngx-page-scroll": "^11.0.0",
+    "ngx-page-scroll-core": "^7.0.0",
     "ngx-toastr": "^17.0.2",
     "pdfjs-dist": "^4.0.189",
     "primeng": "^16.4.2",
