@@ -40,7 +40,7 @@ export class LoginService {
 
     getTokenPublic(): Observable<any> {
         console.log("Creando public token");
-        let requestLogin: RequestLogin = { emailUser: 'prueba@gmail.com', password: '1010' }
+        let requestLogin: RequestLogin = { emailUser: 'correoprueba@gmail.com', password: '1234' }
         return this.http.post<ResponseLogin>(environment.apiUrl + 'login', requestLogin).pipe(
             map(result => {
                 console.log("result token public");
@@ -54,21 +54,13 @@ export class LoginService {
     }
 
     getTokenPublicS(): Observable<ResponseLogin> {
-        console.log("Creando public token");
-        let requestLogin: RequestLogin = { emailUser: 'prueba@gmail.com', password: '1010' }
+        let requestLogin: RequestLogin = { emailUser: 'correoprueba@gmail.com', password: '1234' }
         return this.http.post<ResponseLogin>(environment.apiUrl + 'login', requestLogin).pipe(
             map(result => {
-                console.log("result token public");
-                console.log(result);
-
-                console.log("Llego public token");
                 const responseLogin: ResponseLogin = { token: result.token };
                 return responseLogin;
-
-
             })
         );
     }
-
 
 }
