@@ -5,13 +5,90 @@
         </div>
         <div class="row">
             <div class="contact-title">Contáctanos</div>
+            <div class="form-group">
+                <form [formGroup]="form"  class="form-container">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="nameContact">Nombre de Contacto:</label>
+                            <input type="text" id="nameContact" formControlName="nameContact" class="form-control">
+                            <div *ngIf="form.get('nameContact')?.hasError('required') && form.get('nameContact')?.touched">
+                                El nombre de contacto es obligatorio.
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="email">Correo Electrónico:</label>
+                            <input type="email" id="email" formControlName="email" class="form-control">
+                            <div *ngIf="form.get('email')?.hasError('required') && form.get('email')?.touched">
+                                El correo electrónico es obligatorio.
+                            </div>
+                            <div *ngIf="form.get('email')?.hasError('required') && form.get('email')?.touched">
+                                Ingresa un correo electrónico válido.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6 select_message">
+                            <label for="reason">Motivo:</label>
+                            <select id="reason" formControlName="reason" class="form-control">
+                                <option value="" disabled selected>Selecciona un motivo</option>
+                                <option *ngFor="let opcion of optionsReason" [value]="opcion">{{ opcion }}</option>
+                            </select>
+                            <div *ngIf="form.get('reason')?.hasError('required') && form.get('reason')?.touched">
+                                El motivo es obligatorio.
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="attach">Adjunto:</label>
+                            <input type="file" id="attach" (change)="onFileSelected($event,'pdf')" formControlName="attach" class="form-control" accept=".pdf">
+                            <div *ngIf="form.get('attach')?.hasError('invalidExtension') && form.get('attach')?.touched">
+                                Tipo de archivo no permitido. Selecciona un archivo PDF.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="department">Departamento:</label>
+                            <input type="text" id="department" formControlName="department" class="form-control">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="city">Ciudad:</label>
+                            <input type="text" id="city" formControlName="city" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="cellphone">Teléfono:</label>
+                            <input type="tel" id="cellphone" formControlName="cellphone" class="form-control">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="comment">Mensaje:</label>
+                            <textarea id="comment" formControlName="comment" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-12 text-center">
+                            <button type="submit" [disabled]="!form.valid"  (click)="onSubmit()" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </div>
+
+                </form>
+                <div></div>
+            </div>
+            <div class="Text-Container"></div>
         </div>
     </div>
 </section>
 
 <section>
     <div class="section_body">
-        <div class="container">
-        </div>
+        <div class="container"></div>
     </div>
 </section>

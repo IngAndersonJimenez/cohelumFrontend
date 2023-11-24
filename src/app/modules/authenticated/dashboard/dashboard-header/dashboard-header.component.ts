@@ -52,7 +52,7 @@ export class DashboardHeaderComponent implements OnInit {
       'Profile': '/profile',
       'Settings': '/settings',
       'Lock screen': '/lock-screen',
-      'Logout': '/home'
+      'Logout': '/cohelum/login'
     };
 
     const targetRoute = routeMapping[route];

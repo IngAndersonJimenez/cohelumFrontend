@@ -14,8 +14,8 @@ export interface Product{
         getInventoryCategoryDTO:{
             description: string
         }
-        getInventoryImageDTO:{
-            image?: string  | null;
+        getInventoryImageDTO: {
+            image?: string | null;
         }
     }
 }

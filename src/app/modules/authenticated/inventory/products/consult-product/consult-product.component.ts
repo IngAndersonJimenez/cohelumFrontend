@@ -14,7 +14,7 @@ export class ConsultProductComponent implements OnInit {
   canShowSearchAsOverlay = false;
   productData: Product | undefined;
   pdfSrc: string = '';
-  imageR: String = '';
+  imageR:string='';
 
   constructor(private fb: FormBuilder, private inventoryService: InventoryService) {
     this.consultaForm = this.fb.group({
@@ -35,37 +35,45 @@ export class ConsultProductComponent implements OnInit {
     });
   }
 
-  // Método para realizar la búsqueda al hacer clic en el botón "Buscar"
   searchProduct(): void {
     const nombreProducto = this.consultaForm.get('name')?.value;
 
     if (nombreProducto && nombreProducto.trim() !== '') {
-      // Realizar la búsqueda solo si hay un nombre de producto
       this.inventoryService.getInventoryByName(nombreProducto).subscribe(
-          (respuesta: Product) => {
-            if (respuesta && respuesta.responseDTO) {
-              // Asignar otros datos según sea necesario
-              this.productData = respuesta;
+          (data: Product) => {
+            this.productData = data;
 
-              if (respuesta.responseDTO.getInventoryImageDTO.image){
-                this.imageR = `data:image/jpg;base64, ${respuesta.responseDTO.getInventoryImageDTO.image}`;
-              }
+            // Verifica que getInventoryImageDTO esté definido
+            const imageListOrObject = this.productData?.responseDTO.getInventoryImageDTO;
 
-              // Verificar que hay una ficha técnica y tiene datos antes de asignar a pdfSrc
-              if (respuesta.responseDTO.getInventoryDetailsDTO.datasheet) {
-                const base64Data = respuesta.responseDTO.getInventoryDetailsDTO.datasheet;
-                this.pdfSrc = `data:application/pdf;base64, ${base64Data}`;
+            // Si es una lista, accede al primer elemento y verifica que la propiedad image esté definida
+            if (Array.isArray(imageListOrObject) && imageListOrObject.length > 0) {
+              const firstImage = imageListOrObject[0];
+              if (firstImage?.image) {
+                this.imageR = 'data:image/png;base64,' + firstImage.image;
               }
-            } else {
-              console.error('Respuesta inesperada del servidor:', respuesta);
-              // Manejar errores si es necesario
+            } else if (!Array.isArray(imageListOrObject) && imageListOrObject?.image) {
+              // Si no es una lista y la propiedad image está definida, úsala directamente
+              this.imageR = 'data:image/png;base64,' + imageListOrObject.image;
             }
+
+            // Verifica si hay una ficha técnica y asigna la URL al atributo pdfSrc
+            if (this.productData.responseDTO.getInventoryDetailsDTO.datasheet) {
+              const base64Data = this.productData.responseDTO.getInventoryDetailsDTO.datasheet;
+              this.pdfSrc = `data:application/pdf;base64, ${base64Data}`;
+            }
+
+          },
+          (error) => {
+            console.error('Error al buscar el producto', error);
+            // Puedes agregar un mensaje de error o manejo adecuado aquí
           }
       );
-    } else {
-      // Limpiar datos si el campo de búsqueda está vacío
-      this.productData = undefined;
-      this.pdfSrc = '';
     }
   }
+
+
+
+
+
 }

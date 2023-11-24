@@ -1,6 +1,7 @@
 .contact-content {
     padding-top: 6%;
     padding-bottom: 3%;
+
 }
 
 .contact-subtitle {
@@ -13,4 +14,52 @@
     text-align: center;
     font-size: 2vw;
     color: #0F2137;
+}
+.container {
+    margin-top: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.col-md-6 {
+    margin: 0;
+}
+
+.form-container {
+    margin: 3rem 34rem;
+    width:50%;
+    border-radius: 10px;
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .form-group {
+        width: calc(50% - 10px);
+        margin-bottom: 10px;
+    }
+
+    label {
+        margin-bottom: 5px;
+    }
+
+    input,
+    textarea {
+        margin-bottom: 10px;
+        width: calc(100% - 10px);
+        box-sizing: border-box;
+    }
+
+    button {
+        margin: 1rem 15rem;
+        width: auto;
+        cursor: pointer;
+    }
+}
+select{
+    width:96%
 }
