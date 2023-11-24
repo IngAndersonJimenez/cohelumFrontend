@@ -19,12 +19,10 @@
 
 <mat-card>
     <mat-grid-list cols="4">
-        <mat-card-content *ngIf="productData" >
-            <mat-grid-tile [colspan]="1" [rowspan]="1" >
-                <mat-form-field class="form-input">
-                    <mat-label>Nombre del producto</mat-label>
-                    <input matInput [value]="productData.responseDTO.getInventoryDTO.name" disabled >
-                </mat-form-field>
+        <mat-card-content *ngIf="productData">
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <label class="mat-label">Nombre del producto:</label>
+                {{ productData.responseDTO.getInventoryDTO.name }}
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-form-field class="form-input">
