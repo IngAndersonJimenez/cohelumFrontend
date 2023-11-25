@@ -31,5 +31,10 @@ export const navbarData:INavbarData[] = [
       }
     ]
   },
+  {
+    routerLink: 'Contact',
+    icon: 'fas fa-envelope',
+    label: 'Mensajes'
+  },
 
 ];

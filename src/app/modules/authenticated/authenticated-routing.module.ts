@@ -5,6 +5,7 @@ import { DashboardContentComponent } from './dashboard/dashboard-content/dashboa
 import { CategoryComponent } from './inventory/category/category.component';
 import {CreateProductComponent} from "./inventory/products/create-product/create-product.component";
 import {ConsultProductComponent} from "./inventory/products/consult-product/consult-product.component";
+import {ContactComponent} from "./contact/contact.component";
 
 
 const routes: Routes = [
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'Consult-product',
         component: ConsultProductComponent
+      },
+      {
+        path: 'Contact',
+        component: ContactComponent
       },
 
     ]

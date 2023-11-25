@@ -28,6 +28,7 @@
     "ngx-page-scroll-core": "^7.0.0",
     "ngx-toastr": "^17.0.2",
     "pdfjs-dist": "^4.0.189",
+    "primeicons": "^6.0.1",
     "primeng": "^16.4.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

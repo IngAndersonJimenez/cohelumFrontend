@@ -6,6 +6,7 @@ import {Contact} from "../interface/Contact";
 import {catchError, map, Observable, tap} from "rxjs";
 import {environment} from "../environments/environment";
 import {LoginService} from "./login.service";
+import {InventoryCategory} from "../interface/products/inventoryCategory";
 
 
 @Injectable({
@@ -39,6 +40,33 @@ export class ContactService {
     });
     const url = `${environment.apiUrl}api/v1/requestContact/create`;
     return this.http.post<Contact>(url,formData,{ headers })
+  }
+
+    getToken(): string {
+        let token: string = '';
+        this.loginService.userCurrent.subscribe(data => {
+
+            console.log("Token: ")
+            console.log(data)
+            token = data.token
+        })
+        return token;
+    }
+
+  getContact(token?: string):Observable<Contact[]>{
+      let headers = new HttpHeaders({})
+
+      if (token != null) {
+          headers = new HttpHeaders({
+              'Authorization': `${token}`
+          });
+      } else {
+          headers = new HttpHeaders({
+              'Authorization': `${this.getToken()}`
+          });
+      }
+
+      return this.http.get<Contact[]>(environment.apiUrl + 'api/v1/requestContact/list', { headers });
   }
 
 }

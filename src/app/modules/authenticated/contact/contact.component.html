@@ -1,0 +1,24 @@
+<div class="title-container">
+    <h1>Mensajes</h1>
+</div>
+<div class="card">
+    <div class="card-head">Lista de mensajes</div>
+    <div class="card-body">
+        <p-table [value]="contacts" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Correo</th>
+                    <th>Motivo</th>
+                    <th>Mensaje</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-contact>
+                <tr>
+                    <td>{{ contact.email }}</td>
+                    <td>{{ contact.reason }}</td>
+                    <td>{{ contact.comment }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
