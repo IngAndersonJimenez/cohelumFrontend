@@ -18,19 +18,19 @@ const routes: Routes = [
         component: DashboardContentComponent
       },
       {
-        path: 'Category',
+        path: 'category',
         component: CategoryComponent
       },
       {
-        path: 'Create-products',
+        path: 'create-products',
         component: CreateProductComponent
       },
       {
-        path: 'Consult-product',
+        path: 'consult-product',
         component: ConsultProductComponent
       },
       {
-        path: 'Contact',
+        path: 'contact',
         component: ContactComponent
       },
 

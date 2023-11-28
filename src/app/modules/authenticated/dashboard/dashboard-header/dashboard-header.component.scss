@@ -269,3 +269,155 @@
   background-size: 100%;
   transition: background 0s;
 }
+
+.head-menu-item-btn {
+  position: relative;
+
+  .menu-icon {
+
+  }
+
+  .new-message-indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+}
+
+/* Mensajes */
+
+.message-overlay-scrollable {
+  max-height: 300px; /* Ajusta la altura máxima según tus necesidades */
+  overflow-y: auto;
+  border: 1px solid #ccc; /* Añade un borde para un mejor aspecto */
+  border-radius: 8px; /* Redondea las esquinas */
+}
+
+.message-overlay-scrollable ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.message-overlay-scrollable li {
+  padding: 10px;
+  border-bottom: 1px solid #eee; /* Línea divisoria entre elementos */
+  transition: background-color 0.3s ease; /* Efecto de transición en el cambio de color de fondo */
+}
+
+.message-overlay-scrollable li:hover {
+  background-color: #f5f5f5; /* Color de fondo al pasar el ratón */
+}
+
+.notification-head-container,
+.notification-message-container {
+  background-color: #fff; /* Fondo blanco para encabezado y mensajes */
+}
+
+.notification-head {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.view-all-link {
+  float: right;
+  font-size: 14px;
+  color: #007bff; /* Color del enlace */
+  text-decoration: none;
+}
+
+.view-all-link a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.notification-desc {
+  margin: 5px 0;
+}
+
+/* Añade un indicador de desplazamiento personalizado */
+.message-overlay-scrollable::-webkit-scrollbar {
+  width: 10px;
+}
+
+.message-overlay-scrollable::-webkit-scrollbar-thumb {
+  background-color: #007bff; /* Color del indicador de desplazamiento */
+  border-radius: 5px; /* Redondea las esquinas del indicador */
+}
+
+.message-overlay-scrollable::-webkit-scrollbar-track {
+  background-color: #f5f5f5; /* Color de fondo del indicador de desplazamiento */
+}
+
+/* Notificaciones */
+
+.overlay-notification {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.overlay-notification ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.overlay-notification li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s ease;
+}
+
+.overlay-notification li:hover {
+  background-color: #f5f5f5;
+}
+
+.notification-head-container,
+.notification-message-container {
+  background-color: #fff;
+}
+
+.notification-head {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.view-all-link {
+  float: right;
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.view-all-link a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.notification-desc {
+  margin: 5px 0;
+}
+
+
+.overlay-notification::-webkit-scrollbar {
+  width: 10px;
+}
+
+.overlay-notification::-webkit-scrollbar-thumb {
+  background-color: #007bff;
+  border-radius: 5px;
+}
+
+.overlay-notification::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}

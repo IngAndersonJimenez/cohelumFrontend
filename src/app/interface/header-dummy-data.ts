@@ -33,3 +33,13 @@ export const userItems = [
     label: 'Logout'
   }
 ]
+
+export const message = [
+  {
+    icon: 'fa fa-bell',
+    label: 'Message',
+    message: 'Hola',
+    routerLink: 'Contact'
+  },
+
+]

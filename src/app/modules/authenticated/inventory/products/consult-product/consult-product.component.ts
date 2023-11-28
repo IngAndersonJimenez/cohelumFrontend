@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { InventoryService } from "../../../../../services/inventory.service";
 import { Product } from "../../../../../interface/products/Product";
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-consult-product',
@@ -13,10 +14,10 @@ export class ConsultProductComponent implements OnInit {
   consultaForm: FormGroup;
   canShowSearchAsOverlay = false;
   productData: Product | undefined;
-  pdfSrc: string = '';
+  pdfSrc: SafeResourceUrl = '';
   imageR:string='';
 
-  constructor(private fb: FormBuilder, private inventoryService: InventoryService) {
+  constructor(private fb: FormBuilder, private inventoryService: InventoryService,private sanitizer: DomSanitizer) {
     this.consultaForm = this.fb.group({
       name: [''],
       price: [''],
@@ -54,8 +55,7 @@ export class ConsultProductComponent implements OnInit {
             }
 
             if (this.productData.responseDTO.getInventoryDetailsDTO.datasheet) {
-              const base64Data = this.productData.responseDTO.getInventoryDetailsDTO.datasheet;
-              this.pdfSrc = `data:application/pdf;base64, ${base64Data}`;
+              this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(`data:application/pdf;base64, ${this.productData.responseDTO.getInventoryDetailsDTO.datasheet}`);
             }
 
           },

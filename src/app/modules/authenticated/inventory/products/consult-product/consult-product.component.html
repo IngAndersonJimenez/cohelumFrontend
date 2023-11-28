@@ -17,49 +17,38 @@
     </mat-card>
 </div>
 
-<mat-card>
-    <mat-grid-list cols="4">
-        <mat-card-content *ngIf="productData">
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
-                <label class="mat-label">Nombre del producto:</label>
-                {{ productData.responseDTO.getInventoryDTO.name }}
-            </mat-grid-tile>
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
-                <mat-form-field class="form-input">
-                    <mat-label>Precio</mat-label>
-                    <input matInput [value]="productData.responseDTO.getInventoryDTO.price.toString()" disabled>
-                </mat-form-field>
-            </mat-grid-tile>
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
-                <mat-form-field class="form-input">
-                    <mat-label>Unidades disponibles</mat-label>
-                    <input matInput [value]="productData.responseDTO.getInventoryDTO.unitsAvailable.toString()" disabled>
-                </mat-form-field>
-            </mat-grid-tile>
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
-                <mat-form-field class="form-input">
-                    <mat-label>Categoría</mat-label>
-                    <input matInput [value]="productData.responseDTO.getInventoryCategoryDTO.description" disabled>
-                </mat-form-field>
-            </mat-grid-tile>
-            <mat-grid-tile [colspan]="2" [rowspan]="1">
-                <mat-form-field class="form-email">
-                    <mat-label>Caracteristica</mat-label>
-                    <input matInput [value]="productData.responseDTO.getInventoryDetailsDTO.characteristic" disabled>
-                </mat-form-field>
-            </mat-grid-tile>
-            <mat-grid-tile [colspan]="2" [rowspan]="1" style="background-color: #f0f0f0; color: #333;">
-                <div>
-                    <mat-label>Ficha técnica</mat-label>
-                    <div *ngIf="pdfSrc">
-                        <!-- Descargar la ficha técnica -->
-                        <a [href]="pdfSrc" download="ficha_tecnica.pdf">Descargar Ficha Técnica</a>
-                    </div>
-                </div>
-            </mat-grid-tile>
-            <mat-grid-tile [colspan]="2" [rowspan]="1" style="background-color: #f0f0f0; color: #333;">
-                <img [src]="imageR" alt="Imagen del Producto">
-            </mat-grid-tile>
-        </mat-card-content>
-    </mat-grid-list>
-</mat-card>
+<div class="card card1" *ngIf="productData">
+    <div class="card-header">
+        <h2>Detalles del Producto</h2>
+    </div>
+    <div class="card-body">
+        <div class="form-field">
+            <label>Nombre del Producto:</label>
+            {{ productData.responseDTO.getInventoryDTO.name }}
+        </div>
+        <div class="form-field">
+            <label>Precio:</label>
+            {{ productData.responseDTO.getInventoryDTO.price | currency:'USD':'symbol':'1.2-2' }}
+        </div>
+        <div class="form-field">
+            <label>Unidades Disponibles:</label>
+            {{ productData.responseDTO.getInventoryDTO.unitsAvailable }}
+        </div>
+        <div class="form-field">
+            <label>Categoría:</label>
+            {{ productData.responseDTO.getInventoryCategoryDTO.description }}
+        </div>
+        <div class="form-field">
+            <label>Característica:</label>
+            {{ productData.responseDTO.getInventoryDetailsDTO.characteristic }}
+        </div>
+        <div class="form-field" *ngIf="pdfSrc">
+            <label>Ficha Técnica:</label>
+            <embed *ngIf="pdfSrc" [src]="pdfSrc" type="application/pdf" width="100%" height="500px">
+        </div>
+        <div class="form-field" *ngIf="imageR">
+            <label>Imagen del Producto:</label>
+            <img [src]="imageR" alt="Imagen del Producto">
+        </div>
+    </div>
+</div>

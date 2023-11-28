@@ -15,7 +15,12 @@ import {TableModule} from "primeng/table";
 import {ChipsModule} from "primeng/chips";
 import {MultiSelectModule} from "primeng/multiselect";
 import {DropdownModule} from "primeng/dropdown";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ButtonModule} from "primeng/button";
+import {MatInputModule} from "@angular/material/input";
+import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -24,22 +29,28 @@ import {FormsModule} from "@angular/forms";
     DashboardContentComponent,
     ContactComponent
   ],
-  imports: [
-    CommonModule,
-    AuthenticatedRoutingModule,
-    DashboardModule,
-    InventoryModule,
-    CdkMenu,
-    OverlayModule,
-    CdkMenuTrigger,
-    CdkMenuItem,
-    MatButtonModule,
-    TagModule,
-    TableModule,
-    ChipsModule,
-    MultiSelectModule,
-    DropdownModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        AuthenticatedRoutingModule,
+        DashboardModule,
+        InventoryModule,
+        CdkMenu,
+        OverlayModule,
+        CdkMenuTrigger,
+        CdkMenuItem,
+        MatButtonModule,
+        TagModule,
+        TableModule,
+        ChipsModule,
+        MultiSelectModule,
+        DropdownModule,
+        FormsModule,
+        ButtonModule,
+        MatInputModule,
+        MatTableModule,
+        MatPaginatorModule,
+        ReactiveFormsModule,
+        MatIconModule
+    ]
 })
 export class AuthenticatedModule { }

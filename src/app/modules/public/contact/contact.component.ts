@@ -1,22 +1,27 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NotificationService} from "../../../notifications/notification.service";
-import {ContactService} from "../../../services/contact.service";
-import {LoginService} from "../../../services/login.service";
-import {ReasonEnum} from "../../../interface/Contact";
-import {catchError, switchMap} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { NotificationService } from "../../../notifications/notification.service";
+import { ContactService } from "../../../services/contact.service";
+import { LoginService } from "../../../services/login.service";
+import { ReasonEnum } from "../../../interface/Contact";
+import {BehaviorSubject, catchError, Observable, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
 })
-export class ContactComponent implements OnInit{
-
+export class ContactComponent implements OnInit {
   form!: FormGroup;
   optionsReason: ReasonEnum[] = [ReasonEnum.Garantia, ReasonEnum.ContactoGeneral];
   selectedPDFName: string | undefined;
-  constructor(private formBuilder: FormBuilder,private notificationService:NotificationService,private contactService:ContactService,private loginService:LoginService) { }
+
+  constructor(
+      private formBuilder: FormBuilder,
+      private notificationService: NotificationService,
+      private contactService: ContactService,
+      private loginService: LoginService
+  ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -42,16 +47,19 @@ export class ContactComponent implements OnInit{
     });
   }
 
-  isFormSubmitted = false;
-
   onSubmit() {
-    this.isFormSubmitted = true;
     if (this.form.valid) {
       const formData = new FormData();
       formData.append('nameContact', this.form.get('nameContact')?.value);
       formData.append('email', this.form.get('email')?.value);
       formData.append('reason', this.form.get('reason')?.value);
-      formData.append('attach', this.form.get('attach')?.value);
+
+      // Verifica si se seleccionó un archivo antes de agregarlo al formData
+      const attachFile = this.form.get('attach')?.value;
+      if (attachFile) {
+        formData.append('attach', attachFile);
+      }
+
       formData.append('comment', this.form.get('comment')?.value);
       formData.append('cellphone', this.form.get('cellphone')?.value);
       formData.append('department', this.form.get('department')?.value);
@@ -61,8 +69,8 @@ export class ContactComponent implements OnInit{
           switchMap((token) => this.contactService.createContact(formData, token)),
           catchError((error) => {
             console.error('Error al enviar datos al backend:', error);
-            this.notificationService.showError("Error al intentar enviar la información", "Vuleve a intentar");
-            return [];
+            this.notificationService.showError("Error al intentar enviar la información", "Vuelve a intentar");
+            throw error; // Propaga el error para que sea manejado en el componente que llame a onSubmit
           })
       ).subscribe({
         next: (data) => {
@@ -76,12 +84,13 @@ export class ContactComponent implements OnInit{
     }
   }
 
+
+
   onFileSelected(event: any, type: string): void {
     const input = event.target;
     const newFile = input.files ? input.files[0] : null;
 
     if (newFile) {
-
       const allowedPDFExtensions = ['pdf'];
       const fileExtension = newFile.name.split('.').pop().toLowerCase();
 
@@ -94,6 +103,7 @@ export class ContactComponent implements OnInit{
         this.selectedPDFName = newFile.name;
         const reader = new FileReader();
         reader.onload = (e: any) => {
+          // Puedes realizar acciones adicionales al cargar el archivo si es necesario
         };
         reader.readAsDataURL(newFile);
 
@@ -103,6 +113,4 @@ export class ContactComponent implements OnInit{
       }
     }
   }
-
-
 }

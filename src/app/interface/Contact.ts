@@ -1,13 +1,14 @@
 export enum ReasonEnum {
-    Garantia = 'Garantía',
-    ContactoGeneral = 'Contacto general'
+    Garantia = 'GARANTIA',
+    ContactoGeneral = 'CONTACTO_GENERAL'
 }
 
 export interface Contact {
+    idContact:number;
     nameContact: string;
     email: string;
     reason: ReasonEnum;
-    attach: string;
+    attach?: string  | null;
     department: string;
     city: string;
     cellphone: string;

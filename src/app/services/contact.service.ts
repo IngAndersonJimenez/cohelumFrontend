@@ -3,16 +3,19 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {NotificationService} from "../notifications/notification.service";
 import {Contact} from "../interface/Contact";
-import {catchError, map, Observable, tap} from "rxjs";
+import {BehaviorSubject, catchError, map, Observable, Subject, tap} from "rxjs";
 import {environment} from "../environments/environment";
 import {LoginService} from "./login.service";
-import {InventoryCategory} from "../interface/products/inventoryCategory";
+import {ResponseMessageDTO} from "../interface/header/ResponseMessageDTO";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
+
+    private newContactSubject = new Subject<ResponseMessageDTO>();
+    private unreadMessages: ResponseMessageDTO[] = [];
 
   constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService,
               private loginService:LoginService
@@ -68,5 +71,38 @@ export class ContactService {
 
       return this.http.get<Contact[]>(environment.apiUrl + 'api/v1/requestContact/list', { headers });
   }
+
+    getContactIsNotRead(isNotRead: boolean, token:string): Observable<ResponseMessageDTO[]> {
+        let headers = new HttpHeaders({})
+
+        if (token != null) {
+            headers = new HttpHeaders({
+                'Authorization': `${token}`
+            });
+        } else {
+            headers = new HttpHeaders({
+                'Authorization': `${this.getToken()}`
+            });
+        }
+        const url = `${environment.apiUrl}api/v1/requestContact/notifications/${isNotRead}`;
+        return this.http.get<ResponseMessageDTO[]>(url,{ headers });
+    }
+
+    updateStatusRead(status: boolean, idContact: number,token:string): Observable<any> {
+        let headers = new HttpHeaders({})
+
+        if (token != null) {
+            headers = new HttpHeaders({
+                'Authorization': `${token}`
+            });
+        } else {
+            headers = new HttpHeaders({
+                'Authorization': `${this.getToken()}`
+            });
+        }
+        const url = `${environment.apiUrl}api/v1//notifications/update/${status}/${idContact}`;
+        return this.http.put(url, {},{ headers });
+    }
+
 
 }

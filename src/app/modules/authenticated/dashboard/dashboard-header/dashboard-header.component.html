@@ -35,9 +35,11 @@
                 <i class="fa fa-bell menu-icon"></i>
               </button>
             </div>
+
             <div class="head-menu-item">
-              <button class="head-menu-item-btn ripple">
+              <button class="head-menu-item-btn ripple"  [cdkMenuTriggerFor]="messageOverlay" >
                 <i class="fa fa-comment-alt menu-icon"></i>
+                <span class="new-message-indicator" *ngIf="newMessageCount > 0">{{ newMessageCount }}</span>
               </button>
             </div>
           </div>
@@ -59,7 +61,7 @@
       </button>
     </div>
   </ng-template>
-  
+
   <ng-template #notificationOverlay>
     <div class="overlay overlay-notification overlay-fall" cdkMenu>
       <ul>
@@ -86,7 +88,32 @@
       </ul>
     </div>
   </ng-template>
-  
+<ng-template #messageOverlay>
+  <div class="overlay overlay-notification overlay-fall message-overlay-scrollable" cdkMenu>
+    <ul>
+      <li class="notification-head-container">
+        <div class="notification-head">Mensajes</div>
+        <span class="view-all-link">
+          <a routerLink="/messages">View All</a>
+        </span>
+      </li>
+      <li class="notification-message-container" *ngFor="let message of messageNotifications; let i = index" cdkMenuItem>
+        <i class="fa fa-bell"></i>
+        <div>
+          <div class="notification-subject">
+            Mensaje nuevo de:
+          </div>
+          <p class="notification-desc" (click)="markNotificationAsRead(message.idContact)">
+            {{ message.name }}
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</ng-template>
+
+
+
   <ng-template #userOverlay>
     <div class="overlay overlay-user overlay-fall" cdkMenu>
       <ul>
@@ -97,4 +124,4 @@
       </ul>
     </div>
   </ng-template>
-  
+

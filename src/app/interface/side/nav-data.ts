@@ -12,19 +12,19 @@ export const navbarData:INavbarData[] = [
     label: 'Inventario',
     items:[
       {
-        routerLink: 'Category',
+        routerLink: 'category',
         label: 'Categoria'
       },
       {
-        routerLink: 'Products',
+        routerLink: 'products',
         label: 'Productos',
         items: [
           {
-            routerLink: 'Create-products',
+            routerLink: 'create-products',
             label: 'Crear producto'
           },
           {
-            routerLink: 'Consult-product',
+            routerLink: 'consult-product',
             label: 'Consultar producto'
           }
         ]
@@ -32,7 +32,7 @@ export const navbarData:INavbarData[] = [
     ]
   },
   {
-    routerLink: 'Contact',
+    routerLink: 'contact',
     icon: 'fas fa-envelope',
     label: 'Mensajes'
   },
