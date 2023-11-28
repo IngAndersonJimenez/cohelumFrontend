@@ -4,7 +4,7 @@ export enum ReasonEnum {
 }
 
 export interface Contact {
-    idContact:number;
+    idRequest:number;
     nameContact: string;
     email: string;
     reason: ReasonEnum;
@@ -13,4 +13,5 @@ export interface Contact {
     city: string;
     cellphone: string;
     comment: string;
+    read: boolean;
 }

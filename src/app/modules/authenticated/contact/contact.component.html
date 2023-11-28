@@ -6,7 +6,7 @@
     <div class="card-head">Lista de mensajes</div>
     <div class="card-body">
         <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="contacts" matSort>
+            <table mat-table [dataSource]="dataSource" matSort>
                 <ng-container matColumnDef="email">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
                     <td mat-cell *matCellDef="let contact">{{ contact.email | titlecase }}</td>
@@ -19,23 +19,25 @@
 
                 <ng-container matColumnDef="comment">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Mensaje </th>
-                    <td mat-cell *matCellDef="let contact">{{ contact.comment | titlecase }}</td>
+                    <td mat-cell *matCellDef="let contact">
+                        {{ contact.comment | titlecase | slice:0:20}}
+                        {{ contact.comment.length > 20 ? '...' : '' }}</td>
                 </ng-container>
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                    <td mat-cell *matCellDef="let contact" (click)="markAsRead(contact)" [class.selected-row]="selectedRow === contact">
-                        <!-- Utiliza ngClass para cambiar dinámicamente la clase del ícono -->
-                        <i [ngClass]="{'fas fa-eye': !contact.read, 'far fa-check-circle': contact.read}" [style.color]="contact.read ? 'green' : 'red'"></i>
+                    <td mat-cell *matCellDef="let contact" [class.selected-row]="selectedRow === contact">
+                        <i [ngClass]="{'far fa-check-circle': contact.read, 'fas fa-eye': !contact.read}" [style.color]="contact.read ? 'green' : 'red'"></i>
                     </td>
                 </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="['email','reason', 'comment', 'actions']"></tr>
-                <tr mat-row *matRowDef="let row; columns: ['email','reason', 'comment', 'actions'];"
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"
                     (click)="onDetailsButtonClick(row)" [class.selected-row]="selectedRow === row">
                 </tr>
 
             </table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Seleccionar página"></mat-paginator>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Seleccionar pagína">
+            </mat-paginator>
         </div>
     </div>
 </div>

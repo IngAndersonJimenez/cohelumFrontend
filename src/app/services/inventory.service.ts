@@ -8,6 +8,7 @@ import {catchError, map, Observable, tap} from "rxjs";
 import { LoginService } from "./login.service";
 import { InventoryCategory } from "../interface/products/inventoryCategory";
 import {Product} from "../interface/products/Product";
+import {CategoryImage} from "../interface/products/CategoryImage";
 
 @Injectable({
     providedIn: 'root'
@@ -141,6 +142,18 @@ export class InventoryService {
                 }
             })
         );
+    }
+
+    createCategoryImage(active: boolean, idCategory: number, photo: string): Observable<CategoryImage> {
+        const formData: FormData = new FormData();
+        formData.append('active', active.toString());
+        formData.append('idCategory', idCategory.toString());
+        formData.append('photo', photo.toString());
+        const headers = new HttpHeaders({
+            'Authorization': this.getToken(),
+        });
+
+        return this.http.post<CategoryImage>(`${environment.apiUrl}api/api/v1/categoryImage/create`, formData, { headers });
     }
 
 

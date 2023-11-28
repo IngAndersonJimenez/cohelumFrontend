@@ -14,12 +14,18 @@ import {ResponseMessageDTO} from "../interface/header/ResponseMessageDTO";
 })
 export class ContactService {
 
-    private newContactSubject = new Subject<ResponseMessageDTO>();
+    private newMessageCountSubject = new BehaviorSubject<number>(0);
+    newMessageCount$ = this.newMessageCountSubject.asObservable();
     private unreadMessages: ResponseMessageDTO[] = [];
+    newMessageCount: number = 0;
 
   constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService,
               private loginService:LoginService
   ) {}
+
+    updateNewMessageCount(count: number): void {
+        this.newMessageCountSubject.next(count);
+    }
 
   getTokenPublic(contact: Contact): Observable<string> {
     return this.loginService.getTokenPublicS()
@@ -88,8 +94,8 @@ export class ContactService {
         return this.http.get<ResponseMessageDTO[]>(url,{ headers });
     }
 
-    updateStatusRead(status: boolean, idContact: number,token:string): Observable<any> {
-        let headers = new HttpHeaders({})
+    updateStatusRead(status: boolean, idContact: number, token: string): Observable<any> {
+        let headers = new HttpHeaders({});
 
         if (token != null) {
             headers = new HttpHeaders({
@@ -100,9 +106,18 @@ export class ContactService {
                 'Authorization': `${this.getToken()}`
             });
         }
-        const url = `${environment.apiUrl}api/v1//notifications/update/${status}/${idContact}`;
-        return this.http.put(url, {},{ headers });
+
+        const url = `${environment.apiUrl}api/v1/requestContact/notifications/update/${status}/${idContact}`;
+
+        return this.http.put(url, {}, { headers }).pipe(
+            // Notificar al servicio compartido después de una actualización exitosa
+            tap(() => {
+                this.updateNewMessageCount(status ? this.newMessageCount - 1 : this.newMessageCount);
+                this.newMessageCountSubject.next(this.newMessageCount);
+            })
+        );
     }
+
 
 
 }

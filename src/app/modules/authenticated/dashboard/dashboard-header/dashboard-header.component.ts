@@ -1,9 +1,9 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, Input, OnInit} from '@angular/core';
 import { notifications, userItems } from 'src/app/interface/header-dummy-data';
 import { Router } from "@angular/router";
 import { ContactService } from "../../../../services/contact.service";
 import { ResponseMessageDTO } from "../../../../interface/header/ResponseMessageDTO";
-import {mergeMap, of, switchMap, tap} from "rxjs";
+import {tap} from "rxjs";
 
 interface RouteMapping {
   [key: string]: string;
@@ -26,17 +26,17 @@ export class DashboardHeaderComponent implements OnInit {
   messageNotifications: ResponseMessageDTO[] = [];
 
 
-  constructor(private router: Router, private contactService: ContactService) { }
+  constructor(private router: Router, private contactService: ContactService,private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.checkCanShowSearchAsOverlay(window.innerWidth);
-    // Realizar la llamada al servicio para obtener mensajes no leídos
+    this.contactService.newMessageCount$.subscribe((count) => {
+      this.newMessageCount = count;
+    });
     this.fetchUnreadMessages();
-
-    // Verificar si hay mensajes no leídos cada cierto intervalo (por ejemplo, cada 5 minutos)
     setInterval(() => {
       this.fetchUnreadMessages();
-    }, 300000); // 300000 milisegundos = 5 minutos
+    }, 30000);
   }
 
   getHeadClass(): string {
@@ -90,6 +90,7 @@ export class DashboardHeaderComponent implements OnInit {
             }));
 
             this.newMessageCount = this.messageNotifications.length;
+            this.contactService.newMessageCount = this.newMessageCount;
           } else {
             console.warn('La propiedad responseDTO no está presente en la respuesta.');
           }
@@ -103,19 +104,17 @@ export class DashboardHeaderComponent implements OnInit {
     });
   }
 
-  markNotificationAsRead(idContact: number) {
+  markNotificationAsRead(idContact: number): void {
     const token = this.contactService.getToken();
-    this.contactService.getContactIsNotRead(true, token).subscribe(
-        () => {
-          this.messageNotifications = this.messageNotifications.filter(notification => notification.idContact !== idContact);
-          this.newMessageCount = this.messageNotifications.length;
-        },
-        (error) => {
-          console.error('Error al marcar la notificación como leída:', error);
-        }
-    );
+    this.contactService.updateStatusRead(true, idContact, token).subscribe(() => {
+      this.newMessageCount = Math.max(0, this.newMessageCount - 1);
+      this.contactService.newMessageCount = this.newMessageCount;
+      this.navigateToMessageDetails();
+    });
   }
 
 
-
+  navigateToMessageDetails(): void {
+    this.router.navigate(['/corporate/contact']);
+  }
 }

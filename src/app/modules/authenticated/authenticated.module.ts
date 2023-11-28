@@ -19,6 +19,7 @@ import { FormsModule } from "@angular/forms";
 import { InputTextModule } from 'primeng/inputtext';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
 
 
 @NgModule({
@@ -27,24 +28,25 @@ import {MatTableModule} from "@angular/material/table";
     DashboardContentComponent,
     ContactComponent
   ],
-  imports: [
-    CommonModule,
-    AuthenticatedRoutingModule,
-    DashboardModule,
-    InventoryModule,
-    CdkMenu,
-    OverlayModule,
-    CdkMenuTrigger,
-    CdkMenuItem,
-    MatButtonModule,
-    TagModule,
-    TableModule,
-    ChipsModule,
-    MultiSelectModule,
-    DropdownModule,
-    FormsModule,
-    MatPaginatorModule,
-    MatTableModule
-  ]
+    imports: [
+        CommonModule,
+        AuthenticatedRoutingModule,
+        DashboardModule,
+        InventoryModule,
+        CdkMenu,
+        OverlayModule,
+        CdkMenuTrigger,
+        CdkMenuItem,
+        MatButtonModule,
+        TagModule,
+        TableModule,
+        ChipsModule,
+        MultiSelectModule,
+        DropdownModule,
+        FormsModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatSortModule
+    ]
 })
 export class AuthenticatedModule { }

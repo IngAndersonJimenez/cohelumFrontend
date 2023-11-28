@@ -41,5 +41,16 @@ h1 {
   margin-bottom: 16px;
 }
 
+.category-image-cell {
+  width: 100px; /* Ajusta el ancho según tus necesidades */
+  height: 100px; /* Ajusta la altura según tus necesidades */
+}
+
+.category-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover; /* Ajusta según tus necesidades */
+  background-position: center; /* Ajusta según tus necesidades */
+}
 
 
