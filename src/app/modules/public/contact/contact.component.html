@@ -45,7 +45,7 @@
                             <label for="reason">Motivo:</label>
                             <select id="reason" formControlName="reason" class="form-control">
                                 <option value="" disabled selected>Selecciona un motivo</option>
-                                <option *ngFor="let opcion of optionsReason" [value]="opcion">{{ opcion }}</option>
+                                <option *ngFor="let opcion of optionsReason" [value]="opcion">{{ opcion | titlecase }}</option>
                             </select>
                             <div *ngIf="form.get('reason')?.hasError('required') && form.get('reason')?.touched">
                                 El motivo es obligatorio.

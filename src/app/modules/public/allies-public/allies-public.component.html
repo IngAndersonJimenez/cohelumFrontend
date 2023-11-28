@@ -13,6 +13,29 @@
 <section #ourAlliesSection id="ourAlliesSection" class="ourAllies">
     <div class="section_body">
         <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <select class="form-select" aria-label="Default select example"
+                        (change)="getCitiesByIdDepartament($event)">
+                        <option [value]="0" selected>Todos</option>
+                        <option [value]="departament.getIdDepartamento()"
+                            *ngFor="let departament of departamentList; let i = index">
+                            {{this.departament.getDescripcionDepartamento()}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <select class="form-select" aria-label="Default select example" (change)="getAlliesByIdCity($event)"
+                        *ngIf="isActiveControlCity">
+                        <option selected>Todos</option>
+                        <option [value]="city.getIdCity()" *ngFor="let city of cityList; let i = index">
+                            {{this.city.getDescriptionCity()}}</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="row">
                 <p-carousel [value]="listaAliados" [numVisible]="4" [numScroll]="3" [circular]="true"
                     [responsiveOptions]="responsiveOptions">
@@ -20,13 +43,15 @@
                         <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
                             <div class="mb-3">
                                 <figure class="snipAllies">
-                                    <img [src]="aliado.getUrlLogo()" alt="DECORALVAREZ logo" class="imagen-Aliado"/>
+                                    <img [src]="aliado.getUrlLogo()" alt="DECORALVAREZ logo" class="imagen-Aliado" />
                                     <i class="fa fa-solid fa-globe"></i>
                                     <figcaption>
                                         <h3>Ver<span> más</span></h3>
                                         <p>
                                             <span>{{aliado.getDireccion()}} </span>
-                                            <span>{{aliado.getCiudad()}} &nbsp;&nbsp;&nbsp;</span>
+                                            <span>{{aliado.getCiudad().getDescriptionCity()}},
+                                                {{aliado.getCiudad().getDepartamento().getDescripcionDepartamento()}}
+                                                &nbsp;&nbsp;&nbsp;</span>
                                             <span>{{aliado.getTelefono()}}</span>
                                         </p>
                                     </figcaption><a href="{{aliado.getUrlPaginaWeb()}}" target="_blank"></a>
