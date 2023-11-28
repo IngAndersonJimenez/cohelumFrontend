@@ -70,7 +70,7 @@ export class ContactComponent implements OnInit {
           catchError((error) => {
             console.error('Error al enviar datos al backend:', error);
             this.notificationService.showError("Error al intentar enviar la información", "Vuelve a intentar");
-            throw error; // Propaga el error para que sea manejado en el componente que llame a onSubmit
+            throw error;
           })
       ).subscribe({
         next: (data) => {
@@ -103,7 +103,6 @@ export class ContactComponent implements OnInit {
         this.selectedPDFName = newFile.name;
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          // Puedes realizar acciones adicionales al cargar el archivo si es necesario
         };
         reader.readAsDataURL(newFile);
 
