@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
 import { Aliado } from 'src/app/interface/allies/Aliado';
+import { City } from 'src/app/interface/allies/City';
+import { Departamento } from 'src/app/interface/allies/Departamento';
+import { AllyService } from 'src/app/services/ally.service';
+import { CityService } from 'src/app/services/city.service';
+import { DepartamentService } from 'src/app/services/departament.service';
+import { SelectItemGroup } from 'primeng/api';
 
 @Component({
   selector: 'app-allies-public',
@@ -10,72 +16,46 @@ export class AlliesPublicComponent {
 
   listaAliados: Array<Aliado> = [];
   responsiveOptions: any[] | undefined;
+  public departamentList: Array<Departamento> = [];
+  public cityList: Array<City> = [];
+  public isActiveControlCity: boolean = false;
 
-  constructor() {
-    this.listaAliados.push(new Aliado(
-      'assets/image/ourAllies/DecorAlvarezLogo.png',
-      'DECORALVAREZ',
-      'https://www.decoralvarez.com/shop?Marca=Cohelum',
-      'Avenida 7e # 5- 57 Quinta Oriental',
-      'Cúcuta, Norte de Santander',
-      '3143026085'
-    )
-    );
+  groupedCities: SelectItemGroup[] = [];
+  selectedCity: string | undefined;
 
-    this.listaAliados.push(new Aliado(
-      'assets/image/ourAllies/MueblesEstupiñanLogo.png',
-      'MUEBLES ESTUPIÑAN',
-      'https://mueblesestupinan.com/',
-      'Calle 50 #15-88',
-      'Bucaramanga ',
-      '3102123626'
-    )
-    );
+  constructor(private departamentService: DepartamentService, private cityService: CityService,
+    private allyService: AllyService) {
+    this.listaAliados = this.allyService.getListOfAllies();
+    this.departamentList = this.departamentService.getDepartamentAllActive();
+    this.cityList = this.cityService.getCitiesAllActive();
+  }
 
-    this.listaAliados.push(new Aliado(
-      'assets/image/ourAllies/EraLogo.png',
-      'ERA DISEÑO',
-      'https://eradiseno.com/proyectos/',
-      'CR 2N #19-220 Variante la romelia',
-      'Risaralda, Pereira',
-      '3112837841'
-    )
-    );
 
-    this.listaAliados.push(new Aliado(
-      'assets/image/ourAllies/DiceHogarLogo.png',
-      'DICEHOGAR',
-      'https://dicehogar.com/linea-dicehogar/',
-      'CR 56 #29-154 Guayabal',
-      'Medellin, Antioquia',
-      '3005875466'
-    )
-    );
+  getCitiesByIdDepartament(idDepartament: any) {
 
-    this.listaAliados.push(new Aliado(
-      'assets/image/ourAllies/DecoinnovarLogo.png',
-      'DECOINNOVAR',
-      'https://www.instagram.com/decoinnovar_/',
-      'AV 1Este #16-62 Caobos',
-      'Cúcuta, Norte de Santander',
-      ''
-    )
-    );
+    console.log("getCitiesByIdDepartament")
+    console.log(idDepartament)
+    console.log(idDepartament.target.value)
 
-    this.listaAliados.push(new Aliado(
-      'assets/image/ourAllies/Pisos&GresLogo.png',
-      'PISOS Y GRES',
-      'https://pisosygres.co/accesorios/',
-      'Calle 15A #2E-68 Caobos',
-      'Cúcuta, Norte de Santander',
-      '3125258705'
-    )
-    );
-
-    console.log(this.listaAliados);
-    console.log(this.listaAliados[0].getUrlLogo());
-
+    if (idDepartament.target.value == 0) {
+      this.listaAliados = this.allyService.getListOfAllies();
+      this.isActiveControlCity = false;
+    } else {
+      this.cityList = this.cityService.getCitiesByIdDepartament(idDepartament.target.value);
+      this.isActiveControlCity = true;
+    }
 
   }
+
+  getAlliesByIdCity(idCity: any) {
+    console.log('getAlliesByIdCity')
+    console.log(idCity)
+    console.log(idCity.target.value)
+
+    this.listaAliados = this.allyService.getAlliesByIdCity(idCity.target.value);
+    console.log('getAlliesByIdCity')
+    console.log(this.listaAliados)
+  }
+
 
 }

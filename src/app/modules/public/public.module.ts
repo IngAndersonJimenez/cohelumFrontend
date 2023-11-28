@@ -14,8 +14,10 @@ import { ShowcasePublicComponent } from './showcase-public/showcase-public.compo
 import { GalleriaModule } from 'primeng/galleria';
 import { MaterialModule } from '../material/material.module';
 import { ContactComponent } from './contact/contact.component';
-import {PaginatorModule} from "primeng/paginator";
-import {ReactiveFormsModule} from "@angular/forms";
+import { PaginatorModule } from "primeng/paginator";
+import { ReactiveFormsModule } from "@angular/forms";
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -29,14 +31,16 @@ import {ReactiveFormsModule} from "@angular/forms";
     ShowcasePublicComponent,
     ContactComponent
   ],
-    imports: [
-        CommonModule,
-        PublicRoutingModule,
-        CarouselModule,
-        GalleriaModule,
-        MaterialModule,
-        PaginatorModule,
-        ReactiveFormsModule
-    ]
+  imports: [
+    CommonModule,
+    PublicRoutingModule,
+    CarouselModule,
+    GalleriaModule,
+    MaterialModule,
+    PaginatorModule,
+    ReactiveFormsModule,
+    MultiSelectModule,
+    DropdownModule
+  ]
 })
 export class PublicModule { }

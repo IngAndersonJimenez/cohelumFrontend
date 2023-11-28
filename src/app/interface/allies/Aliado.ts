@@ -1,13 +1,15 @@
+import { City } from "./City";
+
 export class Aliado {
 
     private urlLogo: string;
     private nombre: string;
     private urlPaginaWeb: string;
     private direccion: string;
-    private ciudad: string;
+    private ciudad: City;
     private telefono: string;
 
-    constructor(urlLogo: string, nombre: string, urlPaginaWeb: string, direccion: string, ciudad: string, telefono: string) {
+    constructor(urlLogo: string, nombre: string, urlPaginaWeb: string, direccion: string, ciudad: City, telefono: string) {
         this.urlLogo = urlLogo;
         this.nombre = nombre;
         this.urlPaginaWeb = urlPaginaWeb;
@@ -33,7 +35,7 @@ export class Aliado {
         return this.direccion;
     }
 
-    getCiudad(): string {
+    getCiudad(): City {
         return this.ciudad;
     }
 
@@ -58,7 +60,7 @@ export class Aliado {
         this.direccion = direccion;
     }
 
-    setCiudad(ciudad: string) {
+    setCiudad(ciudad: City) {
         this.ciudad = ciudad;
     }
 
