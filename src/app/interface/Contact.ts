@@ -1,6 +1,6 @@
 export enum ReasonEnum {
-    Garantia = 'Garantía',
-    ContactoGeneral = 'Contacto general'
+    Garantia = 'GARANTIA',
+    ContactoGeneral = 'CONTACTO_GENERAL'
 }
 
 export interface Contact {

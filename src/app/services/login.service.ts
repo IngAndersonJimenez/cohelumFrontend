@@ -54,7 +54,7 @@ export class LoginService {
     }
 
     getTokenPublicS(): Observable<ResponseLogin> {
-        let requestLogin: RequestLogin = { emailUser: 'correoprueba@gmail.com', password: '1234' }
+        let requestLogin: RequestLogin = { emailUser: 'prueba@gmail.com', password: '1010' }
         return this.http.post<ResponseLogin>(environment.apiUrl + 'login', requestLogin).pipe(
             map(result => {
                 const responseLogin: ResponseLogin = { token: result.token };
