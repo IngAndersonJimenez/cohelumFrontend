@@ -94,21 +94,6 @@ export class CategoryComponent implements OnInit {
         this.newCategory = {idCategory: 0, description: '', active: true};
     }
 
-    saveCategory() {
-        this.inventoryService.createCategory(this.newCategory).subscribe(
-            (data: any) => {
-                console.log(data);
-                this.loadData();
-                this.addingCategory = false;
-
-                // Asegúrate de asignar un idCategory válido a newCategory1 antes de llamar a createCategoryImage
-                this.newCategory1.idCategory = data.responseDTO.idCategory;
-
-                this.createCategoryImage();
-                this.newCategory = {idCategory: 0, description: '', active: true};
-            }
-        );
-    }
 
 
     editCategory(category: InventoryCategory) {
@@ -143,19 +128,7 @@ export class CategoryComponent implements OnInit {
         idCategory: 0,
     };
 
-    createCategoryImage() {
-        const active = this.newCategory1.active;
-        const idCategory = this.newCategory1.idCategory;
-        const photo = this.newCategory1.photo !== null ? this.newCategory1.photo : '';
 
-        this.inventoryService.createCategoryImage(active, idCategory, photo)
-            .subscribe(response => {
-                console.log(response);
-            }, error => {
-
-                console.error(error);
-            });
-    }
 
     handleImageChange(event: any) {
         this.newCategory1.photo = event.target.files[0];

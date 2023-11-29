@@ -120,7 +120,7 @@ export class InventoryService {
 
         const url = `${environment.apiUrl}api/v1/inventoryCategory/update?idCategory=${inventoryCategory.idCategory}`;
 
-        // Utiliza el objeto completo en el cuerpo de la solicitud, no solo un objeto vacío
+
         return this.http.put(url, inventoryCategory, { headers }).pipe(
             catchError(error => {
                 console.error('Error en la solicitud:', error);
@@ -160,18 +160,6 @@ export class InventoryService {
                 }
             })
         );
-    }
-
-    createCategoryImage(active: boolean, idCategory: number, photo: string): Observable<CategoryImage> {
-        const formData: FormData = new FormData();
-        formData.append('active', active.toString());
-        formData.append('idCategory', idCategory.toString());
-        formData.append('photo', photo.toString());
-        const headers = new HttpHeaders({
-            'Authorization': this.getToken(),
-        });
-
-        return this.http.post<CategoryImage>(`${environment.apiUrl}api/api/v1/categoryImage/create`, formData, { headers });
     }
 
 
