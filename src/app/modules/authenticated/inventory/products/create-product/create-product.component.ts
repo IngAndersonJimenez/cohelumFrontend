@@ -124,7 +124,7 @@ export class CreateProductComponent implements OnInit{
 
   ngOnInit(): void {
     this.buildForm()
-    this.inventoryService.getCategory().subscribe(
+/*    this.inventoryService.getCategory().subscribe(
         (response: any) => {
           this.categories = response.responseDTO;
           console.log(this.categories);
@@ -132,7 +132,7 @@ export class CreateProductComponent implements OnInit{
         error => {
           console.error('Error al obtener las categorías', error);
         }
-    );
+    );*/
   }
   validateEnter(event: KeyboardEvent, tipo: string) {
     let pattern: RegExp;

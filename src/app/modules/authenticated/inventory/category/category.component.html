@@ -25,8 +25,8 @@
         </mat-form-field>
         <div>
         </div>
-          <mat-label>Seleccionar Imagen</mat-label>
-          <input type="file" (change)="handleImageChange($event)" accept="image/*">
+        <mat-label>Seleccionar Imagen</mat-label>
+        <input type="file"  accept="image/*">
         <button mat-raised-button color="primary" class="buttons-actions" >Guardar</button>
         <button mat-raised-button color="warn" class="buttons-actions" (click)="cancelAdd()">Cancelar</button>
       </form>
@@ -34,7 +34,7 @@
 
 
 
-    <div class="mat-elevation-z8">
+    <div class="mat-elevation-z8 table-image">
       <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="idCategory">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
@@ -51,15 +51,28 @@
             </ng-template>
           </td>
         </ng-container>
+        <ng-container matColumnDef="image">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Imagen </th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="!element.editing; else editMode">
+              <img *ngIf="element.image" [src]="element.image" alt="Imagen Categoría" height="50" width="50">
+            </ng-container>
+            <ng-template #editMode>
+              <!-- Código para la edición, si es necesario -->
+            </ng-template>
+          </td>
+        </ng-container>
 
-        <ng-container matColumnDef="active">
+
+
+        <ng-container matColumnDef="statusCategory">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
           <td mat-cell *matCellDef="let element">
             <ng-container *ngIf="!element.editing; else editMode">
-              {{element.active ? 'Activo' : 'Inactivo'}}
+              {{element.statusCategory ? 'Activo' : 'Inactivo'}}
             </ng-container>
             <ng-template #editMode>
-              <mat-checkbox [(ngModel)]="element.active">Activo</mat-checkbox>
+              <mat-checkbox [(ngModel)]="element.statusCategory">Activo</mat-checkbox>
             </ng-template>
           </td>
         </ng-container>

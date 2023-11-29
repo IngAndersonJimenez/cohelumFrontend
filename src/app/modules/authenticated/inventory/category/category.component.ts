@@ -16,12 +16,13 @@ import {CategoryProducts} from "../../../../interface/products/CategoryProducts"
 export class CategoryComponent implements OnInit {
 
     addingCategory = false;
-    listCategory!: InventoryCategory[];
     categoryList: CategoryProducts[] = [];
-    displayedColumns: string[] = ['idCategory', 'description', 'active', 'action'];
+    displayedColumns: string[] = ['idCategory', 'description', 'statusCategory', 'image', 'action'];
     dataSource = new MatTableDataSource<CategoryProducts>(this.categoryList);
     @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
     @ViewChild(MatSort, {static: true}) sort!: MatSort;
+    imageR:string = '';
+
 
     constructor(private inventoryService: InventoryService) {
     }
@@ -42,42 +43,31 @@ export class CategoryComponent implements OnInit {
     }
 
     loadData() {
-        this.inventoryService.getCategory().subscribe(
-            (data: any) => {
-                console.log(data);
-                this.listCategory = data.responseDTO;
-                this.refreshTable();
-            }
-        );
-
         this.inventoryService.getCategoryAll().subscribe(
             (data: any) => {
-                console.log("todas las categorias");
-                console.log(data);
+                for (let iterDate of data.responseDTO.categoryFullDTOList) {
+                    console.log(iterDate.getCategoryImageDTO);
 
-                for (let iterDate of data.responseDTO.categoryFullDTOList){
-                    console.log(data);
-                    console.log("iterDate");
-                    console.log(iterDate);
-                    console.log("getInventaryCategoryDTO");
-                    console.log(iterDate.getInventoryCategoryDTO);
-                    console.log("id");
-                    console.log(iterDate.getInventoryCategoryDTO.idCategory);
-                   this.categoryList.push(new CategoryProducts(
-                       iterDate.getInventoryCategoryDTO.idCategory,
-                       iterDate.getInventoryCategoryDTO.description,
-                       iterDate.getInventoryCategoryDTO.active,
-                       iterDate.getCategoryImageDTO.photo
-                    ));
+                    // Crea un nuevo CategoryProducts con la imagen correspondiente
+                    const categoryProduct = new CategoryProducts(
+                        iterDate.getInventoryCategoryDTO.idCategory,
+                        iterDate.getInventoryCategoryDTO.description,
+                        iterDate.getInventoryCategoryDTO.active,
+                        'data:image/png;base64,' + iterDate.getCategoryImageDTO.photo
+                    );
+
+                    // Agrega el nuevo CategoryProducts a la lista
+                    this.categoryList.push(categoryProduct);
+
+                    // No necesitas la lógica para this.imageR aquí
                 }
 
-               /*
-                this.listCategory = data.responseDTO;*/
                 this.refreshTable();
             }
         );
-
     }
+
+
 
     refreshTable() {
         this.dataSource = new MatTableDataSource<CategoryProducts>(this.categoryList);
@@ -118,20 +108,6 @@ export class CategoryComponent implements OnInit {
 
     cancelEdit(category: InventoryCategory) {
         category.editing = false;
-    }
-
-
-    newCategory1: CategoryImage = {
-        idCategoryImage: 0,
-        photo: '',
-        active: true,
-        idCategory: 0,
-    };
-
-
-
-    handleImageChange(event: any) {
-        this.newCategory1.photo = event.target.files[0];
     }
 
 }
