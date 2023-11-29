@@ -1,17 +1,17 @@
-export interface Product{
-    responseDTO:{
+export interface Product {
+    responseDTO: {
         getInventoryDTO: {
-            idInventory:number;
-            name:string;
-            price:number;
-            unitsAvailable:number;
+            idInventory: number;
+            name: string;
+            price: number;
+            unitsAvailable: number;
 
         }
-        getInventoryDetailsDTO:{
-            characteristic:string;
-            datasheet?: string  | null;
+        getInventoryDetailsDTO: {
+            characteristic: string;
+            datasheet?: string | null;
         }
-        getInventoryCategoryDTO:{
+        getInventoryCategoryDTO: {
             description: string
         }
         getInventoryImageDTO: {

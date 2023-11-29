@@ -5,6 +5,7 @@ import {MatSort} from "@angular/material/sort";
 import {InventoryService} from "../../../../services/inventory.service";
 import {InventoryCategory} from "../../../../interface/products/inventoryCategory";
 import {CategoryImage} from "../../../../interface/products/CategoryImage";
+import {CategoryProducts} from "../../../../interface/products/CategoryProducts";
 
 @Component({
     selector: 'app-category',
@@ -12,16 +13,18 @@ import {CategoryImage} from "../../../../interface/products/CategoryImage";
     styleUrls: ['./category.component.scss'],
 
 })
-export class CategoryComponent implements OnInit{
+export class CategoryComponent implements OnInit {
 
     addingCategory = false;
     listCategory!: InventoryCategory[];
-    displayedColumns: string[] = ['idCategory', 'description','active','action'];
-    dataSource = new MatTableDataSource<InventoryCategory>(this.listCategory);
-    @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-    @ViewChild(MatSort, { static: true }) sort!: MatSort;
+    categoryList: CategoryProducts[] = [];
+    displayedColumns: string[] = ['idCategory', 'description', 'active', 'action'];
+    dataSource = new MatTableDataSource<CategoryProducts>(this.categoryList);
+    @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
+    @ViewChild(MatSort, {static: true}) sort!: MatSort;
 
-    constructor(private inventoryService:InventoryService) {}
+    constructor(private inventoryService: InventoryService) {
+    }
 
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
@@ -46,20 +49,51 @@ export class CategoryComponent implements OnInit{
                 this.refreshTable();
             }
         );
+
+        this.inventoryService.getCategoryAll().subscribe(
+            (data: any) => {
+                console.log("todas las categorias");
+                console.log(data);
+
+                for (let iterDate of data.responseDTO.categoryFullDTOList){
+                    console.log(data);
+                    console.log("iterDate");
+                    console.log(iterDate);
+                    console.log("getInventaryCategoryDTO");
+                    console.log(iterDate.getInventoryCategoryDTO);
+                    console.log("id");
+                    console.log(iterDate.getInventoryCategoryDTO.idCategory);
+                   this.categoryList.push(new CategoryProducts(
+                       iterDate.getInventoryCategoryDTO.idCategory,
+                       iterDate.getInventoryCategoryDTO.description,
+                       iterDate.getInventoryCategoryDTO.active,
+                       iterDate.getCategoryImageDTO.photo
+                    ));
+                }
+
+               /*
+                this.listCategory = data.responseDTO;*/
+                this.refreshTable();
+            }
+        );
+
     }
+
     refreshTable() {
-        this.dataSource = new MatTableDataSource<InventoryCategory>(this.listCategory);
+        this.dataSource = new MatTableDataSource<CategoryProducts>(this.categoryList);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
     }
+
     addCategory() {
         this.addingCategory = true;
     }
 
     cancelAdd() {
         this.addingCategory = false;
-        this.newCategory = { idCategory: 0, description: '', active: true };
+        this.newCategory = {idCategory: 0, description: '', active: true};
     }
+
     saveCategory() {
         this.inventoryService.createCategory(this.newCategory).subscribe(
             (data: any) => {
@@ -71,12 +105,10 @@ export class CategoryComponent implements OnInit{
                 this.newCategory1.idCategory = data.responseDTO.idCategory;
 
                 this.createCategoryImage();
-                this.newCategory = { idCategory: 0, description: '', active: true };
+                this.newCategory = {idCategory: 0, description: '', active: true};
             }
         );
     }
-
-
 
 
     editCategory(category: InventoryCategory) {

@@ -9,6 +9,7 @@ import { LoginService } from "./login.service";
 import { InventoryCategory } from "../interface/products/inventoryCategory";
 import {Product} from "../interface/products/Product";
 import {CategoryImage} from "../interface/products/CategoryImage";
+import {CategoryProducts} from "../interface/products/CategoryProducts";
 
 @Injectable({
     providedIn: 'root'
@@ -69,6 +70,23 @@ export class InventoryService {
         }
 
         return this.http.get<InventoryCategory[]>(environment.apiUrl + 'api/v1/inventoryCategory/getAll', { headers });
+    }
+
+    getCategoryAll(token?: string): Observable<CategoryProducts[]> {
+
+        let headers = new HttpHeaders({})
+
+        if (token != null) {
+            headers = new HttpHeaders({
+                'Authorization': `${token}`
+            });
+        } else {
+            headers = new HttpHeaders({
+                'Authorization': `${this.getToken()}`
+            });
+        }
+
+        return this.http.get<CategoryProducts[]>(environment.apiUrl + 'api/v1/inventoryCategory/getCategoryAll', { headers });
     }
 
     createCategory(inventoryCategory: InventoryCategory): Observable<any> {
