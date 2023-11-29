@@ -15,8 +15,6 @@
       <input matInput (keyup)="applyFilter($event)" placeholder="Filtro por descripción" #input autocomplete="off">
     </mat-form-field>
 
-    <!-- ... Otros campos del formulario ... -->
-
     <div *ngIf="addingCategory">
       <form>
         <mat-form-field>
@@ -58,7 +56,7 @@
               <img *ngIf="element.image" [src]="element.image" alt="Imagen Categoría" height="50" width="50">
             </ng-container>
             <ng-template #editMode>
-              <!-- Código para la edición, si es necesario -->
+
             </ng-template>
           </td>
         </ng-container>

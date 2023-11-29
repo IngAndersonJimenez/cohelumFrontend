@@ -4,7 +4,6 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {InventoryService} from "../../../../services/inventory.service";
 import {InventoryCategory} from "../../../../interface/products/inventoryCategory";
-import {CategoryImage} from "../../../../interface/products/CategoryImage";
 import {CategoryProducts} from "../../../../interface/products/CategoryProducts";
 
 @Component({
@@ -21,7 +20,6 @@ export class CategoryComponent implements OnInit {
     dataSource = new MatTableDataSource<CategoryProducts>(this.categoryList);
     @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
     @ViewChild(MatSort, {static: true}) sort!: MatSort;
-    imageR:string = '';
 
 
     constructor(private inventoryService: InventoryService) {
@@ -46,9 +44,6 @@ export class CategoryComponent implements OnInit {
         this.inventoryService.getCategoryAll().subscribe(
             (data: any) => {
                 for (let iterDate of data.responseDTO.categoryFullDTOList) {
-                    console.log(iterDate.getCategoryImageDTO);
-
-                    // Crea un nuevo CategoryProducts con la imagen correspondiente
                     const categoryProduct = new CategoryProducts(
                         iterDate.getInventoryCategoryDTO.idCategory,
                         iterDate.getInventoryCategoryDTO.description,
@@ -56,12 +51,9 @@ export class CategoryComponent implements OnInit {
                         'data:image/png;base64,' + iterDate.getCategoryImageDTO.photo
                     );
 
-                    // Agrega el nuevo CategoryProducts a la lista
                     this.categoryList.push(categoryProduct);
 
-                    // No necesitas la lógica para this.imageR aquí
                 }
-
                 this.refreshTable();
             }
         );
