@@ -10,6 +10,7 @@ import { InventoryCategory } from "../interface/products/inventoryCategory";
 import {Product} from "../interface/products/Product";
 import {CategoryImage} from "../interface/products/CategoryImage";
 import {CategoryProducts} from "../interface/products/CategoryProducts";
+import {Category} from "../interface/Category";
 
 @Injectable({
     providedIn: 'root'
@@ -161,6 +162,17 @@ export class InventoryService {
             })
         );
     }
+
+    createCategoryAndImage(formData: FormData): Observable<Category> {
+        console.log('Datos que llegan al servicio:', formData);
+        let headers = new HttpHeaders();
+        headers = headers.append('Authorization', this.getToken());
+
+        return this.http.post<Category>(`${environment.apiUrl}api/v1/inventoryCategory/create/categoryImage`, formData, {
+            headers: headers,
+        });
+    }
+
 
 
 }
