@@ -21,14 +21,15 @@
         }
 
         .left-container {
-            width: 100%; // Cambiado de 50%
+            width: 50%;
             margin-top: 5rem;
         }
 
         .form-container {
-            width: 100%; // Cambiado de 50%
+            width: 50%;
             border-radius: 10px;
             margin: 2rem 0 3rem;
+            margin-top: 5rem;
 
             .form-row {
                 display: flex;
@@ -65,13 +66,27 @@
 
             }
 
-            .comment {
+            .form-group.col-md-6.ccomment {
                 width: 100%;
 
-                #comment {
-                    padding: 1rem; // Ajustado el padding
+                textarea#comment {
+                    width: 100%;
+                    padding: 1rem;
                 }
             }
+            .form-group.col-md-6 {
+                position: relative;
+
+                .btn-primary {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    margin-top: 30px;
+                    width:100%;
+                }
+            }
+
+
         }
 
         .text-container {

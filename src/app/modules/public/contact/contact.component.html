@@ -74,20 +74,22 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-md-6 comment">
+                        <div class="form-group col-md-6 ccomment">
                             <label for="comment">Mensaje:</label>
                             <textarea id="comment" formControlName="comment" class="form-control"></textarea>
                         </div>
+                    </div>
+                    <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="cellphone">Teléfono:</label>
                             <input type="tel" id="cellphone" formControlName="cellphone" class="form-control">
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12 text-center">
-                            <button type="submit" [disabled]="!form.valid"  (click)="onSubmit()" class="btn btn-primary">Enviar Solicitud</button>
+
+                        <div class="form-group col-md-6">
+                            <button type="submit" id="submit" [disabled]="!form.valid"  (click)="onSubmit()" class="btn btn-primary">Enviar Solicitud</button>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>
