@@ -18,6 +18,7 @@ import { PaginatorModule } from "primeng/paginator";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
+import { InventoryComponent } from './inventory/inventory.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { DropdownModule } from 'primeng/dropdown';
     ProductPublicComponent,
     TeamPublicComponent,
     ShowcasePublicComponent,
-    ContactComponent
+    ContactComponent,
+    InventoryComponent
   ],
   imports: [
     CommonModule,

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginService } from 'src/app/services/login.service';
+import { InventoryService } from 'src/app/services/inventory.service';
 
 @Component({
   selector: 'app-content-public',
@@ -8,6 +8,15 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class ContentPublicComponent {
 
+  isActiveInventoty?: boolean;
+
+  constructor(private inventoryService: InventoryService) {
+    this.inventoryService.isActiveInventoryCurrent.subscribe(data=>{
+      console.log("ContentPublicComponent")
+      console.log(data)
+      this.isActiveInventoty = data;
+    });
+  }
 
 
 }
