@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NotificationService } from "../../../notifications/notification.service";
 import { ContactService } from "../../../services/contact.service";
 import { LoginService } from "../../../services/login.service";
 import { ReasonEnum } from "../../../interface/Contact";
 import {BehaviorSubject, catchError, Observable, switchMap} from "rxjs";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-contact',
@@ -15,12 +16,16 @@ export class ContactComponent implements OnInit {
   form!: FormGroup;
   optionsReason: ReasonEnum[] = [ReasonEnum.Garantia, ReasonEnum.ContactoGeneral];
   selectedPDFName: string | undefined;
+  showMessage: boolean = false;
+  radicadoNumber: string | null = null;
+  @ViewChild('radicadoInput', { static: false }) radicadoInput!: ElementRef;
 
   constructor(
       private formBuilder: FormBuilder,
       private notificationService: NotificationService,
       private contactService: ContactService,
-      private loginService: LoginService
+      private loginService: LoginService,
+      private dialog:MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -53,8 +58,6 @@ export class ContactComponent implements OnInit {
       formData.append('nameContact', this.form.get('nameContact')?.value);
       formData.append('email', this.form.get('email')?.value);
       formData.append('reason', this.form.get('reason')?.value);
-
-      // Verifica si se seleccionó un archivo antes de agregarlo al formData
       const attachFile = this.form.get('attach')?.value;
       if (attachFile) {
         formData.append('attach', attachFile);
@@ -75,6 +78,7 @@ export class ContactComponent implements OnInit {
       ).subscribe({
         next: (data) => {
           this.notificationService.showSuccess("Mensaje enviado correctamente", "Registro Exitoso");
+          this.form.reset()
           console.log('Datos enviados con éxito al backend:', data);
         },
         error: (error) => {
@@ -112,4 +116,16 @@ export class ContactComponent implements OnInit {
       }
     }
   }
+  openPopup() {
+    this.radicadoNumber = '12345';
+    this.showMessage = true;
+  }
+  copyToClipboard() {
+    const inputElement = this.radicadoInput.nativeElement;
+    inputElement.select();
+    document.execCommand('copy');
+    this.showMessage = false;
+  }
+
 }
+

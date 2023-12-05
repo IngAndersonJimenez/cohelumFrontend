@@ -46,7 +46,7 @@ h1 {
 }
 
 .card1 {
-  width: 80%;
+  width: 100%;
   margin: 20px auto;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -85,13 +85,14 @@ h1 {
       }
 
       img {
-        max-width: 100%;
+        max-width: 80%;
         height: auto;
         border: 1px solid #ddd;
         border-radius: 5px;
-        margin-top: 5px;
+        margin: 5px auto;
 
       }
+
     }
 
     .form-field:last-child {

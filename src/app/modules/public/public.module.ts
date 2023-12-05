@@ -18,6 +18,8 @@ import { PaginatorModule } from "primeng/paginator";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { DropdownModule } from 'primeng/dropdown';
     PaginatorModule,
     ReactiveFormsModule,
     MultiSelectModule,
-    DropdownModule
+    DropdownModule,
+    MatDialogModule,
+    MatButtonModule
   ]
 })
 export class PublicModule { }

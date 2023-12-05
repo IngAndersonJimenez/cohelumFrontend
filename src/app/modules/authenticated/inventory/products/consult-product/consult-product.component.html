@@ -22,25 +22,41 @@
         <h2>Detalles del Producto</h2>
     </div>
     <div class="card-body">
-        <div class="form-field">
-            <label>Nombre del Producto:</label>
-            {{ productData.responseDTO.getInventoryDTO.name }}
-        </div>
-        <div class="form-field">
-            <label>Precio:</label>
-            {{ productData.responseDTO.getInventoryDTO.price | currency:'USD':'symbol':'1.2-2' }}
-        </div>
-        <div class="form-field">
-            <label>Unidades Disponibles:</label>
-            {{ productData.responseDTO.getInventoryDTO.unitsAvailable }}
-        </div>
-        <div class="form-field">
-            <label>Categoría:</label>
-            {{ productData.responseDTO.getInventoryCategoryDTO.description }}
-        </div>
-        <div class="form-field">
-            <label>Característica:</label>
-            {{ productData.responseDTO.getInventoryDetailsDTO.characteristic }}
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-field">
+                        <label>Nombre del Producto:</label>
+                        {{ productData.responseDTO.getInventoryDTO.name }}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-field">
+                        <label>Categoría:</label>
+                        {{ productData.responseDTO.getInventoryCategoryDTO.description }}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-field">
+                        <label>Unidades Disponibles:</label>
+                        {{ productData.responseDTO.getInventoryDTO.unitsAvailable }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-field">
+                        <label>Precio:</label>
+                        {{ productData.responseDTO.getInventoryDTO.price | currency:'USD':'symbol':'1.2-2' }}
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-field">
+                        <label>Característica:</label>
+                        {{ productData.responseDTO.getInventoryDetailsDTO.characteristic }}
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="form-field" *ngIf="pdfSrc">
             <label>Ficha Técnica:</label>

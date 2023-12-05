@@ -26,7 +26,7 @@ export class InventoryService {
             'Authorization': `${this.getToken()}`,
         });
 
-        return this.http.post<Inventory>(`${environment.apiUrl}api/v1/inventory/createFull`, formData, { headers }).pipe(
+        return this.http.post<Inventory>(`${environment.apiUrl}api/v1/`, formData, { headers }).pipe(
             catchError(error => {
                 console.error('Error en la solicitud:', error);
                 this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
