@@ -1,13 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
-import {InventoryService} from "../../../../services/inventory.service";
-import {InventoryCategory} from "../../../../interface/products/inventoryCategory";
-import {CategoryProducts} from "../../../../interface/products/CategoryProducts";
-import {Category} from "../../../../interface/Category";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NotificationService} from "../../../../notifications/notification.service";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { InventoryService } from "../../../../services/inventory.service";
+import { InventoryCategory } from "../../../../interface/products/inventoryCategory";
+import { CategoryProducts } from "../../../../interface/products/CategoryProducts";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { NotificationService } from "../../../../notifications/notification.service";
 
 @Component({
     selector: 'app-category',
@@ -21,13 +20,13 @@ export class CategoryComponent implements OnInit {
     categoryList: CategoryProducts[] = [];
     displayedColumns: string[] = ['idCategory', 'description', 'statusCategory', 'image', 'action'];
     dataSource = new MatTableDataSource<CategoryProducts>(this.categoryList);
-    @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
-    @ViewChild(MatSort, {static: true}) sort!: MatSort;
+    @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+    @ViewChild(MatSort, { static: true }) sort!: MatSort;
     public productForm!: FormGroup;
     selectedImage: string | undefined;
 
 
-    constructor(private inventoryService: InventoryService, private formBuilder: FormBuilder, private notificationService:NotificationService) {
+    constructor(private inventoryService: InventoryService, private formBuilder: FormBuilder, private notificationService: NotificationService) {
     }
 
     private buildForm() {
@@ -74,7 +73,6 @@ export class CategoryComponent implements OnInit {
     }
 
 
-
     refreshTable() {
         this.dataSource = new MatTableDataSource<CategoryProducts>(this.categoryList);
         this.dataSource.paginator = this.paginator;
@@ -87,7 +85,7 @@ export class CategoryComponent implements OnInit {
 
     cancelAdd() {
         this.addingCategory = false;
-        this.newCategory = {idCategory: 0, description: '', active: true};
+        this.newCategory = { idCategory: 0, description: '', active: true };
     }
 
 

@@ -4,18 +4,21 @@ import { Router } from "@angular/router";
 import { NotificationService } from "../notifications/notification.service";
 import { environment } from "../environments/environment";
 import { Inventory } from "../interface/products/Inventory";
-import {catchError, map, Observable, tap} from "rxjs";
+import { BehaviorSubject, catchError, map, Observable, tap } from "rxjs";
 import { LoginService } from "./login.service";
 import { InventoryCategory } from "../interface/products/inventoryCategory";
-import {Product} from "../interface/products/Product";
-import {CategoryImage} from "../interface/products/CategoryImage";
-import {CategoryProducts} from "../interface/products/CategoryProducts";
-import {Category} from "../interface/Category";
+import { Product } from "../interface/products/Product";
+import { CategoryProducts } from "../interface/products/CategoryProducts";
+import { Category } from "../interface/Category";
 
 @Injectable({
     providedIn: 'root'
 })
 export class InventoryService {
+
+    private isActiveInventory: boolean = false;
+    private isActiveInventoryMemory = new BehaviorSubject(false);
+    public isActiveInventoryCurrent = this.isActiveInventoryMemory.asObservable();
 
     constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService, private loginService: LoginService) {
 
@@ -173,6 +176,18 @@ export class InventoryService {
         });
     }
 
+    activeSectionInventoty() {
+        console.log("activeSectionInventoty")
+        if (this.isActiveInventoryMemory.value) {
+            this.isActiveInventoryMemory.next(false); 
+        } else {
+            this.isActiveInventoryMemory.next(true);
+        }
+        console.log(this.isActiveInventoryMemory)
+    }
 
+   /* getStatusSectionInventory(): boolean {
+        return this.isActiveInventoryMemory;
+    }*/
 
 }

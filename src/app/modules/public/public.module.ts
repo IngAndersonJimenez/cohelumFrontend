@@ -18,6 +18,7 @@ import { PaginatorModule } from "primeng/paginator";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
+import {InventoryComponent} from "./inventory/inventory.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 
@@ -31,7 +32,8 @@ import {MatButtonModule} from "@angular/material/button";
     ProductPublicComponent,
     TeamPublicComponent,
     ShowcasePublicComponent,
-    ContactComponent
+      ContactComponent,
+      InventoryComponent
   ],
   imports: [
     CommonModule,
@@ -43,8 +45,8 @@ import {MatButtonModule} from "@angular/material/button";
     ReactiveFormsModule,
     MultiSelectModule,
     DropdownModule,
-    MatDialogModule,
-    MatButtonModule
+      MatDialogModule,
+      MatButtonModule
   ]
 })
 export class PublicModule { }

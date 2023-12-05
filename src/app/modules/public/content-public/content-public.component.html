@@ -1,7 +1,8 @@
 <app-header-public></app-header-public>
-<app-allies-public></app-allies-public>
-<app-showcase-public></app-showcase-public>
-<app-product-public></app-product-public>
-<app-team-public></app-team-public>
-<app-contact></app-contact>
+<app-allies-public *ngIf="!isActiveInventoty"></app-allies-public>
+<app-showcase-public *ngIf="!isActiveInventoty"></app-showcase-public>
+<app-product-public *ngIf="!isActiveInventoty"></app-product-public>
+<app-inventory *ngIf="isActiveInventoty"></app-inventory>
+<app-team-public *ngIf="!isActiveInventoty"></app-team-public>
+<app-contact *ngIf="!isActiveInventoty"></app-contact>
 <app-footer-public></app-footer-public>

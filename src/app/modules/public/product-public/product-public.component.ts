@@ -50,7 +50,7 @@ export class ProductPublicComponent implements OnInit {
   private getCategories(token: string) {
     console.log('Token categorias')
     console.log(token)
-    let response:any;
+    let response: any;
     this.inventoryService.getCategory(token).subscribe(data => {
       console.log(data)
       response = data;
@@ -59,6 +59,13 @@ export class ProductPublicComponent implements OnInit {
       console.log(this.category[0].description);
     });
   }
+
+
+  activateSectionInventory() {
+    console.log("Activando seccion");
+    this.inventoryService.activeSectionInventoty();
+  }
+
 
 
 }
