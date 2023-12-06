@@ -63,9 +63,8 @@ export class ProductPublicComponent implements OnInit {
 
   activateSectionInventory() {
     console.log("Activando seccion");
-    this.inventoryService.activeSectionInventoty();
+    this.inventoryService.activeSectionInventoty(true);
   }
-
 
 
 }

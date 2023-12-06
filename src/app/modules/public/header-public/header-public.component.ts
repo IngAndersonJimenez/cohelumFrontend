@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
+import { InventoryService } from 'src/app/services/inventory.service';
 
 @Component({
   selector: 'app-header-public',
@@ -9,7 +10,7 @@ import { ViewportScroller } from '@angular/common';
 })
 export class HeaderPublicComponent {
 
-  constructor(public router: Router, private scroller: ViewportScroller) {
+  constructor(public router: Router, private scroller: ViewportScroller, private inventoryService:InventoryService) {
   }
 
   navegateLogin() {
@@ -18,6 +19,7 @@ export class HeaderPublicComponent {
 
   goTo(position: any) {
     this.scroller.scrollToAnchor(position);
+    this.activateSectionInventory();
   }
 
   scrollToDiv(target:HTMLElement){
@@ -25,5 +27,9 @@ export class HeaderPublicComponent {
     target.scrollIntoView();
   }
 
+  activateSectionInventory() {
+    console.log("Activando seccion");
+    this.inventoryService.activeSectionInventoty(false);
+  }
 
 }
