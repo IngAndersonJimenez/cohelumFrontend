@@ -63,47 +63,52 @@ h1 {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
   }
-
   .card-body {
     padding: 20px;
 
     .form-field {
-      margin-bottom: 15px;
+      margin-bottom: 1rem;
 
       label {
         display: block;
         font-weight: bold;
-        margin-bottom: 5px;
+        margin-bottom: 0.5rem;
       }
 
       span {
         display: block;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
+        padding: 1rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
         background-color: #f5f5f5;
       }
-
-      img {
-        max-width: 80%;
-        height: auto;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin: 5px auto;
-
+      .form-field2{
+        margin-top: 2rem
       }
-
     }
 
     .form-field:last-child {
       margin-bottom: 0;
     }
-  }
-}
-/* Agrega estos estilos para resaltar la fila seleccionada */
-mat-table {
-  &.selected-row {
-    background-color: #e0e0e0; /* Cambia esto al color que desees para una fila seleccionada */
-  }
-}
 
+    .carrusel-container {
+      p-carousel {
+        width: 100%;
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+
+          img {
+            width: 50%;
+            height: 50%;
+            border: 2px solid #7a7777;
+            border-radius: 5px;
+            margin: 0 auto;
+            display: block;
+            object-fit: cover;
+          }
+      }
+    }
+  }
+}

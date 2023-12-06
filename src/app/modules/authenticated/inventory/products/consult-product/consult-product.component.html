@@ -45,7 +45,7 @@
             </div>
             <div class="row">
                 <div class="col-3">
-                    <div class="form-field">
+                    <div class="form-field form-field2">
                         <label>Precio:</label>
                         {{ productData.responseDTO.getInventoryDTO.price | currency:'USD':'symbol':'1.2-2' }}
                     </div>
@@ -62,9 +62,19 @@
             <label>Ficha Técnica:</label>
             <embed *ngIf="pdfSrc" [src]="pdfSrc" type="application/pdf" width="100%" height="500px">
         </div>
-        <div class="form-field" *ngIf="imageR">
-            <label>Imagen del Producto:</label>
-            <img [src]="imageR" alt="Imagen del Producto">
+        <div class="form-field">
+            <label>Imagenes del producto:</label>
+        </div>
+        <div class="carrusel-container">
+            <p-carousel [value]="listImage" [numVisible]="4" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions">
+                <ng-template let-imageR pTemplate="item">
+                    <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+                        <div class="mb-3">
+                                <img [src]="imageR" alt="Imagen del Producto">
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
         </div>
     </div>
 </div>

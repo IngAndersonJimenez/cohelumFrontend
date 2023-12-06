@@ -19,6 +19,8 @@ import { ConsultProductComponent } from './products/consult-product/consult-prod
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {PdfViewerModule} from "ng2-pdf-viewer";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {CarouselModule} from "primeng/carousel";
+import {SharedModule} from "primeng/api";
 
 
 
@@ -53,6 +55,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         ProgressSpinnerModule,
         PdfViewerModule,
         MatCheckboxModule,
+        CarouselModule,
+        SharedModule,
     ]
 })
 export class InventoryModule { }

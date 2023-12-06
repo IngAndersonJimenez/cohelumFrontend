@@ -15,7 +15,9 @@ export class ConsultProductComponent implements OnInit {
   canShowSearchAsOverlay = false;
   productData: Product | undefined;
   pdfSrc: SafeResourceUrl = '';
+  listImage: string[] = [];
   imageR:string='';
+  responsiveOptions: any[] | undefined;
 
   constructor(private fb: FormBuilder, private inventoryService: InventoryService,private sanitizer: DomSanitizer) {
     this.consultaForm = this.fb.group({
@@ -46,13 +48,11 @@ export class ConsultProductComponent implements OnInit {
             const imageListOrObject = this.productData?.responseDTO.getInventoryImageDTO;
 
             if (Array.isArray(imageListOrObject) && imageListOrObject.length > 0) {
-              const firstImage = imageListOrObject[0];
-              if (firstImage?.image) {
-                this.imageR = 'data:image/png;base64,' + firstImage.image;
-              }
+              this.listImage = imageListOrObject.map(image => 'data:image/png;base64,' + image.image);
             } else if (!Array.isArray(imageListOrObject) && imageListOrObject?.image) {
-              this.imageR = 'data:image/png;base64,' + imageListOrObject.image;
+              this.listImage = ['data:image/png;base64,' + imageListOrObject.image];
             }
+
 
             if (this.productData.responseDTO.getInventoryDetailsDTO.datasheet) {
               this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(`data:application/pdf;base64, ${this.productData.responseDTO.getInventoryDetailsDTO.datasheet}`);
