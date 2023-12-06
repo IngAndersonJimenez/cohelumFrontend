@@ -29,7 +29,7 @@ export class InventoryService {
             'Authorization': `${this.getToken()}`,
         });
 
-        return this.http.post<Inventory>(`${environment.apiUrl}api/v1/`, formData, { headers }).pipe(
+        return this.http.post<Inventory>(`${environment.apiUrl}api/v1/inventory/createFull`, formData, { headers }).pipe(
             catchError(error => {
                 console.error('Error en la solicitud:', error);
                 this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
@@ -178,11 +178,25 @@ export class InventoryService {
 
     activeSectionInventoty(status: boolean) {
         console.log("activeSectionInventoty")
-        this.isActiveInventoryMemory.next(status); 
+        this.isActiveInventoryMemory.next(status);
     }
 
-   /* getStatusSectionInventory(): boolean {
-        return this.isActiveInventoryMemory;
-    }*/
+
+    getInventoryAll(token?: string): Observable<any[]> {
+        let headers = new HttpHeaders({})
+
+        if (token != null) {
+            headers = new HttpHeaders({
+                'Authorization': `${token}`
+            });
+        } else {
+            headers = new HttpHeaders({
+                'Authorization': `${this.getToken()}`
+            });
+        }
+
+        return this.http.get<CategoryProducts[]>(environment.apiUrl + 'api/v1/inventory', { headers });
+    }
+
 
 }
