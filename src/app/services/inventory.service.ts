@@ -176,14 +176,9 @@ export class InventoryService {
         });
     }
 
-    activeSectionInventoty() {
+    activeSectionInventoty(status: boolean) {
         console.log("activeSectionInventoty")
-        if (this.isActiveInventoryMemory.value) {
-            this.isActiveInventoryMemory.next(false); 
-        } else {
-            this.isActiveInventoryMemory.next(true);
-        }
-        console.log(this.isActiveInventoryMemory)
+        this.isActiveInventoryMemory.next(status); 
     }
 
    /* getStatusSectionInventory(): boolean {
