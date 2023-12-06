@@ -24,8 +24,6 @@ export class ContactComponent implements OnInit {
       private formBuilder: FormBuilder,
       private notificationService: NotificationService,
       private contactService: ContactService,
-      private loginService: LoginService,
-      private dialog:MatDialog
   ) { }
 
   ngOnInit(): void {

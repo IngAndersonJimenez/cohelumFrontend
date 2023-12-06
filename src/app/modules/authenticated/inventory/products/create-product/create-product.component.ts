@@ -52,7 +52,6 @@ export class CreateProductComponent implements OnInit{
             this.productForm.reset();
             this.selectedImage = undefined;
             this.selectedPDFName = undefined;
-            console.log('Producto creado correctamente', result);
           },
           error => {
             this.isLoading = false;
@@ -74,7 +73,6 @@ export class CreateProductComponent implements OnInit{
       const maxSizeInBytes = 6 * 1024 * 1024;
 
       if (fileSizeInBytes > maxSizeInBytes) {
-        console.error('El archivo excede el tamaño permitido (6 megabytes).');
         this.notificationService.showError("El archivo excede el tamaño permitido (6 megabytes).", "Vuelve a intentar");
         input.value = null;
         return;
@@ -87,12 +85,10 @@ export class CreateProductComponent implements OnInit{
       const fileExtension = newFile.name.split('.').pop().toLowerCase();
 
       if (type === 'image' && !allowedImageExtensions.includes(fileExtension)) {
-        console.error('Solo se permiten archivos de imagen (jpg, jpeg, png, gif).');
         this.notificationService.showError("Solo se permiten archivos de imagen (jpg, jpeg, png, gif).", "Vuelve a intentar");
         input.value = null;
         return;
       } else if (type === 'pdf' && !allowedPDFExtensions.includes(fileExtension)) {
-        console.error('Solo se permiten archivos PDF.');
         this.notificationService.showError("Solo se permiten archivos PDF.", "Vuelve a intentar");
         input.value = null;
         return;
@@ -127,7 +123,6 @@ export class CreateProductComponent implements OnInit{
     this.inventoryService.getCategory().subscribe(
         (response: any) => {
           this.categories = response.responseDTO;
-          console.log(this.categories);
         },
         error => {
           console.error('Error al obtener las categorías', error);

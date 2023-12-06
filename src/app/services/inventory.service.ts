@@ -10,6 +10,7 @@ import { InventoryCategory } from "../interface/products/inventoryCategory";
 import { Product } from "../interface/products/Product";
 import { CategoryProducts } from "../interface/products/CategoryProducts";
 import { Category } from "../interface/Category";
+import {InventoryImage} from "../interface/InventoryImage";
 
 @Injectable({
     providedIn: 'root'
@@ -29,7 +30,7 @@ export class InventoryService {
             'Authorization': `${this.getToken()}`,
         });
 
-        return this.http.post<Inventory>(`${environment.apiUrl}api/v1/`, formData, { headers }).pipe(
+        return this.http.post<Inventory>(`${environment.apiUrl}api/v1/inventory/createFull`, formData, { headers }).pipe(
             catchError(error => {
                 console.error('Error en la solicitud:', error);
                 this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
@@ -184,5 +185,16 @@ export class InventoryService {
    /* getStatusSectionInventory(): boolean {
         return this.isActiveInventoryMemory;
     }*/
+
+    createImageProduct(idInventory: number, imageFile: string): Observable<InventoryImage> {
+        const formData: FormData = new FormData();
+        formData.append('image', imageFile);
+
+        let headers = new HttpHeaders();
+        headers = headers.append('Authorization', this.getToken());
+
+        return this.http.post<InventoryImage>(
+            `${environment.apiUrl}api/v1/inventoryImage/create/${idInventory}`, formData, {headers: headers,});
+    }
 
 }

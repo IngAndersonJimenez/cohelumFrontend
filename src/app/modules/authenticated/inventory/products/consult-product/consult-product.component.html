@@ -1,5 +1,3 @@
-<!-- consult-product.component.html -->
-
 <h1>Consultar producto</h1>
 
 <div class="card-head">
@@ -10,14 +8,102 @@
                     <input type="search" name="search" id="search" class="search" placeholder="Consultar producto" autocomplete="off" formControlName="name">
                     <i class="fa fa-search search-icon"></i>
                     <button mat-raised-button color="primary" class="buscar" (click)="searchProduct()">BUSCAR</button>
-
                 </div>
             </div>
         </form>
     </mat-card>
 </div>
 
-<div class="card card1" *ngIf="productData">
+<div *ngIf="productData && productData.responseDTO.getInventoryDTO.active">
+    <div class="card card1">
+        <div class="card-header">
+            <h2>Detalles del Producto</h2>
+        </div>
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-field">
+                            <label>Nombre del Producto:</label>
+                            {{ productData.responseDTO.getInventoryDTO.name }}
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-field">
+                            <label>Categoría:</label>
+                            {{ productData.responseDTO.getInventoryCategoryDTO.description }}
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-field">
+                            <label>Unidades Disponibles:</label>
+                            {{ productData.responseDTO.getInventoryDTO.unitsAvailable }}
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-field">
+                            <label>Estado del producto</label>
+                            <button mat-raised-button color="warn" class="toggle-button deactivate" (click)="toggleProductStatus()">
+                                <mat-icon>stop</mat-icon> Desactivar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-2">
+                    <div class="col-3">
+                        <div class="form-field form-field2">
+                            <label>Precio:</label>
+                            {{ productData.responseDTO.getInventoryDTO.price | currency:'USD':'symbol':'1.2-2' }}
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-field">
+                            <label>Característica:</label>
+                            {{ productData.responseDTO.getInventoryDetailsDTO.characteristic }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-field" *ngIf="pdfSrc">
+                <label>Ficha Técnica:</label>
+                <embed *ngIf="pdfSrc" [src]="pdfSrc" type="application/pdf" width="100%" height="500px">
+            </div>
+            <div class="form-field">
+                <label>Imagenes del producto:</label>
+            </div>
+            <div class="carrusel-container">
+                <p-carousel [value]="listImage" [numVisible]="4" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions">
+                    <ng-template let-imageR pTemplate="item">
+                        <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+                            <div class="mb-3">
+                                <img [src]="imageR" alt="Imagen del Producto">
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-carousel>
+            </div>
+            <div class="add-image-container">
+                <mat-icon>add_a_photo</mat-icon>
+                <span (click)="fileInput.click()">Añadir imagen al producto</span>
+                <input #fileInput type="file" style="display:none" (change)="onFileSelected($event)">
+            </div>
+
+            <div *ngIf="showImagePreview" class="simple-dialog">
+                <div class="dialog-content">
+                    <h2>¿Quieres añadir esta imagen al producto?</h2>
+                    <img [src]="currentImage" alt="Imagen del Producto">
+                    <div class="dialog-buttons">
+                        <button class="accept" (click)="acceptImage()">Aceptar</button>
+                        <button class="cancel" (click)="closeImagePreview()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Muestra solo el botón si el producto no está activo -->
+<div class="card card1" *ngIf="productData && !productData.responseDTO.getInventoryDTO.active">
     <div class="card-header">
         <h2>Detalles del Producto</h2>
     </div>
@@ -26,55 +112,14 @@
             <div class="row">
                 <div class="col-3">
                     <div class="form-field">
-                        <label>Nombre del Producto:</label>
-                        {{ productData.responseDTO.getInventoryDTO.name }}
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-field">
-                        <label>Categoría:</label>
-                        {{ productData.responseDTO.getInventoryCategoryDTO.description }}
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-field">
-                        <label>Unidades Disponibles:</label>
-                        {{ productData.responseDTO.getInventoryDTO.unitsAvailable }}
+                        <label>Estado del producto</label>
+                        <!-- Botón para activar el producto -->
+                        <button mat-raised-button color="primary" class="toggle-button activate" (click)="toggleProductStatus()">
+                            <mat-icon>play_arrow</mat-icon> Activar
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="row form-2">
-                <div class="col-3">
-                    <div class="form-field form-field2">
-                        <label>Precio:</label>
-                        {{ productData.responseDTO.getInventoryDTO.price | currency:'USD':'symbol':'1.2-2' }}
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-field">
-                        <label>Característica:</label>
-                        {{ productData.responseDTO.getInventoryDetailsDTO.characteristic }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-field" *ngIf="pdfSrc">
-            <label>Ficha Técnica:</label>
-            <embed *ngIf="pdfSrc" [src]="pdfSrc" type="application/pdf" width="100%" height="500px">
-        </div>
-        <div class="form-field">
-            <label>Imagenes del producto:</label>
-        </div>
-        <div class="carrusel-container">
-            <p-carousel [value]="listImage" [numVisible]="4" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions">
-                <ng-template let-imageR pTemplate="item">
-                    <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
-                        <div class="mb-3">
-                                <img [src]="imageR" alt="Imagen del Producto">
-                        </div>
-                    </div>
-                </ng-template>
-            </p-carousel>
         </div>
     </div>
 </div>

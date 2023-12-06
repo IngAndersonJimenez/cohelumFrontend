@@ -5,6 +5,7 @@ export interface Product {
             name: string;
             price: number;
             unitsAvailable: number;
+            active?:boolean
 
         }
         getInventoryDetailsDTO: {

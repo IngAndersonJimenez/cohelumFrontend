@@ -20,6 +20,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import {MatSortModule} from "@angular/material/sort";
         FormsModule,
         MatPaginatorModule,
         MatTableModule,
-        MatSortModule
+        MatSortModule,
+        MatDialogModule
     ]
 })
 export class AuthenticatedModule { }
