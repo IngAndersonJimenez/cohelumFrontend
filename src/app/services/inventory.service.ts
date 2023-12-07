@@ -179,12 +179,26 @@ export class InventoryService {
 
     activeSectionInventoty(status: boolean) {
         console.log("activeSectionInventoty")
-        this.isActiveInventoryMemory.next(status); 
+        this.isActiveInventoryMemory.next(status);
     }
 
-   /* getStatusSectionInventory(): boolean {
-        return this.isActiveInventoryMemory;
-    }*/
+
+    getInventoryAll(token?: string): Observable<any> {
+        let headers = new HttpHeaders({})
+
+        if (token != null) {
+            headers = new HttpHeaders({
+                'Authorization': `${token}`
+            });
+        } else {
+            headers = new HttpHeaders({
+                'Authorization': `${this.getToken()}`
+            });
+        }
+
+        return this.http.get<CategoryProducts[]>(environment.apiUrl + 'api/v1/inventory', { headers });
+    }
+
 
     createImageProduct(idInventory: number, imageFile: string): Observable<InventoryImage> {
         const formData: FormData = new FormData();

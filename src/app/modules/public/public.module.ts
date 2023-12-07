@@ -18,9 +18,13 @@ import { PaginatorModule } from "primeng/paginator";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
-import {InventoryComponent} from "./inventory/inventory.component";
-import {MatDialogModule} from "@angular/material/dialog";
-import {MatButtonModule} from "@angular/material/button";
+import { InventoryComponent } from "./inventory/inventory.component";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatButtonModule } from "@angular/material/button";
+import { DataViewModule } from 'primeng/dataview';
+import { TagModule } from 'primeng/tag';
+import { RatingModule } from 'primeng/rating';
+
 
 @NgModule({
   declarations: [
@@ -32,8 +36,8 @@ import {MatButtonModule} from "@angular/material/button";
     ProductPublicComponent,
     TeamPublicComponent,
     ShowcasePublicComponent,
-      ContactComponent,
-      InventoryComponent
+    ContactComponent,
+    InventoryComponent
   ],
   imports: [
     CommonModule,
@@ -45,8 +49,11 @@ import {MatButtonModule} from "@angular/material/button";
     ReactiveFormsModule,
     MultiSelectModule,
     DropdownModule,
-      MatDialogModule,
-      MatButtonModule
+    MatDialogModule,
+    MatButtonModule,
+    DataViewModule,
+    TagModule,
+    RatingModule
   ]
 })
 export class PublicModule { }
