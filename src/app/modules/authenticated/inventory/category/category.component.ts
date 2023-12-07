@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from "@angular/material/table";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { InventoryService } from "../../../../services/inventory.service";
-import { InventoryCategory } from "../../../../interface/products/inventoryCategory";
-import { CategoryProducts } from "../../../../interface/products/CategoryProducts";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { NotificationService } from "../../../../notifications/notification.service";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
+import {InventoryService} from "../../../../services/inventory.service";
+import {InventoryCategory} from "../../../../interface/products/inventoryCategory";
+import {CategoryProducts} from "../../../../interface/products/CategoryProducts";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {NotificationService} from "../../../../notifications/notification.service";
 
 @Component({
     selector: 'app-category',
@@ -20,10 +20,11 @@ export class CategoryComponent implements OnInit {
     categoryList: CategoryProducts[] = [];
     displayedColumns: string[] = ['idCategory', 'description', 'statusCategory', 'image', 'action'];
     dataSource = new MatTableDataSource<CategoryProducts>(this.categoryList);
-    @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-    @ViewChild(MatSort, { static: true }) sort!: MatSort;
+    @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
+    @ViewChild(MatSort, {static: true}) sort!: MatSort;
     public productForm!: FormGroup;
     selectedImage: string | undefined;
+    newImage: string | undefined;
 
 
     constructor(private inventoryService: InventoryService, private formBuilder: FormBuilder, private notificationService: NotificationService) {
@@ -36,6 +37,7 @@ export class CategoryComponent implements OnInit {
 
         });
     }
+
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -86,7 +88,6 @@ export class CategoryComponent implements OnInit {
     onSubmit() {
 
         if (this.productForm.valid) {
-            console.log('Contenido del formulario antes de enviar:', this.productForm.value);
             const formData = new FormData();
             formData.append('descriptionCategory', this.productForm.get('descriptionCategory')?.value);
             const isImageAttached = this.productForm.get('image')?.value !== null;
@@ -105,6 +106,7 @@ export class CategoryComponent implements OnInit {
             console.log('El formulario no está completo. No se llama al servicio.');
         }
     }
+
     onFileSelected(event: any, type: string): void {
         const input = event.target;
         const newFile = input.files ? input.files[0] : null;
@@ -118,6 +120,7 @@ export class CategoryComponent implements OnInit {
                 input.value = null;
                 return;
             }
+
             // Verificar la extensión del archivo
             const allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
 
@@ -138,16 +141,17 @@ export class CategoryComponent implements OnInit {
 
                 const formData = new FormData();
                 formData.append('image', newFile);
-                this.productForm.patchValue({ image: formData.get('image') });
+                this.productForm.patchValue({image: formData.get('image')});
             }
         }
     }
+
     editCategory(category: CategoryProducts) {
         category.isEditing = true;
     }
 
     saveEditedCategory(category: CategoryProducts) {
-        this.inventoryService.updateCategory(category.getIdCategory(), category.getStatusCategory(),category.getDescription()).subscribe(
+        this.inventoryService.updateCategory(category.getIdCategory(), category.getStatusCategory(), category.getDescription()).subscribe(
             (result: any) => {
                 if (result != null && result.responseDTO && 'active' in result.responseDTO) {
                     category.isEditing = false;
@@ -159,24 +163,37 @@ export class CategoryComponent implements OnInit {
     }
 
     saveEditedImageCategory(category: CategoryProducts): void {
-        if (category.getIdCategory() && category.getImage()) {
-            this.inventoryService.updateImageCategory(category.getIdCategory(), category.getImage()).subscribe(
+        category.setImage(this.productForm.get('image')?.value);
+        console.log('Valor de image en el formulario despues:', this.productForm.get('image')?.value);
+        this.inventoryService.updateImageCategory(category.getIdCategory(), category.getImage())
+            .subscribe(
                 (result: any) => {
                     if (result != null && result.responseDTO && 'image' in result.responseDTO) {
                         category.isEditing = false;
-                        category.setImage('data:image/png;base64,' + result.responseDTO.image);
-                        console.log('Contenido de photo:', result.responseDTO.image);
-                    } else {
-                        console.log('La respuesta no contiene la propiedad photo esperada.');
+                        console.log('Resultado: ', result)
                     }
                 }
             );
-        }
     }
 
 
+    onFileSelected1(event: any): void {
+        const input = event.target;
+        const newFile = input.files ? input.files[0] : null;
+        const previousImage = this.productForm.get('image')?.value;
 
-
+        if (newFile) {
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+                this.selectedImage = e.target.result;
+                this.productForm.get('image')?.setValue(this.selectedImage);
+            };
+            reader.readAsDataURL(newFile);
+        } else {
+            this.selectedImage = previousImage;
+            this.productForm.get('image')?.setValue(this.selectedImage);
+        }
+    }
 
 
 
