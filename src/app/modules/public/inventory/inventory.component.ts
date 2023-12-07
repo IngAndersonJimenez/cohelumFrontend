@@ -155,11 +155,11 @@ export class InventoryComponent {
     for (let image of images) {
 
       if (count == 0) {
-        inventoryGridInto.setImageInitial(image.image);
+        inventoryGridInto.setImageInitial('data:image/png;base64,' + image.image);
       }
 
       if (count == 1) {
-        inventoryGridInto.setImageSecond(image.image);
+        inventoryGridInto.setImageSecond('data:image/png;base64,' + image.image);
       }
 
       count++;
