@@ -7,7 +7,7 @@
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-form-field class="form-input">
                             <mat-label>Nombre del producto</mat-label>
-                            <input matInput autocomplete="off" formControlName="name" (keypress)="validateEnter($event, 'letras')" required>
+                            <input matInput autocomplete="off" formControlName="name" required>
                             <div class="icon-container">
                                 <i *ngIf="productForm.controls['name'].valid" class="far fa-circle-check icon-check"></i>
                             </div>
