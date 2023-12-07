@@ -2,7 +2,5 @@ export interface InventoryCategory {
     idCategory: number;
     description: string;
     active: boolean;
-    editing?: boolean;
-    originalActive?: boolean;
-
+    isEditing: boolean;
 }

@@ -69,10 +69,12 @@
               {{element.statusCategory ? 'Activo' : 'Inactivo'}}
             </ng-container>
             <ng-template #editMode>
-              <mat-checkbox [(ngModel)]="element.statusCategory">Activo</mat-checkbox>
+              <mat-checkbox [ngModel]="element.statusCategory" (ngModelChange)="element.statusCategory = $event"></mat-checkbox>
             </ng-template>
           </td>
         </ng-container>
+
+
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let element">

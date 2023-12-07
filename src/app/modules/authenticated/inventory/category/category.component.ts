@@ -55,7 +55,7 @@ export class CategoryComponent implements OnInit {
                         iterDate.getInventoryCategoryDTO.idCategory,
                         iterDate.getInventoryCategoryDTO.description,
                         iterDate.getInventoryCategoryDTO.active,
-                        'data:image/png;base64,' + iterDate.getCategoryImageDTO.photo
+                        'data:image/png;base64,' + iterDate.getCategoryImageDTO.image
                     );
 
                     this.categoryList.push(categoryProduct);
@@ -99,9 +99,6 @@ export class CategoryComponent implements OnInit {
                     this.productForm.reset();
                     this.loadData();
                     this.addingCategory = false;
-                },
-                error => {
-                    console.error('Error al crear el producto', error);
                 }
             );
         } else {
@@ -146,21 +143,42 @@ export class CategoryComponent implements OnInit {
         }
     }
     editCategory(category: CategoryProducts) {
-        // Establece isEditing en true para la categoría seleccionada
         category.isEditing = true;
     }
 
     saveEditedCategory(category: CategoryProducts) {
-        // Realiza la operación updateCategory1 con los datos editados
-        this.inventoryService.updateCategory1(category).subscribe(
-            result => {
-                category.isEditing = false;
+        this.inventoryService.updateCategory(category.getIdCategory(), category.getStatusCategory(),category.getDescription()).subscribe(
+            (result: any) => {
+                if (result != null && result.responseDTO && 'active' in result.responseDTO) {
+                    category.isEditing = false;
+                    this.saveEditedImageCategory(category);
+
+                }
             },
-            error => {
-                console.error('Error al actualizar la categoría', error);
-            }
         );
     }
+
+    saveEditedImageCategory(category: CategoryProducts): void {
+        if (category.getIdCategory() && category.getImage()) {
+            this.inventoryService.updateImageCategory(category.getIdCategory(), category.getImage()).subscribe(
+                (result: any) => {
+                    if (result != null && result.responseDTO && 'image' in result.responseDTO) {
+                        category.isEditing = false;
+                        category.setImage('data:image/png;base64,' + result.responseDTO.image);
+                        console.log('Contenido de photo:', result.responseDTO.image);
+                    } else {
+                        console.log('La respuesta no contiene la propiedad photo esperada.');
+                    }
+                }
+            );
+        }
+    }
+
+
+
+
+
+
 
     cancelEdit(category: CategoryProducts) {
         category.isEditing = false;

@@ -118,31 +118,6 @@ export class InventoryService {
         );
     }
 
-    updateCategory(inventoryCategory: InventoryCategory): Observable<any> {
-        const headers = new HttpHeaders({
-            'Authorization': this.getToken(),
-        });
-
-        const url = `${environment.apiUrl}api/v1/inventoryCategory/update?idCategory=${inventoryCategory.idCategory}`;
-
-
-        return this.http.put(url, inventoryCategory, { headers }).pipe(
-            catchError(error => {
-                console.error('Error en la solicitud:', error);
-                this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
-                throw error;
-            }),
-            tap(result => {
-                console.log(result);
-                if (result != null) {
-                    this.notificationService.showSuccess("Actualización exitosa", "La categoría se ha actualizado correctamente");
-                } else {
-                    this.notificationService.showError("Error en la actualización", "Vuelve a intentar");
-                }
-            })
-        );
-    }
-
 
     getInventoryByName(name: string): Observable<Product> {
         const headers = new HttpHeaders({
@@ -211,29 +186,52 @@ export class InventoryService {
             `${environment.apiUrl}api/v1/inventoryImage/create/${idInventory}`, formData, {headers: headers,});
     }
 
-    updateCategory1(categoryProducts: CategoryProducts): Observable<any> {
+    updateCategory(idCategory: number, statusCategory: boolean,description:string): Observable<any> {
         const headers = new HttpHeaders({
             'Authorization': this.getToken(),
         });
 
-        const url = `${environment.apiUrl}api/v1/inventoryCategory/update?idCategory=${categoryProducts.getIdCategory()}`;
+        const url = `${environment.apiUrl}api/v1/inventoryCategory/update?idCategory=${idCategory}`;
 
+        const body = {
+            active: statusCategory,
+            description: description
+        };
 
-        return this.http.put(url, categoryProducts, { headers }).pipe(
+        return this.http.put(url, body, { headers }).pipe(
             catchError(error => {
                 console.error('Error en la solicitud:', error);
                 this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
                 throw error;
             }),
             tap(result => {
-                console.log(result);
-                if (result != null) {
-                    this.notificationService.showSuccess("Actualización exitosa", "La categoría se ha actualizado correctamente");
-                } else {
-                    this.notificationService.showError("Error en la actualización", "Vuelve a intentar");
-                }
+                console.log('Respuesta de la actualización:', result);
+                this.notificationService.showSuccess("Actualización exitosa", "La categoría se ha actualizado correctamente");
+
             })
         );
     }
+
+    updateImageCategory(idCategory: number, image: string): Observable<any> {
+        const headers = new HttpHeaders({
+            'Authorization': this.getToken(),
+        });
+
+        const formData = new FormData();
+        formData.append('image', image);
+
+        const url = `${environment.apiUrl}api/v1/categoryImage/update/${idCategory}`;
+
+        return this.http.put(url, formData, { headers }).pipe(
+            catchError(error => {
+                this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
+                throw error;
+            }),
+            tap(result => {
+                this.notificationService.showSuccess("Actualización exitosa", "La categoría se ha actualizado correctamente");
+            })
+        );
+    }
+
 
 }

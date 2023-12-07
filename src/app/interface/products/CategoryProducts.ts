@@ -4,7 +4,9 @@ export class CategoryProducts {
     private description: string;
     private statusCategory: boolean;
     private image: string;
-    public isEditing: boolean = false
+    public isEditing: boolean = false;
+
+
 
     constructor(idCategory: number, description: string, statusCategory: boolean, image: string) {
         this.idCategory = idCategory;
@@ -12,7 +14,6 @@ export class CategoryProducts {
         this.statusCategory = statusCategory;
         this.image = image;
     }
-
 
     getIdCategory(): number {
         return this.idCategory;
