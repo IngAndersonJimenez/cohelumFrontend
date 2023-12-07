@@ -41,12 +41,6 @@ export class CategoryComponent implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    newCategory: InventoryCategory = {
-        idCategory: 0,
-        description: '',
-        active: true
-    };
-
     ngOnInit(): void {
         this.loadData()
         this.buildForm()
@@ -85,34 +79,9 @@ export class CategoryComponent implements OnInit {
 
     cancelAdd() {
         this.addingCategory = false;
-        this.newCategory = { idCategory: 0, description: '', active: true };
+
     }
 
-
-
-    editCategory(category: InventoryCategory) {
-        category.editing = true;
-        category.originalActive = true;
-    }
-
-    saveEditedCategory(category: InventoryCategory) {
-        console.log('Datos antes de la actualización:', category);
-
-        this.inventoryService.updateCategory(category).subscribe(
-            () => {
-                console.log('La categoría se actualizó correctamente.');
-                this.loadData();
-                category.editing = false;
-            },
-            error => {
-                console.error('Error al actualizar la categoría:', error);
-            }
-        );
-    }
-
-    cancelEdit(category: InventoryCategory) {
-        category.editing = false;
-    }
 
     onSubmit() {
 
@@ -176,7 +145,25 @@ export class CategoryComponent implements OnInit {
             }
         }
     }
+    editCategory(category: CategoryProducts) {
+        // Establece isEditing en true para la categoría seleccionada
+        category.isEditing = true;
+    }
 
+    saveEditedCategory(category: CategoryProducts) {
+        // Realiza la operación updateCategory1 con los datos editados
+        this.inventoryService.updateCategory1(category).subscribe(
+            result => {
+                category.isEditing = false;
+            },
+            error => {
+                console.error('Error al actualizar la categoría', error);
+            }
+        );
+    }
 
+    cancelEdit(category: CategoryProducts) {
+        category.isEditing = false;
+    }
 
 }

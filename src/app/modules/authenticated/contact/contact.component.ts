@@ -3,11 +3,9 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {Contact} from "../../../interface/Contact";
 import {ContactService} from "../../../services/contact.service";
-import {ResponseMessageDTO} from "../../../interface/header/ResponseMessageDTO";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-import {InventoryCategory} from "../../../interface/products/inventoryCategory";
 
 @Component({
     selector: 'app-contact',

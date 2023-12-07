@@ -197,4 +197,29 @@ export class InventoryService {
             `${environment.apiUrl}api/v1/inventoryImage/create/${idInventory}`, formData, {headers: headers,});
     }
 
+    updateCategory1(categoryProducts: CategoryProducts): Observable<any> {
+        const headers = new HttpHeaders({
+            'Authorization': this.getToken(),
+        });
+
+        const url = `${environment.apiUrl}api/v1/inventoryCategory/update?idCategory=${categoryProducts.getIdCategory()}`;
+
+
+        return this.http.put(url, categoryProducts, { headers }).pipe(
+            catchError(error => {
+                console.error('Error en la solicitud:', error);
+                this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
+                throw error;
+            }),
+            tap(result => {
+                console.log(result);
+                if (result != null) {
+                    this.notificationService.showSuccess("Actualización exitosa", "La categoría se ha actualizado correctamente");
+                } else {
+                    this.notificationService.showError("Error en la actualización", "Vuelve a intentar");
+                }
+            })
+        );
+    }
+
 }

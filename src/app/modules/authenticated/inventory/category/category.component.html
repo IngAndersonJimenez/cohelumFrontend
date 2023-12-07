@@ -1,5 +1,3 @@
-
-
 <div class="title-button">
   <h1>Categorías</h1>
   <div class="demo-button-container">
@@ -36,8 +34,6 @@
       </form>
     </div>
 
-
-
     <div class="mat-elevation-z8 table-image">
       <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="idCategory">
@@ -47,7 +43,7 @@
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
           <td mat-cell *matCellDef="let element">
-            <ng-container *ngIf="!element.editing; else editMode">
+            <ng-container *ngIf="!element.isEditing; else editMode">
               {{element.description}}
             </ng-container>
             <ng-template #editMode>
@@ -58,21 +54,18 @@
         <ng-container matColumnDef="image">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Imagen </th>
           <td mat-cell *matCellDef="let element">
-            <ng-container *ngIf="!element.editing; else editMode">
+            <ng-container *ngIf="!element.isEditing; else editMode">
               <img *ngIf="element.image" [src]="element.image" alt="Imagen Categoría" height="50" width="50">
             </ng-container>
             <ng-template #editMode>
-
+              <input type="file" (change)="onFileSelected($event, element)" />
             </ng-template>
           </td>
         </ng-container>
-
-
-
         <ng-container matColumnDef="statusCategory">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
           <td mat-cell *matCellDef="let element">
-            <ng-container *ngIf="!element.editing; else editMode">
+            <ng-container *ngIf="!element.isEditing; else editMode">
               {{element.statusCategory ? 'Activo' : 'Inactivo'}}
             </ng-container>
             <ng-template #editMode>
@@ -80,11 +73,10 @@
             </ng-template>
           </td>
         </ng-container>
-
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let element">
-            <ng-container *ngIf="!element.editing; else editActions">
+            <ng-container *ngIf="!element.isEditing; else editActions">
               <a class="icon-edit" (click)="editCategory(element)">
                 <mat-icon>edit</mat-icon>
               </a>

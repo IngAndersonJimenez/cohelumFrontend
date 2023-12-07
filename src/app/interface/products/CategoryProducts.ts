@@ -4,6 +4,7 @@ export class CategoryProducts {
     private description: string;
     private statusCategory: boolean;
     private image: string;
+    public isEditing: boolean = false
 
     constructor(idCategory: number, description: string, statusCategory: boolean, image: string) {
         this.idCategory = idCategory;
