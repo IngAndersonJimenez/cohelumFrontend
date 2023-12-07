@@ -183,7 +183,7 @@ export class InventoryService {
     }
 
 
-    getInventoryAll(token?: string): Observable<any[]> {
+    getInventoryAll(token?: string): Observable<any> {
         let headers = new HttpHeaders({})
 
         if (token != null) {

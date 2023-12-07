@@ -26,50 +26,30 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="card">
-                <p-dataView #dv [value]="products">
-                    <ng-template let-product pTemplate="listItem">
-                        <div class="col-12">
-                            <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
-                                <img class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round"
-                                    [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
-                                    [alt]="product.name" />
-                                <div
-                                    class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                                    <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                                        <div class="text-2xl font-bold text-900">{{ product.name }}</div>
-                                        <p-rating [(ngModel)]="product.rating" [readonly]="true"
-                                            [cancel]="false"></p-rating>
-                                        <div class="flex align-items-center gap-3">
-                                            <span class="flex align-items-center gap-2">
-                                                <i class="pi pi-tag"></i>
-                                                <span class="font-semibold">{{ product.category }}</span>
-                                            </span>
-                                            <p-tag [value]="product.inventoryStatus"
-                                                [severity]="getSeverity(product)"></p-tag>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
-                                        <span class="text-2xl font-semibold">{{'$'+ product.price }}</span>
-                                        <button pButton icon="pi pi-shopping-cart"
-                                            class="md:align-self-end mb-2 p-button-rounded"
-                                            [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></button>
-                                    </div>
-                                </div>
-                            </div>
+        <div>
+            <div class="row">
+                <div class="col-md-3 col-sm-6" *ngFor="let inventory of inventoryGrid">
+                    <div class="product-grid2 card">
+                        <div class="product-image2">
+                            <a href="#">
+                                <img class="pic-1" [src]="inventory.getImageInitial()">
+                                <img class="pic-2" [src]="inventory.getImageSecond()">
+                            </a>
+                            <ul class="social">
+                                <li><a href="#" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
+                                <li><a href="#" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
+                                <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                            <span class="product-new-label">Sale</span>
+                            <a class="add-to-cart" href="">Add to cart</a>
                         </div>
-                    </ng-template>
-                </p-dataView>
+                        <div class="product-content">
+                            <h3 class="title"><a href="#">Women's Designer Top</a></h3>
+                            <span class="price">$599.99</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-
-
     </div>
-
-
-
 </section>
-

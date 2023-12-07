@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { InventoryGrid } from 'src/app/interface/inventory/InventoryGrid';
 import { InventoryService } from 'src/app/services/inventory.service';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -25,6 +26,8 @@ export class InventoryComponent {
   layout: string = 'list';
 
   products: Product[] = [];
+
+  public inventoryGrid: Array<InventoryGrid> = [];
 
   constructor(private inventoryService: InventoryService, private loginService: LoginService) {
     this.getTokenPublic();
@@ -116,29 +119,52 @@ export class InventoryComponent {
   }
 
   private getInventoryAll(token: string) {
+
+    let inventoryGridInto: InventoryGrid;
+
     this.inventoryService.getInventoryAll(token).subscribe(
       data => {
         console.log("Consulta inventario")
         console.log(data)
+
+        for (let response of data.responseDTO) {
+          console.log(response.getInventoryCategoryDTO.description)
+
+          inventoryGridInto = new InventoryGrid(response.getInventoryCategoryDTO.description,
+            response.getInventoryDTO.description,
+            response.getInventoryDTO.price, response.getInventoryDTO.unitsAvailable,
+            "", "")
+
+          this.setImages(response.getInventoryImageDTO, inventoryGridInto);
+          this.inventoryGrid.push(inventoryGridInto);
+        }
       }
     );
+
+    console.log("Consulta resultado")
+    console.log(this.inventoryGrid)
+
+
   }
 
-  getSeverity(product: Product) {
-    switch (product.inventoryStatus) {
-      case 'INSTOCK':
-        return 'success';
+  private setImages(images: any[], inventoryGridInto: InventoryGrid) {
+    let count: number = 0;
 
-      case 'LOWSTOCK':
-        return 'warning';
 
-      case 'OUTOFSTOCK':
-        return 'danger';
 
-      default:
-        return 'success';
+    for (let image of images) {
+
+      if (count == 0) {
+        inventoryGridInto.setImageInitial(image.image);
+      }
+
+      if (count == 1) {
+        inventoryGridInto.setImageSecond(image.image);
+      }
+
+      count++;
     }
-  };
+  }
 
 
 }
