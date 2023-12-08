@@ -11,6 +11,7 @@ import { Product } from "../interface/products/Product";
 import { CategoryProducts } from "../interface/products/CategoryProducts";
 import { Category } from "../interface/Category";
 import {InventoryImage} from "../interface/InventoryImage";
+import {CategoryImage} from "../interface/products/CategoryImage";
 
 @Injectable({
     providedIn: 'root'
@@ -212,26 +213,21 @@ export class InventoryService {
         );
     }
 
-    updateImageCategory(idCategory: number, image: string): Observable<any> {
+    updateCategoryImage(idCategory: number, image: string): Observable<any> {
+        const formData: FormData = new FormData();
+        formData.append('image', image);
+
         const headers = new HttpHeaders({
             'Authorization': this.getToken(),
         });
 
-        const formData = new FormData();
-        formData.append('image', image);
-
         const url = `${environment.apiUrl}api/v1/categoryImage/update/${idCategory}`;
 
-        return this.http.put(url, formData, { headers }).pipe(
-            catchError(error => {
-                this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
-                throw error;
-            }),
-            tap(result => {
-                this.notificationService.showSuccess("Actualización exitosa", "La categoría se ha actualizado correctamente");
-            })
-        );
+
+        return this.http.put(url, formData, { headers });
     }
+
+
 
 
 }

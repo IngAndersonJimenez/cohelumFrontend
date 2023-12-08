@@ -24,7 +24,6 @@ export class CategoryComponent implements OnInit {
     @ViewChild(MatSort, {static: true}) sort!: MatSort;
     public productForm!: FormGroup;
     selectedImage: string | undefined;
-    newImage: string | undefined;
 
 
     constructor(private inventoryService: InventoryService, private formBuilder: FormBuilder, private notificationService: NotificationService) {
@@ -155,46 +154,26 @@ export class CategoryComponent implements OnInit {
             (result: any) => {
                 if (result != null && result.responseDTO && 'active' in result.responseDTO) {
                     category.isEditing = false;
-                    this.saveEditedImageCategory(category);
+                    this.loadData()
 
                 }
             },
         );
     }
 
-    saveEditedImageCategory(category: CategoryProducts): void {
-        category.setImage(this.productForm.get('image')?.value);
-        console.log('Valor de image en el formulario despues:', this.productForm.get('image')?.value);
-        this.inventoryService.updateImageCategory(category.getIdCategory(), category.getImage())
-            .subscribe(
-                (result: any) => {
-                    if (result != null && result.responseDTO && 'image' in result.responseDTO) {
-                        category.isEditing = false;
-                        console.log('Resultado: ', result)
-                    }
-                }
-            );
+
+    onFileSelected1(event: any, idCategory: number): void {
+        const file: string = event.target.files[0];
+        this.uploadImage(idCategory, file);
+
     }
 
-
-    onFileSelected1(event: any): void {
-        const input = event.target;
-        const newFile = input.files ? input.files[0] : null;
-        const previousImage = this.productForm.get('image')?.value;
-
-        if (newFile) {
-            const reader = new FileReader();
-            reader.onload = (e: any) => {
-                this.selectedImage = e.target.result;
-                this.productForm.get('image')?.setValue(this.selectedImage);
-            };
-            reader.readAsDataURL(newFile);
-        } else {
-            this.selectedImage = previousImage;
-            this.productForm.get('image')?.setValue(this.selectedImage);
-        }
+    uploadImage(idCategory: number, file: string): void {
+        this.inventoryService.updateCategoryImage(idCategory, file)
+            .subscribe(response => {
+                console.log(response);
+            });
     }
-
 
 
     cancelEdit(category: CategoryProducts) {

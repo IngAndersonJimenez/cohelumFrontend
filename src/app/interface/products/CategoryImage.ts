@@ -1,6 +1,6 @@
 export interface CategoryImage{
     idCategoryImage: number;
-    photo: string | null;
+    image: string | null;
     active: boolean;
     idCategory:number
 }

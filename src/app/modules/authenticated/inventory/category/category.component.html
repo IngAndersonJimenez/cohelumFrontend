@@ -58,7 +58,7 @@
               <img *ngIf="element.image"   [src]="element.image" alt="Imagen Categoría" height="50" width="50">
             </ng-container>
             <ng-template #editMode>
-              <input type="file" (change)="onFileSelected1($event)" />
+              <input type="file" (change)="onFileSelected1($event,element.idCategory)" />
             </ng-template>
           </td>
         </ng-container>
