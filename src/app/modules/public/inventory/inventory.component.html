@@ -11,24 +11,62 @@
 
 <section>
     <div class="container">
-        <div class="row justify-content-end">
-            <div class="col-2 align-self-end">filters</div>
-        </div>
         <div class="row">
-            <div class="col-2">filters</div>
+            <div class="col-2"></div>
             <div class="col">
                 <div class="row">
-                    <div class="col" style="background-color: aqua;">1</div>
-                    <div class="col">2</div>
-                    <div class="col">3</div>
-                    <div class="col">4</div>
+                    <div class="col"></div>
+                    <div class="col"></div>
+                    <div class="col">
+                    </div>
+                    <div class="col">
+                        <select class="form-select" aria-label="Default select example">
+                            <option [value]="0" selected>Ordernar productos</option>
+                            <option [value]="order.code" *ngFor="let order of optionOrder; let i = index">
+                                {{order.name}}</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div>
             <div class="row">
-                <div class="col-md-3 col-sm-6" *ngFor="let inventory of inventoryGrid">
+                <div class="col-2 container-filter">
+
+                    <div class="container">
+
+                        <div class="row title-container">
+                            <h5>Filtros</h5>
+                        </div>
+
+                        <div class="row">
+                            <hr />
+                            <h6>Categoria</h6>
+                            <div class="form-check" *ngFor="let category of inventoryCategories">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1" [value]="category.idCategory"
+                                    (click)="filterForCategory(category.description)">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    {{category.description}}
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1" (click)="filterForCategory('todos')" checked>
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Todos
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3 col-sm-6" *ngFor="let inventory of inventoryFilter">
                     <div class="product-grid2 card">
                         <div class="product-image2">
                             <a href="#">
@@ -36,16 +74,16 @@
                                 <img class="pic-2" [src]="inventory.getImageSecond()">
                             </a>
                             <ul class="social">
-                                <li><a href="#" data-tip="Quick View"><i class="fa fa-eye"></i></a></li>
-                                <li><a href="#" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
-                                <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+                                <li><a href="#" data-tip="Mas"><i class="fa fa-eye"></i></a></li>
+                                <!-- <li><a href="#" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
+                                <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>-->
                             </ul>
-                            <span class="product-new-label">Sale</span>
-                            <a class="add-to-cart" href="">Add to cart</a>
+                            <span class="product-new-label">{{inventory.getDescriptionCategory()}}</span>
+                            <a class="add-to-cart">Caracteristicas</a>
                         </div>
-                        <div class="product-content">
-                            <h3 class="title"><a href="#">Women's Designer Top</a></h3>
-                            <span class="price">$599.99</span>
+                        <div class="product-content card-footer">
+                            <h3 class="title"><a><strong>{{inventory.getDescriptionInventory()}}</strong></a></h3>
+                            <span class="price">{{inventory.getPrice() | currency:"$":"symbol"}}</span>
                         </div>
                     </div>
                 </div>

@@ -1,19 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { InventoryGrid } from 'src/app/interface/inventory/InventoryGrid';
+import { InventoryCategory } from 'src/app/interface/products/inventoryCategory';
 import { InventoryService } from 'src/app/services/inventory.service';
 import { LoginService } from 'src/app/services/login.service';
 
-export interface Product {
-  id?: string;
-  code?: string;
-  name?: string;
-  description?: string;
-  price?: number;
-  quantity?: number;
-  inventoryStatus?: string;
-  category?: string;
-  image?: string;
-  rating?: number;
+interface OptionOrder {
+  name: string;
+  code: number;
 }
 
 @Component({
@@ -21,99 +15,30 @@ export interface Product {
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.scss']
 })
-export class InventoryComponent {
-
-  layout: string = 'list';
-
-  products: Product[] = [];
+export class InventoryComponent implements OnInit {
 
   public inventoryGrid: Array<InventoryGrid> = [];
+  optionOrder: OptionOrder[] | undefined;
+  public inventoryCategories: Array<InventoryCategory> = [];
+  public inventoryFilter: Array<InventoryGrid> = [];
 
-  constructor(private inventoryService: InventoryService, private loginService: LoginService) {
+  constructor(private inventoryService: InventoryService, private loginService: LoginService,
+    private formBuilder: FormBuilder) {
     this.getTokenPublic();
-    this.products.push({
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-    })
+  }
 
-    this.products.push({
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-    })
-
-    this.products.push({
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-    })
-
-    this.products.push({
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-    })
-
-    this.products.push({
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-    })
-
-    this.products.push({
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-    })
-
+  ngOnInit() {
+    this.optionOrder = [
+      { name: 'Alfabeticamente', code: 1 },
+      { name: 'Menor a mayor precio', code: 2 },
+      { name: 'Mayor a menor precio', code: 3 }
+    ];
   }
 
   private getTokenPublic() {
     this.loginService.getTokenPublicS().subscribe(data => {
       this.getInventoryAll(data.token);
+      this.getCategoryAll(data.token);
     }
     );
   }
@@ -131,7 +56,7 @@ export class InventoryComponent {
           console.log(response.getInventoryCategoryDTO.description)
 
           inventoryGridInto = new InventoryGrid(response.getInventoryCategoryDTO.description,
-            response.getInventoryDTO.description,
+            response.getInventoryDTO.name,
             response.getInventoryDTO.price, response.getInventoryDTO.unitsAvailable,
             "", "")
 
@@ -143,13 +68,13 @@ export class InventoryComponent {
 
     console.log("Consulta resultado")
     console.log(this.inventoryGrid)
+    this.inventoryFilter = this.inventoryGrid;
 
 
   }
 
   private setImages(images: any[], inventoryGridInto: InventoryGrid) {
     let count: number = 0;
-
 
 
     for (let image of images) {
@@ -163,6 +88,32 @@ export class InventoryComponent {
       }
 
       count++;
+    }
+  }
+
+
+  getCategoryAll(token: string) {
+    let response: any;
+    this.inventoryService.getCategory(token).subscribe(
+      data => {
+        response = data;
+        this.inventoryCategories = response.responseDTO
+      }
+    );
+  }
+
+  filterForCategory(descriptionCategory: string) {
+
+    if (descriptionCategory == 'todos') {
+      this.inventoryFilter = this.inventoryGrid;
+    } else {
+      this.inventoryFilter = [];
+      for (let inventory of this.inventoryGrid) {
+        if (inventory.getDescriptionCategory() == descriptionCategory) {
+          this.inventoryFilter.push(inventory);
+          break;
+        }
+      }
     }
   }
 

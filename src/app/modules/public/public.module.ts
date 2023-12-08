@@ -15,7 +15,7 @@ import { GalleriaModule } from 'primeng/galleria';
 import { MaterialModule } from '../material/material.module';
 import { ContactComponent } from './contact/contact.component';
 import { PaginatorModule } from "primeng/paginator";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { InventoryComponent } from "./inventory/inventory.component";
@@ -24,7 +24,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
 import { RatingModule } from 'primeng/rating';
-
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @NgModule({
   declarations: [
@@ -53,7 +53,10 @@ import { RatingModule } from 'primeng/rating';
     MatButtonModule,
     DataViewModule,
     TagModule,
-    RatingModule
+    RatingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RadioButtonModule
   ]
 })
 export class PublicModule { }
