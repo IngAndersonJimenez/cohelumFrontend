@@ -8,12 +8,12 @@
                 <div class="text-container">
                     <h1 id="comunicate">Comunícate con Nosotros!</h1>
                     <hr class="line">
-                    <p class="p1">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
-                    <p class="p2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+                    <p class="p1">¡Estamos emocionados por ser parte de tu proyecto arquitectónico! nos especializamos
+                        en ofrecer cocinas integrales, griferías, pozuelos y más,
+                        para elevar la estética y funcionalidad de tu espacio. ¿Listo para llevar tu diseño al siguiente
+                        nivel? ¡Contáctanos y hagamos realidad tus ideas hoy mismo!</p>
+                    <p class="p2">En esta Seccion puedes dejarnos comentarios para contactarte y hacer crecer tu proyecto;
+                        si ya eres nuestro cliente puedes radicar y solicitar tus garantias. </p>
                 </div>
             </div>
             <div class="form-container">
@@ -23,7 +23,8 @@
                         <div class="form-group col-md-6">
                             <label for="nameContact">Nombre de Contacto:</label>
                             <input type="text" id="nameContact" formControlName="nameContact" class="form-control">
-                            <div *ngIf="form.get('nameContact')?.hasError('required') && form.get('nameContact')?.touched">
+                            <div
+                                *ngIf="form.get('nameContact')?.hasError('required') && form.get('nameContact')?.touched">
                                 El nombre de contacto es obligatorio.
                             </div>
                         </div>
@@ -45,7 +46,8 @@
                             <label for="reason">Motivo:</label>
                             <select id="reason" formControlName="reason" class="form-control">
                                 <option value="" disabled selected>Selecciona un motivo</option>
-                                <option *ngFor="let opcion of optionsReason" [value]="opcion">{{ opcion | titlecase }}</option>
+                                <option *ngFor="let opcion of optionsReason" [value]="opcion">{{ opcion | titlecase }}
+                                </option>
                             </select>
                             <div *ngIf="form.get('reason')?.hasError('required') && form.get('reason')?.touched">
                                 El motivo es obligatorio.
@@ -54,8 +56,10 @@
 
                         <div class="form-group col-md-6">
                             <label for="attach">Adjunto:</label>
-                            <input type="file" id="attach" (change)="onFileSelected($event,'pdf')" formControlName="attach" class="form-control" accept=".pdf">
-                            <div *ngIf="form.get('attach')?.hasError('invalidExtension') && form.get('attach')?.touched">
+                            <input type="file" id="attach" (change)="onFileSelected($event,'pdf')"
+                                formControlName="attach" class="form-control" accept=".pdf">
+                            <div
+                                *ngIf="form.get('attach')?.hasError('invalidExtension') && form.get('attach')?.touched">
                                 Tipo de archivo no permitido. Selecciona un archivo PDF.
                             </div>
                         </div>
@@ -91,7 +95,8 @@
                                 <p>Radicado: <input #radicadoInput type="text" [value]="radicadoNumber" readonly></p>
                                 <button (click)="copyToClipboard()">Copiar y Cerrar</button>
                             </div>
-                            <button type="submit" id="submit" [disabled]="!form.valid" (click)="onSubmit(); openPopup()" class="btn btn-primary">Enviar Solicitud</button>
+                            <button type="submit" id="submit" [disabled]="!form.valid" (click)="onSubmit(); openPopup()"
+                                class="btn btn-primary">Enviar Solicitud</button>
                         </div>
                     </div>
                 </form>
@@ -99,5 +104,3 @@
         </div>
     </div>
 </section>
-
-
