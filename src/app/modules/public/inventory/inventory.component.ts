@@ -103,7 +103,6 @@ export class InventoryComponent implements OnInit {
   }
 
   filterForCategory(descriptionCategory: string) {
-
     if (descriptionCategory == 'todos') {
       this.inventoryFilter = this.inventoryGrid;
     } else {
@@ -111,10 +110,38 @@ export class InventoryComponent implements OnInit {
       for (let inventory of this.inventoryGrid) {
         if (inventory.getDescriptionCategory() == descriptionCategory) {
           this.inventoryFilter.push(inventory);
-          break;
         }
       }
     }
+  }
+
+  orderInventory(code: any) {
+
+    console.log("orderInventory")
+    console.log(code.target.value)
+    console.log(this.inventoryFilter)
+
+    if (code.target.value == 1) {
+      console.log("orderInventory")
+      this.inventoryFilter.sort(
+        (a, b) => a.getDescriptionInventory().localeCompare(b.getDescriptionInventory())
+      );
+    }
+
+    if (code.target.value == 2) {
+      console.log("orderInventory")
+      this.inventoryFilter.sort(
+        (a, b) => a.getPrice() - b.getPrice());
+    }
+
+    if (code.target.value == 3) {
+      console.log("orderInventory")
+      this.inventoryFilter.sort(
+        (a, b) => b.getPrice() - a.getPrice());
+    }
+
+    console.log(this.inventoryFilter)
+
   }
 
 

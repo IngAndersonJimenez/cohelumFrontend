@@ -25,6 +25,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
 import { RatingModule } from 'primeng/rating';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { MenubarModule } from 'primeng/menubar';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     RatingModule,
     FormsModule,
     ReactiveFormsModule,
-    RadioButtonModule
+    RadioButtonModule,
+    MenubarModule
   ]
 })
 export class PublicModule { }
