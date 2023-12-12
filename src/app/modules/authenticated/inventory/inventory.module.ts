@@ -21,6 +21,9 @@ import {PdfViewerModule} from "ng2-pdf-viewer";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {CarouselModule} from "primeng/carousel";
 import {SharedModule} from "primeng/api";
+import {DialogModule} from "primeng/dialog";
+import {ButtonModule} from "primeng/button";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 
@@ -57,6 +60,9 @@ import {SharedModule} from "primeng/api";
         MatCheckboxModule,
         CarouselModule,
         SharedModule,
+        DialogModule,
+        ButtonModule,
+        MatProgressSpinnerModule,
     ]
 })
 export class InventoryModule { }

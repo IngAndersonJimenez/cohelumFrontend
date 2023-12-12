@@ -1,11 +1,14 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { InventoryService } from "../../../../../services/inventory.service";
-import { Product } from "../../../../../interface/products/Product";
-import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {InventoryImage} from "../../../../../interface/InventoryImage";
-import {MatDialog} from "@angular/material/dialog";
+import { Component, OnInit} from '@angular/core';
+import {ProductFull} from "../../../../../interface/products/ProductFull";
+import {InventoryService} from "../../../../../services/inventory.service";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {NotificationService} from "../../../../../notifications/notification.service";
+import {DomSanitizer} from "@angular/platform-browser";
+import {InventoryImage} from "../../../../../interface/InventoryImage";
+import {InventoryCategory} from "../../../../../interface/products/inventoryCategory";
+
+
+
 
 @Component({
   selector: 'app-consult-product',
@@ -14,21 +17,21 @@ import {NotificationService} from "../../../../../notifications/notification.ser
 })
 export class ConsultProductComponent implements OnInit {
 
-  consultaForm: FormGroup;
-  productData: Product | undefined;
-  pdfSrc: SafeResourceUrl = '';
-  listImage: string[] = [];
+  products:ProductFull[] = [];
+  imageList:string[]=[];
+  consultForm: FormGroup;
+  updateForm:FormGroup;
   responsiveOptions: any[] | undefined;
-  productId :  number | undefined;
-  currentImage: string | undefined;
   selectedFile: string | undefined;
-  imageSelected: boolean = false;
+  currentImage: string | undefined;
   showImagePreview: boolean = false;
+  categories!:InventoryCategory[];
+  showUpdateDialog = false;
+  loadingCategories: boolean = false;
+  showUpdateImageDialog:boolean = false;
 
-
-
-  constructor(private fb: FormBuilder, private inventoryService: InventoryService,private sanitizer: DomSanitizer,private notificationService:NotificationService ) {
-    this.consultaForm = this.fb.group({
+  constructor(private fb: FormBuilder, private inventoryService: InventoryService,private sanitizer: DomSanitizer,private notificationService:NotificationService) {
+    this.consultForm = this.fb.group({
       name: [''],
       price: [''],
       unitsAvailable: [''],
@@ -37,66 +40,74 @@ export class ConsultProductComponent implements OnInit {
       datasheet: [''],
       image: ['']
     });
+    this.updateForm = this.fb.group({
+      name: [''],
+      price: [''],
+      unitsAvailable: [''],
+      idCategory: [null],
+      characteristic: [''],
+      datasheet: [''],
+      image: [''],
+      idInventoryImage:[]
+    });
+
   }
 
+  loadProducts(product: ProductFull){
+
+    const productName = product.name;
+    if (productName && productName.trim() !== '') {
+      this.products = [];
+
+      this.inventoryService.getInventoryByName(productName).subscribe(
+          (data: any) => {
+            const responseDTO = data.responseDTO;
+
+            if (responseDTO) {
+              const product = new ProductFull(
+                  responseDTO.getInventoryDTO.idInventory,
+                  responseDTO.getInventoryDTO.name,
+                  responseDTO.getInventoryDTO.price,
+                  responseDTO.getInventoryDTO.unitsAvailable,
+                  responseDTO.getInventoryDTO.active,
+                  responseDTO.getInventoryDetailsDTO.characteristic,
+                  this.sanitizer.bypassSecurityTrustResourceUrl('data:application/pdf;base64,' + (responseDTO.getInventoryDetailsDTO.datasheet || '')),
+                  responseDTO.getInventoryCategoryDTO.idCategory,
+                  responseDTO.getInventoryCategoryDTO.description,
+                  responseDTO.getInventoryImageDTO[0].idInventoryImage,
+                  'data:image/png;base64,' + responseDTO.getInventoryImageDTO[0].image
+              );
+
+              this.products.push(product);
+
+              this.imageList = responseDTO.getInventoryImageDTO.map((imageDTO: any) => {
+                return 'data:image/png;base64,' + imageDTO.image;
+              });
+
+            }
+
+          }
+      );
+    }
+  }
   ngOnInit(): void {
-    this.consultaForm.get('name')?.valueChanges.subscribe(() => {
-      this.productData = undefined;
-      this.pdfSrc = '';
+    this.consultForm.get('name')?.valueChanges.subscribe(() => {
+      this.products = [];
     });
   }
 
-  searchProduct(): void {
-    const nombreProducto = this.consultaForm.get('name')?.value;
-
-    if (nombreProducto && nombreProducto.trim() !== '') {
-      this.inventoryService.getInventoryByName(nombreProducto).subscribe(
-          (data: Product) => {
-            this.productData = data;
-            this.productId = data.responseDTO.getInventoryDTO.idInventory
-            this.imageSelected = false;
-            console.log('Esto es la data: ',data)
-            const imageListOrObject = this.productData?.responseDTO.getInventoryImageDTO;
-
-            if (Array.isArray(imageListOrObject) && imageListOrObject.length > 0) {
-              this.listImage = imageListOrObject.map(image => 'data:image/png;base64,' + image.image);
-            } else if (!Array.isArray(imageListOrObject) && imageListOrObject?.image) {
-              this.listImage = ['data:image/png;base64,' + imageListOrObject.image];
-            }
-
-            if (this.productData.responseDTO.getInventoryDetailsDTO.datasheet) {
-              this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(`data:application/pdf;base64, ${this.productData.responseDTO.getInventoryDetailsDTO.datasheet}`);
-            }
-
-          },
-          (error) => {
-            console.error('Error al buscar el producto', error);
-          }
-      );
-    }
-  }
-
-  toggleProductStatus() {
-    if (this.productData?.responseDTO) {
-      this.productData.responseDTO.getInventoryDTO.active = !this.productData.responseDTO.getInventoryDTO.active;
-    }
-  }
-
   addImage(): void {
-    if (this.productId && this.selectedFile) {
-      this.inventoryService.createImageProduct(this.productId, this.selectedFile).subscribe(
+    if (this.products[0].idInventory && this.selectedFile) {
+
+      this.inventoryService.createImageProduct(this.products[0].idInventory, this.selectedFile).subscribe(
           (data: InventoryImage) => {
-            this.imageSelected=true;
             console.log('Imagen creada exitosamente', data);
-            this.searchProduct()
-          },
-          (error) => {
-            console.error('Error al crear la imagen del producto', error);
+            this.notificationService.showSuccess("Imagen Añadida al producto","Correctamente")
+            this.loadProducts(this.products[0])
           }
       );
     }
   }
-
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
@@ -110,11 +121,14 @@ export class ConsultProductComponent implements OnInit {
     }
   }
 
+  onFileSelected1(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
   acceptImage(): void {
     this.addImage();
     this.closeImagePreview()
   }
-
 
   openImagePreview(imageSrc: string): void {
     this.currentImage = imageSrc;
@@ -125,6 +139,87 @@ export class ConsultProductComponent implements OnInit {
 
   closeImagePreview(): void {
     this.showImagePreview = false;
+  }
+
+  closeUpdateDialog() {
+    this.showUpdateDialog = false;
+  }
+
+  updateProduct(formdata:FormData){
+    this.inventoryService.updateProduct(formdata,this.products[0].idInventory).subscribe(
+        (data) =>{
+          const updatedProductName = this.consultForm.get('name')?.value;
+          this.closeUpdateDialog()
+          this.loadProducts(updatedProductName)
+        }
+    )
+  }
+
+  openUpdateDialog(product: ProductFull): void {
+    console.log('datasheet:' , product.datasheet)
+
+    this.updateForm.setValue({
+      name: product.name,
+      price: product.price,
+      unitsAvailable: product.unitsAvailable,
+      idCategory: product.idCategory,
+      characteristic: product.characteristic,
+      datasheet: product.datasheet,
+      image:'',
+      idInventoryImage:''
+    });
+
+    this.inventoryService.getCategory().subscribe(
+        (response: any) => {
+          this.categories = response.responseDTO;
+          this.showUpdateDialog = true;
+          this.loadingCategories = false;
+        }
+    );
+  }
+
+  openUpdateDialog2(product: ProductFull): void {
+    console.log('datos: ', product.idInventoryImage);
+    this.updateForm.patchValue({
+      image: product.image,
+      idInventoryImage: product.idInventoryImage,
+    });
+    this.showUpdateImageDialog = true;
+  }
+
+
+  updateImage() {
+    const formData = new FormData();
+    formData.append('image', this.updateForm.get('image')?.value);
+
+    const idInventoryImage = this.updateForm.get('idInventoryImage')?.value;
+
+    this.inventoryService.updateImageProduct(formData, idInventoryImage).subscribe(
+        (updatedProduct: ProductFull) => {
+          console.log('Imagen actualizada exitosamente', updatedProduct);
+          this.closeUpdateImageDialog();
+        }
+    );
+  }
+
+
+
+  closeUpdateImageDialog(){
+    this.showUpdateImageDialog = false;
+  }
+
+  loadImage(image:any){
+    this.selectedFile = image.target.files[0];
+    if (this.selectedFile) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+      };
+      reader.readAsDataURL(this.selectedFile as any);
+      console.log('imagen: ',this.selectedFile)
+      this.updateForm.get('image')?.setValue(this.selectedFile)
+      console.log('imagen: ',this.updateForm)
+
+    }
   }
 
 

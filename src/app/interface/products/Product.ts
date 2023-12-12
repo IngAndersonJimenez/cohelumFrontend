@@ -13,9 +13,11 @@ export interface Product {
             datasheet?: string | null;
         }
         getInventoryCategoryDTO: {
+            idCategory:number
             description: string
         }
         getInventoryImageDTO: {
+            idInventoryImage:number;
             image?: string | null;
         }
     }

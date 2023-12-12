@@ -11,14 +11,15 @@ import { Product } from "../interface/products/Product";
 import { CategoryProducts } from "../interface/products/CategoryProducts";
 import { Category } from "../interface/Category";
 import {InventoryImage} from "../interface/InventoryImage";
-import {CategoryImage} from "../interface/products/CategoryImage";
+import {ProductFull} from "../interface/products/ProductFull";
+
 
 @Injectable({
     providedIn: 'root'
 })
 export class InventoryService {
 
-    private isActiveInventory: boolean = false;
+
     private isActiveInventoryMemory = new BehaviorSubject(false);
     public isActiveInventoryCurrent = this.isActiveInventoryMemory.asObservable();
 
@@ -95,38 +96,13 @@ export class InventoryService {
         return this.http.get<CategoryProducts[]>(environment.apiUrl + 'api/v1/inventoryCategory/getCategoryAll', { headers });
     }
 
-    createCategory(inventoryCategory: InventoryCategory): Observable<any> {
-        const headers = new HttpHeaders({
-            'Authorization': this.getToken(),
-        });
-
-        const url = `${environment.apiUrl}api/v1/inventoryCategory/create`;
-
-        return this.http.post<InventoryCategory>(url, inventoryCategory, { headers }).pipe(
-            catchError(error => {
-                console.error('Error en la solicitud:', error);
-                this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
-                throw error;
-            }),
-            tap(result => {
-                console.log(result);
-                if (result != null) {
-                    this.notificationService.showSuccess("Registro exitoso", "La categoría se ha creado correctamente");
-                } else {
-                    this.notificationService.showError("Error en la creación", "Vuelve a intentar");
-                }
-            })
-        );
-    }
-
-
-    getInventoryByName(name: string): Observable<Product> {
+    getInventoryByName(name: string): Observable<ProductFull> {
         const headers = new HttpHeaders({
             Authorization: `${this.getToken()}`,
         });
         const url = `${environment.apiUrl}api/v1/inventory/searchByName/${name}`;
 
-        return this.http.get<Product>(url, { headers }).pipe(
+        return this.http.get<ProductFull>(url, { headers }).pipe(
             catchError((error) => {
                 console.error('Error en la solicitud:', error);
                 this.notificationService.showError('Error en la solicitud', 'Vuelve a intentar');
@@ -135,7 +111,7 @@ export class InventoryService {
             tap((result) => {
                 console.log(result);
                 if (result != null) {
-                    this.notificationService.showSuccess('Consulta exitosa', 'Bienvenido');
+                    this.notificationService.showSuccess('Datos del producto', 'Consulta exitosa!');
                 } else {
                     this.notificationService.showError('Registro fallido', 'Vuelve a intentar');
                 }
@@ -225,6 +201,53 @@ export class InventoryService {
 
 
         return this.http.put(url, formData, { headers });
+    }
+
+    updateProduct(formData:FormData, idInventoryId:number):Observable<ProductFull>{
+        const headers = new HttpHeaders({
+            'Authorization': `${this.getToken()}`,
+        });
+
+        return this.http.put<ProductFull>(`${environment.apiUrl}api/v1/inventory/updateFull/${idInventoryId}`, formData, { headers }).pipe(
+            catchError(error => {
+                console.error('Error en la solicitud:', error);
+                this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
+                throw error;
+            }),
+            map(result => {
+                console.log(result);
+                if (result != null) {
+                    console.log("Llego");
+                    this.notificationService.showSuccess("Actualización exitoso", "El producto se ha actualizado correctamente");
+                } else {
+                    this.notificationService.showError("Actualización fallido", "Vuelve a intentar");
+                }
+                return result;
+            })
+        );
+    }
+    updateImageProduct(formData:FormData,idInventoryImage: number):Observable<ProductFull>{
+        const headers = new HttpHeaders({
+            'Authorization': `${this.getToken()}`,
+        });
+
+        return this.http.put<ProductFull>(`${environment.apiUrl}api/v1/inventoryImage/update/${idInventoryImage}`, formData, { headers }).pipe(
+            catchError(error => {
+                console.error('Error en la solicitud:', error);
+                this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
+                throw error;
+            }),
+            map(result => {
+                console.log(result);
+                if (result != null) {
+                    console.log("Llego");
+                    this.notificationService.showSuccess("Actualización exitoso", "Imagen Actualizada correctamente!");
+                } else {
+                    this.notificationService.showError("Actualización fallido", "Vuelve a intentar");
+                }
+                return result;
+            })
+        );
     }
 
 

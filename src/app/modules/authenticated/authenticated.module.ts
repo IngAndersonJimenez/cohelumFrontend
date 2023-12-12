@@ -16,11 +16,16 @@ import { ChipsModule } from "primeng/chips";
 import { MultiSelectModule } from "primeng/multiselect";
 import { DropdownModule } from "primeng/dropdown";
 import { FormsModule } from "@angular/forms";
-import { InputTextModule } from 'primeng/inputtext';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {MatDialogModule} from "@angular/material/dialog";
+import {DialogModule} from "primeng/dialog";
+import {DialogService} from "primeng/dynamicdialog";
+
+
+
+
 
 
 @NgModule({
@@ -48,7 +53,10 @@ import {MatDialogModule} from "@angular/material/dialog";
         MatPaginatorModule,
         MatTableModule,
         MatSortModule,
-        MatDialogModule
-    ]
+        MatDialogModule,
+        DialogModule,
+
+    ],
+    providers: [DialogService],
 })
 export class AuthenticatedModule { }

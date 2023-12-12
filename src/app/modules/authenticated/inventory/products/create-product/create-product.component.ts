@@ -123,9 +123,6 @@ export class CreateProductComponent implements OnInit{
     this.inventoryService.getCategory().subscribe(
         (response: any) => {
           this.categories = response.responseDTO;
-        },
-        error => {
-          console.error('Error al obtener las categorías', error);
         }
     );
   }
