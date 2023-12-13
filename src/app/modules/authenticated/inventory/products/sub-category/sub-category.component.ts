@@ -8,6 +8,7 @@ import { NotificationService } from "../../../../../notifications/notification.s
 import { CategoryService } from "../../../../../services/category.service";
 import {InventoryCategory} from "../../../../../interface/products/inventoryCategory";
 import {InventoryService} from "../../../../../services/inventory.service";
+import {CategoryProducts} from "../../../../../interface/products/CategoryProducts";
 
 @Component({
   selector: 'app-sub-category',
@@ -17,7 +18,7 @@ import {InventoryService} from "../../../../../services/inventory.service";
 export class SubCategoryComponent {
 
   subCategoryList: SubCategory[] = [];
-  displayedColumns: string[] = ['idSubCategory', 'description', 'idCategory', 'statusCategory', 'action'];
+  displayedColumns: string[] = ['idSubCategory', 'description', 'idCategory', 'active', 'action'];
   dataSource = new MatTableDataSource<SubCategory>(this.subCategoryList);
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -31,6 +32,7 @@ export class SubCategoryComponent {
   private buildForm() {
     this.productForm = this.formBuilder.group({
       description: ['', Validators.required],
+      idCategory:[null, Validators.required]
     });
   }
 
@@ -70,8 +72,8 @@ export class SubCategoryComponent {
     this.buildForm();
   }
 
-  editCategory(subCategory: SubCategory) {
-    subCategory.isEditing = true;
+  editCategory(subcategory:SubCategory) {
+    subcategory.isEditing = true;
   }
 
   cancelEdit(subCategory: SubCategory) {
@@ -92,9 +94,30 @@ export class SubCategoryComponent {
     this.showDialog = false;
   }
 
-  addSubCategory() {
-    // Agrega la lógica para agregar la subcategoría aquí
-    // Puedes acceder a this.productForm.value para obtener los valores del formulario
+  addSubCategory(subcategory:SubCategory) {
+    this.categoryService.createInventorySubCategory(subcategory).subscribe(
+        (data:any)=>{
+          this.notificationService.showSuccess("Registro Exitoso!","La subcategoría se ha creado correctamente!");
+          this.getSubcategory()
+          this.productForm.reset()
+        }
+    )
     this.closeDialog();
+  }
+
+
+
+  updateSubcategory(subcategory:SubCategory){
+    this.categoryService.updateInventorySubCategory(subcategory.getIdSubCategory,subcategory.getActive,subcategory.getDescription,subcategory.getIdCategory).subscribe(
+        (data:any) =>{
+          if (data != null && data.responseDTO && 'active' in data.responseDTO) {
+            console.log('data', data)
+            this.notificationService.showSuccess("Actualización Exitoso!","La subcategoría se ha actualizado correctamente!");
+            subcategory.isEditing = false;
+            this.getSubcategory()
+
+          }
+        }
+    )
   }
 }

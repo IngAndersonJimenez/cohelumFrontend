@@ -3,7 +3,6 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {InventoryService} from "../../../../services/inventory.service";
-import {InventoryCategory} from "../../../../interface/products/inventoryCategory";
 import {CategoryProducts} from "../../../../interface/products/CategoryProducts";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NotificationService} from "../../../../notifications/notification.service";
@@ -29,6 +28,7 @@ export class CategoryComponent implements OnInit {
 
     constructor(private inventoryService: InventoryService, private formBuilder: FormBuilder, private notificationService: NotificationService) {
     }
+
 
     private buildForm() {
         this.productForm = this.formBuilder.group({

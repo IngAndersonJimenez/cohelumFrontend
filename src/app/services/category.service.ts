@@ -46,4 +46,23 @@ export class CategoryService {
     return this.http.get<SubCategory>(environment.apiUrl + 'api/v1/inventorySubCategory/getSubCategoryAll', { headers });
   }
 
+  createInventorySubCategory(subCategory: SubCategory): Observable<SubCategory> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', this.getToken());
+
+    return this.http.post<SubCategory>(`${environment.apiUrl}api/v1/inventorySubCategory/create`,subCategory,{headers})
+  }
+
+  updateInventorySubCategory(idSubcategory:number,statusCategory:boolean,description:string,idCategory:number):Observable<any>{
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', this.getToken());
+
+    const body = {
+      active: statusCategory,
+      description: description,
+      idCategory:idCategory
+    };
+    return this.http.put<any>(`${environment.apiUrl}api/v1/inventorySubCategory/update?idSubcategory=${idSubcategory}`,body,{headers})
+  }
+
 }

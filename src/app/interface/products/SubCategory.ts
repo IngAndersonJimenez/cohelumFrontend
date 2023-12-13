@@ -1,11 +1,11 @@
 export class SubCategory {
     private idSubCategory: number;
-    private description: number;
+    private description: string;
     private active: boolean;
     private idCategory: number;
     public isEditing: boolean = false;
 
-    constructor(idSubCategory: number, description: number, active: boolean, idCategory: number) {
+    constructor(idSubCategory: number, description: string, active: boolean, idCategory: number) {
         this.idSubCategory = idSubCategory;
         this.description = description;
         this.active = active;
@@ -20,11 +20,11 @@ export class SubCategory {
         this.idSubCategory = value;
     }
 
-    get getDescription(): number {
+    get getDescription(): string {
         return this.description;
     }
 
-    set setDescription(value: number) {
+    set setDescription(value: string) {
         this.description = value;
     }
 
