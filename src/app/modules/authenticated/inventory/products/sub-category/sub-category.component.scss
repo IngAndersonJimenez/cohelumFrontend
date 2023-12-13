@@ -1,55 +1,31 @@
-h1{
-  color: #495057;
-}
-.icon-edit{
-  cursor: pointer;
-}
-.mat-mdc-form-field {
-  font-size: 14px;
-  width: 100%;
-}
-.space{
-  flex: 1 1 auto;
-}
-.title-button{
+/* Estilos generales */
+.title-button {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   h1 {
     margin: 0;
+    font-size: 1.5rem;
   }
-  .demo-button-container{
-    border-radius: 10px
-  }
-}
 
-.mat-form-field {
-  width: 100%;
-}
+  .demo-button-container {
+    .add-button {
+      margin-left: 10px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1rem;
 
-.mat-form-field {
-  width: 100%;
-}
-h1 {
-  font-size: 24px;
-  margin-bottom: 16px;
-}
-
-.category-image-cell {
-  width: 100px;
-  height: 100px;
-}
-
-.table-image {
-  img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin-right: 10px;
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
   }
 }
-/* Estilos generales del diálogo */
 
 .overlay {
   display: none;
@@ -85,7 +61,7 @@ h1 {
 
         label {
           display: block;
-          margin-bottom: 12px;
+          margin-bottom: 5px;
           font-weight: bold;
         }
 
@@ -110,7 +86,6 @@ h1 {
         border-radius: 5px;
         font-size: 1rem;
         margin-left: 10px;
-        margin-top: 20px;
 
         &:first-child {
           background-color: #ccc;
@@ -144,11 +119,11 @@ h1 {
   }
 }
 
-/* Estilos adicionales para el campo de formulario Angular Material */
 
 .mat-form-field {
   width: 100%;
   box-sizing: border-box;
+
   margin-bottom: 15px;
 
   mat-label {

@@ -1,0 +1,99 @@
+<div class="title-button">
+    <h1>SubCategorías</h1>
+    <div class="demo-button-container">
+        <button mat-raised-button color="primary"  (click)="openAddDialog()">AGREGAR</button>
+    </div>
+</div>
+
+<div class="overlay" [ngClass]="{ 'open': showDialog }">
+    <div class="dialog">
+        <h2>Agregar Subcategoría</h2>
+        <div class="dialog-content">
+            <div class="form-field">
+                <label for="updateUnitsAvailable">Descripción:</label>
+                <input type="text" id="updateUnitsAvailable"/>
+            </div>
+            <div class="form-field">
+                <label for="Category">Seleccionar categoría a la que pertenece:</label>
+                <select id="Category">
+                    <option *ngFor="let category of categories" [value]="category.idCategory">
+                        {{ category.description }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="dialog-actions">
+            <button mat-raised-button color="warn"  class="cancel-button" (click)="closeDialog()">Cancelar</button>
+            <button mat-raised-button color="primary" class="buttons-actions" (click)="addSubCategory()">Guardar</button>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-head">Lista de categorías</div>
+    <div class="card-body">
+        <mat-form-field>
+            <mat-label>Filtro</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Filtro por descripción" #input autocomplete="off">
+        </mat-form-field>
+        <div class="mat-elevation-z8 table-image">
+            <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="idSubCategory">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> No.SubCategoría </th>
+                    <td mat-cell *matCellDef="let element"> {{element.idSubCategory}} </td>
+                </ng-container>
+                <ng-container matColumnDef="idCategory">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>No.Categoría</th>
+                    <td mat-cell *matCellDef="let element"> {{element.idCategory}} </td>
+                </ng-container>
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="!element.isEditing; else editMode">
+                            {{element.description}}
+                        </ng-container>
+                        <ng-template #editMode>
+                            <input matInput [(ngModel)]="element.description" placeholder="Editar descripción" autocomplete="off">
+                        </ng-template>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="statusCategory">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="!element.isEditing; else editMode">
+                            {{element.statusCategory ? 'Activo' : 'Inactivo'}}
+                        </ng-container>
+                        <ng-template #editMode>
+                            <mat-checkbox [ngModel]="element.statusCategory" (ngModelChange)="element.statusCategory = $event"></mat-checkbox>
+                        </ng-template>
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="!element.isEditing; else editActions">
+                            <a class="icon-edit" (click)="editCategory(element)">
+                                <mat-icon>edit</mat-icon>
+                            </a>
+                        </ng-container>
+                        <ng-template #editActions>
+                            <button mat-icon-button color="primary">
+                                <mat-icon>done</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" (click)="cancelEdit(element)">
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                        </ng-template>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Seleccionar pagína">
+            </mat-paginator>
+        </div>
+    </div>
+</div>
+

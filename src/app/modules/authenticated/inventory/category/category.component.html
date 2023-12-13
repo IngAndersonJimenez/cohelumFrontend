@@ -8,32 +8,34 @@
 <div class="card">
   <div class="card-head">Lista de categorías</div>
   <div class="card-body">
-    <mat-form-field *ngIf="!addingCategory">
+    <mat-form-field>
       <mat-label>Filtro</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Filtro por descripción" #input autocomplete="off">
     </mat-form-field>
 
-    <div *ngIf="addingCategory">
-      <form [formGroup]="productForm">
-        <mat-form-field class="input-category">
-          <mat-label>Nueva Categoría</mat-label>
-          <input matInput formControlName="descriptionCategory" placeholder="Ingresa una nueva descripción" autocomplete="off" class="Input-filter-add">
-          <div class="icon-container">
-            <i *ngIf="productForm.controls['descriptionCategory'].valid" class="far fa-circle-check icon-check"></i>
+    <form [formGroup]="productForm">
+    <div class="overlay" [ngClass]="{ 'open': showAddingCategoryDialog }">
+      <div class="dialog">
+        <h2>Agregar Nueva Categoría</h2>
+        <div class="dialog-content">
+          <div class="form-field">
+            <label for="updateUnitsAvailable">Descripción:</label>
+            <input type="text" id="updateUnitsAvailable" formControlName="descriptionCategory"/>
           </div>
-        </mat-form-field>
-        <div id="file-image-category">
-          <input class="file" type="file" (change)="onFileSelected($event, 'image')" #imageFileInput formControlName="image" required style="display: none;">
-          <button mat-raised-button color="primary" (click)="imageFileInput.click()">Imagen de la categoría</button>
+          <div class="form-field">
+            <label for="image">Seleccionar categoría a la que pertenece:</label>
+            <input class="file" id="image" type="file" (change)="onFileSelected($event, 'image')" #imageFileInput formControlName="image" required style="display: none;">
+            <button mat-raised-button color="primary" (click)="imageFileInput.click()">Imagen de la categoría</button>
+          </div>
         </div>
-        <div class="icon-container">
-          <i *ngIf="productForm.controls['image'].valid" class="far fa-circle-check icon-check"></i>
-        </div>
-        <button mat-raised-button color="primary" class="buttons-actions" (click)="onSubmit()">Guardar</button>
-        <button mat-raised-button color="warn" class="buttons-actions" (click)="cancelAdd()">Cancelar</button>
-      </form>
-    </div>
+        <div class="dialog-actions">
 
+          <button mat-raised-button color="warn"  class="cancel-button" (click)="cancelAdd()">Cancelar</button>
+          <button mat-raised-button color="primary" class="buttons-actions" (click)="onSubmit()">Guardar</button>
+        </div>
+      </div>
+    </div>
+    </form>
     <div class="mat-elevation-z8 table-image">
       <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="idCategory">
@@ -58,7 +60,8 @@
               <img *ngIf="element.image"   [src]="element.image" alt="Imagen Categoría" height="50" width="50">
             </ng-container>
             <ng-template #editMode>
-              <input type="file" (change)="onFileSelected1($event,element.idCategory)" />
+              <input type="file" #imageFileEdit (change)="onFileSelected1($event,element.idCategory)" style="display: none;" />
+              <button mat-raised-button color="primary" (click)="imageFileEdit.click()">Cambiar imagen</button>
             </ng-template>
           </td>
         </ng-container>

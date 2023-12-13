@@ -24,6 +24,7 @@ export class CategoryComponent implements OnInit {
     @ViewChild(MatSort, {static: true}) sort!: MatSort;
     public productForm!: FormGroup;
     selectedImage: string | undefined;
+    showAddingCategoryDialog:boolean = false;
 
 
     constructor(private inventoryService: InventoryService, private formBuilder: FormBuilder, private notificationService: NotificationService) {
@@ -75,11 +76,11 @@ export class CategoryComponent implements OnInit {
     }
 
     addCategory() {
-        this.addingCategory = true;
+        this.showAddingCategoryDialog = true;
     }
 
     cancelAdd() {
-        this.addingCategory = false;
+        this.showAddingCategoryDialog = false;
 
     }
 
@@ -98,7 +99,7 @@ export class CategoryComponent implements OnInit {
                 result => {
                     this.productForm.reset();
                     this.loadData();
-                    this.addingCategory = false;
+                    this.showAddingCategoryDialog = false;
                 }
             );
         } else {

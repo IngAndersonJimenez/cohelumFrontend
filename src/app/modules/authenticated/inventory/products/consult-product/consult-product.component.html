@@ -79,8 +79,8 @@
                         <ng-template let-imageR let-i="index" pTemplate="item">
                             <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
                                 <div class="mb-3">
-                                    <img [src]="imageR" alt="Imagen del Producto">
-                                    <mat-icon class="update-icon" (click)="openUpdateDialog2(product)">
+                                    <img [src]="imageR.image" alt="Imagen del Producto">
+                                    <mat-icon class="update-icon" (click)="openUpdateDialog2(imageR.idInventoryImage)">
                                         update
                                     </mat-icon>
                                 </div>
@@ -144,10 +144,10 @@
                             <div class="form-field">
                                 <label for="updateDatasheet">Nuevo Datasheet:</label>
                                 <input type="file" id="updateDatasheet" formControlName="datasheet"
-                                       (change)="onFileSelected1($event)"/>
+                                       (change)="onFileSelected1($event,'pdf')"/>
                             </div>
                             <button mat-raised-button color="accent" class="update-button"
-                                    (click)="updateProduct(updateForm.value)">Actualizar
+                                    (click)="submitUpdateForm()">Actualizar
                             </button>
                         </form>
 

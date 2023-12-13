@@ -36,7 +36,7 @@ export class DashboardHeaderComponent implements OnInit {
     this.fetchUnreadMessages();
     setInterval(() => {
       this.fetchUnreadMessages();
-    }, 30000);
+    }, 50000);
   }
 
   getHeadClass(): string {

@@ -15,13 +15,18 @@ import { TableModule } from "primeng/table";
 import { ChipsModule } from "primeng/chips";
 import { MultiSelectModule } from "primeng/multiselect";
 import { DropdownModule } from "primeng/dropdown";
-import { FormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {MatDialogModule} from "@angular/material/dialog";
 import {DialogModule} from "primeng/dialog";
 import {DialogService} from "primeng/dynamicdialog";
+import { SubCategoryComponent } from './inventory/products/sub-category/sub-category.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatIconModule} from "@angular/material/icon";
+import {MatInputModule} from "@angular/material/input";
 
 
 
@@ -32,7 +37,8 @@ import {DialogService} from "primeng/dynamicdialog";
   declarations: [
     ContentUserComponent,
     DashboardContentComponent,
-    ContactComponent
+    ContactComponent,
+    SubCategoryComponent
   ],
     imports: [
         CommonModule,
@@ -55,6 +61,11 @@ import {DialogService} from "primeng/dynamicdialog";
         MatSortModule,
         MatDialogModule,
         DialogModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        ReactiveFormsModule,
 
     ],
     providers: [DialogService],

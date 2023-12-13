@@ -203,12 +203,12 @@ export class InventoryService {
         return this.http.put(url, formData, { headers });
     }
 
-    updateProduct(formData:FormData, idInventoryId:number):Observable<ProductFull>{
+    updateProduct(formData:FormData, idInventoryId:number):Observable<Inventory>{
         const headers = new HttpHeaders({
             'Authorization': `${this.getToken()}`,
         });
 
-        return this.http.put<ProductFull>(`${environment.apiUrl}api/v1/inventory/updateFull/${idInventoryId}`, formData, { headers }).pipe(
+        return this.http.put<Inventory>(`${environment.apiUrl}api/v1/inventory/updateFull/${idInventoryId}`, formData, { headers }).pipe(
             catchError(error => {
                 console.error('Error en la solicitud:', error);
                 this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");

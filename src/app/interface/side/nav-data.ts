@@ -13,7 +13,11 @@ export const navbarData:INavbarData[] = [
     items:[
       {
         routerLink: 'category',
-        label: 'Categoria'
+        label: 'Categoría'
+      },
+      {
+        routerLink: 'sub-category',
+        label: 'SubCategoría'
       },
       {
         routerLink: 'products',
