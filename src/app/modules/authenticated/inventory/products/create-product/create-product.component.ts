@@ -1,35 +1,38 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { InventoryService } from "../../../../../services/inventory.service";
 import { LoginService } from "../../../../../services/login.service";
-import {NotificationService} from "../../../../../notifications/notification.service";
-import {InventoryCategory} from "../../../../../interface/products/inventoryCategory";
-import {SubCategory} from "../../../../../interface/products/SubCategory";
-import {CategoryService} from "../../../../../services/category.service";
+import { NotificationService } from "../../../../../notifications/notification.service";
+import { InventoryCategory } from "../../../../../interface/products/inventoryCategory";
+import { SubCategory } from "../../../../../interface/products/SubCategory";
+import { CategoryService } from "../../../../../services/category.service";
 
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
   styleUrls: ['./create-product.component.scss']
 })
-export class CreateProductComponent implements OnInit{
+export class CreateProductComponent implements OnInit {
 
   public productForm!: FormGroup;
   selectedPDFName: string | undefined;
   selectedImage: string | undefined;
   categories!: InventoryCategory[];
   isLoading = false;
-  subcategories!:SubCategory[];
-  constructor(private notificationService:NotificationService, private inventoryService: InventoryService, private formBuilder: FormBuilder,
-              private loginService: LoginService, private categoryService:CategoryService) {}
+  subcategories: Array<SubCategory> = [];
+  isActiveSubcategories: boolean = false;
+  subcategoriesFilter: Array<SubCategory> = [];
+  constructor(private notificationService: NotificationService, private inventoryService: InventoryService, private formBuilder: FormBuilder,
+    private loginService: LoginService, private categoryService: CategoryService) {
+  }
 
   private buildForm() {
     this.productForm = this.formBuilder.group({
       name: ['', Validators.required],
       price: [null, Validators.required],
       unitsAvailable: [null, Validators.required],
-      categoryId: [null,Validators.required],
-      idSubCategory:[null,Validators.required],
+      categoryId: [null, Validators.required],
+      idSubCategory: [null, Validators.required],
       characteristic: [''],
       datasheet: ['', Validators.required],
       image: [null, Validators.required]
@@ -53,16 +56,16 @@ export class CreateProductComponent implements OnInit{
       }
 
       this.inventoryService.createProduct(formData).subscribe(
-          result => {
-            this.isLoading = false;
-            this.productForm.reset();
-            this.selectedImage = undefined;
-            this.selectedPDFName = undefined;
-          },
-          error => {
-            this.isLoading = false;
-            console.error('Error al crear el producto', error);
-          }
+        result => {
+          this.isLoading = false;
+          this.productForm.reset();
+          this.selectedImage = undefined;
+          this.selectedPDFName = undefined;
+        },
+        error => {
+          this.isLoading = false;
+          console.error('Error al crear el producto', error);
+        }
       );
     } else {
       console.log('El formulario no está completo. No se llama al servicio.');
@@ -127,16 +130,18 @@ export class CreateProductComponent implements OnInit{
   ngOnInit(): void {
     this.buildForm()
     this.inventoryService.getCategory().subscribe(
-        (response: any) => {
-          this.categories = response.responseDTO;
-
-        }
+      (response: any) => {
+        this.categories = response.responseDTO;
+      }
     );
     this.categoryService.getSubcategory().subscribe(
-        (response: any) => {
-          this.subcategories = response.responseDTO;
-          console.log('Subcategories', this.subcategories)
-        },
+      (response: any) => {
+        for (let iter of response.responseDTO) {
+          this.subcategories.push(
+            new SubCategory(iter.idSubCategory, iter.description, iter.active, iter.idCategory)
+          );
+        }
+      },
     )
 
   }
@@ -155,6 +160,28 @@ export class CreateProductComponent implements OnInit{
     if (!pattern.test(inputChar)) {
       event.preventDefault();
     }
+  }
+
+  subCategoryLoad(idCategory: number) {
+    console.log('idCategory.target.value')
+    console.log(idCategory)
+    this.isActiveSubcategories = true;
+
+    this.subcategoriesFilter = [];
+    for (let iter of this.subcategories) {
+
+      console.log('iter')
+      console.log(iter)
+
+      if (iter.getIdCategory() == idCategory) {
+        this.subcategoriesFilter.push(iter);
+        console.log('subCategoryLoad')
+      }
+    }
+
+    console.log(' this.isActiveSubcategories')
+    console.log(   this.isActiveSubcategories)
+
   }
 
 

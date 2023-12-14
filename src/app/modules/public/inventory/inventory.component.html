@@ -20,7 +20,8 @@
                     <div class="col">
                     </div>
                     <div class="col">
-                        <select class="form-select" aria-label="Default select example" (change)="orderInventory($event)">
+                        <select class="form-select" aria-label="Default select example"
+                            (change)="orderInventory($event)">
                             <option [value]="0" selected>Ordernar productos</option>
                             <option [value]="order.code" *ngFor="let order of optionOrder; let i = index">
                                 {{order.name}}</option>
@@ -66,7 +67,7 @@
                     </div>
 
                 </div>
-                <div class="col-md-3 col-sm-6" *ngFor="let inventory of inventoryFilter">
+                <div class="col-md-3 col-sm-6" *ngFor="let inventory of inventoryFilter; let i= index">
                     <div class="product-grid2 card">
                         <div class="product-image2">
                             <a href="#">
@@ -74,7 +75,8 @@
                                 <img class="pic-2" [src]="inventory.getImageSecond()">
                             </a>
                             <ul class="social">
-                                <li><a href="#" data-tip="Mas"><i class="fa fa-eye"></i></a></li>
+                                <li><a (click)="selectedProduct(i)" data-tip="Mas"><i class="fa fa-eye"></i></a>
+                                </li>
                                 <!-- <li><a href="#" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
                                 <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>-->
                             </ul>

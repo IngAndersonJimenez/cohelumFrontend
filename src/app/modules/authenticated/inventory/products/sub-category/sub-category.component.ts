@@ -6,8 +6,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { SubCategory } from "../../../../../interface/products/SubCategory";
 import { NotificationService } from "../../../../../notifications/notification.service";
 import { CategoryService } from "../../../../../services/category.service";
-import {InventoryCategory} from "../../../../../interface/products/inventoryCategory";
-import {InventoryService} from "../../../../../services/inventory.service";
+import { InventoryCategory } from "../../../../../interface/products/inventoryCategory";
+import { InventoryService } from "../../../../../services/inventory.service";
 
 
 @Component({
@@ -26,13 +26,13 @@ export class SubCategoryComponent {
   showDialog: boolean = false;
   categories!: InventoryCategory[];
 
-  constructor(private categoryService: CategoryService, private formBuilder: FormBuilder, private notificationService: NotificationService, private inventoryService:InventoryService) {
+  constructor(private categoryService: CategoryService, private formBuilder: FormBuilder, private notificationService: NotificationService, private inventoryService: InventoryService) {
   }
 
   private buildForm() {
     this.productForm = this.formBuilder.group({
       description: ['', Validators.required],
-      idCategory:[null, Validators.required]
+      idCategory: [null, Validators.required]
     });
   }
 
@@ -50,20 +50,20 @@ export class SubCategoryComponent {
   getSubcategory() {
     this.subCategoryList = [];
     this.categoryService.getSubcategory().subscribe(
-        (data: any) => {
-          for (let iterDate of data.responseDTO) {
-            const subCategoryProduct = new SubCategory(
-                iterDate.idSubCategory,
-                iterDate.description,
-                iterDate.active,
-                iterDate.idCategory
-            );
+      (data: any) => {
+        for (let iterDate of data.responseDTO) {
+          const subCategoryProduct = new SubCategory(
+            iterDate.idSubCategory,
+            iterDate.description,
+            iterDate.active,
+            iterDate.idCategory
+          );
 
-            this.subCategoryList.push(subCategoryProduct);
+          this.subCategoryList.push(subCategoryProduct);
 
-          }
-          this.refreshTable();
         }
+        this.refreshTable();
+      }
     );
   }
 
@@ -76,9 +76,9 @@ export class SubCategoryComponent {
   editCategory(subcategory: SubCategory) {
     subcategory.isEditing = true;
     this.inventoryService.getCategory().subscribe(
-        (response: any) => {
-          this.categories = response.responseDTO;
-        }
+      (response: any) => {
+        this.categories = response.responseDTO;
+      }
     );
   }
 
@@ -90,10 +90,10 @@ export class SubCategoryComponent {
   openAddDialog() {
 
     this.inventoryService.getCategory().subscribe(
-        (response: any) => {
-          this.categories = response.responseDTO;
-          this.showDialog = true;
-        }
+      (response: any) => {
+        this.categories = response.responseDTO;
+        this.showDialog = true;
+      }
     );
   }
 
@@ -101,30 +101,31 @@ export class SubCategoryComponent {
     this.showDialog = false;
   }
 
-  addSubCategory(subcategory:SubCategory) {
+  addSubCategory(subcategory: SubCategory) {
     this.categoryService.createInventorySubCategory(subcategory).subscribe(
-        (data:any)=>{
-          this.notificationService.showSuccess("Registro Exitoso!","La subcategoría se ha creado correctamente!");
-          this.getSubcategory()
-          this.productForm.reset()
-        }
+      (data: any) => {
+        this.notificationService.showSuccess("Registro Exitoso!", "La subcategoría se ha creado correctamente!");
+        this.getSubcategory()
+        this.productForm.reset()
+      }
     )
     this.closeDialog();
   }
 
 
 
-  updateSubcategory(subcategory:SubCategory){
-    this.categoryService.updateInventorySubCategory(subcategory.getIdSubCategory,subcategory.getActive,subcategory.getDescription,subcategory.getIdCategory).subscribe(
-        (data:any) =>{
-          if (data != null && data.responseDTO && 'active' in data.responseDTO) {
-            console.log('data', data)
-            this.notificationService.showSuccess("Actualización Exitoso!","La subcategoría se ha actualizado correctamente!");
-            subcategory.isEditing = false;
-            this.getSubcategory()
+  updateSubcategory(subcategory: SubCategory) {
+    this.categoryService.updateInventorySubCategory(subcategory.getIdSubCategory(), subcategory.getActive(), 
+      subcategory.getDescription(), subcategory.getIdCategory()).subscribe(
+      (data: any) => {
+        if (data != null && data.responseDTO && 'active' in data.responseDTO) {
+          console.log('data', data)
+          this.notificationService.showSuccess("Actualización Exitoso!", "La subcategoría se ha actualizado correctamente!");
+          subcategory.isEditing = false;
+          this.getSubcategory()
 
-          }
         }
+      }
     )
   }
 }

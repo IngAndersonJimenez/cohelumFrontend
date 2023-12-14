@@ -58,7 +58,7 @@ export class InventoryComponent implements OnInit {
           inventoryGridInto = new InventoryGrid(response.getInventoryCategoryDTO.description,
             response.getInventoryDTO.name,
             response.getInventoryDTO.price, response.getInventoryDTO.unitsAvailable,
-            "", "")
+            "", "", response.getInventoryImageDTO);
 
           this.setImages(response.getInventoryImageDTO, inventoryGridInto);
           this.inventoryGrid.push(inventoryGridInto);
@@ -142,6 +142,11 @@ export class InventoryComponent implements OnInit {
 
     console.log(this.inventoryFilter)
 
+  }
+
+  selectedProduct(index: number) {
+    console.log("Producto seleccionado")
+    console.log(index)
   }
 
 

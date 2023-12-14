@@ -2,14 +2,15 @@
 <div class="container-product">
     <mat-card>
         <mat-card-content>
-            <form [formGroup]="productForm" >
+            <form [formGroup]="productForm">
                 <mat-grid-list cols="4" rowHeight="70px">
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-form-field class="form-input">
                             <mat-label>Nombre del producto</mat-label>
                             <input matInput autocomplete="off" formControlName="name" required>
                             <div class="icon-container">
-                                <i *ngIf="productForm.controls['name'].valid" class="far fa-circle-check icon-check"></i>
+                                <i *ngIf="productForm.controls['name'].valid"
+                                    class="far fa-circle-check icon-check"></i>
                             </div>
                         </mat-form-field>
                     </mat-grid-tile>
@@ -23,77 +24,94 @@
                                 {{ selectedPDFName }}
                             </div>
                         </ng-template>
-                        <img *ngIf="!selectedImage && !selectedPDFName" [src]="'assets/image/create-product/ImageCreate.svg'" alt="Imagen-default" class="preview-image">
+                        <img *ngIf="!selectedImage && !selectedPDFName"
+                            [src]="'assets/image/create-product/ImageCreate.svg'" alt="Imagen-default"
+                            class="preview-image">
                     </mat-grid-tile>
 
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-form-field class="form-input">
                             <mat-label>Precio</mat-label>
-                            <input matInput formControlName="price" (keypress)="validateEnter($event, 'numeros')" required>
+                            <input matInput formControlName="price" (keypress)="validateEnter($event, 'numeros')"
+                                required>
                             <div class="icon-container">
-                                <i *ngIf="productForm.controls['price'].valid" class="far fa-circle-check icon-check"></i>
+                                <i *ngIf="productForm.controls['price'].valid"
+                                    class="far fa-circle-check icon-check"></i>
                             </div>
                         </mat-form-field>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-form-field class="form-input">
                             <mat-label>Unidades disponibles</mat-label>
-                            <input matInput formControlName="unitsAvailable" (keypress)="validateEnter($event, 'numeros')" required>
+                            <input matInput formControlName="unitsAvailable"
+                                (keypress)="validateEnter($event, 'numeros')" required>
                             <div class="icon-container">
-                                <i *ngIf="productForm.controls['unitsAvailable'].valid" class="far fa-circle-check icon-check"></i>
+                                <i *ngIf="productForm.controls['unitsAvailable'].valid"
+                                    class="far fa-circle-check icon-check"></i>
                             </div>
                         </mat-form-field>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field  class="form-input">
+                        <mat-form-field class="form-input">
                             <mat-label>Categoría</mat-label>
                             <mat-select formControlName="categoryId" required>
-                                <mat-option *ngFor="let category of categories" [value]="category.idCategory">
+                                <mat-option *ngFor="let category of categories" [value]="category.idCategory"
+                                    (click)="subCategoryLoad(category.idCategory)">
                                     {{ category.description }}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="productForm.get('categoryId')?.hasError('required')">Selecciona una categoría</mat-error>
+                            <mat-error *ngIf="productForm.get('categoryId')?.hasError('required')">Selecciona una
+                                categoría</mat-error>
                         </mat-form-field>
                     </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-grid-tile [colspan]="1" [rowspan]="1" *ngIf="isActiveSubcategories">
                         <mat-form-field class="form-input">
                             <mat-label>SubCategoría</mat-label>
                             <mat-select formControlName="idSubCategory" required>
-                                <mat-option *ngFor="let subCategory of subcategories" [value]="subCategory.getIdSubCategory">
-                                    {{ subCategory.getDescription }}
+                                <mat-option *ngFor="let subCategory of subcategoriesFilter"
+                                    [value]="subCategory.getIdSubCategory()">
+                                    {{ subCategory.getDescription() }}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="productForm.get('idSubCategory')?.hasError('required')">Selecciona una subcategoría</mat-error>
+                            <mat-error *ngIf="productForm.get('idSubCategory')?.hasError('required')">Selecciona una
+                                subcategoría</mat-error>
                         </mat-form-field>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-form-field class="form-input">
                             <mat-label>Caracteristica</mat-label>
-                            <input matInput formControlName="characteristic" (keypress)="validateEnter($event, 'letras')" required>
+                            <input matInput formControlName="characteristic"
+                                (keypress)="validateEnter($event, 'letras')" required>
                             <div class="icon-container">
-                                <i *ngIf="productForm.controls['characteristic'].valid" class="far fa-circle-check icon-check"></i>
+                                <i *ngIf="productForm.controls['characteristic'].valid"
+                                    class="far fa-circle-check icon-check"></i>
                             </div>
                         </mat-form-field>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
-                        <input class="file" type="file" (change)="onFileSelected($event, 'pdf')" #pdfFileInput formControlName="datasheet" required style="display: none;">
+                        <input class="file" type="file" (change)="onFileSelected($event, 'pdf')" #pdfFileInput
+                            formControlName="datasheet" required style="display: none;">
                         <div class="icon-container">
-                            <i *ngIf="productForm.controls['datasheet'].valid" class="far fa-circle-check icon-check image"></i>
+                            <i *ngIf="productForm.controls['datasheet'].valid"
+                                class="far fa-circle-check icon-check image"></i>
                         </div>
                         <button mat-raised-button color="primary" (click)="pdfFileInput.click()">Ficha técnica</button>
                     </mat-grid-tile>
 
                     <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
                         <input class="file" type="file" (change)="onFileSelected($event, 'image')" #imageFileInput
-                               formControlName="image" required style="display: none;">
+                            formControlName="image" required style="display: none;">
                         <div class="icon-container">
                             <i *ngIf="productForm.controls['image'].valid" class="far fa-circle-check icon-check"></i>
                         </div>
-                        <button mat-raised-button color="primary" (click)="imageFileInput.click()">Imagen del producto</button>
+                        <button mat-raised-button color="primary" (click)="imageFileInput.click()">Imagen del
+                            producto</button>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
-                        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!productForm.valid || isLoading">Guardar</button>
-                        <p-progressSpinner *ngIf="isLoading" strokeWidth="4" styleClass="custom-spinner"></p-progressSpinner>
+                        <button mat-raised-button color="primary" (click)="onSubmit()"
+                            [disabled]="!productForm.valid || isLoading">Guardar</button>
+                        <p-progressSpinner *ngIf="isLoading" strokeWidth="4"
+                            styleClass="custom-spinner"></p-progressSpinner>
                         <span *ngIf="isLoading">Guardando...</span>
                     </mat-grid-tile>
 
