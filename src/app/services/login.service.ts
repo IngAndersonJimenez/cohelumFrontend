@@ -23,12 +23,9 @@ export class LoginService {
     constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService) { }
 
     login(requestLogin: RequestLogin): Observable<any> {
-        console.log(requestLogin);
         return this.http.post<any>(environment.apiUrl + 'login', requestLogin).pipe(
             map(result => {
-                console.log(result);
                 if (result != null && result.token) {
-                    console.log("Llego");
                     const responseLogin: ResponseLogin = { token: result.token };
                     this.userMemory.next(responseLogin);
                     this.notificationService.showSuccess("Login exitoso", "Bienvenido");
@@ -39,14 +36,10 @@ export class LoginService {
     }
 
     getTokenPublic(): Observable<any> {
-        console.log("Creando public token");
         let requestLogin: RequestLogin = { emailUser: 'prueba@gmail.com', password: '1010' }
         return this.http.post<ResponseLogin>(environment.apiUrl + 'login', requestLogin).pipe(
             map(result => {
-                console.log("result token public");
-                console.log(result);
                 if (result != null && result.token) {
-                    console.log("Llego public token");
                     const responseLogin: ResponseLogin = { token: result.token };
                 }
             })

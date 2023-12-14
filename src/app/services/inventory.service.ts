@@ -39,9 +39,7 @@ export class InventoryService {
                 throw error;
             }),
             map(result => {
-                console.log(result);
                 if (result != null) {
-                    console.log("Llego");
                     this.notificationService.showSuccess("Registro exitoso", "El producto se ha creado correctamente");
                 } else {
                     this.notificationService.showError("Registro fallido", "Vuelve a intentar");
@@ -54,9 +52,6 @@ export class InventoryService {
     getToken(): string {
         let token: string = '';
         this.loginService.userCurrent.subscribe(data => {
-
-            console.log("Token: ")
-            console.log(data)
             token = data.token
         })
         return token;
@@ -109,7 +104,6 @@ export class InventoryService {
                 throw error;
             }),
             tap((result) => {
-                console.log(result);
                 if (result != null) {
                     this.notificationService.showSuccess('Datos del producto', 'Consulta exitosa!');
                 } else {
@@ -120,17 +114,14 @@ export class InventoryService {
     }
 
     createCategoryAndImage(formData: FormData): Observable<Category> {
-        console.log('Datos que llegan al servicio:', formData);
         let headers = new HttpHeaders();
         headers = headers.append('Authorization', this.getToken());
-
         return this.http.post<Category>(`${environment.apiUrl}api/v1/inventoryCategory/create/categoryImage`, formData, {
             headers: headers,
         });
     }
 
     activeSectionInventoty(status: boolean) {
-        console.log("activeSectionInventoty")
         this.isActiveInventoryMemory.next(status);
     }
 
@@ -182,7 +173,6 @@ export class InventoryService {
                 throw error;
             }),
             tap(result => {
-                console.log('Respuesta de la actualización:', result);
                 this.notificationService.showSuccess("Actualización exitosa", "La categoría se ha actualizado correctamente");
 
             })
@@ -215,9 +205,7 @@ export class InventoryService {
                 throw error;
             }),
             map(result => {
-                console.log(result);
                 if (result != null) {
-                    console.log("Llego");
                     this.notificationService.showSuccess("Actualización exitoso", "El producto se ha actualizado correctamente");
                 } else {
                     this.notificationService.showError("Actualización fallido", "Vuelve a intentar");
@@ -238,9 +226,7 @@ export class InventoryService {
                 throw error;
             }),
             map(result => {
-                console.log(result);
                 if (result != null) {
-                    console.log("Llego");
                     this.notificationService.showSuccess("Actualización exitoso", "Imagen Actualizada correctamente!");
                 } else {
                     this.notificationService.showError("Actualización fallido", "Vuelve a intentar");

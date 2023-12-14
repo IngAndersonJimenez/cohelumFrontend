@@ -91,7 +91,6 @@ export class ContactComponent implements OnInit {
 
 
     markAsRead(contact: Contact): void {
-        console.log('Esto trae contact: ', contact);
         const token = this.contactService.getToken();
         this.contactService.updateStatusRead(true, contact.idRequest, token).subscribe(() => {
             const contactIndex = this.contacts.findIndex(c => c.idRequest === contact.idRequest);

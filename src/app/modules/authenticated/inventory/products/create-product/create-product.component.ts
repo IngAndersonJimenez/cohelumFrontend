@@ -163,25 +163,13 @@ export class CreateProductComponent implements OnInit {
   }
 
   subCategoryLoad(idCategory: number) {
-    console.log('idCategory.target.value')
-    console.log(idCategory)
     this.isActiveSubcategories = true;
-
     this.subcategoriesFilter = [];
     for (let iter of this.subcategories) {
-
-      console.log('iter')
-      console.log(iter)
-
       if (iter.getIdCategory() == idCategory) {
         this.subcategoriesFilter.push(iter);
-        console.log('subCategoryLoad')
       }
     }
-
-    console.log(' this.isActiveSubcategories')
-    console.log(   this.isActiveSubcategories)
-
   }
 
 

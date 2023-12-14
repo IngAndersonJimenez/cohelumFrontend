@@ -54,13 +54,6 @@ export class ShowcasePublicComponent {
   }
 
   changeData(index: number) {
-    console.log('changeData');
-    console.log(index);
-
-    console.log(
-      this.gallery[index].getTitleInfo()
-    );
-
     this.titleInformative = this.gallery[index].getTitleInfo();
     this.description = this.gallery[index].getDescription();
 

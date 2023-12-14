@@ -30,12 +30,10 @@ export class LoginComponent implements OnInit{
 
   login() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
       this.loginService.login(this.loginForm.value).subscribe(
           data => console.log(data),
           err => this.notificationService.showError('Error en las credenciales', 'Login Faliido')
       );
-
 
       this.router.navigate(['/cohelum/authenticated/content-user/dashboard']);
     }

@@ -49,11 +49,8 @@ export class InventoryComponent implements OnInit {
 
     this.inventoryService.getInventoryAll(token).subscribe(
       data => {
-        console.log("Consulta inventario")
-        console.log(data)
 
         for (let response of data.responseDTO) {
-          console.log(response.getInventoryCategoryDTO.description)
 
           inventoryGridInto = new InventoryGrid(response.getInventoryCategoryDTO.description,
             response.getInventoryDTO.name,
@@ -66,10 +63,7 @@ export class InventoryComponent implements OnInit {
       }
     );
 
-    console.log("Consulta resultado")
-    console.log(this.inventoryGrid)
     this.inventoryFilter = this.inventoryGrid;
-
 
   }
 
@@ -117,30 +111,21 @@ export class InventoryComponent implements OnInit {
 
   orderInventory(code: any) {
 
-    console.log("orderInventory")
-    console.log(code.target.value)
-    console.log(this.inventoryFilter)
-
     if (code.target.value == 1) {
-      console.log("orderInventory")
       this.inventoryFilter.sort(
         (a, b) => a.getDescriptionInventory().localeCompare(b.getDescriptionInventory())
       );
     }
 
     if (code.target.value == 2) {
-      console.log("orderInventory")
       this.inventoryFilter.sort(
         (a, b) => a.getPrice() - b.getPrice());
     }
 
     if (code.target.value == 3) {
-      console.log("orderInventory")
       this.inventoryFilter.sort(
         (a, b) => b.getPrice() - a.getPrice());
     }
-
-    console.log(this.inventoryFilter)
 
   }
 

@@ -31,7 +31,6 @@ export class ContactService {
     return this.loginService.getTokenPublicS()
         .pipe(
             map((response) => {
-              console.log('Contacto creado con éxito:', response);
               return response.token;
             }),
             catchError((error) => {
@@ -43,7 +42,6 @@ export class ContactService {
 
 
   createContact(formData: FormData, token:string): Observable<Contact>{
-    console.log('createContact:', formData, token);
     const headers = new HttpHeaders({
       'Authorization': `${token}`
     });
@@ -54,9 +52,6 @@ export class ContactService {
     getToken(): string {
         let token: string = '';
         this.loginService.userCurrent.subscribe(data => {
-
-            console.log("Token: ")
-            console.log(data)
             token = data.token
         })
         return token;
