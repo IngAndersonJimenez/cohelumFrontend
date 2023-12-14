@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ContentPublicComponent } from './content-public/content-public.component';
 import { InventoryComponent } from './inventory/inventory.component';
+import { InventoryDetailComponent } from './inventory-detail/inventory-detail.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
       {
         path: 'inventory',
         component: InventoryComponent
+      },
+      {
+        path: 'inventoryDetail',
+        component: InventoryDetailComponent
       }
     ]
   }

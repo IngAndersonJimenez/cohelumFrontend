@@ -1,0 +1,35 @@
+<section #categoriasSeccion id="inventoryDetailSeccion" class="categories inventory-content">
+    <div class="container">
+        <div class="row">
+            <div class="inventoryDetail-subtitle"><b>Product detail</b></div>
+        </div>
+        <div class="row">
+            <div class="inventoryDetail-title">Detalle producto</div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                1
+            </div>
+            <div class="col">
+                <div class="card">
+                    <p-galleria [value]="images" thumbnailsPosition="right" [responsiveOptions]="responsiveOptions"
+                        [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5" [autoPlay]="true">
+                        <ng-template pTemplate="item" let-item>
+                            <img [src]="item.itemImageSrc" style="width: 100%; min-height: 420px; display: block;" />
+                        </ng-template>
+                        <ng-template pTemplate="thumbnail" let-item>
+                            <div class="grid grid-nogutter justify-content-center">
+                                <img [src]="item.thumbnailImageSrc" />
+                            </div>
+                        </ng-template>
+                    </p-galleria>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

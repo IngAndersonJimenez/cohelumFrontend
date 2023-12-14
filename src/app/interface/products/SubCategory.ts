@@ -12,35 +12,35 @@ export class SubCategory {
         this.idCategory = idCategory;
     }
 
-    get getIdSubCategory(): number {
+    getIdSubCategory(): number {
         return this.idSubCategory;
     }
 
-    set setIdSubCategory(value: number) {
+    setIdSubCategory(value: number) {
         this.idSubCategory = value;
     }
 
-    get getDescription(): string {
+    getDescription(): string {
         return this.description;
     }
 
-    set setDescription(value: string) {
+    setDescription(value: string) {
         this.description = value;
     }
 
-    get getActive(): boolean {
+    getActive(): boolean {
         return this.active;
     }
 
-    set setActive(value: boolean) {
+    setActive(value: boolean) {
         this.active = value;
     }
 
-    get getIdCategory(): number {
+    getIdCategory(): number {
         return this.idCategory;
     }
 
-    set setIdCategory(value: number) {
+    setIdCategory(value: number) {
         this.idCategory = value;
     }
 }

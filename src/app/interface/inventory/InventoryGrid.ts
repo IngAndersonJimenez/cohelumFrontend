@@ -4,12 +4,13 @@ export class InventoryGrid {
     private descriptionInventory: string;
     private price: number;
     private unitsAvaible: number;
+    private images: Array<string>;
     private imageInitial: string;
     private imageSecond: string;
 
 
-    constructor(descriptionCategory: string, descriptionInventory: string, price: number, 
-        unitsAvaible: number, imageInitial: string, imageSecond: string
+    constructor(descriptionCategory: string, descriptionInventory: string, price: number,
+        unitsAvaible: number, imageInitial: string, imageSecond: string, images: Array<string>
     ) {
         this.descriptionCategory = descriptionCategory
         this.descriptionInventory = descriptionInventory
@@ -17,6 +18,7 @@ export class InventoryGrid {
         this.unitsAvaible = unitsAvaible
         this.imageInitial = imageInitial
         this.imageSecond = imageSecond
+        this.images = images
     }
 
     public getDescriptionCategory(): string {
@@ -67,6 +69,13 @@ export class InventoryGrid {
         this.imageSecond = imageSecond;
     }
 
+    public getImages(): Array<string> {
+        return this.images;
+    }
+
+    public setImages(images: Array<string>): void {
+        this.images = images;
+    }
 
 
 }

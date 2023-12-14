@@ -26,6 +26,8 @@ import { TagModule } from 'primeng/tag';
 import { RatingModule } from 'primeng/rating';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { MenubarModule } from 'primeng/menubar';
+import { InventoryDetailComponent } from './inventory-detail/inventory-detail.component';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { MenubarModule } from 'primeng/menubar';
     TeamPublicComponent,
     ShowcasePublicComponent,
     ContactComponent,
-    InventoryComponent
+    InventoryComponent,
+    InventoryDetailComponent
   ],
   imports: [
     CommonModule,
@@ -58,7 +61,8 @@ import { MenubarModule } from 'primeng/menubar';
     FormsModule,
     ReactiveFormsModule,
     RadioButtonModule,
-    MenubarModule
+    MenubarModule,
+    ImageModule
   ]
 })
 export class PublicModule { }
