@@ -8,7 +8,7 @@ import { NotificationService } from "../../../../../notifications/notification.s
 import { CategoryService } from "../../../../../services/category.service";
 import {InventoryCategory} from "../../../../../interface/products/inventoryCategory";
 import {InventoryService} from "../../../../../services/inventory.service";
-import {CategoryProducts} from "../../../../../interface/products/CategoryProducts";
+
 
 @Component({
   selector: 'app-sub-category',
@@ -70,11 +70,18 @@ export class SubCategoryComponent {
   ngOnInit(): void {
     this.getSubcategory();
     this.buildForm();
+
   }
 
-  editCategory(subcategory:SubCategory) {
+  editCategory(subcategory: SubCategory) {
     subcategory.isEditing = true;
+    this.inventoryService.getCategory().subscribe(
+        (response: any) => {
+          this.categories = response.responseDTO;
+        }
+    );
   }
+
 
   cancelEdit(subCategory: SubCategory) {
     subCategory.isEditing = false;

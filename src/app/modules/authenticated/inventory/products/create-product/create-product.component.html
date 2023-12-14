@@ -13,7 +13,7 @@
                             </div>
                         </mat-form-field>
                     </mat-grid-tile>
-                    <mat-grid-tile [colspan]="3" [rowspan]="8">
+                    <mat-grid-tile [colspan]="3" [rowspan]="9">
                         <ng-container *ngIf="selectedImage; else pdfPreview">
                             <img [src]="selectedImage" alt="Imagen seleccionada" class="preview-image">
                         </ng-container>
@@ -53,6 +53,17 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="productForm.get('categoryId')?.hasError('required')">Selecciona una categoría</mat-error>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-form-field class="form-input">
+                            <mat-label>SubCategoría</mat-label>
+                            <mat-select formControlName="idSubCategory" required>
+                                <mat-option *ngFor="let subCategory of subcategories" [value]="subCategory.getIdSubCategory">
+                                    {{ subCategory.getDescription }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="productForm.get('idSubCategory')?.hasError('required')">Selecciona una subcategoría</mat-error>
                         </mat-form-field>
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="1" [rowspan]="1">

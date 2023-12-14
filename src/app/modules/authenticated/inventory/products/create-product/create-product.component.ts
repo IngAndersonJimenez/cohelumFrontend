@@ -4,6 +4,8 @@ import { InventoryService } from "../../../../../services/inventory.service";
 import { LoginService } from "../../../../../services/login.service";
 import {NotificationService} from "../../../../../notifications/notification.service";
 import {InventoryCategory} from "../../../../../interface/products/inventoryCategory";
+import {SubCategory} from "../../../../../interface/products/SubCategory";
+import {CategoryService} from "../../../../../services/category.service";
 
 @Component({
   selector: 'app-create-product',
@@ -17,7 +19,9 @@ export class CreateProductComponent implements OnInit{
   selectedImage: string | undefined;
   categories!: InventoryCategory[];
   isLoading = false;
-  constructor(private notificationService:NotificationService, private inventoryService: InventoryService, private formBuilder: FormBuilder, private loginService: LoginService) {}
+  subcategories!:SubCategory[];
+  constructor(private notificationService:NotificationService, private inventoryService: InventoryService, private formBuilder: FormBuilder,
+              private loginService: LoginService, private categoryService:CategoryService) {}
 
   private buildForm() {
     this.productForm = this.formBuilder.group({
@@ -25,6 +29,7 @@ export class CreateProductComponent implements OnInit{
       price: [null, Validators.required],
       unitsAvailable: [null, Validators.required],
       categoryId: [null,Validators.required],
+      idSubCategory:[null,Validators.required],
       characteristic: [''],
       datasheet: ['', Validators.required],
       image: [null, Validators.required]
@@ -39,6 +44,7 @@ export class CreateProductComponent implements OnInit{
       formData.append('price', this.productForm.get('price')?.value);
       formData.append('unitsAvailable', this.productForm.get('unitsAvailable')?.value);
       formData.append('categoryId', this.productForm.get('categoryId')?.value);
+      formData.append('subCategoryId', this.productForm.get('subCategoryId')?.value);
       formData.append('characteristic', this.productForm.get('characteristic')?.value);
       formData.append('datasheet', this.productForm.get('datasheet')?.value);
       const isImageAttached = this.productForm.get('image')?.value !== null;
@@ -123,8 +129,16 @@ export class CreateProductComponent implements OnInit{
     this.inventoryService.getCategory().subscribe(
         (response: any) => {
           this.categories = response.responseDTO;
+
         }
     );
+    this.categoryService.getSubcategory().subscribe(
+        (response: any) => {
+          this.subcategories = response.responseDTO;
+          console.log('Subcategories', this.subcategories)
+        },
+    )
+
   }
   validateEnter(event: KeyboardEvent, tipo: string) {
     let pattern: RegExp;
