@@ -6,6 +6,8 @@ import {NotificationService} from "../../../../../notifications/notification.ser
 import {DomSanitizer} from "@angular/platform-browser";
 import {InventoryImage} from "../../../../../interface/InventoryImage";
 import {InventoryCategory} from "../../../../../interface/products/inventoryCategory";
+import {SubCategory} from "../../../../../interface/products/SubCategory";
+import {CategoryService} from "../../../../../services/category.service";
 
 
 @Component({
@@ -29,8 +31,12 @@ export class ConsultProductComponent implements OnInit {
     showUpdateImageDialog: boolean = false;
     selectedPDFName: string | undefined;
     selectedImage: string | undefined;
+    subcategories: Array<SubCategory> = [];
+    isActiveSubcategories: boolean = false;
+    subcategoriesFilter: Array<SubCategory> = [];
 
-    constructor(private fb: FormBuilder, private inventoryService: InventoryService, private sanitizer: DomSanitizer, private notificationService: NotificationService) {
+    constructor(private fb: FormBuilder, private inventoryService: InventoryService, private sanitizer: DomSanitizer,
+                private notificationService: NotificationService, private categoryService:CategoryService) {
         this.consultForm = this.fb.group({
             name: [''],
             price: [''],
@@ -38,13 +44,15 @@ export class ConsultProductComponent implements OnInit {
             description: [''],
             characteristic: [''],
             datasheet: [''],
-            image: ['']
+            image: [''],
+            descriptionSubCategory:['']
         });
         this.updateForm = this.fb.group({
             name: [''],
             price: [''],
             unitsAvailable: [''],
             idCategory: [null],
+            idSubCategory:[null],
             characteristic: [''],
             description: [''],
             datasheet: [''],
@@ -64,7 +72,7 @@ export class ConsultProductComponent implements OnInit {
                 (data: any) => {
                     const responseDTO = data.responseDTO;
 
-                    if (responseDTO) {
+                    if (data && data.responseDTO) {
                         const product = new ProductFull(
                             responseDTO.getInventoryDTO.idInventory,
                             responseDTO.getInventoryDTO.name,
@@ -76,9 +84,11 @@ export class ConsultProductComponent implements OnInit {
                             responseDTO.getInventoryCategoryDTO.idCategory,
                             responseDTO.getInventoryCategoryDTO.description,
                             responseDTO.getInventoryImageDTO[0].idInventoryImage,
-                            'data:image/png;base64,' + responseDTO.getInventoryImageDTO[0].image
+                            'data:image/png;base64,' + responseDTO.getInventoryImageDTO[0].image,
+                            responseDTO.getInventorySubCategoryDTO.description,
+                            responseDTO.getInventorySubCategoryDTO.idSubCategory
                         );
-
+                        console.log('Updated products:', this.products)
                         this.products.push(product);
                         this.getImageByProduct(responseDTO.getInventoryImageDTO)
 
@@ -107,6 +117,8 @@ export class ConsultProductComponent implements OnInit {
         this.consultForm.get('name')?.valueChanges.subscribe(() => {
             this.products = [];
         });
+
+
     }
 
     addImage(): void {
@@ -206,15 +218,17 @@ export class ConsultProductComponent implements OnInit {
         this.showUpdateDialog = false;
     }
 
-    updateProduct(formdata:FormData,idInventory:number){
-        this.inventoryService.updateProduct(formdata,idInventory).subscribe(
-            (data) =>{
+    updateProduct(formdata: FormData, idInventory: number) {
+        this.inventoryService.updateProduct(formdata, idInventory).subscribe(
+            (data) => {
                 const updatedProductName = this.updateForm.get('name')?.value;
-                this.closeUpdateDialog()
-                this.loadProducts(updatedProductName)
+                this.closeUpdateDialog();
+                this.loadProducts(updatedProductName);
             }
-        )
+        );
     }
+
+
 
     submitUpdateForm() {
         const formdata = this.updateForm.value;
@@ -229,6 +243,7 @@ export class ConsultProductComponent implements OnInit {
         formData.append('price', data.price);
         formData.append('unitsAvailable', data.unitsAvailable);
         formData.append('idCategory', this.updateForm.get('idCategory')?.value);
+        formData.append('idSubCategory', this.updateForm.get('idSubCategory')?.value);
         formData.append('characteristic', data.characteristic);
         formData.append('datasheet', this.updateForm.get('datasheet')?.value);
 
@@ -241,7 +256,8 @@ export class ConsultProductComponent implements OnInit {
             name: product.name,
             price: product.price,
             unitsAvailable: product.unitsAvailable,
-            idCategory: product.idCategory,
+            idCategory: '',
+            idSubCategory:product.idSubCategory,
             description:product.description,
             characteristic: product.characteristic,
             datasheet: product.datasheet,
@@ -256,6 +272,15 @@ export class ConsultProductComponent implements OnInit {
                 this.loadingCategories = false;
             }
         );
+        this.categoryService.getSubcategory().subscribe(
+            (response: any) => {
+                for (let iter of response.responseDTO) {
+                    this.subcategories.push(
+                        new SubCategory(iter.idSubCategory, iter.description, iter.active, iter.idCategory)
+                    );
+                }
+            },
+        )
     }
 
     openUpdateDialog2(productData: any): void {
@@ -293,6 +318,20 @@ export class ConsultProductComponent implements OnInit {
 
         }
     }
+
+    subCategoryLoad(event: any) {
+        const idCategory = event.target.value;
+        this.isActiveSubcategories = true;
+        this.subcategoriesFilter = [];
+        for (let iter of this.subcategories) {
+            if (iter.getIdCategory() == idCategory) {
+                this.subcategoriesFilter.push(iter);
+            }
+        }
+    }
+
+
+
 
 
 }

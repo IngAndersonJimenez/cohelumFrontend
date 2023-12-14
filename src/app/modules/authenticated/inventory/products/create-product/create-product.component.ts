@@ -47,7 +47,7 @@ export class CreateProductComponent implements OnInit {
       formData.append('price', this.productForm.get('price')?.value);
       formData.append('unitsAvailable', this.productForm.get('unitsAvailable')?.value);
       formData.append('categoryId', this.productForm.get('categoryId')?.value);
-      formData.append('subCategoryId', this.productForm.get('subCategoryId')?.value);
+      formData.append('idSubCategory', this.productForm.get('idSubCategory')?.value);
       formData.append('characteristic', this.productForm.get('characteristic')?.value);
       formData.append('datasheet', this.productForm.get('datasheet')?.value);
       const isImageAttached = this.productForm.get('image')?.value !== null;

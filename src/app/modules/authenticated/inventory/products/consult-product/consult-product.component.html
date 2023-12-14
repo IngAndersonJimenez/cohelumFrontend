@@ -54,13 +54,19 @@
                         <div class="col-3">
                             <div class="form-field form-field2">
                                 <label>Precio:</label>
-                                {{products[0].price}}
+                                {{products[0].price.toLocaleString('es-ES', { style: 'currency', currency: 'COP' })}}
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <div class="form-field">
                                 <label>Característica:</label>
                                 {{products[0].characteristic}}
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-field">
+                                <label>SubCategoría:</label>
+                                {{products[0].descriptionSubCategory}}
                             </div>
                         </div>
                     </div>
@@ -103,16 +109,6 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="showImagePreview" class="simple-dialog">
-                    <div class="dialog-content">
-                        <h2>¿Quieres añadir esta imagen al producto?</h2>
-                        <img [src]="currentImage" alt="Imagen del Producto">
-                        <div class="dialog-buttons">
-                            <button class="accept" (click)="acceptImage()">Aceptar</button>
-                            <button class="cancel" (click)="closeImagePreview()">Cancelar</button>
-                        </div>
-                    </div>
-                </div>
                 <div *ngIf="showUpdateDialog" class="custom-dialog">
                     <div class="dialog-content">
                         <h2>Actualizar Producto</h2>
@@ -131,9 +127,17 @@
                             </div>
                             <div class="form-field">
                                 <label for="updateCategory">Nueva Categoría:</label>
-                                <select id="updateCategory" formControlName="idCategory">
+                                <select id="updateCategory" formControlName="idCategory" (change)="subCategoryLoad($event)">
                                     <option *ngFor="let category of categories" [value]="category.idCategory">
                                         {{ category.description }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label for="updateSubCategory">Nueva SubCategoría:</label>
+                                <select id="updateSubCategory" formControlName="idSubCategory">
+                                    <option *ngFor="let subCategory of subcategoriesFilter" [value]="subCategory.getIdSubCategory()">
+                                        {{ subCategory.getDescription() }}
                                     </option>
                                 </select>
                             </div>

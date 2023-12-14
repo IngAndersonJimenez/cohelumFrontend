@@ -1,19 +1,31 @@
 import { SafeResourceUrl } from "@angular/platform-browser";
 
 export class ProductFull {
+
     private _idInventory: number;
     private _name: string;
     private _price: number;
     private _unitsAvailable: number;
     private _active: boolean;
     private _characteristic: string;
+    private _descriptionSubCategory:string
     private _datasheet: SafeResourceUrl | null;
     private _idCategory: number;
+    private _idSubCategory: number;
     private _description: string;
     private _idInventoryImage: number;
+
+    get idSubCategory(): number {
+        return this._idSubCategory;
+    }
+
+    set idSubCategory(value: number) {
+        this._idSubCategory = value;
+    }
+
     private _image: string | null;
 
-    constructor(idInventory: number, name: string, price: number, unitsAvailable: number, active: boolean, characteristic: string, datasheet: SafeResourceUrl | null, idCategory: number, description: string, idInventoryImage: number, image: string | null) {
+    constructor(idInventory: number, name: string, price: number, unitsAvailable: number, active: boolean, characteristic: string, datasheet: SafeResourceUrl | null, idCategory: number, description: string, idInventoryImage: number, image: string | null,descriptionSubCategory:string,idSubCategory:number) {
         this._idInventory = idInventory;
         this._name = name;
         this._price = price;
@@ -25,6 +37,8 @@ export class ProductFull {
         this._description = description;
         this._idInventoryImage = idInventoryImage;
         this._image = image;
+        this._descriptionSubCategory = descriptionSubCategory
+        this._idSubCategory = idSubCategory
     }
 
     get idInventory(): number {
@@ -113,5 +127,14 @@ export class ProductFull {
 
     set image(value: string | null) {
         this._image = value;
+    }
+
+
+    get descriptionSubCategory(): string {
+        return this._descriptionSubCategory;
+    }
+
+    set descriptionSubCategory(value: string) {
+        this._descriptionSubCategory = value;
     }
 }
