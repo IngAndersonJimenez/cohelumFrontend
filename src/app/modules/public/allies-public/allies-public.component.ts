@@ -33,10 +33,6 @@ export class AlliesPublicComponent {
 
   getCitiesByIdDepartament(idDepartament: any) {
 
-    console.log("getCitiesByIdDepartament")
-    console.log(idDepartament)
-    console.log(idDepartament.target.value)
-
     if (idDepartament.target.value == 0) {
       this.listaAliados = this.allyService.getListOfAllies();
       this.isActiveControlCity = false;
@@ -48,13 +44,7 @@ export class AlliesPublicComponent {
   }
 
   getAlliesByIdCity(idCity: any) {
-    console.log('getAlliesByIdCity')
-    console.log(idCity)
-    console.log(idCity.target.value)
-
     this.listaAliados = this.allyService.getAlliesByIdCity(idCity.target.value);
-    console.log('getAlliesByIdCity')
-    console.log(this.listaAliados)
   }
 
 

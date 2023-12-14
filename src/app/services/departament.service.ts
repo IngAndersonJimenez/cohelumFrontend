@@ -57,8 +57,6 @@ export class DepartamentService {
         departamentActive.push(departamentIter);
       }
     }
-    console.log("departamentos activos")
-    console.log(departamentActive)
     return departamentActive;
   }
 

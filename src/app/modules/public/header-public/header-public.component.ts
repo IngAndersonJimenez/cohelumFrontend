@@ -26,12 +26,10 @@ export class HeaderPublicComponent  implements OnInit{
   }
 
   scrollToDiv(target:HTMLElement){
-    console.log('conector')
     target.scrollIntoView();
   }
 
   activateSectionInventory() {
-    console.log("Activando seccion");
     this.inventoryService.activeSectionInventoty(false);
   }
 

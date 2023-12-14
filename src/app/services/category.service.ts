@@ -20,9 +20,6 @@ export class CategoryService {
   getToken(): string {
     let token: string = '';
     this.loginService.userCurrent.subscribe(data => {
-
-      console.log("Token: ")
-      console.log(data)
       token = data.token
     })
     return token;

@@ -12,8 +12,6 @@ export class ContentPublicComponent {
 
   constructor(private inventoryService: InventoryService) {
     this.inventoryService.isActiveInventoryCurrent.subscribe(data=>{
-      console.log("ContentPublicComponent")
-      console.log(data)
       this.isActiveInventoty = data;
     });
   }

@@ -100,7 +100,6 @@ export class ConsultProductComponent implements OnInit {
             this.imageList.push(inventoryImage)
 
         }
-        console.log('Listo de imagenes: ' , this.imageList)
     }
 
 
@@ -115,7 +114,6 @@ export class ConsultProductComponent implements OnInit {
 
             this.inventoryService.createImageProduct(this.products[0].idInventory, this.selectedFile).subscribe(
                 (data: InventoryImage) => {
-                    console.log('Imagen creada exitosamente', data);
                     this.notificationService.showSuccess("Imagen Añadida al producto", "Correctamente")
                     this.loadProducts(this.products[0])
                 }
@@ -197,7 +195,6 @@ export class ConsultProductComponent implements OnInit {
     openImagePreview(imageSrc: string): void {
         this.currentImage = imageSrc;
         this.showImagePreview = true;
-        console.log('showImagePreview', this.showImagePreview);
     }
 
 
@@ -239,7 +236,6 @@ export class ConsultProductComponent implements OnInit {
     }
 
     openUpdateDialog(product: ProductFull): void {
-        console.log('datasheet:', product.datasheet)
 
         this.updateForm.setValue({
             name: product.name,
@@ -263,9 +259,7 @@ export class ConsultProductComponent implements OnInit {
     }
 
     openUpdateDialog2(productData: any): void {
-        console.log('productData: ', productData)
         this.updateForm.get('idInventoryImage')?.setValue(productData)
-        console.log('formulario: ',  this.updateForm)
         this.showUpdateImageDialog = true;
     }
 
@@ -278,7 +272,6 @@ export class ConsultProductComponent implements OnInit {
 
         this.inventoryService.updateImageProduct(formData, idInventoryImage).subscribe(
             (updatedProduct: ProductFull) => {
-                console.log('Imagen actualizada exitosamente', updatedProduct);
                 this.closeUpdateImageDialog();
             }
         );
@@ -296,9 +289,7 @@ export class ConsultProductComponent implements OnInit {
             reader.onload = (e: any) => {
             };
             reader.readAsDataURL(this.selectedFile as any);
-            console.log('imagen: ', this.selectedFile)
             this.updateForm.get('image')?.setValue(this.selectedFile)
-            console.log('imagen: ', this.updateForm)
 
         }
     }

@@ -119,7 +119,6 @@ export class SubCategoryComponent {
       subcategory.getDescription(), subcategory.getIdCategory()).subscribe(
       (data: any) => {
         if (data != null && data.responseDTO && 'active' in data.responseDTO) {
-          console.log('data', data)
           this.notificationService.showSuccess("Actualización Exitoso!", "La subcategoría se ha actualizado correctamente!");
           subcategory.isEditing = false;
           this.getSubcategory()

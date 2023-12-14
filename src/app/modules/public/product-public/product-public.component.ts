@@ -48,15 +48,10 @@ export class ProductPublicComponent implements OnInit {
   }
 
   private getCategories(token: string) {
-    console.log('Token categorias')
-    console.log(token)
     let response: any;
     this.inventoryService.getCategory(token).subscribe(data => {
-      console.log(data)
       response = data;
-      console.log(response.responseDTO)
       this.category = response.responseDTO;
-      console.log(this.category[0].description);
     });
   }
 
