@@ -45,10 +45,13 @@
                                         Extendida</label>
                                 </li>
 
-                                <li class="nav-item">
-                                    <label class="nav-link puntero" (click)="goTo('ourTeamSection')">Nosotros</label>
+                                <li class="nav-item1" (click)="toggleDropdown()">
+                                    <label class="nav-link puntero">Nosotros</label>
+                                    <ul class="content" [ngClass]="{ 'show': isDropdownOpen }">
+                                        <li class="lista-nosotros"><a href="#" (click)="goToSection('aboutUsSection')">¿Quiénes somos?</a></li>
+                                        <li class="lista-nosotros"><a href="#" (click)="goToSection('projectsSection')">Proyectos</a></li>
+                                    </ul>
                                 </li>
-
                                 <li class="nav-item desplegar">
                                     <label class="nav-link puntero"
                                         (click)="goTo('categoriasSeccion')">Productos</label>

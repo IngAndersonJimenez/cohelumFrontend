@@ -12,6 +12,7 @@ import { MenuItem } from 'primeng/api';
 export class HeaderPublicComponent  implements OnInit{
 
   items: MenuItem[] | undefined;
+    isDropdownOpen = false;
 
   constructor(public router: Router, private scroller: ViewportScroller, private inventoryService:InventoryService) {
   }
@@ -159,6 +160,13 @@ export class HeaderPublicComponent  implements OnInit{
         }
     ];
 }
+    toggleDropdown() {
+        this.isDropdownOpen = !this.isDropdownOpen;
+    }
 
+    goToSection(section: string) {
+        // Lógica para navegar a la sección deseada
+        console.log(`Navigating to ${section}`);
+    }
 
 }

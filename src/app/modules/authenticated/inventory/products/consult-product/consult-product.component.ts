@@ -88,7 +88,6 @@ export class ConsultProductComponent implements OnInit {
                             responseDTO.getInventorySubCategoryDTO.description,
                             responseDTO.getInventorySubCategoryDTO.idSubCategory
                         );
-                        console.log('Updated products:', this.products)
                         this.products.push(product);
                         this.getImageByProduct(responseDTO.getInventoryImageDTO)
 
@@ -127,7 +126,7 @@ export class ConsultProductComponent implements OnInit {
             this.inventoryService.createImageProduct(this.products[0].idInventory, this.selectedFile).subscribe(
                 (data: InventoryImage) => {
                     this.notificationService.showSuccess("Imagen Añadida al producto", "Correctamente")
-                    this.loadProducts(this.products[0])
+
                 }
             );
         }
@@ -218,21 +217,15 @@ export class ConsultProductComponent implements OnInit {
         this.showUpdateDialog = false;
     }
 
-    updateProduct(formdata: FormData, idInventory: number) {
-        this.inventoryService.updateProduct(formdata, idInventory).subscribe(
-            (data) => {
-                const updatedProductName = this.updateForm.get('name')?.value;
-                this.closeUpdateDialog();
-                this.loadProducts(updatedProductName);
-            }
-        );
-    }
-
-
 
     submitUpdateForm() {
         const formdata = this.updateForm.value;
-        this.updateProduct(this.createFormData(formdata),this.products[0].idInventory);
+        this.inventoryService.updateProduct(this.createFormData(formdata),this.products[0].idInventory).subscribe(
+            data =>{
+                this.closeUpdateDialog();
+                this.reloadProductData()
+            }
+        )
     }
 
 
@@ -296,7 +289,8 @@ export class ConsultProductComponent implements OnInit {
         const idInventoryImage = this.updateForm.get('idInventoryImage')?.value;
 
         this.inventoryService.updateImageProduct(formData, idInventoryImage).subscribe(
-            (updatedProduct: ProductFull) => {
+            (data:any) => {
+                this.reloadProductData()
                 this.closeUpdateImageDialog();
             }
         );
@@ -331,7 +325,27 @@ export class ConsultProductComponent implements OnInit {
     }
 
 
+    reloadProductData() {
+        const productName = this.consultForm.get('name')?.value;
 
+        if (productName && productName.trim() !== '') {
+            this.loadProducts(new ProductFull(
+                this.products[0].idInventory,
+                productName,
+                this.updateForm.get('price')?.value,
+                this.updateForm.get('unitsAvailable')?.value,
+                this.products[0].active,
+                this.updateForm.get('characteristic')?.value,
+                this.sanitizer.bypassSecurityTrustResourceUrl('data:application/pdf;base64,' + (this.updateForm.get('datasheet')?.value || '')),
+                this.updateForm.get('idCategory')?.value,
+                this.updateForm.get('description')?.value,
+                this.updateForm.get('idInventoryImage')?.value,
+                'data:image/png;base64,' + this.updateForm.get('image')?.value,
+                this.updateForm.get('descriptionSubCategory')?.value,
+                this.updateForm.get('idSubCategory')?.value
+            ));
+        }
+    }
 
 
 }
