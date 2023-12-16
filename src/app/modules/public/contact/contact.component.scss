@@ -9,6 +9,10 @@ body {
     padding-top: 6%;
     padding-bottom: 3%;
 
+    @media (max-width: 768px) {
+        padding-top: 5%;
+    }
+
     .contact-subtitle {
         text-align: center;
         font-size: 1vw;
@@ -144,6 +148,51 @@ body {
             width: 100%;
         }
     }
+    @media (max-width: 768px) {
+        .container {
+            .row {
+                flex-direction: column; // Cambio a columna para dispositivos pequeños
+            }
+
+            .left-container,
+            .form-container {
+                width: 100%;
+                margin: 0;
+            }
+
+            .text-container {
+                #comunicate {
+                    font-size: 3.5vw;
+                }
+
+                .line {
+                    width: 100%;
+                }
+
+                .p1 {
+                    font-size: 3vw;
+                    margin-top: 15px;
+                }
+
+                .p2 {
+                    font-size: 2.5vw;
+                }
+            }
+
+            .form-container {
+                margin-top: 1rem;
+                .form-row {
+                    .form-group {
+                        width: 100%;
+                    }
+
+                    .button-container {
+                        margin: 1rem 0;
+                    }
+                }
+            }
+        }
+    }
 }
 .popup-message {
     position: fixed;
@@ -205,4 +254,3 @@ body {
         color: #E0AB67;
     }
 }
-
