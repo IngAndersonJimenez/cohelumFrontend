@@ -1,3 +1,10 @@
+body {
+    font-family: "Mulish", Sans-serif, serif;
+    font-weight: 700;
+    background-color: #1e1e1e;
+    color: #e6e6e6;
+}
+
 .contact-content {
     padding-top: 6%;
     padding-bottom: 3%;
@@ -61,6 +68,7 @@
 
                     button {
                         width: auto;
+
                     }
                 }
 
@@ -93,7 +101,7 @@
             width: 100%; // Cambiado de 540px
 
             #comunicate {
-                font-family: Poppins, sans-serif;
+                font-family: "Mulish", sans-serif;
                 font-size: 3vw; // Ajustado el tamaño de la fuente
                 font-weight: 800;
                 line-height: 1.2;
@@ -142,8 +150,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #0F2137;  // Ajusta el color de fondo según tu paleta de colores
-    color: #ffffff;           // Ajusta el color del texto según tu paleta de colores
+    background-color: #0F2137;
+    color: #ffffff;
     padding: 20px;
     text-align: center;
     z-index: 1000;
@@ -156,7 +164,7 @@
     }
 
     button {
-        background-color: #007bff;   // Ajusta el color del botón según tu paleta de colores
+        background-color: #007bff;
         color: white;
         padding: 10px;
         border: none;
@@ -165,7 +173,7 @@
         transition: background-color 0.3s;
 
         &:hover {
-            background-color: #0056b3;  // Ajusta el color del botón al pasar el ratón
+            background-color: #0056b3;
         }
     }
 
@@ -188,3 +196,13 @@
         justify-content: space-between;
     }
 }
+#submit {
+    background-color: orange;
+    color: black;
+    border: none;
+    &:hover {
+        background-color: white;
+        color: #E0AB67;
+    }
+}
+

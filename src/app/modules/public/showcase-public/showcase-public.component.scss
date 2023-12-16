@@ -1,11 +1,15 @@
 .showcase-content {
     padding-top: 6%;
     padding-bottom: 3%;
+    overflow: hidden;
 }
 
 .showcase-title {
+    font-family: "Mulish", sans-serif;
+    font-weight: 600;
     font-size: 2.6vw;
     color: #001857;
+    animation: fadeInUp 1s ease-in-out;
 }
 
 .showcase-inter {
@@ -13,16 +17,51 @@
 }
 
 .showcase-descrption {
+    font-family: "Mulish", sans-serif;
     padding-top: 4%;
     color: #001857;
     line-height: 2em;
+    animation: fadeInUp 1s ease-in-out;
 }
 
 .showcase-icon {
+    font-family: "Mulish", sans-serif;
     padding-top: 4%;
     color: #001857;
+    display: flex;
+    justify-content: space-around; /* Alinea los íconos en el centro */
+    animation: fadeInUp 1s ease-in-out; /* Agrega animación fadeInUp */
+}
+
+.showcase-icon .col {
+    text-align: center;
+    padding: 1em;
+    transition: transform 0.3s ease-in-out; /* Agrega transición a los íconos */
+}
+
+.showcase-icon .col:hover {
+    transform: scale(1.1); /* Agranda el ícono en el hover */
 }
 
 .showcase-col {
     padding-top: 4%;
+    text-align: center;
+}
+
+
+.col img {
+    border-radius: 12px; /* Redondea la imagen */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega sombra estilo card */
+}
+
+/* Agrega la animación fadeInUp */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

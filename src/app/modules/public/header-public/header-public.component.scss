@@ -1,9 +1,11 @@
-.header-nav {
-    opacity: 0.8;
+body {
+    font-family: "Mulish", Sans-serif, serif;
+    font-weight: 600;
 }
 
-.btn {
-    background-color: #0a4275;
+.header-nav {
+    opacity: 0.8;
+
 }
 
 .logo {
@@ -12,17 +14,12 @@
 
 .puntero {
     cursor: pointer;
-    cursor: hand;
-}
-
-.drop {
-    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
 }
 
 .menu {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1.1vw;
-    color: black;
+    font-family: "Mulish", Sans-serif, serif;
+    font-weight: 600;
+    color: #333;
 
     li {
         display: inline-block;
@@ -30,22 +27,33 @@
         padding: 20px 15px;
         line-height: normal;
         transition: all 300ms ease;
-
-        &:hover {
-            background-color: #0a4275;
-            color: #fff;
-        }
+        position: relative;
 
         label {
-            color: black;
+            color: white;
+            position: relative;
 
-            &:hover {
-                background-color: #0a4275;
-                color: #fff;
+            &:after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 2px;
+                background-color: orange;
+                bottom: 0;
+                left: 0;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+        }
+
+        &:hover {
+            label:after {
+                opacity: 1;
             }
         }
     }
 }
+
 
 .desplegar {
     position: relative;
@@ -55,16 +63,14 @@
     cursor: pointer;
     outline: 0;
 
-    &:hover {
-        background: #1389e0;
-    }
-
     span {
         font-size: 16px;
     }
 }
 
 .mega-menu {
+    font-family: "Mulish", Sans-serif, serif;
+    font-weight: 600;
     width: auto;
     position: absolute;
     background: #fff;
@@ -77,6 +83,8 @@
     visibility: hidden;
 
     h2 {
+        font-family: "Mulish", Sans-serif, serif;
+        font-weight: 600;
         padding: 20px;
         background: #1389e0;
         color: #fff;
@@ -96,41 +104,28 @@
         width: 100%;
         margin: 5px;
         padding: 10px;
+        color: white;
 
         h3 {
+            font-family: "Mulish", Sans-serif, serif;
+            font-weight: 600;
             padding: 10px;
         }
 
         a {
             display: block;
-            color: #434343;
+            color: #0000006E;
             padding: 15px 10px;
             font-size: 15px;
-
-            &:hover {
-                background: none;
-                color: #1389e0;
-            }
         }
     }
 }
-
 .nav-item1 {
     position: relative;
 
     a {
         text-decoration: none;
-        color: black;
-        font-size: 20px;
-
-        &:hover {
-            color: #1389e0;
-        }
-    }
-
-    .menu-label {
-        display: block;
-        cursor: pointer;
+        color: white;
     }
 
     .content {
@@ -138,27 +133,49 @@
         position: absolute;
         top: 100%;
         left: 0;
-        width: 200px;
-        background-color: rgba(255, 255, 255, 0.9);
+        width: 400px;
+        padding: 20px;
 
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-    }
 
-    .lista-nosotros {
-        display: block;
-        color: black;
-
-        &:hover {
-            color: blue;
-            background-color: rgba(255, 255, 255, 0.9);
-        }
     }
 
     &:hover .content {
-        display: block;
+        display: flex;
+        flex-direction: column;
     }
 }
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+
+    .lista-nosotros {
+        width: 48%;
+        text-align: left;
+        color: black;
+        font-family: "Mulish", Sans-serif, serif;
+        font-weight: 600;
+        padding-bottom: 10px;
+        position: relative;
+
+
+        &:before {
+            content: '';
+            display: block;
+            width: 85%;
+            height: 2px;
+            background-color: orange;
+            position: absolute;
+            bottom: 0;
+
+        }
+
+        a {
+            color: black;
+            text-decoration: none;
+        }
+    }
+}
+
