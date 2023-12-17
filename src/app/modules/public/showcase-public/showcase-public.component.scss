@@ -4,16 +4,28 @@
     overflow: hidden;
 }
 
+.showcase-inter {
+    padding-right: 6%;
+    display: flex;
+    flex-direction: column; /* Cambia a una disposición de columna */
+
+    @media (max-width: 768px) {
+        padding-right: 0;
+        margin-bottom: 20px;
+    }
+}
+
 .showcase-title {
     font-family: "Mulish", sans-serif;
     font-weight: 600;
     font-size: 2.6vw;
     color: #001857;
     animation: fadeInUp 1s ease-in-out;
-}
 
-.showcase-inter {
-    padding-right: 6%;
+    @media (max-width: 768px) {
+        font-size: 5vw;
+        margin-bottom: 10px;
+    }
 }
 
 .showcase-descrption {
@@ -22,39 +34,62 @@
     color: #001857;
     line-height: 2em;
     animation: fadeInUp 1s ease-in-out;
+
+    @media (max-width: 768px) {
+        padding-top: 2%;
+    }
+}
+
+.showcase-col {
+    display: flex;
+    flex-direction: column; /* Cambia a una disposición de columna */
+    align-items: center;
+    padding-top: 4%;
+    text-align: center;
+
+    @media (max-width: 768px) {
+        padding-top: 2%;
+    }
+}
+
+.col img {
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+
+    @media (max-width: 768px) {
+        max-width: 100%;
+        margin-bottom: 10px;
+    }
 }
 
 .showcase-icon {
     font-family: "Mulish", sans-serif;
-    padding-top: 4%;
     color: #001857;
     display: flex;
-    justify-content: space-around; /* Alinea los íconos en el centro */
-    animation: fadeInUp 1s ease-in-out; /* Agrega animación fadeInUp */
+    justify-content: space-around;
+    animation: fadeInUp 1s ease-in-out;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 .showcase-icon .col {
     text-align: center;
     padding: 1em;
-    transition: transform 0.3s ease-in-out; /* Agrega transición a los íconos */
+    transition: transform 0.3s ease-in-out;
+
+    @media (max-width: 768px) {
+        padding: 0.5em;
+    }
 }
 
 .showcase-icon .col:hover {
-    transform: scale(1.1); /* Agranda el ícono en el hover */
+    transform: scale(1.1);
 }
 
-.showcase-col {
-    padding-top: 4%;
-    text-align: center;
-}
-
-
-.col img {
-    border-radius: 12px; /* Redondea la imagen */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega sombra estilo card */
-}
-
-/* Agrega la animación fadeInUp */
 @keyframes fadeInUp {
     from {
         opacity: 0;
