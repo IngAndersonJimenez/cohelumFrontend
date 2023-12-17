@@ -13,10 +13,11 @@
 
                     <!-- Toggle button -->
                     <button data-mdb-collapse-init class="navbar-toggler" type="button"
-                        data-mdb-target="#navbarButtonsExample" aria-controls="navbarButtonsExample"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                            data-mdb-target="#navbarButtonsExample" aria-controls="navbarButtonsExample"
+                            aria-expanded="false" aria-label="Toggle navigation" id="menuToggle" (click)="toggleMenu()">
                         <i class="fas fa-bars"></i>
                     </button>
+
 
                     <!-- Collapsible wrapper -->
                     <div class="collapse navbar-collapse" id="navbarButtonsExample">
@@ -32,16 +33,16 @@
 
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0 menu">
                                 <li class="nav-item">
-                                    <label class="nav-link puntero" (click)="goTo('aliadoSeccion')">Aliados</label>
+                                    <label class="nav-link puntero" (click)="closeMenu(); goTo('aliadoSeccion')">Aliados</label>
                                 </li>
 
                                 <li class="nav-item">
                                     <label class="nav-link puntero"
-                                        (click)="goTo('contactoSeccion')">Contactanos</label>
+                                           (click)="closeMenu(); goTo('contactoSeccion')">Contactanos</label>
                                 </li>
 
                                 <li class="nav-item">
-                                    <label class="nav-link puntero" (click)="goTo('aliadoSeccion')">Garantia
+                                    <label class="nav-link puntero" (click)="closeMenu(); goTo('aliadoSeccion')">Garantia
                                         Extendida</label>
                                 </li>
 
@@ -54,7 +55,7 @@
                                 </li>
                                 <li class="nav-item desplegar">
                                     <label class="nav-link puntero"
-                                        (click)="goTo('categoriasSeccion')">Productos</label>
+                                           (click)="closeMenu(); goTo('categoriasSeccion')">Productos</label>
                                         <div class="mega-menu">
                                             <h2>Nuestros Tutoriales</h2>
                                             <div class="categorias">

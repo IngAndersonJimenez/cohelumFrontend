@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import { Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { InventoryService } from 'src/app/services/inventory.service';
@@ -13,8 +13,9 @@ export class HeaderPublicComponent  implements OnInit{
 
   items: MenuItem[] | undefined;
     isDropdownOpen = false;
+    menuVisible = false;
 
-  constructor(public router: Router, private scroller: ViewportScroller, private inventoryService:InventoryService) {
+  constructor(public router: Router, private scroller: ViewportScroller, private inventoryService:InventoryService,private renderer: Renderer2) {
   }
 
   navegateLogin() {
@@ -165,8 +166,26 @@ export class HeaderPublicComponent  implements OnInit{
     }
 
     goToSection(section: string) {
-        // Lógica para navegar a la sección deseada
+
         console.log(`Navigating to ${section}`);
+    }
+
+    toggleMenu() {
+        const navbar = document.getElementById('navbarButtonsExample');
+
+        if (this.menuVisible) {
+            this.renderer.removeClass(navbar, 'show');
+        } else {
+            this.renderer.addClass(navbar, 'show');
+        }
+
+        this.menuVisible = !this.menuVisible;
+    }
+
+    closeMenu() {
+        const navbar = document.getElementById('navbarButtonsExample');
+        this.renderer.removeClass(navbar, 'show'); // Oculta el menú
+        this.menuVisible = false; // Actualiza el estado del menú
     }
 
 }
