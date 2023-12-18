@@ -17,7 +17,7 @@ export class HeaderPublicComponent  implements OnInit{
   }
 
   navegateLogin() {
-    this.router.navigateByUrl('cohelum/login');
+    this.router.navigateByUrl('corporate/auth');
   }
 
   goTo(position: any) {
