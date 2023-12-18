@@ -11,15 +11,16 @@ const routes: Routes = [
     children: [
       {
         path: 'inventory',
-        component: InventoryComponent
+        component: InventoryComponent,
+        data: { title: 'Inventory' } 
       },
       {
-        path: 'inventoryDetail',
-        component: InventoryDetailComponent
-      }
+        path: 'inventory-detail',
+        component: InventoryDetailComponent,
+        data: { title: 'Inventory Detail' } 
+      },
     ]
-  }
-
+  },
 ];
 
 @NgModule({
