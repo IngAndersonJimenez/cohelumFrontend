@@ -28,6 +28,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { MenubarModule } from 'primeng/menubar';
 import { InventoryDetailComponent } from './inventory-detail/inventory-detail.component';
 import { ImageModule } from 'primeng/image';
+import { UsComponent } from './us/us.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ImageModule } from 'primeng/image';
     ShowcasePublicComponent,
     ContactComponent,
     InventoryComponent,
-    InventoryDetailComponent
+    InventoryDetailComponent,
+    UsComponent
   ],
   imports: [
     CommonModule,
