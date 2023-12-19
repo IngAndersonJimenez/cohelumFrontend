@@ -31,6 +31,7 @@ import { Router } from '@angular/router';
             routerLinkActive="active-sublevel"
             [routerLinkActiveOptions]="{exact:true}"
         >
+          <p style="color: blanchedalmond">{{item.routerLink}} </p>
           <i class="sublevel-link-icon fa fa-circle"></i>
           <span class="sublevel-link-text" @fadeInOut *ngIf="collapsed">
             {{item.label}}</span>
