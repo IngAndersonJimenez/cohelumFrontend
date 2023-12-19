@@ -8,7 +8,7 @@
                     <!-- Navbar brand -->
                     <a class="navbar-brand me-2">
                         <img src="assets/image/logo.png" class="logo drop puntero" alt="Logo cohelum" loading="lazy"
-                            title="Logo empresarial cohelum" style="margin-top: -1px;" />
+                             title="Logo empresarial cohelum" style="margin-top: -1px;" />
                     </a>
 
                     <!-- Toggle button -->
@@ -33,55 +33,56 @@
 
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0 menu">
                                 <li class="nav-item">
-                                    <label class="nav-link puntero" (click)="closeMenu(); goTo('aliadoSeccion')">Aliados</label>
+                                    <label class="nav-link puntero" [routerLink]="['/home/content']" (click)="closeMenu();
+                                    goTo('aliadoSeccion')">Aliados</label>
+                                </li>
+
+                                <li class="nav-item">
+                                    <label class="nav-link puntero "
+                                           [routerLink]="['/home/content']" (click)="closeMenu(); goTo('contactoSeccion')">Contactanos</label>
                                 </li>
 
                                 <li class="nav-item">
                                     <label class="nav-link puntero"
-                                           (click)="closeMenu(); goTo('contactoSeccion')">Contactanos</label>
-                                </li>
-
-                                <li class="nav-item">
-                                    <label class="nav-link puntero" (click)="closeMenu(); goTo('aliadoSeccion')">Garantia
+                                           (click)="closeMenu(); goTo('aliadoSeccion')">Garantia
                                         Extendida</label>
                                 </li>
 
                                 <li class="nav-item1" (click)="toggleDropdown()">
                                     <label class="nav-link puntero">Nosotros</label>
                                     <ul class="content" [ngClass]="{ 'show': isDropdownOpen }">
-                                        <li class="lista-nosotros">
-                                            <a href="javascript:void(0)" (click)="navigateToUs()">¿Quiénes somos?</a>
-                                        </li>
-
-                                        <li class="lista-nosotros"><a href="#">Proyectos</a></li>
+                                        <li class="lista-nosotros"><a [routerLink]="['/Us']">¿Quiénes
+                                            somos?</a></li>
+                                        <li class="lista-nosotros"><a
+                                                (click)="goToSection('projectsSection')">Proyectos</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item desplegar">
                                     <label class="nav-link puntero"
                                            (click)="closeMenu(); goTo('categoriasSeccion')">Productos</label>
-                                        <div class="mega-menu">
-                                            <h2>Nuestros Tutoriales</h2>
-                                            <div class="categorias">
-                                                <div class="lista">
-                                                    <h3>Categoria 1</h3>
-                                                    <a href="#">Enlace 1</a>
-                                                    <a href="#">Enlace 2</a>
-                                                    <a href="#">Enlace 3</a>
-                                                </div>
-                                                <div class="lista">
-                                                    <h3>Categoria 2</h3>
-                                                    <a href="#">Enlace 1</a>
-                                                    <a href="#">Enlace 2</a>
-                                                    <a href="#">Enlace 3</a>
-                                                </div>
-                                                <div class="lista">
-                                                    <h3>Categoria 3</h3>
-                                                    <a href="#">Enlace 1</a>
-                                                    <a href="#">Enlace 2</a>
-                                                    <a href="#">Enlace 3</a>
-                                                </div>
+                                    <div class="mega-menu">
+                                        <h2>Nuestros Tutoriales</h2>
+                                        <div class="categorias">
+                                            <div class="lista">
+                                                <h3>Categoria 1</h3>
+                                                <a href="#">Enlace 1</a>
+                                                <a href="#">Enlace 2</a>
+                                                <a href="#">Enlace 3</a>
+                                            </div>
+                                            <div class="lista">
+                                                <h3>Categoria 2</h3>
+                                                <a href="#">Enlace 1</a>
+                                                <a href="#">Enlace 2</a>
+                                                <a href="#">Enlace 3</a>
+                                            </div>
+                                            <div class="lista">
+                                                <h3>Categoria 3</h3>
+                                                <a href="#">Enlace 1</a>
+                                                <a href="#">Enlace 2</a>
+                                                <a href="#">Enlace 3</a>
                                             </div>
                                         </div>
+                                    </div>
                                 </li>
 
                                 <li class="nav-item desplegar">

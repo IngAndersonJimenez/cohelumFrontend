@@ -3,13 +3,11 @@
   background-color: #2c2c2c;
   transition: background-color 0.5s ease;
   @media (max-width: 768px) {
-    padding-top: 60%;
+
   }
 }
 .footer-into {
-  padding-top: 4%;
   @media (max-width: 768px) {
-    padding-top: 6%;
   }
 }
 
@@ -17,6 +15,7 @@
   padding: 2%;
   @media (max-width: 768px) {
     padding: 4%;
+    margin: -1rem;
     .input-container {
       width: 100%;
 
@@ -52,6 +51,7 @@
   text-align: center;
   font-size: 2vw;
   @media (max-width: 768px) {
+    margin: 2rem 2rem;
     font-size: 5vw;
   }
 }
@@ -155,5 +155,10 @@ a {
 
   .social ul li {
     width: 200px;
+  }
+}
+.col{
+  @media (max-width: 991px) {
+    padding:1rem;
   }
 }

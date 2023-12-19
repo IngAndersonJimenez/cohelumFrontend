@@ -29,7 +29,7 @@ export class LoginService {
                     const responseLogin: ResponseLogin = { token: result.token };
                     this.userMemory.next(responseLogin);
                     this.notificationService.showSuccess("Login exitoso", "Bienvenido");
-                    this.router.navigate(['/cohelum/corporate/dashboard']);
+                    this.router.navigate(['corporate/dashboard']);
                 }
             })
         );

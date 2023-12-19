@@ -7,6 +7,8 @@ import { HeaderComponent } from './layout/header/header.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { PublicModule } from './modules/public/public.module';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -21,13 +23,15 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    PublicModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent],
   exports:[
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ]
 })
 export class AppModule { }

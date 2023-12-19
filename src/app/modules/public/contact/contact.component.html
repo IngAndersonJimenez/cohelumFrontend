@@ -21,8 +21,7 @@
                         <div class="form-group col-md-6">
                             <label for="nameContact">Nombre de Contacto:</label>
                             <input type="text" id="nameContact" formControlName="nameContact" class="form-control">
-                            <div
-                                    *ngIf="form.get('nameContact')?.hasError('required') && form.get('nameContact')?.touched">
+                            <div *ngIf="form.get('nameContact')?.hasError('required') && form.get('nameContact')?.touched">
                                 El nombre de contacto es obligatorio.
                             </div>
                         </div>
@@ -56,8 +55,7 @@
                             <label for="attach">Adjunto:</label>
                             <input type="file" id="attach" (change)="onFileSelected($event,'pdf')"
                                    formControlName="attach" class="form-control" accept=".pdf">
-                            <div
-                                    *ngIf="form.get('attach')?.hasError('invalidExtension') && form.get('attach')?.touched">
+                            <div *ngIf="form.get('attach')?.hasError('invalidExtension') && form.get('attach')?.touched">
                                 Tipo de archivo no permitido. Selecciona un archivo PDF.
                             </div>
                         </div>
@@ -102,5 +100,4 @@
         </div>
     </div>
 </section>
-
 </body>

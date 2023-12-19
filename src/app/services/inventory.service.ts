@@ -7,7 +7,6 @@ import { Inventory } from "../interface/products/Inventory";
 import { BehaviorSubject, catchError, map, Observable, tap } from "rxjs";
 import { LoginService } from "./login.service";
 import { InventoryCategory } from "../interface/products/inventoryCategory";
-import { Product } from "../interface/products/Product";
 import { CategoryProducts } from "../interface/products/CategoryProducts";
 import { Category } from "../interface/Category";
 import {InventoryImage} from "../interface/InventoryImage";
@@ -22,6 +21,9 @@ export class InventoryService {
 
     private isActiveInventoryMemory = new BehaviorSubject(false);
     public isActiveInventoryCurrent = this.isActiveInventoryMemory.asObservable();
+
+    private isActiveUsMemory = new BehaviorSubject(false);
+    public isActiveUsCurrent = this.isActiveUsMemory.asObservable();
 
     constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService, private loginService: LoginService) {
 
@@ -123,6 +125,10 @@ export class InventoryService {
 
     activeSectionInventoty(status: boolean) {
         this.isActiveInventoryMemory.next(status);
+    }
+
+    activeSectionUs(status: boolean) {
+        this.isActiveUsMemory.next(status);
     }
 
 
