@@ -21,6 +21,7 @@ body {
     font-weight: 600;
     color: #333;
 
+
     li {
         display: inline-block;
         text-decoration: none;
@@ -159,6 +160,7 @@ ul {
         font-weight: 600;
         padding-bottom: 10px;
         position: relative;
+        cursor: pointer;
 
 
         &:before {
@@ -179,3 +181,9 @@ ul {
     }
 }
 
+@media (max-width: 991px) {
+    .lista-nosotros {
+        left:7rem;
+        top:-5.5rem
+    }
+}

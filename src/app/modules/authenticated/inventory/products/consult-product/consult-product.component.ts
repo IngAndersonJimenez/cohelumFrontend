@@ -113,11 +113,6 @@ export class ConsultProductComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.consultForm.get('name')?.valueChanges.subscribe(() => {
-            this.products = [];
-        });
-
-
     }
 
     addImage(): void {
@@ -215,6 +210,7 @@ export class ConsultProductComponent implements OnInit {
 
     closeUpdateDialog() {
         this.showUpdateDialog = false;
+        this.subcategoriesFilter = [];
     }
 
 
@@ -244,14 +240,16 @@ export class ConsultProductComponent implements OnInit {
     }
 
     openUpdateDialog(product: ProductFull): void {
+        // Reinicia el array subcategoriesFilter
+        this.subcategoriesFilter = [];
 
         this.updateForm.setValue({
             name: product.name,
             price: product.price,
             unitsAvailable: product.unitsAvailable,
             idCategory: '',
-            idSubCategory:product.idSubCategory,
-            description:product.description,
+            idSubCategory: product.idSubCategory,
+            description: product.description,
             characteristic: product.characteristic,
             datasheet: product.datasheet,
             image: '',
@@ -263,6 +261,8 @@ export class ConsultProductComponent implements OnInit {
                 this.categories = response.responseDTO;
                 this.showUpdateDialog = true;
                 this.loadingCategories = false;
+                // Filtra las subcategorías iniciales
+                this.subCategoryLoad({ target: { value: this.updateForm.get('idCategory')?.value } });
             }
         );
         this.categoryService.getSubcategory().subscribe(
@@ -272,11 +272,14 @@ export class ConsultProductComponent implements OnInit {
                         new SubCategory(iter.idSubCategory, iter.description, iter.active, iter.idCategory)
                     );
                 }
+
             },
         )
     }
 
+
     openUpdateDialog2(productData: any): void {
+        this.subcategoriesFilter = [];
         this.updateForm.get('idInventoryImage')?.setValue(productData)
         this.showUpdateImageDialog = true;
     }

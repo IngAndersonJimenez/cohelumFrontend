@@ -8,6 +8,7 @@ import { SharedModule } from './modules/shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { PublicModule } from './modules/public/public.module';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -23,13 +24,14 @@ import { PublicModule } from './modules/public/public.module';
       positionClass: 'toast-bottom-right'
     }),
     BrowserAnimationsModule,
-    PublicModule
+    PublicModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent],
   exports:[
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ]
 })
 export class AppModule { }

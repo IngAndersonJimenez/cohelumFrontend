@@ -19,16 +19,12 @@ export class HeaderPublicComponent  implements OnInit{
   }
 
   navegateLogin() {
-    this.router.navigateByUrl('login');
+    this.router.navigateByUrl('corporate/login');
   }
 
   goTo(position: any) {
     this.scroller.scrollToAnchor(position);
     this.activateSectionInventory();
-  }
-
-  scrollToDiv(target:HTMLElement){
-    target.scrollIntoView();
   }
 
   activateSectionInventory() {
@@ -170,7 +166,7 @@ export class HeaderPublicComponent  implements OnInit{
     }
 
     goToSection(position: string) {
-  
+
     }
 
     toggleMenu() {

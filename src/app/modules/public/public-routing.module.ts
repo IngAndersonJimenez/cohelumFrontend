@@ -12,15 +12,16 @@ const routes: Routes = [
       {
         path: 'inventory',
         component: InventoryComponent,
-        data: { title: 'Inventory' } 
+        data: { title: 'Inventory' }
       },
       {
         path: 'inventory-detail',
         component: InventoryDetailComponent,
-        data: { title: 'Inventory Detail' } 
+        data: { title: 'Inventory Detail' }
       },
     ]
-  },
+  }
+
 ];
 
 @NgModule({

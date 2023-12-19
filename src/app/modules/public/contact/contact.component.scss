@@ -9,8 +9,8 @@ body {
     padding-top: 6%;
     padding-bottom: 3%;
 
-    @media (max-width: 768px) {
-        padding-top: 5%;
+    @media (max-width: 991px) {
+        padding: .5rem 1rem
     }
 
     .contact-subtitle {
@@ -41,6 +41,7 @@ body {
             border-radius: 10px;
             margin: 2rem 0 3rem;
             margin-top: 5rem;
+            padding: 1rem;
 
             .form-row {
                 display: flex;
@@ -148,7 +149,7 @@ body {
             width: 100%;
         }
     }
-    @media (max-width: 768px) {
+    @media (max-width: 991px) {
         .container {
             .row {
                 flex-direction: column; // Cambio a columna para dispositivos pequeños
@@ -157,12 +158,13 @@ body {
             .left-container,
             .form-container {
                 width: 100%;
-                margin: 0;
+                padding: .5rem 1.2rem;
+                margin: -1rem;
             }
 
             .text-container {
                 #comunicate {
-                    font-size: 3.5vw;
+                    font-size: 2.5vw;
                 }
 
                 .line {
@@ -170,26 +172,31 @@ body {
                 }
 
                 .p1 {
-                    font-size: 3vw;
-                    margin-top: 15px;
+                    font-size: 2vw;
                 }
 
                 .p2 {
-                    font-size: 2.5vw;
+                    font-size: 2vw;
                 }
             }
 
             .form-container {
-                margin-top: 1rem;
                 .form-row {
                     .form-group {
                         width: 100%;
-                    }
-
-                    .button-container {
-                        margin: 1rem 0;
+                        input,
+                        textarea,
+                        select{
+                            font-size: 0.5rem;
+                        }
+                        label{
+                            font-size: 12px;
+                        }
                     }
                 }
+            }
+            #submit{
+                margin: 0;
             }
         }
     }
@@ -252,5 +259,11 @@ body {
     &:hover {
         background-color: white;
         color: #E0AB67;
+    }
+}
+
+@media (max-width: 991px) {
+    .form-group label {
+        font-size: 14px; // Tamaño de fuente ajustado
     }
 }

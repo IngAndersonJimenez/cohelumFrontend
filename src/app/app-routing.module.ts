@@ -20,10 +20,6 @@ const routes: Routes = [
       }
     ]
   },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
 
   {
     path: 'Us',
@@ -51,6 +47,15 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'corporate',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./modules/auth/auth.module').then((m) => m.AuthModule)
+      }
+    ]
+  },
+  {
     path: '**',
     redirectTo: 'home/content',
     pathMatch: 'full'
@@ -58,7 +63,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: false })],
+  imports: [RouterModule.forRoot(routes, { useHash: false, enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
