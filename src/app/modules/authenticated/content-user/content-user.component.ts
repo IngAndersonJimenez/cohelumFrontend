@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ConfigService } from 'src/app/services/config.service';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -11,6 +12,11 @@ interface SideNavToggle {
   styleUrls: ['./content-user.component.scss']
 })
 export class ContentUserComponent {
+
+  constructor(private configService: ConfigService) {
+    this.configService.activeSectionLayout(false);
+  }
+
   @Input() collapsed = false;
   @Input() screenWidth = 0;
 

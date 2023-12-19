@@ -65,6 +65,10 @@ import { UsComponent } from './us/us.component';
     RadioButtonModule,
     MenubarModule,
     ImageModule
-  ]
+  ],
+  exports: [
+    HeaderPublicComponent,
+    FooterPublicComponent
+  ] 
 })
 export class PublicModule { }

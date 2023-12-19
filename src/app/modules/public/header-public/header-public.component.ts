@@ -19,7 +19,7 @@ export class HeaderPublicComponent  implements OnInit{
   }
 
   navegateLogin() {
-    this.router.navigateByUrl('corporate/auth');
+    this.router.navigateByUrl('login');
   }
 
   goTo(position: any) {
@@ -33,6 +33,10 @@ export class HeaderPublicComponent  implements OnInit{
 
   activateSectionInventory() {
     this.inventoryService.activeSectionInventoty(false);
+  }
+
+  activateSectionUs() {
+    this.inventoryService.activeSectionUs(false);
   }
 
 
@@ -165,9 +169,8 @@ export class HeaderPublicComponent  implements OnInit{
         this.isDropdownOpen = !this.isDropdownOpen;
     }
 
-    goToSection(section: string) {
-
-        console.log(`Navigating to ${section}`);
+    goToSection(position: string) {
+  
     }
 
     toggleMenu() {
