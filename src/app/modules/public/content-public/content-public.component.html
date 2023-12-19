@@ -1,6 +1,7 @@
 <app-header-public></app-header-public>
 <app-allies-public *ngIf="!isActiveInventoty"></app-allies-public>
 <app-showcase-public *ngIf="!isActiveInventoty"></app-showcase-public>
+<router-outlet></router-outlet>
 <app-product-public *ngIf="!isActiveInventoty"></app-product-public>
 <app-inventory *ngIf="isActiveInventoty"></app-inventory>
 <app-inventory-detail *ngIf="isActiveInventoty"></app-inventory-detail>

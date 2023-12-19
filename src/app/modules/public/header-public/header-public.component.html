@@ -49,7 +49,10 @@
                                 <li class="nav-item1" (click)="toggleDropdown()">
                                     <label class="nav-link puntero">Nosotros</label>
                                     <ul class="content" [ngClass]="{ 'show': isDropdownOpen }">
-                                        <li class="lista-nosotros"><a href="home/us">¿Quiénes somos?</a></li>
+                                        <li class="lista-nosotros">
+                                            <a href="javascript:void(0)" (click)="navigateToUs()">¿Quiénes somos?</a>
+                                        </li>
+
                                         <li class="lista-nosotros"><a href="#">Proyectos</a></li>
                                     </ul>
                                 </li>

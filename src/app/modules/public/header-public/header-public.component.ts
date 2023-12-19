@@ -185,8 +185,8 @@ export class HeaderPublicComponent implements OnInit {
         this.menuVisible = false; // Actualiza el estado del menú
     }
 
-    navegateUs() {
-        this.router.navigateByUrl('cohelum/us');
+    navigateToUs() {
+        this.router.navigate(['/home/us']);
     }
 
 }
