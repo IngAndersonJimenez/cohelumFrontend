@@ -9,11 +9,17 @@ import { InventoryService } from 'src/app/services/inventory.service';
 export class ContentPublicComponent {
 
   isActiveInventoty?: boolean;
+  isActiveUs?: boolean;
 
   constructor(private inventoryService: InventoryService) {
     this.inventoryService.isActiveInventoryCurrent.subscribe(data=>{
       this.isActiveInventoty = data;
     });
+
+    this.inventoryService.isActiveUsCurrent.subscribe(data=>{
+      this.isActiveUs = data;
+    });
+
   }
 
 

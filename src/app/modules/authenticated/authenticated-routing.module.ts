@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ContentUserComponent } from './content-user/content-user.component';
 import { DashboardContentComponent } from './dashboard/dashboard-content/dashboard-content.component';
 import { CategoryComponent } from './inventory/category/category.component';
 import { CreateProductComponent } from "./inventory/products/create-product/create-product.component";
@@ -11,10 +10,9 @@ import { SubCategoryComponent } from "./inventory/products/sub-category/sub-cate
 
 const routes: Routes = [
   {
-    path: 'corporate',
-    component: ContentUserComponent,
+    path: 'dashboard',
+    component: DashboardContentComponent,
     children: [
-      { path: 'dashboard', component: DashboardContentComponent },
       { path: 'category', component: CategoryComponent },
       { path: 'sub-category', component: SubCategoryComponent },
       { path: 'create-products', component: CreateProductComponent },

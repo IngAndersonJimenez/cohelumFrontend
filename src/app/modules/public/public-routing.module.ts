@@ -6,7 +6,7 @@ import { InventoryDetailComponent } from './inventory-detail/inventory-detail.co
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: 'content',
     component: ContentPublicComponent,
     children: [
       {
