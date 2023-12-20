@@ -12,7 +12,7 @@ export const navbarData:INavbarData[] = [
     label: 'Inventario',
     items:[
       {
-        routerLink: 'dashboard/category',
+        routerLink: 'category',
         label: 'Categoría'
       },
       {

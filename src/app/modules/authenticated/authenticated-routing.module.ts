@@ -10,9 +10,9 @@ import { SubCategoryComponent } from "./inventory/products/sub-category/sub-cate
 
 const routes: Routes = [
   {
-    path: 'dashboard',
-    component: DashboardContentComponent,
+    path: '',
     children: [
+      { path: 'dashboard', component: DashboardContentComponent },
       { path: 'category', component: CategoryComponent },
       { path: 'sub-category', component: SubCategoryComponent },
       { path: 'create-products', component: CreateProductComponent },
