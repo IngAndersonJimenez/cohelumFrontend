@@ -19,7 +19,6 @@
              [ngClass]="!data.expanded ? 'fa fa-angle-right':'fa fa-angle-down'"
           ></i>
         </a>
-        <p style="color:aliceblue">{{data.routerLink}}</p>
         <a  class="sidenav-nav-link" [routerLink]="data.routerLink"
             *ngIf="!data.items  || (data.items && data.items.length === 0)"
             routerLinkActive="active"

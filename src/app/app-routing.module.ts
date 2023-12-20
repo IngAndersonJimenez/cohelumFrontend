@@ -5,6 +5,9 @@ import { ContentUserComponent } from './modules/authenticated/content-user/conte
 import { UsComponent } from './modules/public/us/us.component';
 import { InventoryComponent } from './modules/public/inventory/inventory.component';
 import { InventoryDetailComponent } from './modules/public/inventory-detail/inventory-detail.component';
+import {
+  DashboardContentComponent
+} from "./modules/authenticated/dashboard/dashboard-content/dashboard-content.component";
 
 const routes: Routes = [
 
@@ -63,7 +66,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: false, enableTracing: true })],
+  imports: [RouterModule.forRoot(routes, { useHash: false, /*enableTracing: true*/ })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
