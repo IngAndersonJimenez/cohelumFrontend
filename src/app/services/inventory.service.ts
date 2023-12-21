@@ -21,7 +21,8 @@ export class InventoryService {
 
     private isActiveInventoryMemory = new BehaviorSubject(false);
     public isActiveInventoryCurrent = this.isActiveInventoryMemory.asObservable();
-
+    private selectedCategoryId: number  | null = null;
+    private selectedInventoryDetails: any | null = null;
     private isActiveUsMemory = new BehaviorSubject(false);
     public isActiveUsCurrent = this.isActiveUsMemory.asObservable();
 
@@ -242,7 +243,21 @@ export class InventoryService {
         );
     }
 
+    setSelectedCategoryId(categoryId: number) {
+        this.selectedCategoryId = categoryId;
+    }
 
+    getSelectedCategoryId(): number | null {
+        return this.selectedCategoryId;
+    }
+
+    setSelectedInventoryDetails(details: any) {
+        this.selectedInventoryDetails = details;
+    }
+
+    getSelectedInventoryDetails(): any | null {
+        return this.selectedInventoryDetails;
+    }
 
 
 }

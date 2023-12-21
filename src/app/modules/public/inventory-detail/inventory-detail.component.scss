@@ -8,13 +8,9 @@
     text-align: center;
     font-size: 2vw;
     color: #0F2137;
+    font-family: "Mulish", sans-serif;
+    font-weight: 800;
 }
-
-.inventoryDetail-content {
-    padding-top: 3%;
-    padding-bottom: 3%;
-}
-
 
 .geeks {
     width: 300px;
@@ -24,10 +20,30 @@
 }
 
 .geeks img {
-    width: 100%;
+    width: 50%;
     transition: 0.5s all ease-in-out;
 }
 
 .geeks:hover img {
     transform: scale(1.5);
+}
+.information{
+    margin-top:1rem;
+}
+h2{
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+p{
+    font-weight: 500;
+}
+.pdf{
+    margin: 2rem 10rem
+}
+.icono-pdf{
+    width: 50px;
+    height: 50px;
+}
+.container-detail{
+
 }

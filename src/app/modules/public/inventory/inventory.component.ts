@@ -4,6 +4,8 @@ import { InventoryGrid } from 'src/app/interface/inventory/InventoryGrid';
 import { InventoryCategory } from 'src/app/interface/products/inventoryCategory';
 import { InventoryService } from 'src/app/services/inventory.service';
 import { LoginService } from 'src/app/services/login.service';
+import {Router} from "@angular/router";
+import {Product} from "../../../interface/products/Product";
 
 interface OptionOrder {
   name: string;
@@ -23,7 +25,7 @@ export class InventoryComponent implements OnInit {
   public inventoryFilter: Array<InventoryGrid> = [];
 
   constructor(private inventoryService: InventoryService, private loginService: LoginService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,private router:Router) {
     this.getTokenPublic();
   }
 
@@ -55,14 +57,17 @@ export class InventoryComponent implements OnInit {
           inventoryGridInto = new InventoryGrid(response.getInventoryCategoryDTO.description,
             response.getInventoryDTO.name,
             response.getInventoryDTO.price, response.getInventoryDTO.unitsAvailable,
-            "", "", response.getInventoryImageDTO);
+            "", "", response.getInventoryImageDTO,
+              response.getInventoryCategoryDTO.idCategory,
+              response.getInventoryDTO.name,
+              response.getInventoryDetailsDTO.characteristic,
+              response.getInventoryDetailsDTO.datasheet);
 
           this.setImages(response.getInventoryImageDTO, inventoryGridInto);
           this.inventoryGrid.push(inventoryGridInto);
         }
       }
     );
-
     this.inventoryFilter = this.inventoryGrid;
 
   }
@@ -97,17 +102,19 @@ export class InventoryComponent implements OnInit {
   }
 
   filterForCategory(descriptionCategory: string) {
-    if (descriptionCategory == 'todos') {
+
+    if (descriptionCategory === 'todos') {
       this.inventoryFilter = this.inventoryGrid;
     } else {
       this.inventoryFilter = [];
       for (let inventory of this.inventoryGrid) {
-        if (inventory.getDescriptionCategory() == descriptionCategory) {
+        if (inventory.getDescriptionCategory() === descriptionCategory) {
           this.inventoryFilter.push(inventory);
         }
       }
     }
   }
+
 
   orderInventory(code: any) {
 
@@ -134,5 +141,22 @@ export class InventoryComponent implements OnInit {
     console.log(index)
   }
 
+  navigateToDetail(inventory: InventoryGrid) {
+    const idCategory = inventory.getIdCategory();
+    const name = inventory.getName();
+    const characteristic = inventory.getCharacteristic();
+    const datasheet = inventory.getDatasheet();
+    const image = inventory.getImages()
+
+    this.inventoryService.setSelectedCategoryId(idCategory);
+    this.inventoryService.setSelectedInventoryDetails({
+      name: name,
+      characteristic: characteristic,
+      datasheet: datasheet,
+      image:image
+    });
+
+    this.router.navigate(['/Detail']);
+  }
 
 }

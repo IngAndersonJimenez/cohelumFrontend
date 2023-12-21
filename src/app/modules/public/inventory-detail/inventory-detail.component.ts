@@ -1,15 +1,21 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {InventoryService} from "../../../services/inventory.service";
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-inventory-detail',
   templateUrl: './inventory-detail.component.html',
   styleUrls: ['./inventory-detail.component.scss']
 })
-export class InventoryDetailComponent {
+export class InventoryDetailComponent implements OnInit{
 
   images: any[] | undefined;
   displayBasic: boolean | undefined;
   displayBasic2!: boolean;
+  categoryId: number | null = null;
+  details: any | null;
+  pdfUrl: SafeResourceUrl;
 
   position: string = 'bottom';
 
@@ -47,7 +53,7 @@ export class InventoryDetailComponent {
     }
   ];
 
-  constructor() {
+  constructor(private route: ActivatedRoute, private inventoryService:InventoryService,private sanitizer: DomSanitizer) {
     this.images =
       [
         {
@@ -70,6 +76,16 @@ export class InventoryDetailComponent {
         }
       ]
 
+    this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl('assets/pdf/LM350.PDF');
+
+  }
+
+
+  ngOnInit(): void {
+    this.categoryId = this.inventoryService.getSelectedCategoryId();
+    this.details = this.inventoryService.getSelectedInventoryDetails();
+    console.log('Llego category id a detalle: ',this.categoryId)
+    console.log('Informacion: ',this.details)
   }
 
 

@@ -7,10 +7,14 @@ export class InventoryGrid {
     private images: Array<string>;
     private imageInitial: string;
     private imageSecond: string;
-
+    private idCategory:number;
+    private name:string
+    private characteristic:string
+    private datasheet:string
 
     constructor(descriptionCategory: string, descriptionInventory: string, price: number,
-        unitsAvaible: number, imageInitial: string, imageSecond: string, images: Array<string>
+        unitsAvaible: number, imageInitial: string, imageSecond: string, images: Array<string>,idCategory:number,
+                name:string,characteristic:string,datasheet:string
     ) {
         this.descriptionCategory = descriptionCategory
         this.descriptionInventory = descriptionInventory
@@ -19,6 +23,10 @@ export class InventoryGrid {
         this.imageInitial = imageInitial
         this.imageSecond = imageSecond
         this.images = images
+        this.idCategory = idCategory
+        this.name = name
+        this.characteristic = characteristic
+        this.datasheet = datasheet
     }
 
     public getDescriptionCategory(): string {
@@ -77,5 +85,36 @@ export class InventoryGrid {
         this.images = images;
     }
 
+    public getIdCategory(): number {
+        return this.idCategory;
+    }
+
+    public setIdCategory(idCategory: number): void {
+        this.idCategory = idCategory;
+    }
+
+    public getName(): string {
+        return this.name;
+    }
+
+    public setName(value: string) {
+        this.name = value;
+    }
+
+    public getCharacteristic(): string {
+        return this.characteristic;
+    }
+
+    public setCharacteristic(value: string) {
+        this.characteristic = value;
+    }
+
+    public getDatasheet(): string {
+        return this.datasheet;
+    }
+
+    public setDatasheet(value: string) {
+        this.datasheet = value;
+    }
 
 }
