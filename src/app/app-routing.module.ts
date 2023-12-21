@@ -1,13 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './modules/auth/login/login.component';
 import { ContentUserComponent } from './modules/authenticated/content-user/content-user.component';
 import { UsComponent } from './modules/public/us/us.component';
 import { InventoryComponent } from './modules/public/inventory/inventory.component';
 import { InventoryDetailComponent } from './modules/public/inventory-detail/inventory-detail.component';
-import {
-  DashboardContentComponent
-} from "./modules/authenticated/dashboard/dashboard-content/dashboard-content.component";
 
 const routes: Routes = [
 
@@ -35,7 +31,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'detail',
+    path: 'Detail',
     component: InventoryDetailComponent
   },
 

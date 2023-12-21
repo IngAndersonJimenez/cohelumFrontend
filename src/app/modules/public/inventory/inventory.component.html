@@ -70,7 +70,7 @@
                 <div class="col-md-3 col-sm-6" *ngFor="let inventory of inventoryFilter; let i= index">
                     <div class="product-grid2 card">
                         <div class="product-image2">
-                            <a href="#">
+                            <a [routerLink]="['/Detail']">
                                 <img class="pic-1" [src]="inventory.getImageInitial()">
                                 <img class="pic-2" [src]="inventory.getImageSecond()">
                             </a>
