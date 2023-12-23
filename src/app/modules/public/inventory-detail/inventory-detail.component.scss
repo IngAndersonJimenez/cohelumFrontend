@@ -10,6 +10,7 @@
     color: #0F2137;
     font-family: "Mulish", sans-serif;
     font-weight: 800;
+    margin-top:1rem;
 }
 
 .geeks {
@@ -44,6 +45,57 @@ p{
     width: 50px;
     height: 50px;
 }
-.container-detail{
-
+.container{
+    margin-top:3rem;
 }
+.info{
+    margin-bottom:-8rem;
+}
+.regular-price{
+    font-weight: 800;
+    color:#45595b;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+.nav.nav-tabs .nav-link.active {
+    border-bottom: 3px solid var(--bs-secondary) !important;
+}
+.text-secondary{
+    color:#ffb524 !important
+}
+.d-flex.align-items-center {
+    font-size: 15px;
+
+    .fa-star {
+        cursor: pointer;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #E0AB67;
+        }
+
+        &.selected {
+            color: #E0AB67 !important;  // Agrega !important para asegurar la prioridad del estilo
+        }
+    }
+}
+
+.rating-label {
+    margin-left: 15px;
+    font-family: "Mulish", Sans-serif, serif;
+    font-weight: 800;
+}
+
+#submit {
+    background-color: white;
+    color: #E0AB67;
+    border: none;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+        background-color: orange;
+        color: black;
+    }
+}
+

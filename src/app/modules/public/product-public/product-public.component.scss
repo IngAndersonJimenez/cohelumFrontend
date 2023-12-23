@@ -10,7 +10,7 @@
         width: 100%;
         background: #ffffff;
         color: #000000;
-        border-radius: 8px; // Añade bordes redondeados
+        border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Añade sombra
         transition: box-shadow 0.3s ease-in-out;
 
@@ -114,7 +114,7 @@
     z-index: 0;
     overflow: hidden;
 
-    @media (max-width: 768px) {
+    @media (max-width: 1199px) {
         margin: 12px 0; // Ajuste para dispositivos pequeños
     }
 
@@ -192,7 +192,7 @@
 
 .section-categories {
     height: 24vw;
-    @media (max-width: 768px) {
+    @media (max-width: 1199px) {
         height: auto; // Ajusta la altura para dispositivos pequeños
     }
     .p-carousel {
@@ -252,7 +252,7 @@
     float: left;
     width: 80%;
 
-    @media (max-width: 768px) {
+    @media (max-width: 1199px) {
         font-size: 3vw;
         width: 100%;
         margin: 0 auto;

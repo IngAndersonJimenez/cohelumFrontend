@@ -55,13 +55,15 @@
                                         <li class="lista-nosotros"><a (click)="closeMenu()" [routerLink]="['/Us']">¿Quiénes
                                             somos?</a></li>
                                         <li class="lista-nosotros"><a
+                                                [routerLink]="['/home/content']"
                                                 (click)="goToSection('projectsSection')">Proyectos</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item desplegar">
                                     <label class="nav-link puntero"
+                                           [routerLink]="['/home/content']"
                                            (click)="closeMenu(); goTo('categoriasSeccion')">Productos</label>
-                                    <div class="mega-menu">
+<!--                                    <div class="mega-menu">
                                         <h2>Nuestros Tutoriales</h2>
                                         <div class="categorias">
                                             <div class="lista">
@@ -83,7 +85,7 @@
                                                 <a href="#">Enlace 3</a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </li>
 
                                 <li class="nav-item desplegar">

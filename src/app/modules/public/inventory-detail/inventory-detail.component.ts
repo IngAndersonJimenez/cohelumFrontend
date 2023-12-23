@@ -1,7 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {InventoryService} from "../../../services/inventory.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {CommentService} from "../../../services/comment.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {LoginService} from "../../../services/login.service";
+import {InventoryComments} from "../../../interface/comment/InventoryComments";
 
 @Component({
   selector: 'app-inventory-detail',
@@ -11,13 +15,23 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 export class InventoryDetailComponent implements OnInit{
 
   images: any[] | undefined;
-  displayBasic: boolean | undefined;
-  displayBasic2!: boolean;
   categoryId: number | null = null;
   details: any | null;
   pdfUrl: SafeResourceUrl;
+  commentForm!:FormGroup
+  selectedStarColor: string = '#808080';
+  comments: InventoryComments[] = [];
+  averageRating: number = 0;
+  @ViewChild('reviewSection') reviewSection: ElementRef | undefined;
+
 
   position: string = 'bottom';
+
+  scrollToReview() {
+    if (this.reviewSection && this.reviewSection.nativeElement) {
+      this.reviewSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
   positionOptions = [
     {
@@ -53,7 +67,8 @@ export class InventoryDetailComponent implements OnInit{
     }
   ];
 
-  constructor(private route: ActivatedRoute, private inventoryService:InventoryService,private sanitizer: DomSanitizer) {
+  constructor(private route: ActivatedRoute, private inventoryService:InventoryService,private sanitizer: DomSanitizer,
+              private commentService:CommentService,private formBuilder: FormBuilder,private loginService:LoginService) {
     this.images =
       [
         {
@@ -75,18 +90,108 @@ export class InventoryDetailComponent implements OnInit{
           title: 'Title 3'
         }
       ]
-
+    this.reviewSection = undefined;
     this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl('assets/pdf/LM350.PDF');
-
   }
 
+  private buildForm() {
+    this.commentForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', Validators.required],
+      review: ['', Validators.required],
+      qualification:[null, Validators.required],
+    });
+  }
 
   ngOnInit(): void {
+    this.buildForm()
     this.categoryId = this.inventoryService.getSelectedCategoryId();
     this.details = this.inventoryService.getSelectedInventoryDetails();
-    console.log('Llego category id a detalle: ',this.categoryId)
-    console.log('Informacion: ',this.details)
+    this.getTokenPublic();
   }
+
+  private getTokenPublic() {
+    this.loginService.getTokenPublicS().subscribe(data => {
+          this.getComment(data.token);
+        }
+    );
+  }
+
+
+
+  getComment(token: string): void {
+    this.commentService.getComment(token).subscribe(
+        (data: any) => {
+          console.log('Respuesta del servicio:', data);
+          if (Array.isArray(data.responseDTO)) {
+            this.comments = data.responseDTO;
+            console.log('Comentarios:', this.comments);
+            this.updateStarRating();
+          }
+        }
+    );
+  }
+
+   getTokenPublic1() {
+    this.loginService.getTokenPublicS().subscribe(data => {
+          this.createComment(data.token);
+        }
+    );
+  }
+
+
+  createComment(token:string) {
+    if (this.commentForm.valid) {
+      const newComment: InventoryComments = this.commentForm.value;
+
+      this.commentService.createInventoryComment(newComment,token).subscribe(
+          response => {
+            console.log('Respuesta del servidor:', response);
+            this.commentForm.reset();
+            this.getComment(token)
+          }
+      );
+    }
+  }
+
+
+  setSelectedStarColor(color: string, index: number): void {
+    this.selectedStarColor = color;
+    this.commentForm.get('qualification')?.setValue(index + 1);
+  }
+
+
+  getRatingLabel(qualification: number | null): string {
+    if (qualification === 1) {
+      return ' Mala nota';
+    } else if (qualification === 2) {
+      return ' Más o menos';
+    } else if (qualification === 3) {
+      return ' Bueno';
+    } else if (qualification === 4) {
+      return ' Excelente';
+    } else if (qualification === 5) {
+      return ' Súper excelente';
+    } else {
+      return '';
+    }
+  }
+
+
+  getStarsArray(qualification: number): number[] {
+    return new Array(5).fill(0).map((_, index) => index < qualification ? index + 1 : 0);
+  }
+
+  updateStarRating() {
+    if (this.comments.length === 0) {
+      return;
+    }
+
+    const totalRatingsSum = this.comments.reduce((sum, comment) => sum + comment.qualification, 0);
+    this.averageRating = totalRatingsSum / this.comments.length;
+
+  }
+
 
 
 }

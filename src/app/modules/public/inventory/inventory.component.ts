@@ -147,13 +147,15 @@ export class InventoryComponent implements OnInit {
     const characteristic = inventory.getCharacteristic();
     const datasheet = inventory.getDatasheet();
     const image = inventory.getImages()
+    const price = inventory.getPrice()
 
     this.inventoryService.setSelectedCategoryId(idCategory);
     this.inventoryService.setSelectedInventoryDetails({
       name: name,
       characteristic: characteristic,
       datasheet: datasheet,
-      image:image
+      image:image,
+      price:price
     });
 
     this.router.navigate(['/Detail']);
