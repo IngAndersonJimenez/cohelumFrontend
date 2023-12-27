@@ -6,6 +6,8 @@ import { InventoryService } from 'src/app/services/inventory.service';
 import { LoginService } from 'src/app/services/login.service';
 import {Router} from "@angular/router";
 import {Product} from "../../../interface/products/Product";
+import {CommentService} from "../../../services/comment.service";
+import {InventoryComments} from "../../../interface/comment/InventoryComments";
 
 interface OptionOrder {
   name: string;
@@ -23,9 +25,10 @@ export class InventoryComponent implements OnInit {
   optionOrder: OptionOrder[] | undefined;
   public inventoryCategories: Array<InventoryCategory> = [];
   public inventoryFilter: Array<InventoryGrid> = [];
+  comments: InventoryComments[] = [];
 
   constructor(private inventoryService: InventoryService, private loginService: LoginService,
-    private formBuilder: FormBuilder,private router:Router) {
+    private formBuilder: FormBuilder,private router:Router,private commentService:CommentService) {
     this.getTokenPublic();
   }
 
@@ -61,7 +64,8 @@ export class InventoryComponent implements OnInit {
               response.getInventoryCategoryDTO.idCategory,
               response.getInventoryDTO.name,
               response.getInventoryDetailsDTO.characteristic,
-              response.getInventoryDetailsDTO.datasheet);
+              response.getInventoryDetailsDTO.datasheet,
+              response.getInventoryDTO.idInventory);
 
           this.setImages(response.getInventoryImageDTO, inventoryGridInto);
           this.inventoryGrid.push(inventoryGridInto);
@@ -148,6 +152,7 @@ export class InventoryComponent implements OnInit {
     const datasheet = inventory.getDatasheet();
     const image = inventory.getImages()
     const price = inventory.getPrice()
+    const idInventory = inventory.getIdInventory()
 
     this.inventoryService.setSelectedCategoryId(idCategory);
     this.inventoryService.setSelectedInventoryDetails({
@@ -155,10 +160,23 @@ export class InventoryComponent implements OnInit {
       characteristic: characteristic,
       datasheet: datasheet,
       image:image,
-      price:price
+      price:price,
+      idInventory:idInventory
     });
+    this.loginService.getTokenPublicS().subscribe(dataAuth => {
+      this.commentService.getCommentById(idInventory, dataAuth.token).subscribe(
+          (comment: any) => {
+            this.comments = comment.responseDTO
+            this.commentService.setComments(this.comments);
+          }
+      );
+    });
+
+
 
     this.router.navigate(['/Detail']);
   }
+
+
 
 }

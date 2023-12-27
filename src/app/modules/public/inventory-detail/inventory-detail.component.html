@@ -39,11 +39,11 @@
                         <p-galleria [value]="images" thumbnailsPosition="right" [responsiveOptions]="responsiveOptions"
                                     [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5" [autoPlay]="true">
                             <ng-template pTemplate="item" let-item>
-                                <img [src]="item.itemImageSrc" style="width: 100%; min-height: 420px; display: block;"/>
+                                <!--<img [src]="item.itemImageSrc" style="width: 100%; min-height: 420px; display: block;"/>-->
                             </ng-template>
                             <ng-template pTemplate="thumbnail" let-item>
                                 <div class="grid grid-nogutter justify-content-center">
-                                    <img [src]="item.thumbnailImageSrc"/>
+                                   <!-- <img [src]="item.thumbnailImageSrc"/>-->
                                 </div>
                             </ng-template>
                         </p-galleria>
@@ -87,17 +87,17 @@
                                 <div class="row g-4">
                                     <div class="col-lg-6">
                                         <div class="border-bottom rounded">
-                                            <input type="text" class="form-control border-0 me-4" placeholder="Nombre *" formControlName="name" >
+                                            <input type="text" class="form-control border-0 me-4" placeholder="Nombre *" formControlName="name">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="border-bottom rounded">
-                                            <input type="email" class="form-control border-0" placeholder="Correo electrónico *" formControlName="email" >
+                                            <input type="email" class="form-control border-0" placeholder="Correo electrónico *" formControlName="email">
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="border-bottom rounded my-4">
-                                            <textarea name="" id="" class="form-control border-0" cols="30" rows="8" placeholder="Reseña *" spellcheck="false" formControlName="review" ></textarea>
+                                            <textarea name="" id="" class="form-control border-0" cols="30" rows="8" placeholder="Reseña *" spellcheck="false" formControlName="review"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -115,11 +115,12 @@
                                                     {{ getRatingLabel(commentForm.get('qualification')?.value) }}
                                                 </div>
                                             </div>
-                                            <button id="submit" class="btn border border-secondary rounded-pill px-4 py-3" (click)="getTokenPublic1()">Publicar reseña</button>
+                                            <button id="submit" class="btn border border-secondary rounded-pill px-4 py-3" (click)="getTokenPublic()">Publicar reseña</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>
