@@ -222,4 +222,45 @@ ul {
 
 .lista-nosotros a:hover {
     background-color: #f0f0f0;
+}/*** Navbar Start ***/
+
+
+.navbar {
+    height: 100px;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
 }
+
+@media (min-width: 1200px) {
+    .navbar .nav-item .dropdown-menu {
+        display: block;
+        visibility: hidden;
+        top: 100%;
+        transform: rotateX(-75deg);
+        transform-origin: 0% 0%;
+        border: 0;
+        transition: .5s;
+        opacity: 0;
+    }
+}
+
+
+.navbar .nav-item:hover .dropdown-menu {
+    transform: rotateX(0deg);
+    visibility: visible;
+    background: var(--bs-light) !important;
+    border-radius: 10px !important;
+    transition: .5s;
+    opacity: 1;
+}
+
+#searchModal .modal-content {
+    background: rgba(255, 255, 255, .8);
+}
+.nav-item.dropdown {
+    .dropdown-item {
+        font-family: "Mulish", Sans-serif, serif;
+        font-weight: 600;
+        color: black; // Cambia el color del texto a negro
+    }
+}
+

@@ -84,7 +84,7 @@ export class ConsultProductComponent implements OnInit {
                             responseDTO.getInventoryCategoryDTO.idCategory,
                             responseDTO.getInventoryCategoryDTO.description,
                             responseDTO.getInventoryImageDTO[0].idInventoryImage,
-                            'data:image/png;base64,' + responseDTO.getInventoryImageDTO[0].image,
+                            responseDTO.getInventoryImageDTO[0].image,
                             responseDTO.getInventorySubCategoryDTO.description,
                             responseDTO.getInventorySubCategoryDTO.idSubCategory
                         );
@@ -104,7 +104,7 @@ export class ConsultProductComponent implements OnInit {
 
             inventoryImage = {
                 "idInventoryImage":iter.idInventoryImage,
-                "image":  'data:image/png;base64,' +  iter.image,
+                "image": iter.image,
             }
             this.imageList.push(inventoryImage)
 
@@ -343,7 +343,7 @@ export class ConsultProductComponent implements OnInit {
                 this.updateForm.get('idCategory')?.value,
                 this.updateForm.get('description')?.value,
                 this.updateForm.get('idInventoryImage')?.value,
-                'data:image/png;base64,' + this.updateForm.get('image')?.value,
+                this.updateForm.get('image')?.value,
                 this.updateForm.get('descriptionSubCategory')?.value,
                 this.updateForm.get('idSubCategory')?.value
             ));
