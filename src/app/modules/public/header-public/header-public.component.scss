@@ -257,6 +257,7 @@ ul {
     background: rgba(255, 255, 255, .8);
 }
 .nav-item.dropdown {
+    cursor: pointer;
     .dropdown-item {
         font-family: "Mulish", Sans-serif, serif;
         font-weight: 600;
