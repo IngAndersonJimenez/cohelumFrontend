@@ -1,10 +1,11 @@
 export interface Inventory{
-    idInventory:number;
+
     name: string;
     price: number;
     unitsAvailable: number;
     categoryId:number;
+    idSubCategory:number;
     characteristic: string;
     datasheet: string;
-    image?: File | null; //
+    image?: string;
 }

@@ -52,6 +52,9 @@ export class InventoryService {
         );
     }
 
+
+
+
     getToken(): string {
         let token: string = '';
         this.loginService.userCurrent.subscribe(data => {
@@ -150,9 +153,10 @@ export class InventoryService {
     }
 
 
-    createImageProduct(idInventory: number, imageFile: string): Observable<InventoryImage> {
+    createImageProduct(idInventory: number, imageFile: string, fileName:string): Observable<InventoryImage> {
         const formData: FormData = new FormData();
         formData.append('image', imageFile);
+        formData.append('fileName', fileName);
 
         let headers = new HttpHeaders();
         headers = headers.append('Authorization', this.getToken());

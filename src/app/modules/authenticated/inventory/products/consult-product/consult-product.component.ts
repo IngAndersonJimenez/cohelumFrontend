@@ -8,6 +8,7 @@ import {InventoryImage} from "../../../../../interface/InventoryImage";
 import {InventoryCategory} from "../../../../../interface/products/inventoryCategory";
 import {SubCategory} from "../../../../../interface/products/SubCategory";
 import {CategoryService} from "../../../../../services/category.service";
+import {environment} from "../../../../../environments/environment";
 
 
 @Component({
@@ -34,6 +35,7 @@ export class ConsultProductComponent implements OnInit {
     subcategories: Array<SubCategory> = [];
     isActiveSubcategories: boolean = false;
     subcategoriesFilter: Array<SubCategory> = [];
+    pathImage: string = environment.sourceImage;
 
     constructor(private fb: FormBuilder, private inventoryService: InventoryService, private sanitizer: DomSanitizer,
                 private notificationService: NotificationService, private categoryService:CategoryService) {
@@ -67,7 +69,7 @@ export class ConsultProductComponent implements OnInit {
         const productName = product.name;
         if (productName && productName.trim() !== '') {
             this.products = [];
-
+            this.imageList = [];
             this.inventoryService.getInventoryByName(productName).subscribe(
                 (data: any) => {
                     const responseDTO = data.responseDTO;
@@ -98,34 +100,39 @@ export class ConsultProductComponent implements OnInit {
         }
     }
 
-    getImageByProduct(inventory:any){
-        let inventoryImage : InventoryImage;
-        for (let iter of inventory){
-
-            inventoryImage = {
-                "idInventoryImage":iter.idInventoryImage,
-                "image": iter.image,
-            }
-            this.imageList.push(inventoryImage)
-
+    getImageByProduct(inventory: any) {
+        const productName = this.consultForm.get('name')?.value;
+        console.log('Nombre que llega al get: ' , productName)
+        for (let iter of inventory) {
+            const imageName = iter.image
+            console.log('Esto llega: ',this.pathImage + `${imageName}` )
+            const inventoryImage: InventoryImage = {
+                "idInventoryImage": iter.idInventoryImage,
+                "image":this.pathImage + `${imageName}`,
+            };
+            this.imageList.push(inventoryImage);
         }
     }
 
-
     ngOnInit(): void {
+
     }
 
     addImage(): void {
         if (this.products[0].idInventory && this.selectedFile) {
+            const idInventory = this.products[0].idInventory;
+            const fileName = this.products[0].name;
 
-            this.inventoryService.createImageProduct(this.products[0].idInventory, this.selectedFile).subscribe(
+            this.inventoryService.createImageProduct(idInventory, this.selectedFile, fileName).subscribe(
                 (data: InventoryImage) => {
-                    this.notificationService.showSuccess("Imagen Añadida al producto", "Correctamente")
-
+                    this.notificationService.showSuccess("Imagen Añadida al producto", "Correctamente");
                 }
             );
         }
     }
+
+
+
 
     onFileSelected(event: any): void {
         this.selectedFile = event.target.files[0];

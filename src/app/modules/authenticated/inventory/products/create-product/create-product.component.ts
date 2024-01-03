@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { InventoryService } from "../../../../../services/inventory.service";
 import { LoginService } from "../../../../../services/login.service";
@@ -6,6 +6,8 @@ import { NotificationService } from "../../../../../notifications/notification.s
 import { InventoryCategory } from "../../../../../interface/products/inventoryCategory";
 import { SubCategory } from "../../../../../interface/products/SubCategory";
 import { CategoryService } from "../../../../../services/category.service";
+import {SafeResourceUrl} from "@angular/platform-browser";
+import {Inventory} from "../../../../../interface/products/Inventory";
 
 @Component({
   selector: 'app-create-product',
@@ -22,6 +24,14 @@ export class CreateProductComponent implements OnInit {
   subcategories: Array<SubCategory> = [];
   isActiveSubcategories: boolean = false;
   subcategoriesFilter: Array<SubCategory> = [];
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  uploadedImages: any[] = [];
+  isTextVisible = true;
+  showProgressBar = false;
+  uploadProgress = 0;
+  pdfUrl!: SafeResourceUrl;
+
+
   constructor(private notificationService: NotificationService, private inventoryService: InventoryService, private formBuilder: FormBuilder,
     private loginService: LoginService, private categoryService: CategoryService) {
   }
@@ -39,8 +49,10 @@ export class CreateProductComponent implements OnInit {
     });
   }
 
+
   onSubmit() {
     this.isLoading = true;
+
     if (this.productForm.valid) {
       const formData = new FormData();
       formData.append('name', this.productForm.get('name')?.value);
@@ -50,22 +62,18 @@ export class CreateProductComponent implements OnInit {
       formData.append('idSubCategory', this.productForm.get('idSubCategory')?.value);
       formData.append('characteristic', this.productForm.get('characteristic')?.value);
       formData.append('datasheet', this.productForm.get('datasheet')?.value);
-      const isImageAttached = this.productForm.get('image')?.value !== null;
-      if (isImageAttached) {
-        formData.append('image', this.productForm.get('image')?.value);
-      }
+      formData.append('image',this.productForm.get('image')?.value)
+      formData.forEach((value, key) => {
+        console.log(`Form Data Entry: ${key}, ${value}`);
+      });
 
       this.inventoryService.createProduct(formData).subscribe(
-        result => {
-          this.isLoading = false;
-          this.productForm.reset();
-          this.selectedImage = undefined;
-          this.selectedPDFName = undefined;
-        },
-        error => {
-          this.isLoading = false;
-          console.error('Error al crear el producto', error);
-        }
+          result => {
+            this.isLoading = false;
+            this.productForm.reset();
+            this.selectedImage = undefined;
+            this.selectedPDFName = undefined;
+          }
       );
     } else {
       console.log('El formulario no está completo. No se llama al servicio.');
@@ -73,7 +81,7 @@ export class CreateProductComponent implements OnInit {
   }
 
 
-  onFileSelected(event: any, type: string): void {
+ /* onFileSelected(event: any, type: string): void {
     const input = event.target;
     const newFile = input.files ? input.files[0] : null;
 
@@ -93,30 +101,37 @@ export class CreateProductComponent implements OnInit {
 
       const fileExtension = newFile.name.split('.').pop().toLowerCase();
 
-      if (type === 'image' && !allowedImageExtensions.includes(fileExtension)) {
-        this.notificationService.showError("Solo se permiten archivos de imagen (jpg, jpeg, png, gif).", "Vuelve a intentar");
-        input.value = null;
-        return;
-      } else if (type === 'pdf' && !allowedPDFExtensions.includes(fileExtension)) {
-        this.notificationService.showError("Solo se permiten archivos PDF.", "Vuelve a intentar");
+      if ((type === 'image' && !allowedImageExtensions.includes(fileExtension)) ||
+          (type === 'pdf' && !allowedPDFExtensions.includes(fileExtension))) {
+        this.notificationService.showError(`Solo se permiten archivos de ${type === 'image' ? 'imagen' : 'PDF'}.`, "Vuelve a intentar");
         input.value = null;
         return;
       }
 
-      if (type === 'image' && newFile !== this.productForm.get('image')?.value) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.selectedImage = e.target.result;
-        };
-        reader.readAsDataURL(newFile);
+      if (type === 'image') {
+        this.showProgressBar = true;
+        this.uploadProgress = 0;
+        this.uploadedImages.push({
+          file: newFile,
+          dataURL: URL.createObjectURL(newFile),
+        });
 
-        const formData = new FormData();
-        formData.append('image', newFile);
-        this.productForm.patchValue({ image: formData.get('image') });
+        this.isTextVisible = false;
+
+        const interval = setInterval(() => {
+          if (this.uploadProgress < 100) {
+            this.uploadProgress += 10;
+          } else {
+            clearInterval(interval);
+            this.showProgressBar = false;
+          }
+        }, 35);
+
       } else if (type === 'pdf' && newFile !== this.productForm.get('datasheet')?.value) {
         this.selectedPDFName = newFile.name;
         const reader = new FileReader();
         reader.onload = (e: any) => {
+          this.pdfUrl = e.target.result;
         };
         reader.readAsDataURL(newFile);
 
@@ -124,6 +139,30 @@ export class CreateProductComponent implements OnInit {
         formData.append('datasheet', newFile);
         this.productForm.patchValue({ datasheet: formData.get('datasheet') });
       }
+    }
+  }*/
+
+  onFileSelected(event: any) {
+    const selectedFile = (event.target as HTMLInputElement).files?.[0];
+
+    if (selectedFile) {
+      this.showProgressBar = true;
+      this.uploadProgress = 0;
+      this.uploadedImages.push({
+        file: selectedFile,
+        dataURL: URL.createObjectURL(selectedFile),
+      });
+
+      this.isTextVisible = false;
+      this.fileInput.nativeElement.value = '';
+      const interval = setInterval(() => {
+        if (this.uploadProgress < 100) {
+          this.uploadProgress += 10;
+        } else {
+          clearInterval(interval);
+          this.showProgressBar = false;
+        }
+      }, 35);
     }
   }
 
@@ -171,6 +210,19 @@ export class CreateProductComponent implements OnInit {
       }
     }
   }
+  triggerFileInputClick() {
+    if (this.fileInput) {
+      this.fileInput.nativeElement.click();
+    }
+  }
 
+  removeImage(index: number, event: Event) {
+    event.stopPropagation();
+    this.uploadedImages.splice(index, 1);
+    this.showProgressBar = this.uploadedImages.length > 0;
+    this.uploadProgress = 0;
+    this.isTextVisible = this.uploadedImages.length === 0;
+    this.showProgressBar = false;
+  }
 
 }

@@ -1,122 +1,175 @@
-<h1>Crear producto</h1>
 <div class="container-product">
-    <mat-card>
-        <mat-card-content>
-            <form [formGroup]="productForm">
-                <mat-grid-list cols="4" rowHeight="70px">
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="form-input">
-                            <mat-label>Nombre del producto</mat-label>
-                            <input matInput autocomplete="off" formControlName="name" required>
-                            <div class="icon-container">
-                                <i *ngIf="productForm.controls['name'].valid"
-                                    class="far fa-circle-check icon-check"></i>
-                            </div>
-                        </mat-form-field>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="3" [rowspan]="9">
-                        <ng-container *ngIf="selectedImage; else pdfPreview">
-                            <img [src]="selectedImage" alt="Imagen seleccionada" class="preview-image">
-                        </ng-container>
-                        <ng-template #pdfPreview>
-                            <div *ngIf="selectedPDFName" class="preview-pdf">
-                                <i class="fa-sharp fa-solid fa-file-pdf"></i>
-                                {{ selectedPDFName }}
-                            </div>
-                        </ng-template>
-                        <img *ngIf="!selectedImage && !selectedPDFName"
-                            [src]="'assets/image/create-product/ImageCreate.svg'" alt="Imagen-default"
-                            class="preview-image">
-                    </mat-grid-tile>
+    <form [formGroup]="productForm" >
+        <div class="row gx-3">
+            <div class="col-sm-12 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Crear producto</div>
+                    </div>
+                    <div class="card-body">
 
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="form-input">
-                            <mat-label>Precio</mat-label>
-                            <input matInput formControlName="price" (keypress)="validateEnter($event, 'numeros')"
-                                required>
-                            <div class="icon-container">
-                                <i *ngIf="productForm.controls['price'].valid"
-                                    class="far fa-circle-check icon-check"></i>
+                        <div class="row gx-3">
+                            <div class="col-sm-6 col-12">
+                                <div class="card-border">
+                                    <div class="card-border-title">Información General</div>
+                                    <div class="card-border-body">
+
+                                        <div class="row gx-3">
+                                            <div class="col-sm-12 col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Nombre del producto<span class="text-red">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Ingrese el nombre del producto"
+                                                           formControlName="name" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-12">
+                                                <div class=" mb-3">
+                                                    <label class="form-label">Precio</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control"
+                                                               placeholder="Ingrese el precio del producto"
+                                                               formControlName="price"
+                                                               (keypress)="validateEnter($event, 'numeros')"
+                                                               required>
+                                                        <span class="input-group-text">%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-12">
+                                                <div class=" mb-3">
+                                                    <label class="form-label">Unidades disponibles</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control"
+                                                               placeholder="Ingrese el precio del producto"
+                                                               formControlName="unitsAvailable"
+                                                               (keypress)="validateEnter($event, 'numeros')" required>
+                                                        <span class="input-group-text">%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-12">
+                                                <div class="mb-0">
+                                                    <label class="form-label">Caracteristicas<span
+                                                            class="text-red">*</span></label>
+                                                    <textarea rows="4" class="form-control"
+                                                              placeholder="Ingrese las características del producto"
+                                                              formControlName="characteristic"
+                                                              (keypress)="validateEnter($event, 'letras')"
+                                                              required></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-                        </mat-form-field>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="form-input">
-                            <mat-label>Unidades disponibles</mat-label>
-                            <input matInput formControlName="unitsAvailable"
-                                (keypress)="validateEnter($event, 'numeros')" required>
-                            <div class="icon-container">
-                                <i *ngIf="productForm.controls['unitsAvailable'].valid"
-                                    class="far fa-circle-check icon-check"></i>
+                            <div class="col-sm-6 col-12">
+                                <div class="card-border">
+                                    <div class="card-border-title">Categoría relacionada</div>
+                                    <div class="card-border-body">
+
+                                        <div class="row gx-3">
+                                            <div class="col-sm-6 col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Categoría<span
+                                                            class="text-red">*</span></label>
+                                                    <select class="form-control" formControlName="categoryId" required
+                                                            (change)="subCategoryLoad(productForm.get('categoryId')?.value)">
+                                                        <option value="Select Product Category">Seleccione la
+                                                            categoría
+                                                        </option>
+                                                        <option *ngFor="let category of categories"
+                                                                [value]="category.idCategory">
+                                                            {{ category.description }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Sub-Categoría<span
+                                                            class="text-red">*</span></label>
+                                                    <select class="form-control" formControlName="idSubCategory"
+                                                            required>
+                                                        <option value="Select Product Category">Seleccione la
+                                                            Subcategoría
+                                                        </option>
+                                                        <option *ngFor="let subCategory of subcategoriesFilter"
+                                                                [value]="subCategory.getIdSubCategory()">
+                                                            {{ subCategory.getDescription() }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Seleccionar ficha técnica<span
+                                                            class="text-red">*</span></label>
+                                                    <input type="file" (change)="onFileSelected($event)"
+                                                           accept=".pdf" class="form-control"
+                                                           formControlName="datasheet" required/>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-12">
+                                                <div class="mb-0">
+                                                    <div *ngIf="pdfUrl">
+                                                        <pdf-viewer [src]="pdfUrl" [render-text]="true"
+                                                                    style="display: block;"></pdf-viewer>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </mat-form-field>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="form-input">
-                            <mat-label>Categoría</mat-label>
-                            <mat-select formControlName="categoryId" required>
-                                <mat-option *ngFor="let category of categories" [value]="category.idCategory"
-                                    (click)="subCategoryLoad(category.idCategory)">
-                                    {{ category.description }}
-                                </mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="productForm.get('categoryId')?.hasError('required')">Selecciona una
-                                categoría</mat-error>
-                        </mat-form-field>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1" *ngIf="isActiveSubcategories">
-                        <mat-form-field class="form-input">
-                            <mat-label>SubCategoría</mat-label>
-                            <mat-select formControlName="idSubCategory" required>
-                                <mat-option *ngFor="let subCategory of subcategoriesFilter"
-                                    [value]="subCategory.getIdSubCategory()">
-                                    {{ subCategory.getDescription() }}
-                                </mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="productForm.get('idSubCategory')?.hasError('required')">Selecciona una
-                                subcategoría</mat-error>
-                        </mat-form-field>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="form-input">
-                            <mat-label>Caracteristica</mat-label>
-                            <input matInput formControlName="characteristic"
-                                (keypress)="validateEnter($event, 'letras')" required>
-                            <div class="icon-container">
-                                <i *ngIf="productForm.controls['characteristic'].valid"
-                                    class="far fa-circle-check icon-check"></i>
+                            <div class="col-sm-12 col-12">
+                                <div class="card-border">
+                                    <div class="card-border-title">Imagenes del producto</div>
+                                    <div class="card-border-body">
+                                        <div #dropzone id="dropzone" class="dropzone-dark"
+                                             (click)="triggerFileInputClick()">
+                                            <div class="dz-message needsclick">
+                                                <label for="fileInput" class="dz-button" *ngIf="isTextVisible">Arrastra
+                                                    la imagen a guardar o realiza un clic.</label>
+                                                <input #fileInput type="file" id="fileInput" style="display: none"
+                                                       (change)="onFileSelected($event)"
+                                                       formControlName="image" required>
+                                                <br>
+                                                <span class="note needsclick" *ngIf="isTextVisible">
+                                                                (Los archivos se prevusializaran antes de ser añadidos <strong>no</strong> se actualiza hasta dar clic en <strong>Añadir producto</strong>.)
+                                                            </span>
+                                                <div *ngFor="let image of uploadedImages; let i = index"
+                                                     class="dz-preview">
+                                                    <img [src]="image.dataURL" alt="Preview">
+                                                    <div class="progress-bar-container"
+                                                         *ngIf="showProgressBar && i === uploadedImages.length - 1">
+                                                        <div class="progress-bar"
+                                                             [style.width]="uploadProgress + '%'"></div>
+                                                    </div>
+                                                    <button type="button" (click)="removeImage(i, $event)">
+                                                        <img class="remove" src="assets/image/create-product/x.svg">
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </mat-form-field>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
-                        <input class="file" type="file" (change)="onFileSelected($event, 'pdf')" #pdfFileInput
-                            formControlName="datasheet" required style="display: none;">
-                        <div class="icon-container">
-                            <i *ngIf="productForm.controls['datasheet'].valid"
-                                class="far fa-circle-check icon-check image"></i>
+                            <div class="col-sm-12 col-12">
+                                <div class="custom-btn-group flex-end">
+                                    <button type="button" class="btn btn-light">Cancelar</button>
+                                    <button type="button" class="btn btn-success" (click)="onSubmit()"
+                                            [disabled]="!productForm.valid || isLoading">Guardar
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <button mat-raised-button color="primary" (click)="pdfFileInput.click()">Ficha técnica</button>
-                    </mat-grid-tile>
 
-                    <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
-                        <input class="file" type="file" (change)="onFileSelected($event, 'image')" #imageFileInput
-                            formControlName="image" required style="display: none;">
-                        <div class="icon-container">
-                            <i *ngIf="productForm.controls['image'].valid" class="far fa-circle-check icon-check"></i>
-                        </div>
-                        <button mat-raised-button color="primary" (click)="imageFileInput.click()">Imagen del
-                            producto</button>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1" class="form-input">
-                        <button mat-raised-button color="primary" (click)="onSubmit()"
-                            [disabled]="!productForm.valid || isLoading">Guardar</button>
-                        <p-progressSpinner *ngIf="isLoading" strokeWidth="4"
-                            styleClass="custom-spinner"></p-progressSpinner>
-                        <span *ngIf="isLoading">Guardando...</span>
-                    </mat-grid-tile>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                </mat-grid-list>
-            </form>
-        </mat-card-content>
-    </mat-card>
+    </form>
 </div>
