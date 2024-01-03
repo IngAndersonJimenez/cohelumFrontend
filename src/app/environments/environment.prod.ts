@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8095/'
+  apiUrl: 'http://localhost:8095/',
+  sourceImage: '/imagenes/'
 };

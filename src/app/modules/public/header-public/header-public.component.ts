@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { InventoryService } from 'src/app/services/inventory.service';
 import { MenuItem } from 'primeng/api';
+import { environment } from 'src/app/environments/environment';
 
 @Component({
   selector: 'app-header-public',
@@ -10,6 +11,9 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./header-public.component.scss']
 })
 export class HeaderPublicComponent  implements OnInit{
+
+    pathImage: string = environment.sourceImage;
+    urlLogo : string = this.pathImage + "/imagenes/home/logo.png";
 
   items: MenuItem[] | undefined;
     isDropdownOpen = false;
