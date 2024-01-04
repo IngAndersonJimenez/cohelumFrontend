@@ -3,7 +3,7 @@ import {ProductFull} from "../../../../../interface/products/ProductFull";
 import {InventoryService} from "../../../../../services/inventory.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {NotificationService} from "../../../../../notifications/notification.service";
-import {DomSanitizer} from "@angular/platform-browser";
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {InventoryImage} from "../../../../../interface/InventoryImage";
 import {InventoryCategory} from "../../../../../interface/products/inventoryCategory";
 import {SubCategory} from "../../../../../interface/products/SubCategory";
@@ -65,7 +65,6 @@ export class ConsultProductComponent implements OnInit {
     }
 
     loadProducts(product: ProductFull) {
-
         const productName = product.name;
         if (productName && productName.trim() !== '') {
             this.products = [];
@@ -82,7 +81,7 @@ export class ConsultProductComponent implements OnInit {
                             responseDTO.getInventoryDTO.unitsAvailable,
                             responseDTO.getInventoryDTO.active,
                             responseDTO.getInventoryDetailsDTO.characteristic,
-                            this.sanitizer.bypassSecurityTrustResourceUrl('data:application/pdf;base64,' + (responseDTO.getInventoryDetailsDTO.datasheet || '')),
+                            this.sanitizer.bypassSecurityTrustResourceUrl(environment.sourceImage + responseDTO.getInventoryDetailsDTO.datasheet),
                             responseDTO.getInventoryCategoryDTO.idCategory,
                             responseDTO.getInventoryCategoryDTO.description,
                             responseDTO.getInventoryImageDTO[0].idInventoryImage,
@@ -90,15 +89,15 @@ export class ConsultProductComponent implements OnInit {
                             responseDTO.getInventorySubCategoryDTO.description,
                             responseDTO.getInventorySubCategoryDTO.idSubCategory
                         );
+                        console.log('El pdf es:', product.datasheet);
                         this.products.push(product);
-                        this.getImageByProduct(responseDTO.getInventoryImageDTO)
-
+                        this.getImageByProduct(responseDTO.getInventoryImageDTO);
                     }
-
                 }
             );
         }
     }
+
 
     getImageByProduct(inventory: any) {
         const productName = this.consultForm.get('name')?.value;
@@ -358,4 +357,5 @@ export class ConsultProductComponent implements OnInit {
     }
 
 
+    protected readonly environment = environment;
 }

@@ -8,6 +8,7 @@ import { SubCategory } from "../../../../../interface/products/SubCategory";
 import { CategoryService } from "../../../../../services/category.service";
 import {SafeResourceUrl} from "@angular/platform-browser";
 import {Inventory} from "../../../../../interface/products/Inventory";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-create-product',
@@ -30,6 +31,7 @@ export class CreateProductComponent implements OnInit {
   showProgressBar = false;
   uploadProgress = 0;
   pdfUrl!: SafeResourceUrl;
+  pathImage: string = environment.sourceImage;
 
 
   constructor(private notificationService: NotificationService, private inventoryService: InventoryService, private formBuilder: FormBuilder,
@@ -62,9 +64,9 @@ export class CreateProductComponent implements OnInit {
       formData.append('idSubCategory', this.productForm.get('idSubCategory')?.value);
       formData.append('characteristic', this.productForm.get('characteristic')?.value);
       formData.append('datasheet', this.productForm.get('datasheet')?.value);
-      formData.append('image',this.productForm.get('image')?.value)
-      formData.forEach((value, key) => {
-        console.log(`Form Data Entry: ${key}, ${value}`);
+
+      this.uploadedImages.forEach((image, index) => {
+        formData.append(`image[${index}]`, image.file);
       });
 
       this.inventoryService.createProduct(formData).subscribe(
@@ -80,8 +82,7 @@ export class CreateProductComponent implements OnInit {
     }
   }
 
-
- /* onFileSelected(event: any, type: string): void {
+  onFileSelected(event: any, type: string): void {
     const input = event.target;
     const newFile = input.files ? input.files[0] : null;
 
@@ -95,7 +96,6 @@ export class CreateProductComponent implements OnInit {
         return;
       }
 
-      // Verificar la extensión del archivo
       const allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
       const allowedPDFExtensions = ['pdf'];
 
@@ -137,34 +137,13 @@ export class CreateProductComponent implements OnInit {
 
         const formData = new FormData();
         formData.append('datasheet', newFile);
+
         this.productForm.patchValue({ datasheet: formData.get('datasheet') });
       }
     }
-  }*/
-
-  onFileSelected(event: any) {
-    const selectedFile = (event.target as HTMLInputElement).files?.[0];
-
-    if (selectedFile) {
-      this.showProgressBar = true;
-      this.uploadProgress = 0;
-      this.uploadedImages.push({
-        file: selectedFile,
-        dataURL: URL.createObjectURL(selectedFile),
-      });
-
-      this.isTextVisible = false;
-      this.fileInput.nativeElement.value = '';
-      const interval = setInterval(() => {
-        if (this.uploadProgress < 100) {
-          this.uploadProgress += 10;
-        } else {
-          clearInterval(interval);
-          this.showProgressBar = false;
-        }
-      }, 35);
-    }
   }
+
+
 
   ngOnInit(): void {
     this.buildForm()

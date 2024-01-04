@@ -106,7 +106,7 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Seleccionar ficha técnica<span
                                                             class="text-red">*</span></label>
-                                                    <input type="file" (change)="onFileSelected($event)"
+                                                    <input type="file" (change)="onFileSelected($event,'pdf')"
                                                            accept=".pdf" class="form-control"
                                                            formControlName="datasheet" required/>
                                                 </div>
@@ -133,7 +133,7 @@
                                                 <label for="fileInput" class="dz-button" *ngIf="isTextVisible">Arrastra
                                                     la imagen a guardar o realiza un clic.</label>
                                                 <input #fileInput type="file" id="fileInput" style="display: none"
-                                                       (change)="onFileSelected($event)"
+                                                       (change)="onFileSelected($event,'image')"
                                                        formControlName="image" required>
                                                 <br>
                                                 <span class="note needsclick" *ngIf="isTextVisible">
