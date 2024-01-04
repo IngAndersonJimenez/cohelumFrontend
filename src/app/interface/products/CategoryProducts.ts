@@ -8,6 +8,7 @@ export class CategoryProducts {
 
 
 
+
     constructor(idCategory: number, description: string, statusCategory: boolean, image: string) {
         this.idCategory = idCategory;
         this.description = description;

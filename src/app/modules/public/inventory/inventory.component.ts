@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {Product} from "../../../interface/products/Product";
 import {CommentService} from "../../../services/comment.service";
 import {InventoryComments} from "../../../interface/comment/InventoryComments";
+import {environment} from "../../../environments/environment";
 
 interface OptionOrder {
   name: string;
@@ -26,6 +27,7 @@ export class InventoryComponent implements OnInit {
   public inventoryCategories: Array<InventoryCategory> = [];
   public inventoryFilter: Array<InventoryGrid> = [];
   comments: InventoryComments[] = [];
+  pathImage: string = environment.sourceImage;
 
   constructor(private inventoryService: InventoryService, private loginService: LoginService,
     private formBuilder: FormBuilder,private router:Router,private commentService:CommentService) {
@@ -83,11 +85,11 @@ export class InventoryComponent implements OnInit {
     for (let image of images) {
 
       if (count == 0) {
-        inventoryGridInto.setImageInitial('data:image/png;base64,' + image.image);
+        inventoryGridInto.setImageInitial(this.pathImage + image.image);
       }
 
       if (count == 1) {
-        inventoryGridInto.setImageSecond('data:image/png;base64,' + image.image);
+        inventoryGridInto.setImageSecond(this.pathImage + image.image);
       }
 
       count++;

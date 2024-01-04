@@ -2,10 +2,9 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NotificationService } from "../../../notifications/notification.service";
 import { ContactService } from "../../../services/contact.service";
-import { LoginService } from "../../../services/login.service";
 import { ReasonEnum } from "../../../interface/Contact";
 import {BehaviorSubject, catchError, Observable, switchMap} from "rxjs";
-import {MatDialog} from "@angular/material/dialog";
+
 
 @Component({
   selector: 'app-contact',
@@ -100,7 +99,6 @@ export class ContactComponent implements OnInit {
         console.error('Solo se permiten archivos PDF.');
         this.notificationService.showError("Solo se permiten archivos PDF.", "Vuelve a intentar");
         input.value = null;
-        return;
       } else if (type === 'pdf' && newFile !== this.form.get('attach')?.value) {
         this.selectedPDFName = newFile.name;
         const reader = new FileReader();

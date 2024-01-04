@@ -6,6 +6,7 @@ import {InventoryService} from "../../../../services/inventory.service";
 import {CategoryProducts} from "../../../../interface/products/CategoryProducts";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NotificationService} from "../../../../notifications/notification.service";
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'app-category',
@@ -22,8 +23,10 @@ export class CategoryComponent implements OnInit {
     @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
     @ViewChild(MatSort, {static: true}) sort!: MatSort;
     public productForm!: FormGroup;
-    selectedImage: string | undefined;
     showAddingCategoryDialog:boolean = false;
+    selectedImagePreview: string | undefined;
+    pathImage: string = environment.sourceImage;
+
 
 
     constructor(private inventoryService: InventoryService, private formBuilder: FormBuilder, private notificationService: NotificationService) {
@@ -33,10 +36,10 @@ export class CategoryComponent implements OnInit {
     private buildForm() {
         this.productForm = this.formBuilder.group({
             descriptionCategory: ['', Validators.required],
-            image: ['', Validators.required],
-
+            image: [null, Validators.required],
         });
     }
+
 
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
@@ -57,16 +60,16 @@ export class CategoryComponent implements OnInit {
                         iterDate.getInventoryCategoryDTO.idCategory,
                         iterDate.getInventoryCategoryDTO.description,
                         iterDate.getInventoryCategoryDTO.active,
-                        'data:image/png;base64,' + iterDate.getCategoryImageDTO.image
+                        this.pathImage + iterDate.getCategoryImageDTO.image
                     );
-
+                    console.log('ruta imagen: ',this.pathImage + iterDate.getCategoryImageDTO.image )
                     this.categoryList.push(categoryProduct);
-
                 }
                 this.refreshTable();
             }
         );
     }
+
 
 
     refreshTable() {
@@ -86,15 +89,11 @@ export class CategoryComponent implements OnInit {
 
 
     onSubmit() {
-
         if (this.productForm.valid) {
             const formData = new FormData();
             formData.append('descriptionCategory', this.productForm.get('descriptionCategory')?.value);
-            const isImageAttached = this.productForm.get('image')?.value !== null;
-            if (isImageAttached) {
-                formData.append('image', this.productForm.get('image')?.value);
-            }
-
+            formData.append('image', this.productForm.get('image')?.value);
+            console.log('Imagen category:',  this.productForm.get('image')?.value)
             this.inventoryService.createCategoryAndImage(formData).subscribe(
                 result => {
                     this.productForm.reset();
@@ -106,6 +105,7 @@ export class CategoryComponent implements OnInit {
             console.log('El formulario no está completo. No se llama al servicio.');
         }
     }
+
 
     onFileSelected(event: any, type: string): void {
         const input = event.target;
@@ -121,7 +121,6 @@ export class CategoryComponent implements OnInit {
                 return;
             }
 
-            // Verificar la extensión del archivo
             const allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
 
             const fileExtension = newFile.name.split('.').pop().toLowerCase();
@@ -135,16 +134,14 @@ export class CategoryComponent implements OnInit {
             if (type === 'image' && newFile !== this.productForm.get('image')?.value) {
                 const reader = new FileReader();
                 reader.onload = (e: any) => {
-                    this.selectedImage = e.target.result;
+                    this.selectedImagePreview = e.target.result;
                 };
                 reader.readAsDataURL(newFile);
-
-                const formData = new FormData();
-                formData.append('image', newFile);
-                this.productForm.patchValue({image: formData.get('image')});
+                this.productForm.get('image')?.setValue(newFile);
             }
         }
     }
+
 
     editCategory(category: CategoryProducts) {
         category.isEditing = true;

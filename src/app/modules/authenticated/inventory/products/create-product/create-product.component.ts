@@ -31,7 +31,7 @@ export class CreateProductComponent implements OnInit {
   showProgressBar = false;
   uploadProgress = 0;
   pdfUrl!: SafeResourceUrl;
-  pathImage: string = environment.sourceImage;
+
 
 
   constructor(private notificationService: NotificationService, private inventoryService: InventoryService, private formBuilder: FormBuilder,

@@ -6,6 +6,7 @@ import {ContactService} from "../../../services/contact.service";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
+import {environment} from "../../../environments/environment";
 
 @Component({
     selector: 'app-contact',
@@ -21,6 +22,7 @@ export class ContactComponent implements OnInit {
     displayedColumns: string[] = ['email', 'reason', 'comment', 'actions'];
     @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
     @ViewChild(MatSort, {static: true}) sort!: MatSort;
+    pathImage: string = environment.sourceImage;
 
     constructor(
         private contactService: ContactService,
@@ -58,8 +60,7 @@ export class ContactComponent implements OnInit {
             this.messageForm.enable();
 
             if (contact.attach) {
-                // Renderizar el PDF en un objeto SafeResourceUrl
-                this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(`data:application/pdf;base64, ${contact.attach}`);
+                this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.pathImage + `${contact.attach}`);
             }
 
             this.messageForm.patchValue({
