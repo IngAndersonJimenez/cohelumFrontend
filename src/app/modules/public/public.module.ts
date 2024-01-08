@@ -29,6 +29,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { InventoryDetailComponent } from './inventory-detail/inventory-detail.component';
 import { ImageModule } from 'primeng/image';
 import { UsComponent } from './us/us.component';
+import {SlickCarouselModule} from "ngx-slick-carousel";
 
 @NgModule({
   declarations: [
@@ -45,27 +46,28 @@ import { UsComponent } from './us/us.component';
     InventoryDetailComponent,
     UsComponent
   ],
-  imports: [
-    CommonModule,
-    PublicRoutingModule,
-    CarouselModule,
-    GalleriaModule,
-    MaterialModule,
-    PaginatorModule,
-    ReactiveFormsModule,
-    MultiSelectModule,
-    DropdownModule,
-    MatDialogModule,
-    MatButtonModule,
-    DataViewModule,
-    TagModule,
-    RatingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RadioButtonModule,
-    MenubarModule,
-    ImageModule
-  ],
+    imports: [
+        CommonModule,
+        PublicRoutingModule,
+        CarouselModule,
+        GalleriaModule,
+        MaterialModule,
+        PaginatorModule,
+        ReactiveFormsModule,
+        MultiSelectModule,
+        DropdownModule,
+        MatDialogModule,
+        MatButtonModule,
+        DataViewModule,
+        TagModule,
+        RatingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RadioButtonModule,
+        MenubarModule,
+        ImageModule,
+        SlickCarouselModule
+    ],
   exports: [
     HeaderPublicComponent,
     FooterPublicComponent

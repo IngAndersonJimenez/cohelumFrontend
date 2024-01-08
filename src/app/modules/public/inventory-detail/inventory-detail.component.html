@@ -29,26 +29,27 @@
                         <div class="regular-price">{{ details.price | currency:'$':'symbol':'1.0-0'}}</div>
                     </div>
                     <p>{{ details.characteristic }}</p>
-                    <a [href]="pdfUrl" download="Ficha técnica.pdf" class="btn btn-primary pdf">
+                    <a [href]="pdfUrl" target="_blank" download="Ficha técnica.pdf" class="btn btn-primary pdf">
                         <img src="assets/pdf/pdf-svgrepo-com.svg" alt="Icono PDF" class="icono-pdf"/>
                         Ficha técnica
                     </a>
                 </div>
                 <div class="col-md-6">
-                    <div class="card">
-                        <p-galleria [value]="images" thumbnailsPosition="right" [responsiveOptions]="responsiveOptions"
-                                    [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5" [autoPlay]="true">
-                            <ng-template pTemplate="item" let-item>
-                                <!--<img [src]="item.itemImageSrc" style="width: 100%; min-height: 420px; display: block;"/>-->
-                            </ng-template>
-                            <ng-template pTemplate="thumbnail" let-item>
-                                <div class="grid grid-nogutter justify-content-center">
-                                   <!-- <img [src]="item.thumbnailImageSrc"/>-->
-                                </div>
-                            </ng-template>
-                        </p-galleria>
+                    <div class="image-container">
+                        <ng-container *ngIf="images && images.length > 0">
+                            <img [src]="pathImage + images[currentIndex]" class="contained-image" />
+                        </ng-container>
                     </div>
+                    <div class="thumbnail-gallery">
+                        <div class="thumbnails-container">
+                            <ng-container *ngFor="let image of images; let i = index">
+                                <img [src]="pathImage + image" class="thumbnail" (click)="changeImage(i)" />
+                            </ng-container>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
         </div>
         <div class="container-fluid py-5 mt-5">

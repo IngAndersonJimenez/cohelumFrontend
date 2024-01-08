@@ -68,7 +68,7 @@ export class InventoryComponent implements OnInit {
               response.getInventoryDetailsDTO.characteristic,
               response.getInventoryDetailsDTO.datasheet,
               response.getInventoryDTO.idInventory);
-
+          this.inventoryService.setImages(response.getInventoryDTO.idInventory, response.getInventoryImageDTO);
           this.setImages(response.getInventoryImageDTO, inventoryGridInto);
           this.inventoryGrid.push(inventoryGridInto);
         }
@@ -86,6 +86,7 @@ export class InventoryComponent implements OnInit {
 
       if (count == 0) {
         inventoryGridInto.setImageInitial(this.pathImage + image.image);
+
       }
 
       if (count == 1) {
@@ -143,7 +144,6 @@ export class InventoryComponent implements OnInit {
   }
 
   selectedProduct(index: number) {
-    console.log("Producto seleccionado")
     console.log(index)
   }
 

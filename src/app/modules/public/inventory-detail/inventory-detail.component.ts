@@ -6,6 +6,8 @@ import {CommentService} from "../../../services/comment.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LoginService} from "../../../services/login.service";
 import {InventoryComments} from "../../../interface/comment/InventoryComments";
+import {environment} from "../../../environments/environment";
+import {Galleria} from "primeng/galleria";
 
 @Component({
     selector: 'app-inventory-detail',
@@ -14,17 +16,20 @@ import {InventoryComments} from "../../../interface/comment/InventoryComments";
 })
 export class InventoryDetailComponent implements OnInit {
 
-    images: any[] | undefined;
+    images: string[] = [];
     categoryId: number | null = null;
     details: any | null;
-    pdfUrl: SafeResourceUrl;
+    pdfUrl!: SafeResourceUrl;
     commentForm!: FormGroup
     selectedStarColor: string = '#808080';
     comments: InventoryComments[] = [];
     averageRating: number = 0;
     currentIdInventory!: number;
-    CreatedComment: InventoryComments | null = null;
     @ViewChild('reviewSection') reviewSection: ElementRef | undefined;
+    pathImage: string = environment.sourceImage;
+    currentIndex: number = 0;
+    intervalId: any;
+
 
 
     position: string = 'bottom';
@@ -71,29 +76,8 @@ export class InventoryDetailComponent implements OnInit {
 
     constructor(private route: ActivatedRoute, private inventoryService: InventoryService, private sanitizer: DomSanitizer,
                 private commentService: CommentService, private formBuilder: FormBuilder, private loginService: LoginService) {
-        this.images =
-            [
-                {
-                    itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg',
-                    thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria1s.jpg',
-                    alt: 'Description for Image 1',
-                    title: 'Title 1'
-                },
-                {
-                    itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria2.jpg',
-                    thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria2s.jpg',
-                    alt: 'Description for Image 2',
-                    title: 'Title 2'
-                },
-                {
-                    itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria3.jpg',
-                    thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria3s.jpg',
-                    alt: 'Description for Image 3',
-                    title: 'Title 3'
-                }
-            ]
         this.reviewSection = undefined;
-        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl('assets/pdf/LM350.PDF');
+
     }
 
     private buildForm() {
@@ -115,24 +99,36 @@ export class InventoryDetailComponent implements OnInit {
             this.comments = comments;
             this.updateStarRating();
         });
+        this.pdfUrl = `${environment.sourceImage}${this.details.datasheet}`;
+        this.intervalId = setInterval(() => {
+            this.nextImage();
+        }, 3000);
 
+       this.images = this.inventoryService.getImages();
+
+    }
+    nextImage(): void {
+        this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    }
+
+    prevImage(): void {
+        this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
     }
 
 
+
     createComment(inventoryCommentDTO: any, token: string, idInventory: number): void {
-        const commentWithId = { ...inventoryCommentDTO, idInventory };
+        const commentWithId = {...inventoryCommentDTO, idInventory};
 
         this.commentService.createInventoryComment(commentWithId, token)
             .subscribe(
                 response => {
-                    console.log('Respuesta exitosa:', response);
                     this.commentForm.reset();
 
 
                 }
             );
     }
-
 
 
     getTokenPublic() {
@@ -182,5 +178,9 @@ export class InventoryDetailComponent implements OnInit {
 
     }
 
+
+    changeImage(index: number): void {
+        this.currentIndex = index;
+    }
 
 }

@@ -25,6 +25,11 @@ export class InventoryService {
     private selectedInventoryDetails: any | null = null;
     private isActiveUsMemory = new BehaviorSubject(false);
     public isActiveUsCurrent = this.isActiveUsMemory.asObservable();
+    // BehaviorSubject para emitir las imágenes
+    private inventoryImagesSubject: BehaviorSubject<{ idInventory: number, images: string[] }> = new BehaviorSubject<{ idInventory: number, images: string[] }>({ idInventory: 0, images: [] });
+    // Observable que otros componentes pueden suscribirse para obtener las imágenes
+    public inventoryImages$: Observable<{ idInventory: number, images: any[] }> = this.inventoryImagesSubject.asObservable();
+
 
     constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService, private loginService: LoginService) {
 
@@ -264,6 +269,24 @@ export class InventoryService {
     }
 
 
+
+    setImages(idInventory: number, images: string[]): void {
+        this.inventoryImagesSubject.next({ idInventory, images });
+    }
+
+
+    getImages() : any[] {
+        let image: any[] = [];
+        this.inventoryImages$.subscribe(
+            data =>{
+                for (let path of data.images){
+                    image.push(path.image);
+                }
+
+            }
+        );
+        return image;
+    }
 
 
 
