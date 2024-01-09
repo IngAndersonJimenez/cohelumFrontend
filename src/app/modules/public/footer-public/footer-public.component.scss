@@ -2,20 +2,21 @@
   padding-top: 6%;
   background-color: #2c2c2c;
   transition: background-color 0.5s ease;
-  @media (max-width: 768px) {
 
-  }
+  @media (max-width: 768px) {}
 }
+
 .footer-into {
-  @media (max-width: 768px) {
-  }
+  @media (max-width: 768px) {}
 }
 
 .footer-email {
   padding: 2%;
+
   @media (max-width: 768px) {
     padding: 4%;
     margin: -1rem;
+
     .input-container {
       width: 100%;
 
@@ -34,14 +35,11 @@
 
 }
 
-.footer-bg {
-
-}
-
 .footer-subtitle {
   text-align: center;
   font-size: 1vw;
   color: #0F2137;
+
   @media (max-width: 768px) {
     font-size: 3vw;
   }
@@ -50,6 +48,7 @@
 .footer-title {
   text-align: center;
   font-size: 2vw;
+
   @media (max-width: 768px) {
     margin: 2rem 2rem;
     font-size: 5vw;
@@ -147,6 +146,7 @@ a {
   transform: rotate(0deg);
   transition: all 1s;
 }
+
 @media (max-width: 768px) {
   .social ul {
     transform: translate(-100%, 0);
@@ -156,8 +156,17 @@ a {
     width: 200px;
   }
 }
-.col{
+
+.col {
   @media (max-width: 991px) {
-    padding:1rem;
+    padding: 1rem;
   }
+}
+
+.size-socialIcon {
+  font-size: 1.2vw;
+}
+
+.logo-footer {
+  width: 60%;
 }
