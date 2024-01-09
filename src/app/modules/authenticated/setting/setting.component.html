@@ -1,0 +1,50 @@
+<div class="card">
+    <div class="card-header">
+        Configuracion carrusel home
+    </div>
+
+
+
+    <div class="card-body">
+
+        <div class="card-group">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <form [formGroup]="imageHomeForm" (ngSubmit)="onSubmit()" novalidate > 
+                                    <div class="form-group">
+                                        <label for="titleImage"><strong>Título publicación</strong></label>
+                                        <input type="text" class="form-control" id="titleImage"
+                                            formControlName="tittleImage" placeholder="Titulo publicacion">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="subTitleImage"><strong>Sub Título publicación</strong></label>
+                                        <textarea class="form-control" id="subTitleImage" rows="2"
+                                            formControlName="subTittleImage"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <br>
+                                        <div class="row">
+                                            <input #Image type="file" (change)="handleFileInput($event.target)" />
+                                            <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="image"
+                                                formControlName="image">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <button type="button" class="btn btn-primary" (click)="onSubmit()"
+                                        [disabled]="!imageHomeForm.valid">Guardar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

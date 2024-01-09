@@ -27,10 +27,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
-
-
-
-
+import { SettingComponent } from './setting/setting.component';
+import { FileUploadModule } from 'primeng/fileupload';
 
 
 @NgModule({
@@ -38,7 +36,8 @@ import {MatInputModule} from "@angular/material/input";
     ContentUserComponent,
     DashboardContentComponent,
     ContactComponent,
-    SubCategoryComponent
+    SubCategoryComponent,
+    SettingComponent
   ],
     imports: [
         CommonModule,
@@ -66,6 +65,7 @@ import {MatInputModule} from "@angular/material/input";
         MatIconModule,
         MatInputModule,
         ReactiveFormsModule,
+        FileUploadModule
 
     ],
     providers: [DialogService],

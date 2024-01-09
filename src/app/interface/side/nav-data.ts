@@ -2,6 +2,11 @@ import {INavbarData} from "./helper";
 
 export const navbarData:INavbarData[] = [
   {
+    routerLink: 'setting',
+    icon: 'fa-solid fa-gear',
+    label: 'Configuración'
+  },
+  {
     routerLink: 'dashboard',
     icon: 'fa-solid fa-house',
     label: 'Dashboard'
@@ -39,6 +44,7 @@ export const navbarData:INavbarData[] = [
     routerLink: 'contact',
     icon: 'fas fa-envelope',
     label: 'Mensajes'
-  },
+  }
+
 
 ];
