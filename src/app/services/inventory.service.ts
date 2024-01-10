@@ -25,9 +25,7 @@ export class InventoryService {
     private selectedInventoryDetails: any | null = null;
     private isActiveUsMemory = new BehaviorSubject(false);
     public isActiveUsCurrent = this.isActiveUsMemory.asObservable();
-    // BehaviorSubject para emitir las imágenes
     private inventoryImagesSubject: BehaviorSubject<{ idInventory: number, images: string[] }> = new BehaviorSubject<{ idInventory: number, images: string[] }>({ idInventory: 0, images: [] });
-    // Observable que otros componentes pueden suscribirse para obtener las imágenes
     public inventoryImages$: Observable<{ idInventory: number, images: any[] }> = this.inventoryImagesSubject.asObservable();
 
 
