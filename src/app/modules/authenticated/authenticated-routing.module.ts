@@ -8,6 +8,7 @@ import { ConsultProductComponent } from "./inventory/products/consult-product/co
 import { ContactComponent } from "./contact/contact.component";
 import { SubCategoryComponent } from "./inventory/products/sub-category/sub-category.component";
 import { SettingComponent } from './setting/setting.component';
+import {SettingSectionComponent} from "./setting-section/setting-section.component";
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
       { path: 'create-products', component: CreateProductComponent },
       { path: 'consult-product', component: ConsultProductComponent },
       { path: 'contact', component: ContactComponent },
-      { path: 'setting', component: SettingComponent }
+      { path: 'setting', component: SettingComponent },
+      { path: 'setting-section', component: SettingSectionComponent }
     ]
   }
 ];

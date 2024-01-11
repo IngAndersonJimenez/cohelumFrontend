@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import {LoginService} from "./login.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Inventory} from "../interface/products/Inventory";
 import {environment} from "../environments/environment";
 import {catchError, map, Observable} from "rxjs";
 import {SettingTP} from "../interface/settings/SettingTP";
 import {NotificationService} from "../notifications/notification.service";
-import {InventoryCategory} from "../interface/products/inventoryCategory";
 
 @Injectable({
   providedIn: 'root'
@@ -43,14 +41,16 @@ export class SettingsService {
         })
     );
   }
-  createImageSettingTP(idSettingTP: number, storageFolder: string, image: File): Observable<any> {
+  createImageSettingTP(idSettingTP: number, storageFolder: string, file: string): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `${this.getToken()}`,
     });
 
     const formData = new FormData();
     formData.append('storageFolder', storageFolder);
-    formData.append('imageSettingTP', image, image.name);
+    formData.append('imageSettingTP', file);
+
+    console.log('Contenido de FormData:', formData);
     return this.http.post(`${environment.apiUrl}api/v1/SettingTP/createImage/${idSettingTP}`, formData, { headers });
   }
 

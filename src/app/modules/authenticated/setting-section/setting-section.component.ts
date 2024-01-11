@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SettingsService } from "../../../services/settings.service";
-import { SettingTP } from "../../../interface/settings/SettingTP";
-import { environment } from "../../../environments/environment";
+import {Component, OnInit} from '@angular/core';
+import {environment} from "../../../environments/environment";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {SettingsService} from "../../../services/settings.service";
+import {SettingTP} from "../../../interface/settings/SettingTP";
 
 @Component({
-  selector: 'app-setting',
-  templateUrl: './setting.component.html',
-  styleUrls: ['./setting.component.scss']
+  selector: 'app-setting-section',
+  templateUrl: './setting-section.component.html',
+  styleUrls: ['./setting-section.component.scss']
 })
-export class SettingComponent implements OnInit {
+export class SettingSectionComponent implements OnInit{
 
   pathImage: string = environment.sourceImage;
   imageHomeForms: FormGroup[] = [];
@@ -42,10 +42,10 @@ export class SettingComponent implements OnInit {
     if (formGroup.valid) {
       console.log('esto trae fromgroup ', formGroup)
       const image = formGroup.value.image;
-      const storageFolder = 'home/carrusel';
+      const storageFolder = 'home/seccion2';
       const settingTP: SettingTP = {
-        artefact: 'CarruselHome',
-        description: 'Home',
+        artefact: 'Sección2',
+        description: 'sección',
         value1: formGroup.value.tittleImage ?? '',
         value2: formGroup.value.subTittleImage ?? '',
         value3: '',
@@ -70,7 +70,7 @@ export class SettingComponent implements OnInit {
   }
 
   getSettingSlide() {
-    this.settingService.getSlide("CarruselHome").subscribe(
+    this.settingService.getSlide("Sección2").subscribe(
         (data: any) => {
           data.responseDTO.forEach((setting: any) => {
             const formGroup: FormGroup = this.createFormGroup(setting);

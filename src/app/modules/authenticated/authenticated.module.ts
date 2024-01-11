@@ -29,6 +29,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import { SettingComponent } from './setting/setting.component';
 import { FileUploadModule } from 'primeng/fileupload';
+import { SettingSectionComponent } from './setting-section/setting-section.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     DashboardContentComponent,
     ContactComponent,
     SubCategoryComponent,
-    SettingComponent
+    SettingComponent,
+    SettingSectionComponent
   ],
     imports: [
         CommonModule,

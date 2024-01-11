@@ -12,6 +12,11 @@ export const navbarData:INavbarData[] = [
     label: 'Configuración'
   },
   {
+    routerLink: 'setting-section',
+    icon: 'fas fa-folder',
+    label: 'Sección 2'
+  },
+  {
     routerLink: 'inventory',
     icon: 'fas fa-cubes',
     label: 'Inventario',
