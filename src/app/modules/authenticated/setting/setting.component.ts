@@ -55,12 +55,10 @@ export class SettingComponent implements OnInit {
       this.settingService.createSettingTP(settingTP).subscribe(
           (result) => {
             const idSettingTP = result.responseDTO.idSettingTP;
-            console.log('El id es: ', idSettingTP);
             if (image) {
-              console.log('Valor de imageSettingTP antes de la solicitud:', image);
               this.settingService.createImageSettingTP(idSettingTP,storageFolder,image).subscribe(
                   (imageResult) => {
-                    console.log('Imagen subida con éxito:', imageResult);
+                    this.getSettingSlide()
                   }
               );
             }
@@ -70,6 +68,7 @@ export class SettingComponent implements OnInit {
   }
 
   getSettingSlide() {
+    this.imageHomeForms = [];
     this.settingService.getSlide("CarruselHome").subscribe(
         (data: any) => {
           data.responseDTO.forEach((setting: any) => {
@@ -85,13 +84,27 @@ export class SettingComponent implements OnInit {
       tittleImage: [setting.value1, Validators.required],
       subTittleImage: [setting.value2],
       image: [this.pathImage + setting.value4],
-      imageUrl: [this.pathImage + setting.value4]
+      imageUrl: [this.pathImage + setting.value4],
+      idSettingTP: [setting.idSettingTP],
     });
   }
 
   deleteForm(index: number) {
-    this.imageHomeForms.splice(index, 1);
+
+    const formGroup = this.imageHomeForms[index];
+    const idSettingTP = formGroup.get('idSettingTP')?.value;
+
+    if (idSettingTP !== undefined) {
+      this.settingService.updateStatusSettingTP(idSettingTP, false).subscribe(
+          data => {
+            this.getSettingSlide()
+          }
+      );
+    }
   }
+
+
+
 
   newForm() {
     const nuevoFormGroup = this.createFormGroup({

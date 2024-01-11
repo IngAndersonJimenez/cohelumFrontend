@@ -90,7 +90,17 @@ export class SettingSectionComponent implements OnInit{
   }
 
   deleteForm(index: number) {
-    this.imageHomeForms.splice(index, 1);
+
+    const formGroup = this.imageHomeForms[index];
+    const idSettingTP = formGroup.get('idSettingTP')?.value;
+
+    if (idSettingTP !== undefined) {
+      this.settingService.updateStatusSettingTP(idSettingTP, false).subscribe(
+          data => {
+            this.getSettingSlide()
+          }
+      );
+    }
   }
 
   newForm() {

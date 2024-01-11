@@ -34,8 +34,6 @@ export class SettingsService {
         map(result => {
           if (result != null) {
             this.notificationService.showSuccess("Registro exitoso", "La imagen se ha creado correctamente");
-          } else {
-            this.notificationService.showError("Registro fallido", "Vuelve a intentar");
           }
           return result;
         })
@@ -60,4 +58,26 @@ export class SettingsService {
     });
     return this.http.get<SettingTP>(`${environment.apiUrl}api/v1/SettingTP/${artefact}`, { headers });
   }
+
+  updateStatusSettingTP(idSettingTP: number, statusSettingTP: boolean): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `${this.getToken()}`,
+    });
+    const url = `${environment.apiUrl}api/v1/SettingTP/updateStatus/${idSettingTP}?statusSettingTP=${statusSettingTP}`;
+    return this.http.put(url, null, { headers }).pipe(
+        catchError(error => {
+          console.error('Error en la solicitud:', error);
+          this.notificationService.showError("Error en la eliminación del carrusel", "Vuelve a intentar");
+          throw error;
+        }),
+        map(result => {
+          if (result != null) {
+            this.notificationService.showSuccess("Eliminación exitoso", "La imagen se ha creado eliminado correctamente");
+          }
+          return result;
+        })
+    );;
+  }
+
+
 }
