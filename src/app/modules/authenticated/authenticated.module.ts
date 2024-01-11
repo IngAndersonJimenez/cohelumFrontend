@@ -30,6 +30,7 @@ import {MatInputModule} from "@angular/material/input";
 import { SettingComponent } from './setting/setting.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { SettingSectionComponent } from './setting-section/setting-section.component';
+import {TooltipModule} from "primeng/tooltip";
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { SettingSectionComponent } from './setting-section/setting-section.compo
         MatIconModule,
         MatInputModule,
         ReactiveFormsModule,
-        FileUploadModule
+        FileUploadModule,
+        TooltipModule
 
     ],
     providers: [DialogService],

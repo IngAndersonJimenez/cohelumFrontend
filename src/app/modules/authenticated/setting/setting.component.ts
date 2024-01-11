@@ -40,7 +40,6 @@ export class SettingComponent implements OnInit {
     const formGroup = this.imageHomeForms[index];
 
     if (formGroup.valid) {
-      console.log('esto trae fromgroup ', formGroup)
       const image = formGroup.value.image;
       const storageFolder = 'home/carrusel';
       const settingTP: SettingTP = {
@@ -51,7 +50,6 @@ export class SettingComponent implements OnInit {
         value3: '',
         value4: ''
       };
-      console.log('FormGroup Value:', formGroup.value);
       this.settingService.createSettingTP(settingTP).subscribe(
           (result) => {
             const idSettingTP = result.responseDTO.idSettingTP;
@@ -87,6 +85,40 @@ export class SettingComponent implements OnInit {
       imageUrl: [this.pathImage + setting.value4],
       idSettingTP: [setting.idSettingTP],
     });
+  }
+
+  updateSettingTP(index: number) {
+    const formGroup = this.imageHomeForms[index];
+    const idSettingTP = formGroup.get('idSettingTP')?.value;
+    if (idSettingTP !== undefined) {
+      const settingTP: SettingTP = {
+        artefact: 'CarruselHome',
+        description: 'Home',
+        value1: formGroup.value.tittleImage ?? '',
+        value2: formGroup.value.subTittleImage ?? '',
+        value3: '',
+        value4: ''
+      };
+      this.settingService.updateSettingTP(settingTP, idSettingTP).subscribe(
+          (result) => {
+            console.log('Actualizacion exitosa!',result)
+          }
+      );
+    }
+  }
+
+  updateImage(index: number){
+    const storageFolder = 'home/carrusel';
+    const formGroup = this.imageHomeForms[index];
+    const idSettingTP = formGroup.get('idSettingTP')?.value;
+    const image = formGroup.get('image')?.value;
+    if (idSettingTP !== undefined) {
+      this.settingService.createImageSettingTP(idSettingTP,storageFolder,image).subscribe(
+          data => {
+            this.getSettingSlide()
+          }
+      )
+    }
   }
 
   deleteForm(index: number) {

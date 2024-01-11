@@ -49,7 +49,19 @@ export class SettingsService {
     formData.append('imageSettingTP', file);
 
     console.log('Contenido de FormData:', formData);
-    return this.http.post(`${environment.apiUrl}api/v1/SettingTP/createImage/${idSettingTP}`, formData, { headers });
+    return this.http.post(`${environment.apiUrl}api/v1/SettingTP/createImage/${idSettingTP}`, formData, { headers }).pipe(
+        catchError(error => {
+            console.error('Error en la solicitud:', error);
+            this.notificationService.showError("Error en la creación de la nueva imagen", "Vuelve a intentar");
+            throw error;
+        }),
+        map(result => {
+            if (result != null) {
+                this.notificationService.showSuccess("Imagen añadida exitosamente", "La imagen se ha creado correctamente");
+            }
+            return result;
+        })
+    );
   }
 
   getSlide(artefact: string){
@@ -76,8 +88,26 @@ export class SettingsService {
           }
           return result;
         })
-    );;
+    );
   }
 
+  updateSettingTP(settingTP:SettingTP, idSettingTP:number):Observable<any>{
+    const headers = new HttpHeaders({
+      'Authorization': `${this.getToken()}`,
+    });
+    return this.http.put(`${environment.apiUrl}api/v1/SettingTP/updateSettingTP/${idSettingTP}`,settingTP,{headers}).pipe(
+        catchError(error => {
+          console.error('Error en la solicitud:', error);
+          this.notificationService.showError("Error al actualizar del carrusel", "Vuelve a intentar");
+          throw error;
+        }),
+        map(result => {
+          if (result != null) {
+            this.notificationService.showSuccess("Actualización exitoso", "el carrusel se ha actualizado correctamente");
+          }
+          return result;
+        })
+    );
+  }
 
 }
