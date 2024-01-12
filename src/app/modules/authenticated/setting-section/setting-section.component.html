@@ -1,7 +1,15 @@
 <div class="card">
     <div class="card-header">
         Configuracion sección 2
-        <i class="fa fa-plus-circle text-success" (click)="newForm()"  title="Agregar nuevo formulario"></i>
+        <i class="fa fa-plus-circle text-success" (click)="newForm()" [pTooltip]="tooltipNewForm" tooltipPosition="bottom"></i>
+        <ng-template #tooltipNewForm>
+            <div class="tooltip-create-container">
+                <div class="flex align-items-center">
+                    <span>Agregar nuevo formulario!</span>
+                </div>
+                <div class="tooltip-create-arrow"></div>
+            </div>
+        </ng-template>
     </div>
     <div class="card-body">
         <div class="card-group">
@@ -11,7 +19,7 @@
                     <div *ngFor="let formGroup of imageHomeForms; let i = index" class="col-3">
                         <div class="card">
                             <div class="card-body">
-                                <form [formGroup]="formGroup" class="form-container" (ngSubmit)="onSubmit(i)" enctype="multipart/form-data">
+                                <form [formGroup]="formGroup" class="form-container">
                                     <div class="form-group">
                                         <label for="titleImage"><strong>Título publicación</strong></label>
                                         <input type="text" class="form-control" id="titleImage" formControlName="tittleImage" placeholder="Titulo publicacion">
@@ -25,12 +33,52 @@
                                         <div class="row">
                                             <input type="file" (change)="handleFileInput($event.target, i)" formControlName="image" name="imageSettingTP" />
                                             <img width="100%" *ngIf="formGroup.get('imageUrl')?.value" [src]="formGroup.get('imageUrl')?.value" class="image" loading="lazy">
+                                            <button type="button" class="btn btn-warning btn-update other"
+                                                    (click)="updateImage(i)">
+                                                <i class="fas fa-camera"></i> Actualizar Imagen
+                                            </button>
                                         </div>
                                     </div>
                                     <br>
                                     <div class="button-container">
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
-                                        <i class="fa fa-trash text-danger" (click)="deleteForm(i)"></i>
+                                        <button type="button" class="btn btn-warning btn-update" pButton
+                                                [pTooltip]="tooltipUpdate" tooltipPosition="bottom"
+                                                (click)="updateSettingTP(i)">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                        <ng-template #tooltipUpdate>
+                                            <div class="tooltip-update-container">
+                                                <div class="flex align-items-center">
+                                                    <span>Actualizar Título y Subtítulo!</span>
+                                                </div>
+                                                <div class="tooltip-update-arrow"></div>
+                                            </div>
+                                        </ng-template>
+                                        <button class="btn btn-success btn-create" (click)="onSubmit(i)" pButton
+                                                [pTooltip]="tooltipCreate" tooltipPosition="bottom"
+                                                [disabled]="!formGroup.valid || formGroup.get('idSettingTP')?.value != null">
+                                            <i class="fas fa-save"></i>
+                                        </button>
+
+                                        <ng-template #tooltipCreate>
+                                            <div class="tooltip-create-container">
+                                                <div class="flex align-items-center">
+                                                    <span>Guardar nuevo contenido!</span>
+                                                </div>
+                                                <div class="tooltip-create-arrow"></div>
+                                            </div>
+                                        </ng-template>
+                                        <button class="btn btn-danger btn-delete" (click)="deleteForm(i)" pButton [pTooltip]="tooltipDelete" tooltipPosition="bottom">
+                                            <i class="fa fa-trash text-white"></i>
+                                        </button>
+                                        <ng-template #tooltipDelete>
+                                            <div class="tooltip-container">
+                                                <div class="flex align-items-center">
+                                                    <span>Eliminar contenido!</span>
+                                                </div>
+                                                <div class="tooltip-arrow"></div>
+                                            </div>
+                                        </ng-template>
                                     </div>
                                 </form>
                             </div>
@@ -42,4 +90,3 @@
         </div>
     </div>
 </div>
-

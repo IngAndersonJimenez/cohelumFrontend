@@ -2,15 +2,16 @@
   background-color: gray;
 }
 
-.card-header{
-  display:flex;
+.card-header {
+  display: flex;
   justify-content: space-between;
-  i{
-    font-size: 1.7rem;
-    cursor:pointer;
-  }
 
+  i {
+    font-size: 1.7rem;
+    cursor: pointer;
+  }
 }
+
 
 .card-body {
   padding: 20px;
@@ -20,6 +21,7 @@
       margin-bottom: 20px;
 
       .card-body {
+
         form {
           background-color: #f8f9fa;
           border: 1px solid #ddd;
@@ -65,23 +67,104 @@
             }
           }
 
-          button {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
+          .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+
+            button {
+              margin-bottom: 10px;
+              &.btn-update {
+                margin-right: 10px;
+
+              }
+              &.btn-create{
+                margin-right: 10px;
+              }
+
+              &:last-child {
+                margin-right: 0;
+              }
+            }
+
+            i.fa-trash {
+              margin-left: auto;
+              font-size: 1.2em;
+              cursor: pointer;
+            }
+
           }
 
-          i.fa-trash {
-            margin-left: 7rem;
-            font-size: 1.2em;
-            cursor: pointer;
-          }
 
         }
       }
     }
   }
+}
+
+.tooltip-container {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+
+.tooltip-arrow {
+  border-top: 8px solid #dc3545;
+}
+
+
+.tooltip-fade-enter-active, .tooltip-fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.tooltip-fade-enter, .tooltip-fade-leave-to {
+  opacity: 0;
+}
+
+.tooltip-update-container {
+  background-color: #ffc107;
+  color: #000;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  border: 1px solid #ffc107;
+}
+
+.tooltip-update-arrow {
+  border-top: 8px solid #ffc107;
+}
+
+.tooltip-update-fade-enter-active, .tooltip-update-fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.tooltip-update-fade-enter, .tooltip-update-fade-leave-to {
+  opacity: 0;
+}
+
+.tooltip-create-container {
+  background-color: #28a745;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  border: 1px solid #28a745;
+}
+
+
+.tooltip-create-arrow {
+  border-top: 8px solid #28a745;
+}
+
+.tooltip-create-fade-enter-active, .tooltip-create-fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.tooltip-create-fade-enter, .tooltip-create-fade-leave-to {
+  opacity: 0;
 }

@@ -112,4 +112,38 @@ export class SettingSectionComponent implements OnInit{
 
     this.imageHomeForms.push(nuevoFormGroup);
   }
+
+  updateSettingTP(index: number) {
+    const formGroup = this.imageHomeForms[index];
+    const idSettingTP = formGroup.get('idSettingTP')?.value;
+    if (idSettingTP !== undefined) {
+      const settingTP: SettingTP = {
+        artefact: 'Sección2',
+        description: 'sección',
+        value1: formGroup.value.tittleImage ?? '',
+        value2: formGroup.value.subTittleImage ?? '',
+        value3: '',
+        value4: ''
+      };
+      this.settingService.updateSettingTP(settingTP, idSettingTP).subscribe(
+          (result) => {
+            console.log('Actualizacion exitosa!',result)
+          }
+      );
+    }
+  }
+
+  updateImage(index: number){
+    const storageFolder = 'home/Sección2';
+    const formGroup = this.imageHomeForms[index];
+    const idSettingTP = formGroup.get('idSettingTP')?.value;
+    const image = formGroup.get('image')?.value;
+    if (idSettingTP !== undefined) {
+      this.settingService.createImageSettingTP(idSettingTP,storageFolder,image).subscribe(
+          data => {
+            this.getSettingSlide()
+          }
+      )
+    }
+  }
 }

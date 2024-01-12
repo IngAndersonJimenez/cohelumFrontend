@@ -34,7 +34,7 @@ export class ContactComponent implements OnInit {
       comment: ['', Validators.required],
       cellphone: [null, Validators.required],
       department: [''],
-      city: ['']
+      city: [''],
     });
 
     const attachControl = this.form.get('attach');
@@ -55,9 +55,16 @@ export class ContactComponent implements OnInit {
       formData.append('nameContact', this.form.get('nameContact')?.value);
       formData.append('email', this.form.get('email')?.value);
       formData.append('reason', this.form.get('reason')?.value);
-      const attachFile = this.form.get('attach')?.value;
-      if (attachFile) {
-        formData.append('attach', attachFile);
+
+      // Agrega un PDF vacío si el motivo es "CONTACT"
+      if (this.form.get('reason')?.value === ReasonEnum.ContactoGeneral) {
+        const emptyPdfBlob = new Blob([''], { type: 'application/pdf' });
+        formData.append('attach', emptyPdfBlob, 'empty.pdf');
+      } else {
+        const attachFile = this.form.get('attach')?.value;
+        if (attachFile) {
+          formData.append('attach', attachFile);
+        }
       }
 
       formData.append('comment', this.form.get('comment')?.value);
@@ -73,9 +80,10 @@ export class ContactComponent implements OnInit {
             throw error;
           })
       ).subscribe({
-        next: (data) => {
+        next: (data:any) => {
           this.notificationService.showSuccess("Mensaje enviado correctamente", "Registro Exitoso");
-          this.form.reset()
+          this.openPopup(data.responseDTO.reason, data.responseDTO.idRequest);
+          this.form.reset();
           console.log('Datos enviados con éxito al backend:', data);
         },
         error: (error) => {
@@ -84,6 +92,7 @@ export class ContactComponent implements OnInit {
       });
     }
   }
+
 
 
 
@@ -112,8 +121,9 @@ export class ContactComponent implements OnInit {
       }
     }
   }
-  openPopup() {
-    this.radicadoNumber = '12345';
+  openPopup(reason: string, idRequest: number): void {
+    const prefix = reason === ReasonEnum.Garantia ? 'GARAN_' : 'CONTACT_';
+    this.radicadoNumber = `${prefix}${idRequest}`;
     this.showMessage = true;
   }
   copyToClipboard() {

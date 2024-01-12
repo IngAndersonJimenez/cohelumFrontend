@@ -91,7 +91,7 @@
                                 <p>Radicado: <input #radicadoInput type="text" [value]="radicadoNumber" readonly></p>
                                 <button (click)="copyToClipboard()">Copiar y Cerrar</button>
                             </div>
-                            <button type="submit" id="submit" [disabled]="!form.valid" (click)="onSubmit(); openPopup()"
+                            <button type="submit" id="submit" [disabled]="!form.valid" (click)="onSubmit()"
                                     class="btn btn-primary">Enviar Solicitud</button>
                         </div>
                     </div>
