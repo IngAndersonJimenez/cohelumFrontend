@@ -54,8 +54,7 @@
                                         <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Nosotros</a>
                                         <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                             <a [routerLink]="['/Us']" class="dropdown-item">¿Quiénes somos?</a>
-                                            <a [routerLink]="['/home/content']"
-                                               (click)="goToSection('projectsSection')" class="dropdown-item">Proyectos</a>
+                                            <a (click)="closeMenu(); goTo('ourTeamSection')" class="dropdown-item">Proyectos</a>
                                         </div>
                                     </div>
                                 </li>

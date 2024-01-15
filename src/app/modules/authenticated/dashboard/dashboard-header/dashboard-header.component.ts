@@ -115,6 +115,7 @@ export class DashboardHeaderComponent implements OnInit {
 
 
   navigateToMessageDetails(): void {
-    this.router.navigate(['/cohelum/corporate/contact']);
+    this.router.navigate(['/corporate/contact']);
   }
+
 }
