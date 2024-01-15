@@ -42,9 +42,9 @@ export class SettingSectionComponent implements OnInit{
     if (formGroup.valid) {
       console.log('esto trae fromgroup ', formGroup)
       const image = formGroup.value.image;
-      const storageFolder = 'home/seccion2';
+      const storageFolder = 'home/SocialSeccion';
       const settingTP: SettingTP = {
-        artefact: 'Sección2',
+        artefact: 'SocialSeccion',
         description: 'sección',
         value1: formGroup.value.tittleImage ?? '',
         value2: formGroup.value.subTittleImage ?? '',
@@ -118,7 +118,7 @@ export class SettingSectionComponent implements OnInit{
     const idSettingTP = formGroup.get('idSettingTP')?.value;
     if (idSettingTP !== undefined) {
       const settingTP: SettingTP = {
-        artefact: 'Sección2',
+        artefact: 'SocialSeccion',
         description: 'sección',
         value1: formGroup.value.tittleImage ?? '',
         value2: formGroup.value.subTittleImage ?? '',
@@ -134,7 +134,7 @@ export class SettingSectionComponent implements OnInit{
   }
 
   updateImage(index: number){
-    const storageFolder = 'home/Sección2';
+    const storageFolder = 'home/SocialSeccion';
     const formGroup = this.imageHomeForms[index];
     const idSettingTP = formGroup.get('idSettingTP')?.value;
     const image = formGroup.get('image')?.value;

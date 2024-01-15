@@ -11,17 +11,16 @@
 
 <section class="section-categories">
     <p-carousel [value]="category" [numVisible]="4" [numScroll]="1" [responsiveOptions]="responsiveOptions">
-        <ng-template let-product pTemplate="item">
+        <ng-template let-category pTemplate="item">
             <div class="product-item" [routerLink]="['/Inventory']">
                 <div class="product-item-content">
                     <div class="container-categoria">
                         <div class="content">
                             <a>
                                 <div class="content-overlay"></div>
-                                <img class="content-image" src="assets/image/categorias/{{product.description}}.jpg"
-                                    alt="">
+                                <img class="content-image" [src]="pathImage + category?.getCategoryImageDTO?.image" alt="{{category?.getInventoryCategoryDTO?.description}}">
                                 <div class="content-details fadeIn-bottom">
-                                    <h3 class="content-title">{{product.description}}</h3>
+                                    <h3 class="content-title">{{category?.getInventoryCategoryDTO?.description}}</h3>
                                     <p class="content-text">This is a short description</p>
                                 </div>
                             </a>
