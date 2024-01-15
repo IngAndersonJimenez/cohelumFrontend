@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/app/environments/environment';
 import { Carrusel } from 'src/app/interface/home/carrusel';
+import { LoginService } from 'src/app/services/login.service';
+import { SettingsService } from 'src/app/services/settings.service';
 
 
 @Component({
@@ -14,10 +16,14 @@ export class SliderHomeComponent implements OnInit {
 
   listaImagenesCarrusel: Array<Carrusel> = [];
 
-  constructor() {}
+  constructor(private settingsService: SettingsService, private loginService: LoginService) {
+  }
 
   ngOnInit(): void {
-    this.listaImagenesCarrusel.push(
+
+    this.getTokenPublic();
+
+   /* this.listaImagenesCarrusel.push(
       new Carrusel(this.pathImage + "/imagenes/home/carrusel/1_carrusel.jpg", "Titulo imagen 1", "SubTitulo imagen 1", "10000")
     );
 
@@ -31,23 +37,46 @@ export class SliderHomeComponent implements OnInit {
 
     this.listaImagenesCarrusel.push(
       new Carrusel(this.pathImage + "/imagenes/home/carrusel/4_carrusel.jpg", "Titulo imagen 4", "SubTitulo imagen 4", "3000")
-    );
+    );*/
   }
 
 
   responsiveOptions: any[] = [
     {
-        breakpoint: '1024px',
-        numVisible: 5
+      breakpoint: '1024px',
+      numVisible: 5
     },
     {
-        breakpoint: '768px',
-        numVisible: 3
+      breakpoint: '768px',
+      numVisible: 3
     },
     {
-        breakpoint: '560px',
-        numVisible: 1
+      breakpoint: '560px',
+      numVisible: 1
     }
-];
+  ];
+
+  private getItemsArtefacCarrusel(token: string) {
+    let response: any;
+    this.settingsService.getElementsByArtefact("CarruselHome", token).subscribe(data => {
+
+      response = data
+
+      for (let iter of response.responseDTO) {
+        this.listaImagenesCarrusel.push(
+          new Carrusel(this.pathImage + iter.value4, iter.value1, iter.value2, "10000")
+        );
+      }
+
+    });
+  }
+
+  private getTokenPublic() {
+    this.loginService.getTokenPublicS().subscribe(data => {
+      this.getItemsArtefacCarrusel(data.token);
+    }
+    );
+  }
+
 
 }

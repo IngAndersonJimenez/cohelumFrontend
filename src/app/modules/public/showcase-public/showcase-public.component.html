@@ -11,22 +11,46 @@
                 <div class="row showcase-icon">
                     <div class="col">
                         <div><i class="fa-solid fa-expand fa-2xl"></i></div>
-                        <div class="showcase-col"><p>Tamaño</p></div>
+                        <div class="showcase-col">
+                            <p>Tamaño</p>
+                        </div>
                     </div>
                     <div class="col">
                         <div><i class="fa-solid fa-user-group fa-2xl"></i></div>
-                        <div class="showcase-col"><p>Uso comercial</p></div>
+                        <div class="showcase-col">
+                            <p>Uso comercial</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <p-galleria [value]="gallery" [showIndicators]="true" [showThumbnails]="false"
-                            [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '540px' }"
-                            [(activeIndex)]="activeIndex" (click)="changeData(activeIndex)">
+            <div class="col-5">
+                <!--   <p-galleria [value]="gallerySocial" [showIndicators]="true" [showThumbnails]="false"
+                    [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '540px' }"
+                    [(activeIndex)]="activeIndex" (click)="changeData(activeIndex)">
                     <ng-template pTemplate="item" let-item>
-                        <img [src]="item.getSourceResorce()" style="width: 100%; display: block;" />
+                        {{item.getSourceResorce}}
+                        <img src="item.getSourceResorce()" style="width: 100%; display: block;" />
                     </ng-template>
-                </p-galleria>
+                </p-galleria>-->
+
+
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner contenedorSocial">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100 imagenSocial" [src]="gallerySocial[activeIndex].getSourceResorce()" alt="First slide">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" role="button" data-slide="prev"
+                    (click)="changeDataRest()">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" role="button" data-slide="next" (click)="changeDataSum()">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
             </div>
         </div>
     </div>

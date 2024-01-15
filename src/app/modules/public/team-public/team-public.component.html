@@ -11,105 +11,24 @@
 
 
 <section id="ourTeamSection" class="ourTeam">
-    <!--<div class="section_body">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <figure class="snipOurTeam">
-                        <div class="profile-image"><img
-                                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample47.jpg" alt="sample47" />
-                        </div>
-                        <figcaption>
-                            <h3>Lorem Ipsum</h3>
-                            <h4>Founder</h4>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                Ipsum has been the industry's standard
-                                dummy text ever since the 1500s.</p>
-                            <div class="icons">
-                                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                                <a href="#"> <i class="fa fa-facebook-official" aria-hidden="true"></i></a>
-                            </div>
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class="col">
-                    <figure class="snipOurTeam">
-                        <div class="profile-image"><img
-                                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg" alt="sample83" />
-                        </div>
-                        <figcaption>
-                            <h3>Lorem Ipsum</h3>
-                            <h4>Web Designer</h4>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                Ipsum has been the industry's
-                                standard dummy text ever since the 1500s.</p>
-                            <div class="icons">
-                                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                                <a href="#"> <i class="fa fa-facebook-official" aria-hidden="true"></i></a>
-                            </div>
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class="col">
-                    <figure class="snipOurTeam">
-                        <div class="profile-image"><img
-                                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample70.jpg" alt="sample70" />
-                        </div>
-                        <figcaption>
-                            <h3>Lorem Ipsum</h3>
-                            <h4>Public Relations</h4>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                Ipsum has been the industry's
-                                standard dummy text ever since the 1500s.</p>
-                            <div class="icons">
-                                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                                <a href="#"> <i class="fa fa-facebook-official" aria-hidden="true"></i></a>
-                            </div>
-                        </figcaption>
-                    </figure>
-                </div>
-            </div>
-        </div>
-    </div>-->
 
     <div class="container">
         <div class="row">
             <div class="col">
-                <div class="card">
-                    <p-galleria [value]="images" [responsiveOptions]="responsiveOptions"
-                        [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5">
-                        <ng-template pTemplate="item" let-item>
-                            <img [src]="item.itemImageSrc" style="width: 100%;" />
-                        </ng-template>
-                        <ng-template pTemplate="thumbnail" let-item>
-                            <div class="grid grid-nogutter justify-content-center">
-                                <img [src]="item.thumbnailImageSrc" />
-                            </div>
-                        </ng-template>
-                    </p-galleria>
+                <div *ngFor="let item of listaImagenesCarrusel" class="contenedor-video">
+                    <video autoplay loop muted controls class="size-video">
+                        <source [src]='item.getSourceImage()' type="video/mp4">
+                    </video>
                 </div>
             </div>
             <div class="col">
-                <div class="card">
-                    <p-galleria [value]="images" [responsiveOptions]="responsiveOptions"
-                        [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5">
-                        <ng-template pTemplate="item" let-item>
-                            <img [src]="item.itemImageSrc" style="width: 100%;" />
-                        </ng-template>
-                        <ng-template pTemplate="thumbnail" let-item>
-                            <div class="grid grid-nogutter justify-content-center">
-                                <img [src]="item.thumbnailImageSrc" />
-                            </div>
-                        </ng-template>
-                    </p-galleria>
-                </div>
+                <h2 class="team-parrafo">
+                    En Cohelum, nos enorgullece compartir nuestra trayectoria en la distribución de accesorios de
+                    construcción y cocina a lo largo de diversos proyectos que han dejado una huella duradera. Cada
+                    proyecto es una historia única de creatividad, funcionalidad y estilo, donde hemos colaborado con
+                    profesionales y amantes del diseño para hacer realidad sus visiones.
+                </h2>
             </div>
         </div>
     </div>
-
-
-
 </section>

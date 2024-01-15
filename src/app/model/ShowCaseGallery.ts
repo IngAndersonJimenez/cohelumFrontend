@@ -1,18 +1,18 @@
 export class ShowCaseGallery {
 
-    private idResouce: string;
+    private idResouce: number;
     private sourceResorce: string;
     private titleInfo: string;
     private description: string;
 
-    constructor(idResouce: string, sourceResorce: string, titleInfo: string, description: string) {
+    constructor(idResouce: number, sourceResorce: string, titleInfo: string, description: string) {
         this.idResouce = idResouce;
         this.sourceResorce = sourceResorce;
         this.titleInfo = titleInfo;
         this.description = description;
     }
 
-    getIdResouce(): string {
+    getIdResouce(): number {
         return this.idResouce;
     }
 
@@ -28,7 +28,7 @@ export class ShowCaseGallery {
         return this.description;
     }
 
-    setIdResouce(idResouce: string) {
+    setIdResouce(idResouce: number) {
         this.idResouce = idResouce;
     }
 

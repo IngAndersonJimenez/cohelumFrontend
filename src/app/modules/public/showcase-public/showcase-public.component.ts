@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ShowCaseGallery } from 'src/app/model/ShowCaseGallery';
+import { LoginService } from 'src/app/services/login.service';
+import { SettingsService } from 'src/app/services/settings.service';
+import { environment } from 'src/app/environments/environment';
 
 @Component({
   selector: 'app-showcase-public',
@@ -8,7 +11,9 @@ import { ShowCaseGallery } from 'src/app/model/ShowCaseGallery';
 })
 export class ShowcasePublicComponent {
 
-  gallery: Array<ShowCaseGallery> = [];
+  pathImage: string = environment.sourceImage;
+
+  gallerySocial: Array<ShowCaseGallery> = [];
 
   responsiveOptions: any[] = [
     {
@@ -30,34 +35,58 @@ export class ShowcasePublicComponent {
   titleInformative: string = '';
   description: string = '';
 
-  constructor() {
-
-    this.gallery.push(
-      new ShowCaseGallery(
-        '1', 'assets/image/showcase/showcase3.jpg', 
-        '¡Explora la distinción y resistencia: sumérgete en la elegancia duradera para una cocina impecable!',
-        'Descubre la elegancia y durabilidad que solo un pozuelo en acero puede ofrecer.' +
-        '💎 Con un brillo que perdura y una resistencia inigualable, nuestros pozuelos de acero son la elección inteligente para tu cocina.'
-      )
-    );
-
-    this.gallery.push(
-      new ShowCaseGallery('2',
-        'assets/image/showcase/showcase4.jpg', 'Transforma tu espacio colinario: Grifería en Acero para una Cocina de Belleza y Funcionalidad Inigualables.',
-        'Eleva tu cocina a otro nivel con la belleza y funcionalidad de una grifería en acero.' +
-        '✨ Descubre la diferencia que hace la calidad en cada detalle.'
-      )
-    );
-
-    this.changeData(0);
+  constructor(private settingsService: SettingsService, private loginService: LoginService) {
+    this.getTokenPublic();
 
   }
 
   changeData(index: number) {
-    this.titleInformative = this.gallery[index].getTitleInfo();
-    this.description = this.gallery[index].getDescription();
 
+    console.log('index')
+    console.log(index)
+
+    this.titleInformative = this.gallerySocial[index].getTitleInfo();
+    this.description = this.gallerySocial[index].getDescription();
   }
+
+  changeDataSum() {
+
+    if (this.activeIndex < (this.gallerySocial.length - 1)) {
+      this.activeIndex = this.activeIndex + 1;
+      this.titleInformative = this.gallerySocial[this.activeIndex].getTitleInfo();
+      this.description = this.gallerySocial[this.activeIndex].getDescription();
+    }
+  }
+
+  changeDataRest() {
+    if (this.activeIndex > 0) {
+      this.activeIndex = this.activeIndex - 1;
+      this.titleInformative = this.gallerySocial[this.activeIndex].getTitleInfo();
+      this.description = this.gallerySocial[this.activeIndex].getDescription();
+    }
+  }
+
+  private getItemsArtefacCarrusel(token: string) {
+    let response: any;
+    this.settingsService.getElementsByArtefact("SocialSeccion", token).subscribe(data => {
+      response = data;
+      let index: number = 1;
+      for (let iter of response.responseDTO) {
+        this.gallerySocial.push(
+          new ShowCaseGallery(index, this.pathImage + iter.value4, iter.value1, iter.value2));
+        index++;
+      }
+      this.changeData(0);
+    });
+  }
+
+  private getTokenPublic() {
+    this.loginService.getTokenPublicS().subscribe(data => {
+      this.getItemsArtefacCarrusel(data.token);
+    });
+  }
+
+
 
 
 }

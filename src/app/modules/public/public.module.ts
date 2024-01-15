@@ -30,6 +30,7 @@ import { InventoryDetailComponent } from './inventory-detail/inventory-detail.co
 import { ImageModule } from 'primeng/image';
 import { UsComponent } from './us/us.component';
 import {SlickCarouselModule} from "ngx-slick-carousel";
+import { CascadeSelectModule } from 'primeng/cascadeselect';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import {SlickCarouselModule} from "ngx-slick-carousel";
         RadioButtonModule,
         MenubarModule,
         ImageModule,
-        SlickCarouselModule
+        SlickCarouselModule,
+        CascadeSelectModule
     ],
   exports: [
     HeaderPublicComponent,

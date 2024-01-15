@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { environment } from 'src/app/environments/environment';
+import { Carrusel } from 'src/app/interface/home/carrusel';
 
 @Component({
   selector: 'app-team-public',
@@ -9,6 +11,9 @@ export class TeamPublicComponent {
 
   images: any[] = [];
   responsiveOptions: any[] | undefined;
+  pathImage: string = environment.sourceImage;
+
+  listaImagenesCarrusel: Array<Carrusel> = [];
 
 
   constructor() {
@@ -42,9 +47,9 @@ export class TeamPublicComponent {
         title: 'Title 2'
       },
       {
-        itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria3.jpg',
-        thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria3s.jpg',
-        alt: 'Description for Image 3',
+        itemImageSrc: 'assets/image/experiences/Video1.mp4',
+        thumbnailImageSrc: 'assets/image/experiences/CUORE4Tum.jpg',
+        alt: 'Description for imagen 3',
         title: 'Title 3'
       },
       {
@@ -55,7 +60,17 @@ export class TeamPublicComponent {
       }
     );
 
+   /* this.listaImagenesCarrusel.push(
+      new Carrusel("assets/image/experiences/Video1.mp4", "Titulo imagen 1", "SubTitulo imagen 1", "10000")
+    );*/
+
+    this.listaImagenesCarrusel.push(
+      new Carrusel("assets/image/experiences/Video2.mp4", "Titulo imagen 1", "SubTitulo imagen 1", "10000")
+    );
+
   }
+
+
 
 
 

@@ -70,7 +70,7 @@ export class SettingSectionComponent implements OnInit{
   }
 
   getSettingSlide() {
-    this.settingService.getSlide("Sección2").subscribe(
+    this.settingService.getSlide("SocialSeccion").subscribe(
         (data: any) => {
           data.responseDTO.forEach((setting: any) => {
             const formGroup: FormGroup = this.createFormGroup(setting);

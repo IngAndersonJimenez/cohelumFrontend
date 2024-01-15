@@ -44,13 +44,22 @@
                         <div class="row">
                             <hr />
                             <h6>Categoria</h6>
-                            <div class="form-check" *ngFor="let category of inventoryCategories">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault1" [value]="category.idCategory"
-                                    (click)="filterForCategory(category.description)">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    {{category.description}}
-                                </label>
+
+                            <div class="form-check">
+                                <div *ngFor="let category of inventoryCategories">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                        id="flexRadioDefault1" [value]="category.idCategory"
+                                        (click)="filterForCategory(category.description)">
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        {{category.description}}
+                                    </label>
+                                    <div *ngFor="let subCategory of inventorySubCategory">
+                                        <input class="form-check-input" type="radio">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            {{subCategory.getDescription}}
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="flexRadioDefault"
