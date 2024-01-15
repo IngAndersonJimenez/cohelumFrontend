@@ -4,6 +4,7 @@ import { ContentUserComponent } from './modules/authenticated/content-user/conte
 import { UsComponent } from './modules/public/us/us.component';
 import { InventoryComponent } from './modules/public/inventory/inventory.component';
 import { InventoryDetailComponent } from './modules/public/inventory-detail/inventory-detail.component';
+import { permissionsGuard } from './guard/permissions.guard';
 
 const routes: Routes = [
 
@@ -38,6 +39,7 @@ const routes: Routes = [
   {
     path: 'corporate',
     component: ContentUserComponent,
+    canActivateChild: [permissionsGuard],
     children: [
       {
         path: '',

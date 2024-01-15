@@ -8,7 +8,6 @@ import { SharedModule } from './modules/shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { PublicModule } from './modules/public/public.module';
-import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
