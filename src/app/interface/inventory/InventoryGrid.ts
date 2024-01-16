@@ -7,15 +7,17 @@ export class InventoryGrid {
     private images: Array<string>;
     private imageInitial: string;
     private imageSecond: string;
-    private idCategory:number;
-    private name:string
-    private characteristic:string
-    private datasheet:string
-    private idInventory:number
+    private idCategory: number;
+    private idSubCategory: number;
+    private name: string
+    private characteristic: string
+    private datasheet: string
+    private idInventory: number
 
     constructor(descriptionCategory: string, descriptionInventory: string, price: number,
-        unitsAvaible: number, imageInitial: string, imageSecond: string, images: Array<string>,idCategory:number,
-                name:string,characteristic:string,datasheet:string,idInventory:number
+        unitsAvaible: number, imageInitial: string, imageSecond: string, images: Array<string>, idCategory: number,
+        idSubCategory: number,
+        name: string, characteristic: string, datasheet: string, idInventory: number
     ) {
         this.descriptionCategory = descriptionCategory
         this.descriptionInventory = descriptionInventory
@@ -25,6 +27,7 @@ export class InventoryGrid {
         this.imageSecond = imageSecond
         this.images = images
         this.idCategory = idCategory
+        this.idSubCategory = idSubCategory
         this.name = name
         this.characteristic = characteristic
         this.datasheet = datasheet
@@ -101,6 +104,14 @@ export class InventoryGrid {
 
     public setIdCategory(idCategory: number): void {
         this.idCategory = idCategory;
+    }
+
+    public getIdSubCategory(): number {
+        return this.idSubCategory;
+    }
+
+    public setIdSubCategory(idSubCategory: number): void {
+        this.idSubCategory = idSubCategory;
     }
 
     public getName(): string {

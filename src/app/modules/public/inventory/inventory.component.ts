@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { InventoryGrid } from 'src/app/interface/inventory/InventoryGrid';
 import { InventoryCategory } from 'src/app/interface/products/inventoryCategory';
 import { InventoryService } from 'src/app/services/inventory.service';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from "@angular/router";
-import { Product } from "../../../interface/products/Product";
 import { CommentService } from "../../../services/comment.service";
 import { InventoryComments } from "../../../interface/comment/InventoryComments";
 import { environment } from "../../../environments/environment";
 import { CategoryService } from 'src/app/services/category.service';
 import { SubCategory } from 'src/app/interface/products/SubCategory';
+import { CategoryFull } from 'src/app/interface/CategoryFull';
+import { Category } from 'src/app/interface/products/Category';
 
 interface OptionOrder {
   name: string;
@@ -31,7 +32,8 @@ export class InventoryComponent implements OnInit {
   comments: InventoryComments[] = [];
   pathImage: string = environment.sourceImage;
   isActiveSubCategories: Boolean = false;
-  public inventorySubCategory:  Array<SubCategory> = [];
+  public inventorySubCategory: Array<SubCategory> = [];
+  public categoryFull: Array<CategoryFull> = [];
 
 
   countries: any[] | undefined;
@@ -51,233 +53,196 @@ export class InventoryComponent implements OnInit {
       { name: 'Mayor a menor precio', code: 3 }
     ];
 
-
-    this.countries = [
-      {
-        name: 'Australia',
-        code: 'AU',
-        states: [
-          {
-            name: 'New South Wales',
-            cities: [
-              { cname: 'Sydney', code: 'A-SY' },
-              { cname: 'Newcastle', code: 'A-NE' },
-              { cname: 'Wollongong', code: 'A-WO' }
-            ]
-          },
-          {
-            name: 'Queensland',
-            cities: [
-              { cname: 'Brisbane', code: 'A-BR' },
-              { cname: 'Townsville', code: 'A-TO' }
-            ]
-          }
-        ]
-      },
-      {
-        name: 'Canada',
-        code: 'CA',
-        states: [
-          {
-            name: 'Quebec',
-            cities: [
-              { cname: 'Montreal', code: 'C-MO' },
-              { cname: 'Quebec City', code: 'C-QU' }
-            ]
-          },
-          {
-            name: 'Ontario',
-            cities: [
-              { cname: 'Ottawa', code: 'C-OT' },
-              { cname: 'Toronto', code: 'C-TO' }
-            ]
-          }
-        ]
-      },
-      {
-        name: 'United States',
-        code: 'US',
-        states: [
-          {
-            name: 'California',
-            cities: [
-              { cname: 'Los Angeles', code: 'US-LA' },
-              { cname: 'San Diego', code: 'US-SD' },
-              { cname: 'San Francisco', code: 'US-SF' }
-            ]
-          },
-          {
-            name: 'Florida',
-            cities: [
-              { cname: 'Jacksonville', code: 'US-JA' },
-              { cname: 'Miami', code: 'US-MI' },
-              { cname: 'Tampa', code: 'US-TA' },
-              { cname: 'Orlando', code: 'US-OR' }
-            ]
-          },
-          {
-            name: 'Texas',
-            cities: [
-              { cname: 'Austin', code: 'US-AU' },
-              { cname: 'Dallas', code: 'US-DA' },
-              { cname: 'Houston', code: 'US-HO' }
-            ]
-          }
-        ]
-      }
-    ];
-
-}
+  }
 
   private getTokenPublic() {
-  this.loginService.getTokenPublicS().subscribe(data => {
-    this.getInventoryAll(data.token);
-    this.getCategoryAll(data.token);
+    this.loginService.getTokenPublicS().subscribe(data => {
+      this.getInventoryAll(data.token);
+      this.getCategoryAll(data.token);
+    }
+    );
   }
-  );
-}
 
   private getInventoryAll(token: string) {
 
-  let inventoryGridInto: InventoryGrid;
+    let inventoryGridInto: InventoryGrid;
 
-  this.inventoryService.getInventoryAll(token).subscribe(
-    data => {
+    this.inventoryService.getInventoryAll(token).subscribe(
+      data => {
 
-      for (let response of data.responseDTO) {
+        for (let response of data.responseDTO) {
 
-        inventoryGridInto = new InventoryGrid(response.getInventoryCategoryDTO.description,
-          response.getInventoryDTO.name,
-          response.getInventoryDTO.price, response.getInventoryDTO.unitsAvailable,
-          "", "", response.getInventoryImageDTO,
-          response.getInventoryCategoryDTO.idCategory,
-          response.getInventoryDTO.name,
-          response.getInventoryDetailsDTO.characteristic,
-          response.getInventoryDetailsDTO.datasheet,
-          response.getInventoryDTO.idInventory);
-        this.inventoryService.setImages(response.getInventoryDTO.idInventory, response.getInventoryImageDTO);
-        this.setImages(response.getInventoryImageDTO, inventoryGridInto);
-        this.inventoryGrid.push(inventoryGridInto);
+          inventoryGridInto = new InventoryGrid(response.getInventoryCategoryDTO.description,
+            response.getInventoryDTO.name,
+            response.getInventoryDTO.price, response.getInventoryDTO.unitsAvailable,
+            "", "", response.getInventoryImageDTO,
+            response.getInventoryCategoryDTO.idCategory,
+            response.getInventorySubCategoryDTO.idSubCategory,
+            response.getInventoryDTO.name,
+            response.getInventoryDetailsDTO.characteristic,
+            response.getInventoryDetailsDTO.datasheet,
+            response.getInventoryDTO.idInventory);
+          this.inventoryService.setImages(response.getInventoryDTO.idInventory, response.getInventoryImageDTO);
+          this.setImages(response.getInventoryImageDTO, inventoryGridInto);
+          this.inventoryGrid.push(inventoryGridInto);
+        }
       }
-    }
-  );
-  this.inventoryFilter = this.inventoryGrid;
+    );
+    this.inventoryFilter = this.inventoryGrid;
 
-}
+  }
 
   private setImages(images: any[], inventoryGridInto: InventoryGrid) {
-  let count: number = 0;
+    let count: number = 0;
 
 
-  for (let image of images) {
+    for (let image of images) {
 
-    if (count == 0) {
-      inventoryGridInto.setImageInitial(this.pathImage + image.image);
+      if (count == 0) {
+        inventoryGridInto.setImageInitial(this.pathImage + image.image);
 
+      }
+
+      if (count == 1) {
+        inventoryGridInto.setImageSecond(this.pathImage + image.image);
+      }
+
+      count++;
     }
-
-    if (count == 1) {
-      inventoryGridInto.setImageSecond(this.pathImage + image.image);
-    }
-
-    count++;
   }
-}
 
 
-getCategoryAll(token: string) {
-  let response: any;
-  this.inventoryService.getCategory(token).subscribe(
-    data => {
+  getCategoryAll(token: string) {
+    let response: any;
+    let listSubCategories: Array<SubCategory>;
+    this.inventoryService.getCategory(token).subscribe(
+      data => {
+        response = data;
+        this.inventoryCategories = response.responseDTO
+        console.log('this.inventoryCategories');
+        console.log(this.inventoryCategories);
+        console.log(this.inventoryFilter);
+
+        for (let iter of response.responseDTO) {
+          this.categoryFull.push(new CategoryFull(
+            new Category(iter.description, '', iter.idCategory),
+            listSubCategories
+          ));
+        }
+
+
+      }
+    );
+    this.getSubCategoryAll(token);
+  }
+
+  getSubCategoryAll(token: string) {
+    let response: any;
+    let listSubCategories: Array<SubCategory>;
+    this.categoryService.getSubcategory(token).subscribe(data => {
       response = data;
-      this.inventoryCategories = response.responseDTO
-      console.log('this.inventoryCategories');
-      console.log(this.inventoryCategories);
-      console.log(this.inventoryFilter);
-    }
-  );
-  this.getSubCategoryAll(token);
-}
+      this.inventorySubCategory = response.responseDTO
 
-getSubCategoryAll(token: string) {
-  let response: any;
-  this.categoryService.getSubcategory(token).subscribe(data => {
-    response = data;
-    this.inventorySubCategory = response.responseDTO
-    console.log('this.inventorySubCategory');
-    console.log(this.inventorySubCategory);
-  });
-}
+      for (let category of this.categoryFull) {
+        listSubCategories = [];
+        for (let subCategory of response.responseDTO) {
+          if (category.getCategory().getIdCategory() == subCategory.idCategory) {
+            listSubCategories.push(
+              new SubCategory(subCategory.idSubCategory, subCategory.description, subCategory.active, subCategory.idCategory))
+          }
+        }
+        category.setListSubCategories(listSubCategories);
+      }
+
+    });
+    console.log('this.getSubCategoryAll');
+    console.log(this.categoryFull);
+  }
 
 
-filterForCategory(descriptionCategory: string) {
+  filterForCategory(descriptionCategory: string) {
 
-  if (descriptionCategory === 'todos') {
-    this.inventoryFilter = this.inventoryGrid;
-  } else {
-    this.inventoryFilter = [];
-    for (let inventory of this.inventoryGrid) {
-      if (inventory.getDescriptionCategory() === descriptionCategory) {
-        this.inventoryFilter.push(inventory);
+    if (descriptionCategory === 'todos') {
+      this.inventoryFilter = this.inventoryGrid;
+    } else {
+      this.inventoryFilter = [];
+      for (let inventory of this.inventoryGrid) {
+        if (inventory.getDescriptionCategory() === descriptionCategory) {
+          this.inventoryFilter.push(inventory);
+        }
       }
     }
-  }
-  this.isActiveSubCategories = true;
-}
-
-
-orderInventory(code: any) {
-
-  if (code.target.value == 1) {
-    this.inventoryFilter.sort(
-      (a, b) => a.getDescriptionInventory().localeCompare(b.getDescriptionInventory())
-    );
+    this.isActiveSubCategories = true;
   }
 
-  if (code.target.value == 2) {
-    this.inventoryFilter.sort(
-      (a, b) => a.getPrice() - b.getPrice());
-  }
+  filterForSubCategory(idCategory: number, idSubCategory: number) {
 
-  if (code.target.value == 3) {
-    this.inventoryFilter.sort(
-      (a, b) => b.getPrice() - a.getPrice());
-  }
-
-}
-
-selectedProduct(index: number) {
-  console.log(index)
-}
-
-navigateToDetail(inventory: InventoryGrid) {
-  const idCategory = inventory.getIdCategory();
-  const name = inventory.getName();
-  const characteristic = inventory.getCharacteristic();
-  const datasheet = inventory.getDatasheet();
-  const image = inventory.getImages()
-  const price = inventory.getPrice()
-  const idInventory = inventory.getIdInventory()
-
-  this.inventoryService.setSelectedCategoryId(idCategory);
-  this.inventoryService.setSelectedInventoryDetails({
-    name: name,
-    characteristic: characteristic,
-    datasheet: datasheet,
-    image: image,
-    price: price,
-    idInventory: idInventory
-  });
-  this.loginService.getTokenPublicS().subscribe(dataAuth => {
-    this.commentService.getCommentById(idInventory, dataAuth.token).subscribe(
-      (comment: any) => {
-        this.comments = comment.responseDTO
-        this.commentService.setComments(this.comments);
+    if (idCategory == 0 && idSubCategory == 0) {
+      this.inventoryFilter = this.inventoryGrid;
+    } else {
+      this.inventoryFilter = [];
+      for (let inventory of this.inventoryGrid) {
+        if (inventory.getIdCategory() == idCategory && inventory.getIdSubCategory() == idSubCategory) {
+          this.inventoryFilter.push(inventory);
+        }
       }
-    );
-  });
-  this.router.navigate(['/Detail']);
-}
+    }
+    this.isActiveSubCategories = true;
+  }
+
+
+  orderInventory(code: any) {
+
+    if (code.target.value == 1) {
+      this.inventoryFilter.sort(
+        (a, b) => a.getDescriptionInventory().localeCompare(b.getDescriptionInventory())
+      );
+    }
+
+    if (code.target.value == 2) {
+      this.inventoryFilter.sort(
+        (a, b) => a.getPrice() - b.getPrice());
+    }
+
+    if (code.target.value == 3) {
+      this.inventoryFilter.sort(
+        (a, b) => b.getPrice() - a.getPrice());
+    }
+
+  }
+
+  selectedProduct(index: number) {
+    console.log(index)
+  }
+
+  navigateToDetail(inventory: InventoryGrid) {
+    const idCategory = inventory.getIdCategory();
+    const name = inventory.getName();
+    const characteristic = inventory.getCharacteristic();
+    const datasheet = inventory.getDatasheet();
+    const image = inventory.getImages()
+    const price = inventory.getPrice()
+    const idInventory = inventory.getIdInventory()
+
+    this.inventoryService.setSelectedCategoryId(idCategory);
+    this.inventoryService.setSelectedInventoryDetails({
+      name: name,
+      characteristic: characteristic,
+      datasheet: datasheet,
+      image: image,
+      price: price,
+      idInventory: idInventory
+    });
+    this.loginService.getTokenPublicS().subscribe(dataAuth => {
+      this.commentService.getCommentById(idInventory, dataAuth.token).subscribe(
+        (comment: any) => {
+          this.comments = comment.responseDTO
+          this.commentService.setComments(this.comments);
+        }
+      );
+    });
+    this.router.navigate(['/Detail']);
+  }
 
 
 
