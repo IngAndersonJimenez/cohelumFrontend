@@ -7,8 +7,6 @@ import { InventoryCategory } from "../../../../../interface/products/inventoryCa
 import { SubCategory } from "../../../../../interface/products/SubCategory";
 import { CategoryService } from "../../../../../services/category.service";
 import {SafeResourceUrl} from "@angular/platform-browser";
-import {Inventory} from "../../../../../interface/products/Inventory";
-import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-create-product',
@@ -35,7 +33,7 @@ export class CreateProductComponent implements OnInit {
 
 
   constructor(private notificationService: NotificationService, private inventoryService: InventoryService, private formBuilder: FormBuilder,
-    private loginService: LoginService, private categoryService: CategoryService) {
+     private categoryService: CategoryService) {
   }
 
   private buildForm() {
@@ -75,6 +73,7 @@ export class CreateProductComponent implements OnInit {
             this.productForm.reset();
             this.selectedImage = undefined;
             this.selectedPDFName = undefined;
+            this.uploadedImages = [];
           }
       );
     } else {

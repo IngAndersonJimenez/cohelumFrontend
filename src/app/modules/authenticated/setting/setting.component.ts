@@ -1,150 +1,154 @@
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SettingsService } from "../../../services/settings.service";
-import { SettingTP } from "../../../interface/settings/SettingTP";
-import { environment } from "../../../environments/environment";
+import {Component, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {SettingsService} from "../../../services/settings.service";
+import {SettingTP} from "../../../interface/settings/SettingTP";
+import {environment} from "../../../environments/environment";
 
 @Component({
-  selector: 'app-setting',
-  templateUrl: './setting.component.html',
-  styleUrls: ['./setting.component.scss']
+    selector: 'app-setting',
+    templateUrl: './setting.component.html',
+    styleUrls: ['./setting.component.scss']
 })
 export class SettingComponent implements OnInit {
 
-  pathImage: string = environment.sourceImage;
-  imageHomeForms: FormGroup[] = [];
+    pathImage: string = environment.sourceImage;
+    imageHomeForms: FormGroup[] = [];
 
-  constructor(private formBuilder: FormBuilder, private settingService: SettingsService) { }
-
-  ngOnInit(): void {
-    this.getSettingSlide();
-  }
-
-  handleFileInput(fileInput: any, index: number) {
-    const file = fileInput.files.item(0);
-    console.log('Esto es file', file)
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.imageHomeForms[index].patchValue({
-        imageUrl: event.target.result,
-        image: file,
-      });
-    };
-    reader.readAsDataURL(file);
-  }
-
-
-  onSubmit(index: number) {
-    const formGroup = this.imageHomeForms[index];
-
-    if (formGroup.valid) {
-      const image = formGroup.value.image;
-      const storageFolder = 'home/carrusel';
-      const settingTP: SettingTP = {
-        artefact: 'CarruselHome',
-        description: 'Home',
-        value1: formGroup.value.tittleImage ?? '',
-        value2: formGroup.value.subTittleImage ?? '',
-        value3: '',
-        value4: ''
-      };
-      this.settingService.createSettingTP(settingTP).subscribe(
-          (result) => {
-            const idSettingTP = result.responseDTO.idSettingTP;
-            if (image) {
-              this.settingService.createImageSettingTP(idSettingTP,storageFolder,image).subscribe(
-                  (imageResult) => {
-                    this.getSettingSlide()
-                  }
-              );
-            }
-          }
-      );
+    constructor(private formBuilder: FormBuilder, private settingService: SettingsService) {
     }
-  }
 
-  getSettingSlide() {
-    this.imageHomeForms = [];
-    this.settingService.getSlide("CarruselHome").subscribe(
-        (data: any) => {
-          data.responseDTO.forEach((setting: any) => {
-            const formGroup: FormGroup = this.createFormGroup(setting);
-            this.imageHomeForms.push(formGroup);
-          });
+    ngOnInit(): void {
+        this.getSettingSlide();
+    }
+
+    handleFileInput(fileInput: any, index: number) {
+        const file = fileInput.files.item(0);
+        console.log('Esto es file', file)
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event: any) => {
+            this.imageHomeForms[index].patchValue({
+                imageUrl: event.target.result,
+                image: file,
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+
+
+    onSubmit(index: number) {
+        const formGroup = this.imageHomeForms[index];
+
+        if (formGroup.valid) {
+            const image = formGroup.value.image;
+            const storageFolder = 'home/carrusel';
+            const settingTP: SettingTP = {
+                artefact: 'CarruselHome',
+                description: 'Home',
+                value1: formGroup.value.tittleImage ?? '',
+                value2: formGroup.value.subTittleImage ?? '',
+                value3: '',
+                value4: ''
+            };
+            this.settingService.createSettingTP(settingTP).subscribe(
+                (result) => {
+                    const idSettingTP = result.responseDTO.idSettingTP;
+                    if (image) {
+                        this.settingService.createImageSettingTP(idSettingTP, storageFolder, image).subscribe(
+                            (imageResult) => {
+                                this.getSettingSlide()
+                            }
+                        );
+                    }
+                }
+            );
         }
-    );
-  }
-
-  createFormGroup(setting: any): FormGroup {
-    return this.formBuilder.group({
-      tittleImage: [setting.value1, Validators.required],
-      subTittleImage: [setting.value2],
-      image: [this.pathImage + setting.value4],
-      imageUrl: [this.pathImage + setting.value4],
-      idSettingTP: [setting.idSettingTP],
-    });
-  }
-
-  updateSettingTP(index: number) {
-    const formGroup = this.imageHomeForms[index];
-    const idSettingTP = formGroup.get('idSettingTP')?.value;
-    if (idSettingTP !== undefined) {
-      const settingTP: SettingTP = {
-        artefact: 'CarruselHome',
-        description: 'Home',
-        value1: formGroup.value.tittleImage ?? '',
-        value2: formGroup.value.subTittleImage ?? '',
-        value3: '',
-        value4: ''
-      };
-      this.settingService.updateSettingTP(settingTP, idSettingTP).subscribe(
-          (result) => {
-            console.log('Actualizacion exitosa!',result)
-          }
-      );
     }
-  }
 
-  updateImage(index: number){
-    const storageFolder = 'home/carrusel';
-    const formGroup = this.imageHomeForms[index];
-    const idSettingTP = formGroup.get('idSettingTP')?.value;
-    const image = formGroup.get('image')?.value;
-    if (idSettingTP !== undefined) {
-      this.settingService.createImageSettingTP(idSettingTP,storageFolder,image).subscribe(
-          data => {
-            this.getSettingSlide()
-          }
-      )
+    getSettingSlide() {
+        this.imageHomeForms = [];
+        this.settingService.getSlide("CarruselHome").subscribe(
+            (data: any) => {
+                data.responseDTO.forEach((setting: any) => {
+                    const formGroup: FormGroup = this.createFormGroup(setting);
+                    this.imageHomeForms.push(formGroup);
+                });
+            }
+        );
     }
-  }
 
-  deleteForm(index: number) {
-
-    const formGroup = this.imageHomeForms[index];
-    const idSettingTP = formGroup.get('idSettingTP')?.value;
-
-    if (idSettingTP !== undefined) {
-      this.settingService.updateStatusSettingTP(idSettingTP, false).subscribe(
-          data => {
-            this.getSettingSlide()
-          }
-      );
+    createFormGroup(setting: any): FormGroup {
+        return this.formBuilder.group({
+            tittleImage: [setting.value1, Validators.required],
+            subTittleImage: [setting.value2],
+            image: [this.pathImage + setting.value4],
+            imageUrl: [this.pathImage + setting.value4],
+            idSettingTP: [setting.idSettingTP],
+        });
     }
-  }
+
+    updateSettingTP(index: number) {
+        const formGroup = this.imageHomeForms[index];
+        const idSettingTP = formGroup.get('idSettingTP')?.value;
+        if (idSettingTP !== undefined) {
+            const formImagePath = formGroup.get('image')?.value;
+            const relativeImagePath = formImagePath.replace(this.pathImage, '');
+
+            const settingTP: SettingTP = {
+                artefact: 'CarruselHome',
+                description: 'Home',
+                value1: formGroup.value.tittleImage ?? '',
+                value2: formGroup.value.subTittleImage ?? '',
+                value3: '',
+                value4: relativeImagePath
+            };
+
+            this.settingService.updateSettingTP(settingTP, idSettingTP).subscribe(
+                (result) => {
+                    this.getSettingSlide()
+                }
+            );
+        }
+    }
 
 
+    updateImage(index: number) {
+        const storageFolder = 'home/carrusel';
+        const formGroup = this.imageHomeForms[index];
+        const idSettingTP = formGroup.get('idSettingTP')?.value;
+        const image = formGroup.get('image')?.value;
+        if (idSettingTP !== undefined) {
+            this.settingService.createImageSettingTP(idSettingTP, storageFolder, image).subscribe(
+                data => {
+                    this.getSettingSlide()
+                }
+            )
+        }
+    }
+
+    deleteForm(index: number) {
+
+        const formGroup = this.imageHomeForms[index];
+        const idSettingTP = formGroup.get('idSettingTP')?.value;
+
+        if (idSettingTP !== undefined) {
+            this.settingService.updateStatusSettingTP(idSettingTP, false).subscribe(
+                data => {
+                    this.getSettingSlide()
+                }
+            );
+        }
+    }
 
 
-  newForm() {
-    const nuevoFormGroup = this.createFormGroup({
-      tittleImage: '',
-      subTittleImage: '',
-      image: ''
-    });
+    newForm() {
+        const nuevoFormGroup = this.createFormGroup({
+            tittleImage: '',
+            subTittleImage: '',
+            image: ''
+        });
 
-    this.imageHomeForms.push(nuevoFormGroup);
-  }
+        this.imageHomeForms.push(nuevoFormGroup);
+    }
 }

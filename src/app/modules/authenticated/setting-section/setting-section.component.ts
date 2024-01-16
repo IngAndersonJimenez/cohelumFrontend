@@ -117,13 +117,15 @@ export class SettingSectionComponent implements OnInit{
     const formGroup = this.imageHomeForms[index];
     const idSettingTP = formGroup.get('idSettingTP')?.value;
     if (idSettingTP !== undefined) {
+      const formImagePath = formGroup.get('image')?.value;
+      const relativeImagePath = formImagePath.replace(this.pathImage, '');
       const settingTP: SettingTP = {
         artefact: 'SocialSeccion',
         description: 'sección',
         value1: formGroup.value.tittleImage ?? '',
         value2: formGroup.value.subTittleImage ?? '',
         value3: '',
-        value4: ''
+        value4: relativeImagePath
       };
       this.settingService.updateSettingTP(settingTP, idSettingTP).subscribe(
           (result) => {
