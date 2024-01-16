@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ShowCaseGallery } from 'src/app/model/ShowCaseGallery';
 import { LoginService } from 'src/app/services/login.service';
 import { SettingsService } from 'src/app/services/settings.service';
@@ -15,21 +15,6 @@ export class ShowcasePublicComponent {
 
   gallerySocial: Array<ShowCaseGallery> = [];
 
-  responsiveOptions: any[] = [
-    {
-      breakpoint: '1024px',
-      numVisible: 5
-    },
-    {
-      breakpoint: '768px',
-      numVisible: 3
-    },
-    {
-      breakpoint: '560px',
-      numVisible: 1
-    }
-  ];
-
   activeIndex: number = 0;
 
   titleInformative: string = '';
@@ -41,12 +26,10 @@ export class ShowcasePublicComponent {
   }
 
   changeData(index: number) {
-
-    console.log('index')
-    console.log(index)
-
-    this.titleInformative = this.gallerySocial[index].getTitleInfo();
-    this.description = this.gallerySocial[index].getDescription();
+    if (this.gallerySocial.length > 0) {
+      this.titleInformative = this.gallerySocial[index].getTitleInfo();
+      this.description = this.gallerySocial[index].getDescription();
+    }
   }
 
   changeDataSum() {
@@ -85,8 +68,5 @@ export class ShowcasePublicComponent {
       this.getItemsArtefacCarrusel(data.token);
     });
   }
-
-
-
 
 }

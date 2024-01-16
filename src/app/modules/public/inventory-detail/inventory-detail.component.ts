@@ -7,7 +7,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LoginService} from "../../../services/login.service";
 import {InventoryComments} from "../../../interface/comment/InventoryComments";
 import {environment} from "../../../environments/environment";
-import {Galleria} from "primeng/galleria";
 
 @Component({
     selector: 'app-inventory-detail',
@@ -29,9 +28,6 @@ export class InventoryDetailComponent implements OnInit {
     pathImage: string = environment.sourceImage;
     currentIndex: number = 0;
     intervalId: any;
-
-
-
     position: string = 'bottom';
 
     scrollToReview() {
