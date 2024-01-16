@@ -119,16 +119,41 @@ export class ConsultProductComponent implements OnInit {
 
     addImage(): void {
         if (this.products[0].idInventory && this.selectedFile) {
-            const idInventory = this.products[0].idInventory;
-            const fileName = this.products[0].name;
+            const productName = this.products[0].name;
 
-            this.inventoryService.createImageProduct(idInventory, this.selectedFile, fileName).subscribe(
-                (data: InventoryImage) => {
+            this.inventoryService.createImageProduct(this.products[0].idInventory, this.selectedFile, productName).subscribe(
+                (data: any) => {
                     this.notificationService.showSuccess("Imagen Añadida al producto", "Correctamente");
+                    // Actualiza la ruta de la imagen en el modelo de datos local
+                    const newImageRoute = this.pathImage + data.responseDTO.image;
+                    this.products[0].image = newImageRoute;
+
+                    // Actualiza la lista local de imágenes
+                    const newInventoryImage: InventoryImage = {
+                        "idInventoryImage": data.responseDTO.idInventoryImage,
+                        "image": newImageRoute,
+                    };
+                    this.imageList.push(newInventoryImage);
+                    this.loadProducts(new ProductFull(
+                        this.products[0].idInventory,
+                        productName,
+                        this.updateForm.get('price')?.value,
+                        this.updateForm.get('unitsAvailable')?.value,
+                        this.products[0].active,
+                        this.updateForm.get('characteristic')?.value,
+                        this.sanitizer.bypassSecurityTrustResourceUrl(newInventoryImage?.image ?? ''),
+                        this.updateForm.get('idCategory')?.value,
+                        this.updateForm.get('description')?.value,
+                        this.updateForm.get('idInventoryImage')?.value,
+                        this.updateForm.get('image')?.value,
+                        this.updateForm.get('descriptionSubCategory')?.value,
+                        this.updateForm.get('idSubCategory')?.value
+                    ));
                 }
             );
         }
     }
+
 
 
 
