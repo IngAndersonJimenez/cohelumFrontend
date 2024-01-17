@@ -121,3 +121,27 @@ $base-color: #0F2137;
 .size-video {
     width: 100%;
 }
+
+.row{
+    @media (max-width: 767px){
+        display:block;
+
+        .team-parrafo{
+            font-size: 0.8rem;
+            margin: 1rem;
+        }
+        .contenedor-video{
+            padding:1rem;
+        }
+    }
+}
+.container{
+    @media (max-width: 767px){
+        .team-title{
+            font-size: 5vw;
+        }
+        .team-subtitle{
+            font-size: 3vw;
+        }
+    }
+}
