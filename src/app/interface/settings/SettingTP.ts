@@ -5,4 +5,6 @@ export interface SettingTP{
     value2:string;
     value3:string;
     value4:string;
+    idSettingTP:number;
+    imagePreviews: string[];
 }

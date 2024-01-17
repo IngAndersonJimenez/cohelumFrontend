@@ -99,6 +99,7 @@ export class CategoryComponent implements OnInit {
                     this.productForm.reset();
                     this.loadData();
                     this.showAddingCategoryDialog = false;
+                    this.selectedImagePreview = undefined;
                 }
             );
         } else {

@@ -12,7 +12,9 @@ import {environment} from "../../../environments/environment";
 export class SettingComponent implements OnInit {
 
     pathImage: string = environment.sourceImage;
-    imageHomeForms: FormGroup[] = [];
+    imageHomeForms: Array<SettingTP> = [];
+    isFormDirty: boolean = false;
+
 
     constructor(private formBuilder: FormBuilder, private settingService: SettingsService) {
     }
@@ -21,43 +23,53 @@ export class SettingComponent implements OnInit {
         this.getSettingSlide();
     }
 
+
+
     handleFileInput(fileInput: any, index: number) {
         const file = fileInput.files.item(0);
-        console.log('Esto es file', file)
+
+        console.log('Esto es file', file);
+
         if (!file) return;
 
         const reader = new FileReader();
         reader.onload = (event: any) => {
-            this.imageHomeForms[index].patchValue({
-                imageUrl: event.target.result,
-                image: file,
-            });
+            const imageUrl = event.target.result;
+            this.imageHomeForms[index].imagePreviews.push(imageUrl);
+            this.imageHomeForms[index].value4 = file;
+            this.isFormDirty = true;
         };
         reader.readAsDataURL(file);
     }
 
 
-    onSubmit(index: number) {
-        const formGroup = this.imageHomeForms[index];
 
-        if (formGroup.valid) {
-            const image = formGroup.value.image;
+
+    onSubmit(index: number) {
+        const setting = this.imageHomeForms[index];
+
+        if (setting) {
+            const image = setting.value4;
             const storageFolder = 'home/carrusel';
             const settingTP: SettingTP = {
                 artefact: 'CarruselHome',
                 description: 'Home',
-                value1: formGroup.value.tittleImage ?? '',
-                value2: formGroup.value.subTittleImage ?? '',
+                value1: setting.value1 ?? '',
+                value2: setting.value2 ?? '',
                 value3: '',
-                value4: ''
+                value4: '',
+                idSettingTP: setting.idSettingTP,
+                imagePreviews: []
             };
+            console.log('Esto llega a image: ' , image)
             this.settingService.createSettingTP(settingTP).subscribe(
                 (result) => {
                     const idSettingTP = result.responseDTO.idSettingTP;
                     if (image) {
                         this.settingService.createImageSettingTP(idSettingTP, storageFolder, image).subscribe(
                             (imageResult) => {
-                                this.getSettingSlide()
+                                this.getSettingSlide();
+                                this.isFormDirty = false;
                             }
                         );
                     }
@@ -66,71 +78,68 @@ export class SettingComponent implements OnInit {
         }
     }
 
+
+
+
     getSettingSlide() {
-        this.imageHomeForms = [];
         this.settingService.getSlide("CarruselHome").subscribe(
             (data: any) => {
-                data.responseDTO.forEach((setting: any) => {
-                    const formGroup: FormGroup = this.createFormGroup(setting);
-                    this.imageHomeForms.push(formGroup);
+                this.imageHomeForms = data.responseDTO.map((setting: any) => {
+                    const value4 = this.pathImage + setting.value4 ?? '';
+                    return { ...setting, value4, imagePreviews: [] };
                 });
             }
         );
     }
 
-    createFormGroup(setting: any): FormGroup {
-        return this.formBuilder.group({
-            tittleImage: [setting.value1, Validators.required],
-            subTittleImage: [setting.value2],
-            image: [this.pathImage + setting.value4],
-            imageUrl: [this.pathImage + setting.value4],
-            idSettingTP: [setting.idSettingTP],
-        });
-    }
 
     updateSettingTP(index: number) {
-        const formGroup = this.imageHomeForms[index];
-        const idSettingTP = formGroup.get('idSettingTP')?.value;
+        const setting = this.imageHomeForms[index];
+        const idSettingTP = setting.idSettingTP;
+
         if (idSettingTP !== undefined) {
-            const formImagePath = formGroup.get('image')?.value;
+            const formImagePath = setting.value4;
             const relativeImagePath = formImagePath.replace(this.pathImage, '');
 
-            const settingTP: SettingTP = {
+            const updatedSettingTP: SettingTP = {
                 artefact: 'CarruselHome',
                 description: 'Home',
-                value1: formGroup.value.tittleImage ?? '',
-                value2: formGroup.value.subTittleImage ?? '',
+                value1: setting.value1 ?? '',
+                value2: setting.value2 ?? '',
                 value3: '',
-                value4: relativeImagePath
+                value4: relativeImagePath,
+                idSettingTP: setting.idSettingTP,
+                imagePreviews: []
             };
 
-            this.settingService.updateSettingTP(settingTP, idSettingTP).subscribe(
+            this.settingService.updateSettingTP(updatedSettingTP, idSettingTP).subscribe(
                 (result) => {
-                    this.getSettingSlide()
+                    this.getSettingSlide();
                 }
             );
         }
     }
 
 
+
     updateImage(index: number) {
         const storageFolder = 'home/carrusel';
-        const formGroup = this.imageHomeForms[index];
-        const idSettingTP = formGroup.get('idSettingTP')?.value;
-        const image = formGroup.get('image')?.value;
-        if (idSettingTP !== undefined) {
+        const setting = this.imageHomeForms[index];
+        const idSettingTP = setting.idSettingTP;
+        const image = setting.value4;
+
+        if (idSettingTP !== undefined && image) {
             this.settingService.createImageSettingTP(idSettingTP, storageFolder, image).subscribe(
                 data => {
-                    this.getSettingSlide()
+                    this.getSettingSlide();
                 }
-            )
+            );
         }
     }
 
     deleteForm(index: number) {
-
-        const formGroup = this.imageHomeForms[index];
-        const idSettingTP = formGroup.get('idSettingTP')?.value;
+        const setting = this.imageHomeForms[index];
+        const idSettingTP = setting.idSettingTP;
 
         if (idSettingTP !== undefined) {
             this.settingService.updateStatusSettingTP(idSettingTP, false).subscribe(
@@ -143,12 +152,18 @@ export class SettingComponent implements OnInit {
 
 
     newForm() {
-        const nuevoFormGroup = this.createFormGroup({
-            tittleImage: '',
-            subTittleImage: '',
-            image: ''
-        });
+        const nuevoSetting: SettingTP = {
+            artefact: 'CarruselHome',
+            description: 'Home',
+            value1: '',
+            value2: '',
+            value3: '',
+            value4: '',
+            idSettingTP: 0,
+            imagePreviews: []
+        };
 
-        this.imageHomeForms.push(nuevoFormGroup);
+        this.imageHomeForms.push(nuevoSetting);
     }
+
 }

@@ -1,7 +1,8 @@
-<div class="card">
+<div class="card card-custom">
     <div class="card-header">
-        Configuracion carrusel home
-        <i class="fa fa-plus-circle text-success" (click)="newForm()" [pTooltip]="tooltipNewForm" tooltipPosition="bottom"></i>
+        Configuración carrusel home
+        <i class="fa fa-plus-circle text-success" (click)="newForm()" [pTooltip]="tooltipNewForm"
+           tooltipPosition="bottom"></i>
         <ng-template #tooltipNewForm>
             <div class="tooltip-create-container">
                 <div class="flex align-items-center">
@@ -15,30 +16,39 @@
         <div class="card-group">
             <div class="container">
                 <div class="row">
-                    <!-- Itera sobre los formularios dinámicamente -->
-                    <div *ngFor="let formGroup of imageHomeForms; let i = index" class="col-3">
+                    <!-- Itera sobre los objetos SettingTP dinámicamente -->
+                    <div *ngFor="let setting of imageHomeForms; let i = index" class="col-3">
                         <div class="card">
                             <div class="card-body">
-                                <form [formGroup]="formGroup" class="form-container">
+                                <div class="form-container">
                                     <div class="form-group">
                                         <label for="titleImage"><strong>Título publicación</strong></label>
-                                        <input type="text" class="form-control" id="titleImage" formControlName="tittleImage" placeholder="Titulo publicacion">
+                                        <input type="text" class="form-control" id="titleImage"
+                                               [(ngModel)]="setting.value1" placeholder="Título publicación">
                                     </div>
                                     <div class="form-group">
                                         <label for="subTitleImage"><strong>Sub Título publicación</strong></label>
-                                        <textarea class="form-control" id="subTitleImage" rows="2" formControlName="subTittleImage"></textarea>
+                                        <textarea class="form-control" id="subTitleImage" rows="2"
+                                                  [(ngModel)]="setting.value2"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <br>
                                         <div class="row">
-                                            <input type="file" (change)="handleFileInput($event.target, i)" formControlName="image" name="imageSettingTP" />
-                                            <img width="100%" *ngIf="formGroup.get('imageUrl')?.value" [src]="formGroup.get('imageUrl')?.value" class="image" loading="lazy">
+                                            <input type="file" (change)="handleFileInput($event.target, i)"/>
+                                            <img width="100%" *ngFor="let previewUrl of setting?.imagePreviews"
+                                                 [src]="previewUrl" class="image">
+                                            <ng-container
+                                                    *ngIf="setting?.value4 !== undefined && setting?.value4 !== null">
+                                                <img width="100%" [src]="setting?.value4" class="image" loading="lazy">
+                                            </ng-container>
+
                                             <button type="button" class="btn btn-warning btn-update other"
                                                     (click)="updateImage(i)">
                                                 <i class="fas fa-camera"></i> Actualizar Imagen
                                             </button>
                                         </div>
                                     </div>
+
                                     <br>
                                     <div class="button-container">
                                         <button type="button" class="btn btn-warning btn-update" pButton
@@ -55,11 +65,9 @@
                                             </div>
                                         </ng-template>
                                         <button class="btn btn-success btn-create" (click)="onSubmit(i)" pButton
-                                                [pTooltip]="tooltipCreate" tooltipPosition="bottom"
-                                                [disabled]="!formGroup.valid || formGroup.get('idSettingTP')?.value != null">
+                                                [pTooltip]="tooltipCreate" tooltipPosition="bottom" [disabled]="!isFormDirty">
                                             <i class="fas fa-save"></i>
                                         </button>
-
                                         <ng-template #tooltipCreate>
                                             <div class="tooltip-create-container">
                                                 <div class="flex align-items-center">
@@ -68,7 +76,8 @@
                                                 <div class="tooltip-create-arrow"></div>
                                             </div>
                                         </ng-template>
-                                        <button class="btn btn-danger btn-delete" (click)="deleteForm(i)" pButton [pTooltip]="tooltipDelete" tooltipPosition="bottom">
+                                        <button class="btn btn-danger btn-delete" (click)="deleteForm(i)" pButton
+                                                [pTooltip]="tooltipDelete" tooltipPosition="bottom">
                                             <i class="fa fa-trash text-white"></i>
                                         </button>
                                         <ng-template #tooltipDelete>
@@ -80,11 +89,10 @@
                                             </div>
                                         </ng-template>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -12,55 +12,61 @@ import {SettingTP} from "../../../interface/settings/SettingTP";
 export class SettingSectionComponent implements OnInit{
 
   pathImage: string = environment.sourceImage;
-  imageHomeForms: FormGroup[] = [];
+  imageHomeForms: Array<SettingTP> = [];
+  isFormDirty: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private settingService: SettingsService) { }
+
+  constructor(private formBuilder: FormBuilder, private settingService: SettingsService) {
+  }
 
   ngOnInit(): void {
     this.getSettingSlide();
   }
 
-  handleFileInput(fileInput: any, index: number) {
-    const file = fileInput.files.item(0);
-    console.log('Esto es file', file)
-    if (!file) return;
+
+
+  onSelected(fileInput: any, index: number) {
+    const fileSocial = fileInput.files.item(0);
+    console.log('Esto es file', fileSocial);
+    if (!fileSocial) return;
 
     const reader = new FileReader();
     reader.onload = (event: any) => {
-      this.imageHomeForms[index].patchValue({
-        imageUrl: event.target.result,
-        image: file,
-      });
+      const imageUrl = event.target.result;
+      this.imageHomeForms[index].imagePreviews.push(imageUrl);
+      this.imageHomeForms[index].value4 = fileSocial;
+      this.isFormDirty = true;
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(fileSocial);
   }
 
 
-  onSubmit(index: number) {
-    const formGroup = this.imageHomeForms[index];
 
-    if (formGroup.valid) {
-      console.log('esto trae fromgroup ', formGroup)
-      const image = formGroup.value.image;
+
+  onSubmit(index: number) {
+    const setting = this.imageHomeForms[index];
+
+    if (setting) {
+      const image = setting.value4;
       const storageFolder = 'home/SocialSeccion';
       const settingTP: SettingTP = {
         artefact: 'SocialSeccion',
         description: 'sección',
-        value1: formGroup.value.tittleImage ?? '',
-        value2: formGroup.value.subTittleImage ?? '',
+        value1: setting.value1 ?? '',
+        value2: setting.value2 ?? '',
         value3: '',
-        value4: ''
+        value4: '',
+        idSettingTP: setting.idSettingTP,
+        imagePreviews: []
       };
-      console.log('FormGroup Value:', formGroup.value);
       this.settingService.createSettingTP(settingTP).subscribe(
           (result) => {
             const idSettingTP = result.responseDTO.idSettingTP;
-            console.log('El id es: ', idSettingTP);
             if (image) {
-              console.log('Valor de imageSettingTP antes de la solicitud:', image);
-              this.settingService.createImageSettingTP(idSettingTP,storageFolder,image).subscribe(
+              this.settingService.createImageSettingTP(idSettingTP, storageFolder, image).subscribe(
                   (imageResult) => {
-                    console.log('Imagen subida con éxito:', imageResult);
+                    this.getSettingSlide();
+                    this.isFormDirty = false;
                   }
               );
             }
@@ -69,30 +75,68 @@ export class SettingSectionComponent implements OnInit{
     }
   }
 
+
+
+
   getSettingSlide() {
     this.settingService.getSlide("SocialSeccion").subscribe(
         (data: any) => {
-          data.responseDTO.forEach((setting: any) => {
-            const formGroup: FormGroup = this.createFormGroup(setting);
-            this.imageHomeForms.push(formGroup);
+          this.imageHomeForms = data.responseDTO.map((setting: any) => {
+            const value4 = this.pathImage + setting.value4 ?? '';
+            return { ...setting, value4, imagePreviews: [] };
           });
         }
     );
   }
 
-  createFormGroup(setting: any): FormGroup {
-    return this.formBuilder.group({
-      tittleImage: [setting.value1, Validators.required],
-      subTittleImage: [setting.value2],
-      image: [this.pathImage + setting.value4],
-      imageUrl: [this.pathImage + setting.value4]
-    });
+
+  updateSettingTP(index: number) {
+    const setting = this.imageHomeForms[index];
+    const idSettingTP = setting.idSettingTP;
+
+    if (idSettingTP !== undefined) {
+      const formImagePath = setting.value4;
+      const relativeImagePath = formImagePath.replace(this.pathImage, '');
+
+      const updatedSettingTP: SettingTP = {
+        artefact: 'SocialSeccion',
+        description: 'sección',
+        value1: setting.value1 ?? '',
+        value2: setting.value2 ?? '',
+        value3: '',
+        value4: relativeImagePath,
+        idSettingTP: setting.idSettingTP,
+        imagePreviews: []
+      };
+
+      this.settingService.updateSettingTP(updatedSettingTP, idSettingTP).subscribe(
+          (result) => {
+            this.getSettingSlide();
+          }
+      );
+    }
+  }
+
+
+
+  updateImage(index: number) {
+    const storageFolder = 'home/SocialSeccion';
+    const setting = this.imageHomeForms[index];
+    const idSettingTP = setting.idSettingTP;
+    const image = setting.value4;
+
+    if (idSettingTP !== undefined && image) {
+      this.settingService.createImageSettingTP(idSettingTP, storageFolder, image).subscribe(
+          data => {
+            this.getSettingSlide();
+          }
+      );
+    }
   }
 
   deleteForm(index: number) {
-
-    const formGroup = this.imageHomeForms[index];
-    const idSettingTP = formGroup.get('idSettingTP')?.value;
+    const setting = this.imageHomeForms[index];
+    const idSettingTP = setting.idSettingTP;
 
     if (idSettingTP !== undefined) {
       this.settingService.updateStatusSettingTP(idSettingTP, false).subscribe(
@@ -103,49 +147,20 @@ export class SettingSectionComponent implements OnInit{
     }
   }
 
+
   newForm() {
-    const nuevoFormGroup = this.createFormGroup({
-      tittleImage: '',
-      subTittleImage: '',
-      image: ''
-    });
+    const nuevoSetting: SettingTP = {
+      artefact: 'SocialSeccion',
+      description: 'sección',
+      value1: '',
+      value2: '',
+      value3: '',
+      value4: '',
+      idSettingTP: 0,
+      imagePreviews: []
+    };
 
-    this.imageHomeForms.push(nuevoFormGroup);
+    this.imageHomeForms.push(nuevoSetting);
   }
 
-  updateSettingTP(index: number) {
-    const formGroup = this.imageHomeForms[index];
-    const idSettingTP = formGroup.get('idSettingTP')?.value;
-    if (idSettingTP !== undefined) {
-      const formImagePath = formGroup.get('image')?.value;
-      const relativeImagePath = formImagePath.replace(this.pathImage, '');
-      const settingTP: SettingTP = {
-        artefact: 'SocialSeccion',
-        description: 'sección',
-        value1: formGroup.value.tittleImage ?? '',
-        value2: formGroup.value.subTittleImage ?? '',
-        value3: '',
-        value4: relativeImagePath
-      };
-      this.settingService.updateSettingTP(settingTP, idSettingTP).subscribe(
-          (result) => {
-            console.log('Actualizacion exitosa!',result)
-          }
-      );
-    }
-  }
-
-  updateImage(index: number){
-    const storageFolder = 'home/SocialSeccion';
-    const formGroup = this.imageHomeForms[index];
-    const idSettingTP = formGroup.get('idSettingTP')?.value;
-    const image = formGroup.get('image')?.value;
-    if (idSettingTP !== undefined) {
-      this.settingService.createImageSettingTP(idSettingTP,storageFolder,image).subscribe(
-          data => {
-            this.getSettingSlide()
-          }
-      )
-    }
-  }
 }

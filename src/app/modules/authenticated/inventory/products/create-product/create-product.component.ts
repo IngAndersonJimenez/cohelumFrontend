@@ -1,7 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { InventoryService } from "../../../../../services/inventory.service";
-import { LoginService } from "../../../../../services/login.service";
 import { NotificationService } from "../../../../../notifications/notification.service";
 import { InventoryCategory } from "../../../../../interface/products/inventoryCategory";
 import { SubCategory } from "../../../../../interface/products/SubCategory";
