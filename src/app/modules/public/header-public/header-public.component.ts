@@ -169,21 +169,23 @@ export class HeaderPublicComponent  implements OnInit{
         this.isDropdownOpen = !this.isDropdownOpen;
     }
 
-    goToSection(position: string) {
 
-    }
 
     toggleMenu() {
         const navbar = document.getElementById('navbarButtonsExample');
+        const menuToggle = document.getElementById('menuToggle');
 
         if (this.menuVisible) {
             this.renderer.removeClass(navbar, 'show');
+            this.renderer.removeClass(menuToggle, 'active');
         } else {
             this.renderer.addClass(navbar, 'show');
+            this.renderer.addClass(menuToggle, 'active');
         }
 
         this.menuVisible = !this.menuVisible;
     }
+
 
     closeMenu() {
         const navbar = document.getElementById('navbarButtonsExample');
