@@ -3,11 +3,6 @@
   background-color: #2c2c2c;
   transition: background-color 0.5s ease;
 
-  @media (max-width: 768px) {}
-}
-
-.footer-into {
-  @media (max-width: 768px) {}
 }
 
 .footer-email {
@@ -31,6 +26,7 @@
         box-sizing: border-box;
       }
     }
+
   }
 
 }
@@ -169,4 +165,18 @@ a {
 
 .logo-footer {
   width: 70%;
+}
+
+
+@media (max-width: 768px) {
+  .logo-footer{
+    width: 117%;
+    max-width: none;
+  }
+  .fa-facebook{
+    font-size:25px;
+  }
+  .fa-instagram{
+    font-size:25px;
+  }
 }

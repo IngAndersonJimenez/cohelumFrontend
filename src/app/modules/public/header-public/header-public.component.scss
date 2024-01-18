@@ -277,3 +277,25 @@ ul {
 
 }
 
+@media (max-width: 991px) {
+    .navbar-nav {
+        background-color: black;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+
+        .dropdown-menu {
+            background-color: black;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+
+        }
+    }
+}
+
