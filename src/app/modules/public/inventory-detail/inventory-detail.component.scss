@@ -76,7 +76,7 @@ p{
         }
 
         &.selected {
-            color: #E0AB67 !important;  // Agrega !important para asegurar la prioridad del estilo
+            color: #E0AB67 !important;
         }
     }
 }
@@ -137,3 +137,31 @@ p{
     }
 }
 
+@media (max-width: 768px) {
+    .inventoryDetail-subtitle{
+        font-size: 3vw;
+    }
+    .inventoryDetail-title{
+        font-size: 5vw;
+    }
+}
+.back-arrow {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #090909;
+    text-decoration: none;
+
+    i {
+        margin-right: 5px;
+    }
+
+    &:hover {
+        color: #051634;
+    }
+}
+.btn-suc{
+    @media (max-width: 768px) {
+        font-size: 11px;
+    }
+}
