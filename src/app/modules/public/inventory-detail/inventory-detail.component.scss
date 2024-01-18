@@ -137,3 +137,31 @@ p{
     }
 }
 
+@media (max-width: 768px) {
+    .inventoryDetail-subtitle{
+        font-size: 3vw;
+    }
+    .inventoryDetail-title{
+        font-size: 5vw;
+    }
+}
+.back-arrow {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #090909;  // Cambia el color según tu diseño
+    text-decoration: none;  // Elimina la subrayado del texto
+
+    i {
+        margin-right: 5px;  // Espacio entre el ícono y el texto
+    }
+
+    &:hover {
+        color: #051634;  // Cambia el color al pasar el ratón
+    }
+}
+.btn-suc{
+    @media (max-width: 768px) {
+        font-size: 11px;
+    }
+}

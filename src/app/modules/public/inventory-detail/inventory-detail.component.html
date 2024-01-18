@@ -1,7 +1,11 @@
 <div class="container-detail">
+
     <section #categoriasSeccion id="inventoryDetailSeccion" class="categories inventory-content">
         <div class="container">
             <div class="row">
+                <a  [routerLink]="['/Inventory']" class="back-arrow">
+                    <i class="fa fa-arrow-left"></i> Atrás
+                </a>
                 <div class="inventoryDetail-subtitle"><b>Product detail</b></div>
             </div>
             <div class="row">
@@ -116,7 +120,7 @@
                                                     {{ getRatingLabel(commentForm.get('qualification')?.value) }}
                                                 </div>
                                             </div>
-                                            <button id="submit" class="btn border border-secondary rounded-pill px-4 py-3" (click)="getTokenPublic()">Publicar reseña</button>
+                                            <button id="submit" class="btn border border-secondary rounded-pill px-4 py-3 btn-suc" (click)="getTokenPublic()">Publicar reseña</button>
                                         </div>
                                     </div>
                                 </div>

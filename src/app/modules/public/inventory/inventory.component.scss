@@ -1,12 +1,16 @@
 .inventory-subtitle {
     text-align: center;
+    font-family: "Mulish", sans-serif;
+    font-weight: 600;
     font-size: 1vw;
     color: #0F2137;
 }
 
 .inventory-title {
     text-align: center;
-    font-size: 2vw;
+    font-family: "Mulish", sans-serif;
+    font-weight: 800;
+    font-size: 2.6vw;
     color: #0F2137;
 }
 
@@ -213,8 +217,8 @@
 
 .container-filter {
     background-color: whitesmoke;
-    margin-top: 1.6%;
-    margin-bottom: 1.6%;
+    margin-bottom: 2rem;
+    padding: 2rem;
 }
 
 .title-container {
@@ -227,4 +231,36 @@ hr {border: 3px solid #666; border-radius: 300px/10px; height: 0; text-align: ce
 
 .card{
     cursor:pointer;
+}
+@media (max-width: 768px) {
+    .inventory-title{
+        font-size: 5vw;
+    }
+    .inventory-subtitle{
+        font-size: 3vw;
+    }
+}
+.container-filter,
+.container-detail {
+    flex: 0 0 16.66667%;
+    max-width: 16.66667%;
+
+    @media (max-width: 768px) {
+        flex: 0 0 80%;
+        max-width: 80%;
+        margin: 1rem auto;
+    }
+
+}
+
+.sub-detail{
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+}
+@media (max-width: 768px) {
+    .form-select {
+        max-width: 100%;
+        margin-right: 9rem;
+    }
 }
