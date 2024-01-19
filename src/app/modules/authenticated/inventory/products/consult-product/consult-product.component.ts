@@ -62,6 +62,18 @@ export class ConsultProductComponent implements OnInit {
             idInventoryImage: []
         });
 
+        this.categoryService.getSubcategory().subscribe(
+            (response: any) => {
+                for (let iter of response.responseDTO) {
+                    this.subcategories.push(
+                        new SubCategory(iter.idSubCategory, iter.description, iter.active, iter.idCategory)
+                    );
+                    console.log('Subcategoría agregada:', iter);
+                }
+
+            },
+        )
+
     }
 
     loadProducts(product: ProductFull) {
@@ -278,15 +290,15 @@ export class ConsultProductComponent implements OnInit {
             name: product.name,
             price: product.price,
             unitsAvailable: product.unitsAvailable,
-            idCategory: '',
-            idSubCategory: product.idSubCategory,
+            idCategory: product.idCategory,
+            idSubCategory: product.idSubCategory || null,
             description: product.description,
             characteristic: product.characteristic,
             datasheet: product.datasheet,
             image: '',
             idInventoryImage: ''
         });
-
+        console.log('Valor de datasheet:', product.datasheet);
         this.inventoryService.getCategory().subscribe(
             (response: any) => {
                 this.categories = response.responseDTO;
@@ -294,18 +306,11 @@ export class ConsultProductComponent implements OnInit {
                 this.loadingCategories = false;
                 // Filtra las subcategorías iniciales
                 this.subCategoryLoad({ target: { value: this.updateForm.get('idCategory')?.value } });
+                console.log('Subcategorías filtradas:', this.subcategoriesFilter);
+
             }
         );
-        this.categoryService.getSubcategory().subscribe(
-            (response: any) => {
-                for (let iter of response.responseDTO) {
-                    this.subcategories.push(
-                        new SubCategory(iter.idSubCategory, iter.description, iter.active, iter.idCategory)
-                    );
-                }
 
-            },
-        )
     }
 
 
@@ -370,7 +375,7 @@ export class ConsultProductComponent implements OnInit {
                 this.updateForm.get('unitsAvailable')?.value,
                 this.products[0].active,
                 this.updateForm.get('characteristic')?.value,
-                this.sanitizer.bypassSecurityTrustResourceUrl('data:application/pdf;base64,' + (this.updateForm.get('datasheet')?.value || '')),
+                this.sanitizer.bypassSecurityTrustResourceUrl( (this.updateForm.get('datasheet')?.value || '')),
                 this.updateForm.get('idCategory')?.value,
                 this.updateForm.get('description')?.value,
                 this.updateForm.get('idInventoryImage')?.value,
