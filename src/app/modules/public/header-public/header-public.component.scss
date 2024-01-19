@@ -299,3 +299,21 @@ ul {
     }
 }
 
+@media (max-width: 991px) {
+    .nav-item1.dropdown {
+        position: static;
+    }
+
+    .nav-item1.dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        display: none;
+        float: none;
+        min-width: auto;
+    }
+}

@@ -260,7 +260,12 @@ hr {border: 3px solid #666; border-radius: 300px/10px; height: 0; text-align: ce
 }
 @media (max-width: 768px) {
     .form-select {
-        max-width: 100%;
-        margin-right: 9rem;
+        max-width: 78%;
+        margin-right: 18rem;
+    }
+}
+@media (max-width: 768px) {
+    .product-grid2 {
+        margin:1rem;
     }
 }

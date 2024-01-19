@@ -47,15 +47,17 @@
                                         Extendida</label>
                                 </li>
 
-                                <li class="nav-item1" (click)="toggleDropdown()">
-                                    <div class="nav-item dropdown">
-                                        <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Nosotros</a>
-                                        <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                            <a [routerLink]="['/Us']" class="dropdown-item">¿Quiénes somos?</a>
-                                            <a (click)="closeMenu(); goTo('ourTeamSection')" class="dropdown-item">Proyectos</a>
-                                        </div>
-                                    </div>
+                                <li class="nav-item1 nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Nosotros
+                                    </a>
+                                    <ul class="dropdown-menu ">
+                                        <li><a (click)="closeMenu()" [routerLink]="['/Us']" class="dropdown-item">¿Quiénes somos?</a></li>
+                                        <li><a (click)="closeMenu(); goTo('ourTeamSection')" class="dropdown-item">Proyectos</a></li>
+                                    </ul>
                                 </li>
+
+
                                 <li class="nav-item desplegar">
                                     <label class="nav-link puntero"
                                            [routerLink]="['/home/content']"
