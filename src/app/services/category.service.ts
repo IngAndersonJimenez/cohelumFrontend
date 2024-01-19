@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {InventoryCategory} from "../interface/products/inventoryCategory";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../environments/environment";
@@ -12,6 +12,10 @@ import {SubCategory} from "../interface/products/SubCategory";
   providedIn: 'root'
 })
 export class CategoryService {
+
+  private categorySelected: string =  'todos';
+  private categorySelectedMemory = new BehaviorSubject(this.categorySelected);
+
 
   constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService, private loginService: LoginService) {
 

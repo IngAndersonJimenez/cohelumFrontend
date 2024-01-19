@@ -36,7 +36,7 @@
                                         <div class="row">
                                             <input type="file" (change)="onSelected($event.target, i)"/>
                                             <img width="100%" *ngFor="let previewUrl of setting?.imagePreviews"
-                                                 [src]="previewUrl" class="image">
+                                                 [src]="previewUrl" class="image" loading="lazy">
                                             <ng-container
                                                     *ngIf="setting?.value4 !== undefined && setting?.value4 !== null">
                                                 <img width="100%" [src]="setting?.value4" class="image" loading="lazy">

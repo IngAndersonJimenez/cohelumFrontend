@@ -141,14 +141,14 @@
                                                             </span>
                                                 <div *ngFor="let image of uploadedImages; let i = index"
                                                      class="dz-preview">
-                                                    <img [src]="image.dataURL" alt="Preview">
+                                                    <img [src]="image.dataURL" alt="Preview" loading="lazy">
                                                     <div class="progress-bar-container"
                                                          *ngIf="showProgressBar && i === uploadedImages.length - 1">
                                                         <div class="progress-bar"
                                                              [style.width]="uploadProgress + '%'"></div>
                                                     </div>
                                                     <button type="button" (click)="removeImage(i, $event)">
-                                                        <img class="remove" src="assets/image/create-product/x.svg">
+                                                        <img class="remove" src="assets/image/create-product/x.svg" loading="lazy">
                                                     </button>
                                                 </div>
                                             </div>

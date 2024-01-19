@@ -84,7 +84,7 @@
                         <ng-template let-imageR let-i="index" pTemplate="item">
                             <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
                                 <div class="mb-3">
-                                    <img [src]="imageR.image" alt="Imagen del Producto">
+                                    <img [src]="imageR.image" alt="Imagen del Producto" loading="lazy">
                                     <mat-icon class="update-icon" (click)="openUpdateDialog2(imageR.idInventoryImage)">
                                         update
                                     </mat-icon>
@@ -101,7 +101,7 @@
                 <div *ngIf="showImagePreview" class="simple-dialog">
                     <div class="dialog-content">
                         <h2>¿Quieres añadir esta imagen al producto?</h2>
-                        <img [src]="currentImage" alt="Imagen del Producto">
+                        <img [src]="currentImage" alt="Imagen del Producto" loading="lazy">
                         <div class="dialog-buttons">
                             <button class="accept" (click)="acceptImage()">Aceptar</button>
                             <button class="cancel" (click)="closeImagePreview()">Cancelar</button>

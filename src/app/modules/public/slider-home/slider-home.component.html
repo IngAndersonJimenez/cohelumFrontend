@@ -6,7 +6,7 @@
       <div class="slide" *ngFor="let item of listaImagenesCarrusel">
         <h1>{{item.getTitleImage()}}</h1>
         <h4>{{item.getSubTitleImage()}}</h4>
-        <img [src]='item.getSourceImage()' alt="">
+        <img [src]='item.getSourceImage()' alt="" loading="lazy">
       </div>
     </figure>
   </div>
