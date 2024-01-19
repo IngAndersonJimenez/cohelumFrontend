@@ -18,7 +18,8 @@
                         <div class="content">
                             <a>
                                 <div class="content-overlay"></div>
-                                <img class="content-image" [src]="pathImage + category?.getCategoryImageDTO?.image" alt="{{category?.getInventoryCategoryDTO?.description}}">
+                                <img class="content-image" [src]="pathImage + category?.getCategoryImageDTO?.image"
+                                    alt="{{category?.getInventoryCategoryDTO?.description}}" loading="lazy">
                                 <div class="content-details fadeIn-bottom">
                                     <h3 class="content-title">{{category?.getInventoryCategoryDTO?.description}}</h3>
                                     <p class="content-text">This is a short description</p>

@@ -34,20 +34,20 @@
                     </div>
                     <p>{{ details.characteristic }}</p>
                     <a [href]="pdfUrl" target="_blank" download="Ficha técnica.pdf" class="btn btn-primary pdf">
-                        <img src="assets/pdf/pdf-svgrepo-com.svg" alt="Icono PDF" class="icono-pdf"/>
+                        <img src="assets/pdf/pdf-svgrepo-com.svg" alt="Icono PDF" class="icono-pdf" loading="lazy"/>
                         Ficha técnica
                     </a>
                 </div>
                 <div class="col-md-6">
                     <div class="image-container">
                         <ng-container *ngIf="images && images.length > 0">
-                            <img [src]="pathImage + images[currentIndex]" class="contained-image" />
+                            <img [src]="pathImage + images[currentIndex]" class="contained-image" loading="lazy"/>
                         </ng-container>
                     </div>
                     <div class="thumbnail-gallery">
                         <div class="thumbnails-container">
                             <ng-container *ngFor="let image of images; let i = index">
-                                <img [src]="pathImage + image" class="thumbnail" (click)="changeImage(i)" />
+                                <img [src]="pathImage + image" class="thumbnail" (click)="changeImage(i)" loading="lazy"/>
                             </ng-container>
                         </div>
                     </div>
@@ -72,7 +72,8 @@
                                 <div class="tab-content mb-5">
                                     <div class="tab-pane active" #reviewSection id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                                         <div *ngFor="let comment of comments"  class="d-flex mb-4">
-                                            <img src="assets/image/users/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
+                                            <img src="assets/image/users/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt=""
+                                            loading="lazy">
                                             <div class="">
                                                 <p class="mb-2" style="font-size: 14px;">{{ comment.highDate }}</p>
                                                 <div class="consultComment">

@@ -26,7 +26,8 @@
             <label for="image">Seleccionar categoría a la que pertenece:</label>
             <input class="file" id="image" type="file" (change)="onFileSelected($event, 'image')" #imageFileInput formControlName="image" required style="display: none;">
             <button mat-raised-button color="primary" (click)="imageFileInput.click()">Imagen de la categoría</button>
-            <img *ngIf="selectedImagePreview" [src]="selectedImagePreview" alt="Imagen previsualizada" style="max-width: 100%; margin-top: 10px;">
+            <img *ngIf="selectedImagePreview" [src]="selectedImagePreview" alt="Imagen previsualizada" style="max-width: 100%; margin-top: 10px;"
+            loading="lazy">
           </div>
         </div>
         <div class="dialog-actions">
@@ -57,7 +58,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Imagen </th>
           <td mat-cell *matCellDef="let element">
             <ng-container *ngIf="!element.isEditing; else editMode">
-              <img *ngIf="element.image" [src]="element.image" alt="Imagen Categoría" height="50" width="50">
+              <img *ngIf="element.image" [src]="element.image" alt="Imagen Categoría" height="50" width="50" loading="lazy">
             </ng-container>
             <ng-template #editMode>
               <input type="file" #imageFileEdit (change)="onFileSelected1($event,element.idCategory)" style="display: none;" />
