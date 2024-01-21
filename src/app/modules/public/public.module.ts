@@ -31,6 +31,7 @@ import { ImageModule } from 'primeng/image';
 import { UsComponent } from './us/us.component';
 import {SlickCarouselModule} from "ngx-slick-carousel";
 import { CascadeSelectModule } from 'primeng/cascadeselect';
+import { ExtendedWarrantyComponent } from './extended-warranty/extended-warranty.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { CascadeSelectModule } from 'primeng/cascadeselect';
     ContactComponent,
     InventoryComponent,
     InventoryDetailComponent,
-    UsComponent
+    UsComponent,
+    ExtendedWarrantyComponent
   ],
     imports: [
         CommonModule,

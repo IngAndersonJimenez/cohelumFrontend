@@ -5,6 +5,7 @@ import { UsComponent } from './modules/public/us/us.component';
 import { InventoryComponent } from './modules/public/inventory/inventory.component';
 import { InventoryDetailComponent } from './modules/public/inventory-detail/inventory-detail.component';
 import { permissionsGuard } from './guard/permissions.guard';
+import {ExtendedWarrantyComponent} from "./modules/public/extended-warranty/extended-warranty.component";
 
 const routes: Routes = [
 
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'Us',
     component: UsComponent
+  },
+  {
+    path: 'extended-warranty',
+    component: ExtendedWarrantyComponent
   },
 
   {

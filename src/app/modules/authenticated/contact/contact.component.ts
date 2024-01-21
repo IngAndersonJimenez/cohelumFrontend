@@ -83,9 +83,6 @@ export class ContactComponent implements OnInit {
             (data: any) => {
                 this.contacts = data.responseDTO.reverse();
                 this.refreshTable();
-            },
-            error => {
-                console.error('Error al cargar los contactos', error);
             }
         );
     }
