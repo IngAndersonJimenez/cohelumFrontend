@@ -8,14 +8,15 @@
                     <!-- Navbar brand -->
                     <a class="navbar-brand me-2">
 
-                        <img [src]= 'urlLogo' class="logo drop puntero" alt="Logo cohelum" loading="lazy"
-                             title="Logo empresarial cohelum" style="margin-top: -1px;"  [routerLink]="['/home/content']"/>
+                        <img [src]='urlLogo' class="logo drop puntero" alt="Logo cohelum" loading="lazy"
+                            title="Logo empresarial cohelum" style="margin-top: -1px;"
+                            [routerLink]="['/home/content']" />
                     </a>
 
                     <!-- Toggle button -->
                     <button data-mdb-collapse-init class="navbar-toggler" type="button"
-                            data-mdb-target="#navbarButtonsExample" aria-controls="navbarButtonsExample"
-                            aria-expanded="false" aria-label="Toggle navigation" id="menuToggle" (click)="toggleMenu()">
+                        data-mdb-target="#navbarButtonsExample" aria-controls="navbarButtonsExample"
+                        aria-expanded="false" aria-label="Toggle navigation" id="menuToggle" (click)="toggleMenu()">
                         <i class="fas fa-bars"></i>
                     </button>
 
@@ -30,38 +31,50 @@
 
                         <div class="d-flex align-items-center">
 
+
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0 menu">
-                                <li class="nav-item">
-                                    <label class="nav-link puntero" [routerLink]="['/home/content']" (click)="closeMenu();
-                                    goTo('aliadoSeccion')">Aliados</label>
-                                </li>
-
-                                <li class="nav-item">
-                                    <label class="nav-link puntero "
-                                           [routerLink]="['/home/content']" (click)="closeMenu(); goTo('contactoSeccion')">Contactanos</label>
-                                </li>
-
-                                <li class="nav-item">
-                                    <label class="nav-link puntero"
-                                           (click)="closeMenu()" [routerLink]="['/extended-warranty']">Garantia
-                                        Extendida</label>
-                                </li>
 
                                 <li class="nav-item1 nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
                                         Nosotros
                                     </a>
                                     <ul class="dropdown-menu ">
-                                        <li><a (click)="closeMenu()" [routerLink]="['/Us']" class="dropdown-item">¿Quiénes somos?</a></li>
-                                        <li><a (click)="closeMenu(); goTo('ourTeamSection')" class="dropdown-item">Proyectos</a></li>
+                                        <li><a (click)="closeMenu()" [routerLink]="['/Us']"
+                                                class="dropdown-item">¿Quiénes
+                                                somos?</a></li>
+                                        <li><a (click)="closeMenu(); goTo('ourTeamSection')"
+                                                class="dropdown-item">Proyectos</a></li>
                                     </ul>
                                 </li>
 
-
                                 <li class="nav-item desplegar">
+                                    <label class="nav-link puntero" [routerLink]="['/home/content']"
+                                        (click)="closeMenu(); goTo('categoriasSeccion')">Productos</label>
+                                    <ul class="dropdown-menu ">
+                                        <li></li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <label class="nav-link puntero" [routerLink]="['/home/content']" (click)="closeMenu();
+                                    goTo('aliadoSeccion')" title="Cata electrodomésticos">¿Dónde Comprar?</label>
+                                </li>
+
+                                <li class="nav-item">
                                     <label class="nav-link puntero"
-                                           [routerLink]="['/home/content']"
-                                           (click)="closeMenu(); goTo('categoriasSeccion')">Productos</label>
+                                  (click)="closeMenu()" [routerLink]="['/extended-warranty']">Garantia
+                                        Extendida</label>
+
+                                </li>
+
+                                <li class="nav-item">
+                                    <label class="nav-link puntero " title="Cata electrodomésticos">Cata</label>
+                                </li>
+
+                                <li class="nav-item">
+                                    <label class="nav-link puntero " [routerLink]="['/home/content']"
+                                        (click)="closeMenu(); goTo('contactoSeccion')">Contactanos</label>
                                 </li>
 
                                 <li class="nav-item desplegar">

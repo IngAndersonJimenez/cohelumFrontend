@@ -14,6 +14,7 @@
             <div class="row">
 
                 <div class="col-md-3">
+                    <label class="form-label">Filtra por departamento</label>
                     <select class="form-select" aria-label="Default select example"
                         (change)="getCitiesByIdDepartament($event)">
                         <option [value]="0" selected>Todos</option>
@@ -24,6 +25,7 @@
                 </div>
 
                 <div class="col-md-3">
+                    <label class="form-label" *ngIf="isActiveControlCity">Selecciona ciudad</label>
                     <select class="form-select" aria-label="Default select example" (change)="getAlliesByIdCity($event)"
                         *ngIf="isActiveControlCity">
                         <option selected>Todos</option>
@@ -40,7 +42,7 @@
                         <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
                             <div class="mb-3">
                                 <figure class="snipAllies">
-                                    <img [src]="aliado.getUrlLogo()" alt="DECORALVAREZ logo" class="imagen-Aliado" loading="lazy"/>
+                                    <img [src]="aliado.getUrlLogo()" [alt]="aliado.getNombre()" class="imagen-Aliado" loading="lazy"/>
                                     <i class="fa fa-solid fa-globe"></i>
                                     <figcaption>
                                         <h3>Ver<span> más</span></h3>
