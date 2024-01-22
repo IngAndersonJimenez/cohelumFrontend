@@ -48,7 +48,21 @@ export const navbarData:INavbarData[] = [
   {
     routerLink: 'contact',
     icon: 'fas fa-envelope',
-    label: 'Mensajes'
+    label: 'Mensajes',
+    items:[
+      {
+        routerLink: 'contact',
+        label: 'Contacto general'
+      },
+      {
+        routerLink: 'contact',
+        label: 'Garantía'
+      },
+      {
+        routerLink: 'extended-warranty-c',
+        label: 'Garantía Extendida'
+      },
+    ]
   }
 
 

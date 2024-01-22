@@ -114,5 +114,27 @@ export class ContactService {
     }
 
 
+    createWarranty(formData: FormData,token?: string) : Observable<any>{
+        const headers = new HttpHeaders({
+            'Authorization': `${token}`
+        });
+        return this.http.post(`${environment.apiUrl}api/v1/warranty/create`,formData,{headers})
+    }
+
+    getWarranty(token?: string):Observable<any>{
+        let headers = new HttpHeaders({})
+
+        if (token != null) {
+            headers = new HttpHeaders({
+                'Authorization': `${token}`
+            });
+        } else {
+            headers = new HttpHeaders({
+                'Authorization': `${this.getToken()}`
+            });
+        }
+
+        return this.http.get(`${environment.apiUrl}api/v1/warranty/getWarrantyAll`,{headers})
+    }
 
 }

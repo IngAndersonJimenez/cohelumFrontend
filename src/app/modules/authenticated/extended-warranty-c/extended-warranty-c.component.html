@@ -1,0 +1,114 @@
+<div class="title-button">
+    <h1>Garantía Extendida</h1>
+</div>
+
+<div class="card">
+    <div class="card-head">Lista de mensajes</div>
+    <div class="card-body">
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo</th>
+                    <td mat-cell *matCellDef="let contact">{{ contact.email | titlecase }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="nameContact">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre del contacto</th>
+                    <td mat-cell *matCellDef="let contact">{{ contact.nameContact | titlecase }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="typeDocument">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de documento</th>
+                    <td mat-cell *matCellDef="let contact">
+                        {{ contact.typeDocument}}</td>
+                </ng-container>
+                <ng-container matColumnDef="document">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Documento</th>
+                    <td mat-cell *matCellDef="let contact">
+                        {{ contact.document}}</td>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> Acciones</th>
+                    <td mat-cell *matCellDef="let contact" [class.selected-row]="selectedRow === contact">
+                        <i [ngClass]="{'far fa-check-circle': contact.read, 'fas fa-eye': !contact.read}"
+                           [style.color]="contact.read ? 'green' : 'red'"></i>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"
+                    (click)="onDetailsButtonClick(row)" [class.selected-row]="selectedRow === row">
+                </tr>
+
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Seleccionar pagína">
+            </mat-paginator>
+        </div>
+    </div>
+</div>
+<div *ngIf="selectedRow" class="card card1">
+    <div class="container-card">
+        <div class="card-header">
+            <h2>Detalles del Mensaje</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-field">
+                        <label>Nombre de Contacto:</label>
+                        {{ selectedRow?.nameContact | titlecase }}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-field">
+                        <label>Email:</label>
+                        {{ selectedRow?.email | titlecase }}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-field">
+                        <label>Tipo de documento:</label>
+                        {{ selectedRow?.typeDocument | titlecase }}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-field">
+                        <label>Documento:</label>
+                        {{ selectedRow?.document | titlecase }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-field">
+                        <label>Distribuidor:</label>
+                        {{ selectedRow?.distributor | titlecase }}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-field">
+                        <label>Numero de factura:</label>
+                        {{ selectedRow?.number_bill | titlecase }}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-field">
+                        <label>Fecha de compra:</label>
+                        {{ selectedRow?.date | titlecase }}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-field">
+                        <label>Producto adquirido:</label>
+                        {{ selectedRow?.product | titlecase }}
+                    </div>
+                </div>
+                <div class="form-field" *ngIf="selectedRow?.attach">
+                    <label>Adjunto:</label>
+                    <embed *ngIf="pdfSrc" [src]="pdfSrc" type="application/pdf" width="100%" height="500px">
+                </div>
+            </div>
+        </div>
+
+    </div>
+

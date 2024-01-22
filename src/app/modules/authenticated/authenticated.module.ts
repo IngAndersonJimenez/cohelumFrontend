@@ -31,6 +31,7 @@ import { SettingComponent } from './setting/setting.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { SettingSectionComponent } from './setting-section/setting-section.component';
 import {TooltipModule} from "primeng/tooltip";
+import { ExtendedWarrantyCComponent } from './extended-warranty-c/extended-warranty-c.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import {TooltipModule} from "primeng/tooltip";
     ContactComponent,
     SubCategoryComponent,
     SettingComponent,
-    SettingSectionComponent
+    SettingSectionComponent,
+    ExtendedWarrantyCComponent
   ],
     imports: [
         CommonModule,
