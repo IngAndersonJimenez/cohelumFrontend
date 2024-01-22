@@ -175,7 +175,7 @@ export class AllyService {
     ));
 
     this.listaAliados.push(new Aliado(
-      '',
+      'assets/image/ourAllies/CasaMagnaLogo.png',
       'Casa Magna',
       'https://www.casa-magna.com/cohelum?_q=COHELUM&map=ft',
       'Cr 64 #80-102 Riomar',
@@ -195,7 +195,7 @@ export class AllyService {
     );
 
     this.listaAliados.push(new Aliado(
-      '',
+      'assets/image/ourAllies/ScalottoLogo.png',
       'Scalatto',
       'https://scalatto.com.co/',
       'Cr 59B #79-217 Local 1',
@@ -232,6 +232,109 @@ export class AllyService {
       '3202964320'
     ));
 
+
+    /**Bogota*/
+
+    this.listaAliados.push(new Aliado(
+      'assets/image/ourAllies/LogoFanaticos.png',
+      'FANATICOS POR LAS COCINAS SAS',
+      'https://fanaticosporlascocinas.com/page/2/?s=COHELUM&post_type=product',
+      'Av Carrera 20 #87-71  ',
+      this.cityService.getCityByIdCity(14),
+      '3022804674 - 302 3039308'
+    ));
+
+    this.listaAliados.push(new Aliado(
+      'assets/image/ourAllies/EspaciosHighLogo.png',
+      'ESPACIOS HIGH END',
+      'https://espacios.co.com/categoria/marcas/cohelum/',
+      'Autopista Norte #86-31 ',
+      this.cityService.getCityByIdCity(14),
+      '(601) 6965877 - (601)4838496'
+    ));
+
+    this.listaAliados.push(new Aliado(
+      'assets/image/ourAllies/CocinalNicolLogo.png',
+      'COCINAS NICOL SAS',
+      'https://cocinasnicol.com/',
+      'Edificio Quantum CHICO Calle 90 #19-41 Estudio 804',
+      this.cityService.getCityByIdCity(14),
+      '3105679153 - (601)2517673'
+    ));
+
+    this.listaAliados.push(new Aliado(
+      'assets/image/ourAllies/IGACocinasLogo.png',
+      'IGA COCINAS',
+      'https://www.igacocinasycarpinteria.com/',
+      'Carrera 58 #128b-63, Suba',
+      this.cityService.getCityByIdCity(14),
+      '3213291743 - (601)7026545'
+    ));
+
+    this.listaAliados.push(new Aliado(
+      'assets/image/ourAllies/ArquitecLogo.png',
+      'ARQUITEC GROUP AG SAS',
+      'https://www.arquitecgroup.com',
+      'Calle 109 # 15-66 Local 2',
+      this.cityService.getCityByIdCity(14),
+      '       (601)6960509 - 3212027385'
+    ));
+
+    this.listaAliados.push(new Aliado(
+      'assets/image/ourAllies/DelCorteAngaritaLogo.png',
+      'DEL CORTE ANGARITA SAS BOGOTA',
+      'https://delcorteangarita.co',
+      'Carrera 19 # 104 - 20 Usaquén',
+      this.cityService.getCityByIdCity(14),
+      '3232909224'
+    ));
+
+    this.listaAliados.push(new Aliado(
+      'assets/image/ourAllies/HOMEAPPLIANCESLogo.png',
+      'HOME APPLIANCES',
+      'https://www.homeappliances.com.co',
+      'Calle 94A #67A-74 LOCAL 26 CC. Centro de diseño Floresta',
+      this.cityService.getCityByIdCity(14),
+      '3208656234 - 3204944668 - 3118222801'
+    ));
+
+    this.listaAliados.push(new Aliado(
+      'assets/image/ourAllies/YalLogo.jpg',
+      'YAL GROUP SAS',
+      'https://alco-sas.co',
+      'Carrera 68G #77-59',
+      this.cityService.getCityByIdCity(14),
+      '(601)3115958 - 3175106464'
+    ));
+
+    this.listaAliados.push(new Aliado(
+      'assets/image/ourAllies/CasaMagnaLogo.png',
+      'CASAMAGNA',
+      'https://www.casa-magna.com/cohelum?_q=COHELUM&map=ft',
+      'Carrera 19 #93-19',
+      this.cityService.getCityByIdCity(14),
+      '018000113880'
+    ));
+
+
+    this.listaAliados.push(new Aliado(
+      'assets/image/ourAllies/MenThaLogo.png',
+      'MENTHA SAS',
+      'https://www.mentha.com.co',
+      'Carrera 23 #69- 70, Edificio La Camelia, 2S',
+      this.cityService.getCityByIdCity(16),
+      '3102716881 - 3132263311'
+    ));
+
+
+    this.listaAliados.push(new Aliado(
+      'assets/image/ourAllies/MenThaLogo.png',
+      'MENTHA SAS',
+      'https://www.mentha.com.co',
+      'Carrera 23 #69- 70, Edificio La Camelia, 2S',
+      this.cityService.getCityByIdCity(16),
+      '3102716881 - 3132263311'
+    ));
 
   }
 
