@@ -34,11 +34,7 @@ export class InventoryComponent implements OnInit {
   isActiveSubCategories: Boolean = false;
   public inventorySubCategory: Array<SubCategory> = [];
   public categoryFull: Array<CategoryFull> = [];
-
-
-  countries: any[] | undefined;
-
-  selectedCity: any;
+  selectedCategory: Category | null = null;
 
   constructor(private inventoryService: InventoryService, private loginService: LoginService,
     private formBuilder: FormBuilder, private router: Router, private commentService: CommentService,
@@ -52,8 +48,29 @@ export class InventoryComponent implements OnInit {
       { name: 'Menor a mayor precio', code: 2 },
       { name: 'Mayor a menor precio', code: 3 }
     ];
+    this.categoryService.selectedCategory$.subscribe((category) => {
+      this.selectedCategory = category;
 
+      this.filterInventory();
+    });
   }
+
+  filterInventory() {
+    if (this.selectedCategory) {
+      console.log('Esto es lo que llega a categoria: ', this.selectedCategory)
+      const selectedCategoryId = this.selectedCategory.getIdCategory;
+      this.inventoryFilter = this.inventoryGrid.filter(
+          (inventory) => inventory.getIdCategory === selectedCategoryId
+
+      );
+      console.log('Esto es filtro: ', this.inventoryFilter)
+    } else {
+      this.inventoryFilter = this.inventoryGrid;
+    }
+  }
+
+
+
 
   private getTokenPublic() {
     this.loginService.getTokenPublicS().subscribe(data => {
@@ -119,10 +136,6 @@ export class InventoryComponent implements OnInit {
       data => {
         response = data;
         this.inventoryCategories = response.responseDTO
-        console.log('this.inventoryCategories');
-        console.log(this.inventoryCategories);
-        console.log(this.inventoryFilter);
-
         for (let iter of response.responseDTO) {
           this.categoryFull.push(new CategoryFull(
             new Category(iter.description, '', iter.idCategory),
@@ -155,24 +168,6 @@ export class InventoryComponent implements OnInit {
       }
 
     });
-    console.log('this.getSubCategoryAll');
-    console.log(this.categoryFull);
-  }
-
-
-  filterForCategory(descriptionCategory: string) {
-
-    if (descriptionCategory === 'todos') {
-      this.inventoryFilter = this.inventoryGrid;
-    } else {
-      this.inventoryFilter = [];
-      for (let inventory of this.inventoryGrid) {
-        if (inventory.getDescriptionCategory() === descriptionCategory) {
-          this.inventoryFilter.push(inventory);
-        }
-      }
-    }
-    this.isActiveSubCategories = true;
   }
 
   filterForSubCategory(idCategory: number, idSubCategory: number) {
@@ -243,7 +238,5 @@ export class InventoryComponent implements OnInit {
     });
     this.router.navigate(['/Detail']);
   }
-
-
 
 }

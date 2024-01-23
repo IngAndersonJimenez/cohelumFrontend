@@ -7,18 +7,24 @@ import {Router} from "@angular/router";
 import {NotificationService} from "../notifications/notification.service";
 import {LoginService} from "./login.service";
 import {SubCategory} from "../interface/products/SubCategory";
+import { Category } from 'src/app/interface/products/Category';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 
-  private categorySelected: string =  'todos';
-  private categorySelectedMemory = new BehaviorSubject(this.categorySelected);
+  private selectedCategorySource = new BehaviorSubject<Category | null>(null);
+  selectedCategory$ = this.selectedCategorySource.asObservable();
 
 
   constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService, private loginService: LoginService) {
 
+  }
+
+  setSelectedCategory(category: Category | null) {
+    this.selectedCategorySource.next(category);
   }
 
   getToken(): string {

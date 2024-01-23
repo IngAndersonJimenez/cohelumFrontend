@@ -12,7 +12,7 @@
 <section class="section-categories">
     <p-carousel [value]="category" [numVisible]="4" [numScroll]="1" [responsiveOptions]="responsiveOptions">
         <ng-template let-category pTemplate="item">
-            <div class="product-item" [routerLink]="['/Inventory']">
+            <div class="product-item" [routerLink]="['/Inventory']" (click)="selectCategory(category)">
                 <div class="product-item-content">
                     <div class="container-categoria">
                         <div class="content">

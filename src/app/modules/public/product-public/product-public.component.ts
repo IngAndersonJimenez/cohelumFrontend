@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { Category } from 'src/app/interface/products/Category';
 import { InventoryService } from 'src/app/services/inventory.service';
 import { LoginService } from 'src/app/services/login.service';
 import {environment} from "../../../environments/environment";
+import {CategoryService} from "../../../services/category.service";
 
 @Component({
   selector: 'app-product-public',
@@ -16,7 +17,7 @@ export class ProductPublicComponent implements OnInit {
   category: Array<any> = [];
   pathImage: string = environment.sourceImage;
 
-  constructor(private inventoryService: InventoryService, private loginService: LoginService) { };
+  constructor(private inventoryService: InventoryService, private loginService: LoginService, private categoryService:CategoryService) { };
 
   ngOnInit() {
 
@@ -62,6 +63,8 @@ export class ProductPublicComponent implements OnInit {
     console.log("Activando seccion");
     this.inventoryService.activeSectionInventoty(true);
   }
-
+  selectCategory(category: Category) {
+    this.categoryService.setSelectedCategory(category);
+  }
 
 }
