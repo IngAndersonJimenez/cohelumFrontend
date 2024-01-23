@@ -58,6 +58,7 @@ export class ExtendedWarrantyComponent implements OnInit {
             ).subscribe({
                 next: (data: any) => {
                     this.notificationService.showSuccess("Mensaje enviado correctamente", "Registro Exitoso");
+                    this.form.reset();
                 },
                 error: (error) => {
                     console.error('Error al obtener el token:', error);
