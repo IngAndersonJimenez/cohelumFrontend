@@ -32,16 +32,20 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.loginForm.valid) {
+      const emailValue = this.loginForm.get('emailUser')?.value.toLowerCase();
+      if (emailValue === 'public@cohelum.com') {
+        this.notificationService.showError('No se permite el acceso con esta dirección de correo electrónico', 'Acceso no autorizado');
+        return;
+      }
+
       this.loginService.login(this.loginForm.value).subscribe(
           data => {
-            console.log(data)
+            console.log(data);
           },
-
-          err => this.notificationService.showError('Error en las credenciales', 'Login Faliido')
+          err => this.notificationService.showError('Error en las credenciales', 'Inicio de sesión fallido')
       );
-
-
     }
   }
+
 
 }
