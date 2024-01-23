@@ -219,6 +219,10 @@
 .form{
   margin-left:5rem;
   margin-top:5rem;
+  @media (max-width: 991px) {
+    margin-left: 0;
+    margin-top: 0;
+  }
 }
 .btn-submit{
   width: 100%

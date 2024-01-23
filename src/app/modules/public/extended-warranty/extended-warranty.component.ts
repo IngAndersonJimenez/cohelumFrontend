@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NotificationService} from "../../../notifications/notification.service";
 import {ContactService} from "../../../services/contact.service";
 import {catchError, switchMap} from "rxjs";
+import {ReasonEnum} from "../../../interface/Contact";
 
 @Component({
     selector: 'app-extended-warranty',
@@ -13,6 +14,9 @@ export class ExtendedWarrantyComponent implements OnInit {
 
     form!: FormGroup;
     selectedPDFName: string | undefined;
+    showMessage: boolean = false;
+    radicadoNumber: string | null = null;
+    @ViewChild('radicadoInput', { static: false }) radicadoInput!: ElementRef;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -58,9 +62,11 @@ export class ExtendedWarrantyComponent implements OnInit {
             ).subscribe({
                 next: (data: any) => {
                     this.notificationService.showSuccess("Mensaje enviado correctamente", "Registro Exitoso");
+                    this.openPopup(data.responseDTO.idRequestG)
                     this.form.reset();
                 },
                 error: (error) => {
+                    this.form.reset();
                     console.error('Error al obtener el token:', error);
                 }
             });
@@ -92,5 +98,16 @@ export class ExtendedWarrantyComponent implements OnInit {
       }
     }
   }
+    copyToClipboard() {
+        const inputElement = this.radicadoInput.nativeElement;
+        inputElement.select();
+        document.execCommand('copy');
+        this.showMessage = false;
+    }
 
+    openPopup(idRequestG: number): void {
+        const prefix= 'GE_';
+        this.radicadoNumber = `${prefix}${idRequestG}`;
+        this.showMessage = true;
+    }
 }
