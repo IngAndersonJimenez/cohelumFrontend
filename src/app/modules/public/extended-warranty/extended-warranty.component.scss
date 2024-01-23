@@ -20,6 +20,7 @@
       flex-wrap: wrap;
       justify-content: space-between;
 
+
       .left-container {
         width: 100%;
         margin-top: 5rem;
@@ -223,3 +224,44 @@
   width: 100%
 }
 
+.form-group {
+  position: relative;
+
+  .info-icon {
+    cursor: help;
+    margin-left: 5px; // Ajusta el espaciado entre el texto y el ícono si es necesario
+
+    &[data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: #fff;
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      white-space: nowrap;
+    }
+
+    &[data-tooltip]:hover::before {
+      content: "\2022"; // Utiliza un pequeño punto como indicador
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #333;
+      font-size: 18px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    &[data-tooltip]:hover::after,
+    &[data-tooltip]:hover::before {
+      opacity: 1;
+    }
+  }
+}

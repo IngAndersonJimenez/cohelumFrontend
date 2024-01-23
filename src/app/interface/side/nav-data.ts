@@ -52,11 +52,7 @@ export const navbarData:INavbarData[] = [
     items:[
       {
         routerLink: 'contact',
-        label: 'Contacto general'
-      },
-      {
-        routerLink: 'contact',
-        label: 'Garantía'
+        label: 'Mensajes'
       },
       {
         routerLink: 'extended-warranty-c',

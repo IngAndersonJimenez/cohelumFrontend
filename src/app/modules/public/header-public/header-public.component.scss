@@ -229,7 +229,7 @@ ul {
     border-bottom: 1px solid rgba(255, 255, 255, .1);
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 991px) {
     .navbar .nav-item .dropdown-menu {
         display: block;
         visibility: hidden;
@@ -316,3 +316,4 @@ ul {
         min-width: auto;
     }
 }
+

@@ -105,7 +105,6 @@ export class ContactService {
         const url = `${environment.apiUrl}api/v1/requestContact/notifications/update/${status}/${idContact}`;
 
         return this.http.put(url, {}, { headers }).pipe(
-            // Notificar al servicio compartido después de una actualización exitosa
             tap(() => {
                 this.updateNewMessageCount(status ? this.newMessageCount - 1 : this.newMessageCount);
                 this.newMessageCountSubject.next(this.newMessageCount);
