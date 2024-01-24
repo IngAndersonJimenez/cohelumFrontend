@@ -4,7 +4,7 @@
             <div class="inventory-subtitle"><b>Nuestros productos</b></div>
         </div>
         <div class="row">
-            <div class="inventory-title">Destacados</div>
+            <div class="inventory-title">{{ selectedCategoryDescription }}</div>
         </div>
     </div>
 </section>
@@ -21,7 +21,7 @@
                     </div>
                     <div class="col">
                         <select class="form-select" aria-label="Default select example"
-                            (change)="orderInventory($event)">
+                                (change)="orderInventory($event)">
                             <option [value]="0" selected>Ordernar productos</option>
                             <option [value]="order.code" *ngFor="let order of optionOrder; let i = index">
                                 {{order.name}}</option>
@@ -42,7 +42,7 @@
                         </div>
 
                         <div class="row">
-                            <hr />
+                            <hr/>
                             <h6>Categoria</h6>
 
                             <div class="form-check">
@@ -50,7 +50,7 @@
                                     <p><strong>{{category.getCategory().getDescription()}}</strong></p>
                                     <div *ngFor="let subCategory of category.getListSubCategories()">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1" [value]="subCategory.getIdSubCategory()" (click)="filterForSubCategory(subCategory.getIdCategory(),
+                                               id="flexRadioDefault1" [value]="subCategory.getIdSubCategory()" (click)="filterForSubCategory(subCategory.getIdCategory(),
                                             subCategory.getIdSubCategory())">
                                         <label class="form-check-label" for="flexRadioDefault1">
                                             {{subCategory.getDescription()}}
@@ -61,7 +61,7 @@
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault1" (click)="filterForSubCategory(0, 0)" checked>
+                                       id="flexRadioDefault1" (click)="filterForSubCategory(0, 0)" checked>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Todos
                                 </label>

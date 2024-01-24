@@ -8,6 +8,7 @@ import {NotificationService} from "../notifications/notification.service";
 import {LoginService} from "./login.service";
 import {SubCategory} from "../interface/products/SubCategory";
 import { Category } from 'src/app/interface/products/Category';
+import {ResponseLogin} from "../interface/ResponseLogin";
 
 
 @Injectable({
@@ -15,7 +16,8 @@ import { Category } from 'src/app/interface/products/Category';
 })
 export class CategoryService {
 
-  private selectedCategorySource = new BehaviorSubject<Category | null>(null);
+  private categorySelect : Category =  new Category('','',0);
+  private selectedCategorySource = new BehaviorSubject(this.categorySelect);
   selectedCategory$ = this.selectedCategorySource.asObservable();
 
 
@@ -23,9 +25,11 @@ export class CategoryService {
 
   }
 
-  setSelectedCategory(category: Category | null) {
+  setSelectedCategory(category: Category) {
     this.selectedCategorySource.next(category);
   }
+
+
 
   getToken(): string {
     let token: string = '';

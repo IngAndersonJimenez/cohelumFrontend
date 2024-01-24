@@ -63,8 +63,11 @@ export class ProductPublicComponent implements OnInit {
     console.log("Activando seccion");
     this.inventoryService.activeSectionInventoty(true);
   }
-  selectCategory(category: Category) {
-    this.categoryService.setSelectedCategory(category);
+  selectCategory(category: any) {
+    let categorySelected : Category = new Category( '','',0);
+    categorySelected.setIdCategory(category.getInventoryCategoryDTO.idCategory);
+    categorySelected.setDescription(category.getInventoryCategoryDTO.description);
+    this.categoryService.setSelectedCategory(categorySelected);
   }
 
 }
