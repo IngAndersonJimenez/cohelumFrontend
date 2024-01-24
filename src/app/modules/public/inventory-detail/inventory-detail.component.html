@@ -47,11 +47,19 @@
                     </a>
                 </div>
                 <div class="col-md-6">
-                    <div class="image-container">
+                    <div class="image-container" style="width: 400px; height: 400px; overflow: hidden;">
                         <ng-container *ngIf="images && images.length > 0">
-                            <img [src]="pathImage + images[currentIndex]" class="contained-image" loading="lazy" />
+                            <p-image
+                                    [src]="pathImage + images[currentIndex]"
+                                    [previewImageSrc]="pathImage + images[currentIndex]"
+                                    alt="Image"
+                                    width="100%"
+                                    height="100%"
+                                    [preview]="true"
+                            ></p-image>
                         </ng-container>
                     </div>
+
                     <div class="thumbnail-gallery">
                         <div class="thumbnails-container">
                             <ng-container *ngFor="let image of images; let i = index">
