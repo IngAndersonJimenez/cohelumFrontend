@@ -4,7 +4,11 @@ export class ProductFull {
 
     private _idInventory: number;
     private _name: string;
+    private _reference:string;
     private _price: number;
+
+
+
     private _unitsAvailable: number;
     private _active: boolean;
     private _characteristic: string;
@@ -25,7 +29,7 @@ export class ProductFull {
 
     private _image: string | null;
 
-    constructor(idInventory: number, name: string, price: number, unitsAvailable: number, active: boolean, characteristic: string, datasheet: SafeResourceUrl | null, idCategory: number, description: string, idInventoryImage: number, image: string | null,descriptionSubCategory:string,idSubCategory:number) {
+    constructor(idInventory: number, name: string, price: number, unitsAvailable: number, active: boolean, characteristic: string, datasheet: SafeResourceUrl | null, idCategory: number, description: string, idInventoryImage: number, image: string | null,descriptionSubCategory:string,idSubCategory:number,reference:string) {
         this._idInventory = idInventory;
         this._name = name;
         this._price = price;
@@ -39,6 +43,7 @@ export class ProductFull {
         this._image = image;
         this._descriptionSubCategory = descriptionSubCategory
         this._idSubCategory = idSubCategory
+        this._reference = reference
     }
 
     get idInventory(): number {
@@ -136,5 +141,12 @@ export class ProductFull {
 
     set descriptionSubCategory(value: string) {
         this._descriptionSubCategory = value;
+    }
+    get reference(): string {
+        return this._reference;
+    }
+
+    set reference(value: string) {
+        this._reference = value;
     }
 }

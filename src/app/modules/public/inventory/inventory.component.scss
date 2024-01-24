@@ -269,3 +269,11 @@ hr {border: 3px solid #666; border-radius: 300px/10px; height: 0; text-align: ce
         margin:1rem;
     }
 }
+@media (max-width: 768px) {
+    .products {
+        width: 100%;
+    }
+    .col-10{
+        width: 100%;
+    }
+}

@@ -49,11 +49,15 @@
                                     </ul>
                                 </li>
 
-                                <li class="nav-item desplegar">
-                                    <label class="nav-link puntero" [routerLink]="['/home/content']"
+                                <li class="nav-item1 nav-item dropdown">
+                                    <label class="nav-link puntero nav-link dropdown-toggle" [routerLink]="['/home/content']"
                                         (click)="closeMenu(); goTo('categoriasSeccion')">Productos</label>
                                     <ul class="dropdown-menu ">
-                                        <li></li>
+                                        <li *ngFor="let category of category" id="option-category">
+                                            <a [routerLink]="['/Inventory']" (click)="selectCategory(category); closeMenu()" fragment="inventorySeccion">
+                                                {{ category.getInventoryCategoryDTO.description }}
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
 
@@ -70,7 +74,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <label class="nav-link puntero" title="Cata electrodomésticos" [routerLink]="['/Inventory']" (click)="selectCategory(category); closeMenu()"
+                                    <label class="nav-link puntero" title="Cata electrodomésticos" [routerLink]="['/Inventory']" (click)="selectCategoryCata(); closeMenu()"
                                            fragment="inventorySeccion">Cata</label>
                                 </li>
                                 <li class="nav-item">

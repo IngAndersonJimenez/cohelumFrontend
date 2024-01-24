@@ -146,6 +146,7 @@ export class InventoryComponent implements OnInit {
                         listSubCategories
                     ));
                 }
+                this.getSubCategoryAll(token);
                 this.categoryService.selectedCategory$.subscribe(
                     data => {
                         this.selectedCategoryDescription = data.getDescription();
@@ -154,7 +155,7 @@ export class InventoryComponent implements OnInit {
                 );
             }
         );
-        this.getSubCategoryAll(token);
+
     }
 
 

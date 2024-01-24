@@ -41,6 +41,7 @@ export class ConsultProductComponent implements OnInit {
                 private notificationService: NotificationService, private categoryService:CategoryService) {
         this.consultForm = this.fb.group({
             name: [''],
+            reference: [''],
             price: [''],
             unitsAvailable: [''],
             description: [''],
@@ -51,10 +52,11 @@ export class ConsultProductComponent implements OnInit {
         });
         this.updateForm = this.fb.group({
             name: [''],
+            reference: [''],
             price: [''],
             unitsAvailable: [''],
             idCategory: [null],
-            idSubCategory:[null],
+            idSubCategory: [null],
             characteristic: [''],
             description: [''],
             datasheet: [''],
@@ -68,7 +70,7 @@ export class ConsultProductComponent implements OnInit {
                     this.subcategories.push(
                         new SubCategory(iter.idSubCategory, iter.description, iter.active, iter.idCategory)
                     );
-                    console.log('Subcategoría agregada:', iter);
+
                 }
 
             },
@@ -99,7 +101,8 @@ export class ConsultProductComponent implements OnInit {
                             responseDTO.getInventoryImageDTO[0].idInventoryImage,
                             responseDTO.getInventoryImageDTO[0].image,
                             responseDTO.getInventorySubCategoryDTO.description,
-                            responseDTO.getInventorySubCategoryDTO.idSubCategory
+                            responseDTO.getInventorySubCategoryDTO.idSubCategory,
+                            responseDTO.getInventoryDTO.reference
                         );
                         console.log('El pdf es:', product.datasheet);
                         this.products.push(product);
@@ -159,7 +162,8 @@ export class ConsultProductComponent implements OnInit {
                         this.updateForm.get('idInventoryImage')?.value,
                         this.updateForm.get('image')?.value,
                         this.updateForm.get('descriptionSubCategory')?.value,
-                        this.updateForm.get('idSubCategory')?.value
+                        this.updateForm.get('idSubCategory')?.value,
+                        this.updateForm.get('reference')?.value,
                     ));
                 }
             );
@@ -272,6 +276,7 @@ export class ConsultProductComponent implements OnInit {
 
         const formData = new FormData();
         formData.append('name', data.name);
+        formData.append('reference', data.reference);
         formData.append('price', data.price);
         formData.append('unitsAvailable', data.unitsAvailable);
         formData.append('idCategory', this.updateForm.get('idCategory')?.value);
@@ -288,6 +293,7 @@ export class ConsultProductComponent implements OnInit {
 
         this.updateForm.setValue({
             name: product.name,
+            reference: this.updateForm.get('reference')?.value,
             price: product.price,
             unitsAvailable: product.unitsAvailable,
             idCategory: product.idCategory,
@@ -304,10 +310,7 @@ export class ConsultProductComponent implements OnInit {
                 this.categories = response.responseDTO;
                 this.showUpdateDialog = true;
                 this.loadingCategories = false;
-                // Filtra las subcategorías iniciales
                 this.subCategoryLoad({ target: { value: this.updateForm.get('idCategory')?.value } });
-                console.log('Subcategorías filtradas:', this.subcategoriesFilter);
-
             }
         );
 
@@ -381,7 +384,8 @@ export class ConsultProductComponent implements OnInit {
                 this.updateForm.get('idInventoryImage')?.value,
                 this.updateForm.get('image')?.value,
                 this.updateForm.get('descriptionSubCategory')?.value,
-                this.updateForm.get('idSubCategory')?.value
+                this.updateForm.get('idSubCategory')?.value,
+                this.updateForm.get('reference')?.value
             ));
         }
     }

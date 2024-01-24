@@ -201,25 +201,27 @@ export class HeaderPublicComponent  implements OnInit{
     }
 
 
-    selectCategory(category: any) {
-        // Filtrar por descripción específica
+    selectCategoryCata() {
+
         const filteredCategory = this.category.find((c: any) =>
             c.getInventoryCategoryDTO.description.toLowerCase().includes('cata electrodomesticos')
         );
-
-        console.log('Categoría filtrada:', filteredCategory); // Agrega este console.log para depurar
 
         if (filteredCategory) {
             let categorySelected: Category = new Category('','',0);
             categorySelected.setIdCategory(filteredCategory.getInventoryCategoryDTO.idCategory);
             categorySelected.setDescription(filteredCategory.getInventoryCategoryDTO.description);
             this.categoryService.setSelectedCategory(categorySelected);
-            console.log('Categoría refiltrada:', categorySelected);
         }
 
     }
 
-
+    selectCategory(category: any) {
+        let categorySelected : Category = new Category( '','',0);
+        categorySelected.setIdCategory(category.getInventoryCategoryDTO.idCategory);
+        categorySelected.setDescription(category.getInventoryCategoryDTO.description);
+        this.categoryService.setSelectedCategory(categorySelected);
+    }
 
 
 
