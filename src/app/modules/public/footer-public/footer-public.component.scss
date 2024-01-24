@@ -180,3 +180,20 @@ a {
     font-size:25px;
   }
 }
+#whatsapp {
+  position: fixed;
+  bottom: 20px;
+  left:20px;
+  opacity: 0.8;
+}
+svg {
+  width: 80px;
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,.4));
+}
+circle {
+  fill: black;
+
+}
+path {
+  fill: #fff;
+}

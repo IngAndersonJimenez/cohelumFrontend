@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoginService } from "./login.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../environments/environment";
-import { catchError, map, Observable } from "rxjs";
+import {BehaviorSubject, catchError, map, Observable} from "rxjs";
 import { SettingTP } from "../interface/settings/SettingTP";
 import { NotificationService } from "../notifications/notification.service";
 
@@ -11,7 +11,19 @@ import { NotificationService } from "../notifications/notification.service";
 })
 export class SettingsService {
 
+  private visitorCount = new BehaviorSubject<number>(0);
+  visitorCount$ = this.visitorCount.asObservable();
+
   constructor(private loginService: LoginService, private http: HttpClient, private notificationService: NotificationService) { }
+
+  increaseVisitorCount() {
+    const currentCount = this.visitorCount.value;
+    this.visitorCount.next(currentCount + 1);
+  }
+  // Método agregado para devolver el observable
+  getVisitorCount$() {
+    return this.visitorCount$;
+  }
 
   getToken(): string {
     let token: string = '';

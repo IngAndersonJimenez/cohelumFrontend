@@ -180,7 +180,7 @@ export class InventoryComponent implements OnInit {
     filterForSubCategory(idCategory: number, idSubCategory: number) {
         if (idCategory == 0 && idSubCategory == 0) {
             this.inventoryFilter = this.inventoryGrid;
-            this.updateSelectedCategoryDescription('Todos');
+            this.updateSelectedCategoryDescription('Galeria completa');
         } else {
             this.inventoryFilter = [];
             for (let inventory of this.inventoryGrid) {

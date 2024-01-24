@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {SettingsService} from "../../../../services/settings.service";
 
 interface SideNavToggle {
   screenWidth: number;
@@ -9,10 +10,13 @@ interface SideNavToggle {
   templateUrl: './dashboard-content.component.html',
   styleUrls: ['./dashboard-content.component.scss']
 })
-export class DashboardContentComponent {
+export class DashboardContentComponent implements OnInit{
 
   @Input() collapsed = false;
   @Input() screenWidth = 0;
+
+  constructor(private settingService:SettingsService) {
+  }
 
   isSideNavCollapsed = false;
 
@@ -31,4 +35,16 @@ export class DashboardContentComponent {
     }
     return styleClass;
   }
+
+  ngOnInit(): void {
+    this.settingService.increaseVisitorCount();
+  }
+  getVisitorCount$() {
+    return this.settingService.getVisitorCount$();
+  }
+
+  incrementarContador() {
+    this.settingService.increaseVisitorCount();
+  }
+
 }

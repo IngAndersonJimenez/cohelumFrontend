@@ -76,4 +76,5 @@ export class CategoryService {
     return this.http.put<any>(`${environment.apiUrl}api/v1/inventorySubCategory/update?idSubcategory=${idSubcategory}`,body,{headers})
   }
 
+
 }

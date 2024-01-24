@@ -8,6 +8,7 @@ import { SharedModule } from './modules/shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { PublicModule } from './modules/public/public.module';
+import {SettingsService} from "./services/settings.service";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { PublicModule } from './modules/public/public.module';
     PublicModule,
 
   ],
-  providers: [],
+  providers: [SettingsService],
   bootstrap: [AppComponent],
   exports:[
     BrowserModule,

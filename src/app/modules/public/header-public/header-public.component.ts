@@ -1,9 +1,12 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { InventoryService } from 'src/app/services/inventory.service';
 import { MenuItem } from 'primeng/api';
 import { environment } from 'src/app/environments/environment';
+import { Category } from 'src/app/interface/products/Category';
+import {CategoryService} from "../../../services/category.service";
+import {LoginService} from "../../../services/login.service";
 
 @Component({
   selector: 'app-header-public',
@@ -14,13 +17,28 @@ export class HeaderPublicComponent  implements OnInit{
 
     pathImage: string = environment.sourceImage;
     urlLogo : string = this.pathImage + "/imagenes/home/logo.png";
+    categories: Array<Category> = [];
+    category: Array<any> = [];
 
   items: MenuItem[] | undefined;
     isDropdownOpen = false;
     menuVisible = false;
 
-  constructor(public router: Router, private scroller: ViewportScroller, private inventoryService:InventoryService,private renderer: Renderer2) {
+
+  constructor(public router: Router, private scroller: ViewportScroller, private inventoryService:InventoryService,
+              private renderer: Renderer2,private categoryService:CategoryService, private loginService:LoginService, private activatedRoute: ActivatedRoute) {
+      this.router.events.subscribe((event) => {
+          if (event instanceof NavigationEnd) {
+              this.handleFragment();
+          }
+      });
   }
+    private handleFragment() {
+        this.activatedRoute.fragment.subscribe((fragment) => {
+            if (fragment === 'inventorySeccion') {
+            }
+        });
+    }
 
   navegateLogin() {
     this.router.navigateByUrl('corporate/login');
@@ -164,7 +182,47 @@ export class HeaderPublicComponent  implements OnInit{
             icon: 'pi pi-fw pi-power-off'
         }
     ];
+    this.getTokenPublic()
+
 }
+
+    private getTokenPublic() {
+        this.loginService.getTokenPublicS().subscribe(data => {
+            this.getCategories(data.token);
+        });
+    }
+
+    private getCategories(token: string) {
+        let response: any;
+        this.inventoryService.getCategoryAll(token).subscribe(data => {
+            response = data;
+            this.category = response.responseDTO.categoryFullDTOList;
+        });
+    }
+
+
+    selectCategory(category: any) {
+        // Filtrar por descripción específica
+        const filteredCategory = this.category.find((c: any) =>
+            c.getInventoryCategoryDTO.description.toLowerCase().includes('cata electrodomesticos')
+        );
+
+        console.log('Categoría filtrada:', filteredCategory); // Agrega este console.log para depurar
+
+        if (filteredCategory) {
+            let categorySelected: Category = new Category('','',0);
+            categorySelected.setIdCategory(filteredCategory.getInventoryCategoryDTO.idCategory);
+            categorySelected.setDescription(filteredCategory.getInventoryCategoryDTO.description);
+            this.categoryService.setSelectedCategory(categorySelected);
+            console.log('Categoría refiltrada:', categorySelected);
+        }
+
+    }
+
+
+
+
+
     toggleDropdown() {
         this.isDropdownOpen = !this.isDropdownOpen;
     }
@@ -192,5 +250,7 @@ export class HeaderPublicComponent  implements OnInit{
         this.renderer.removeClass(navbar, 'show'); // Oculta el menú
         this.menuVisible = false; // Actualiza el estado del menú
     }
+
+
 
 }
