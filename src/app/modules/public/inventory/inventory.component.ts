@@ -95,7 +95,9 @@ export class InventoryComponent implements OnInit {
                         response.getInventoryDTO.name,
                         response.getInventoryDetailsDTO.characteristic,
                         response.getInventoryDetailsDTO.datasheet,
-                        response.getInventoryDTO.idInventory);
+                        response.getInventoryDTO.idInventory,
+                        response.getInventoryDTO.reference
+                        );
                     this.inventoryService.setImages(response.getInventoryDTO.idInventory, response.getInventoryImageDTO);
                     this.setImages(response.getInventoryImageDTO, inventoryGridInto);
                     this.inventoryGrid.push(inventoryGridInto);
@@ -226,6 +228,7 @@ export class InventoryComponent implements OnInit {
         const image = inventory.getImages()
         const price = inventory.getPrice()
         const idInventory = inventory.getIdInventory()
+        const reference = inventory.getReference()
 
         this.inventoryService.setSelectedCategoryId(idCategory);
         this.inventoryService.setSelectedInventoryDetails({
@@ -234,7 +237,8 @@ export class InventoryComponent implements OnInit {
             datasheet: datasheet,
             image: image,
             price: price,
-            idInventory: idInventory
+            idInventory: idInventory,
+            reference: reference
         });
         this.loginService.getTokenPublicS().subscribe(dataAuth => {
             this.commentService.getCommentById(idInventory, dataAuth.token).subscribe(

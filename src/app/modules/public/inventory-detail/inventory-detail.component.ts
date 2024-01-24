@@ -1,12 +1,12 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {InventoryService} from "../../../services/inventory.service";
-import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {CommentService} from "../../../services/comment.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {LoginService} from "../../../services/login.service";
-import {InventoryComments} from "../../../interface/comment/InventoryComments";
-import {environment} from "../../../environments/environment";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { InventoryService } from "../../../services/inventory.service";
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
+import { CommentService } from "../../../services/comment.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { LoginService } from "../../../services/login.service";
+import { InventoryComments } from "../../../interface/comment/InventoryComments";
+import { environment } from "../../../environments/environment";
 
 @Component({
     selector: 'app-inventory-detail',
@@ -32,7 +32,7 @@ export class InventoryDetailComponent implements OnInit {
 
     scrollToReview() {
         if (this.reviewSection && this.reviewSection.nativeElement) {
-            this.reviewSection.nativeElement.scrollIntoView({behavior: 'smooth'});
+            this.reviewSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
         }
     }
 
@@ -71,7 +71,7 @@ export class InventoryDetailComponent implements OnInit {
     ];
 
     constructor(private route: ActivatedRoute, private inventoryService: InventoryService, private sanitizer: DomSanitizer,
-                private commentService: CommentService, private formBuilder: FormBuilder, private loginService: LoginService) {
+        private commentService: CommentService, private formBuilder: FormBuilder, private loginService: LoginService) {
         this.reviewSection = undefined;
 
     }
@@ -90,6 +90,8 @@ export class InventoryDetailComponent implements OnInit {
         this.buildForm()
         this.categoryId = this.inventoryService.getSelectedCategoryId();
         this.details = this.inventoryService.getSelectedInventoryDetails();
+        console.log("Detalle")
+        console.log(this.details)
         this.currentIdInventory = this.details.idInventory;
         this.commentService.getComments().subscribe(comments => {
             this.comments = comments;
@@ -100,7 +102,7 @@ export class InventoryDetailComponent implements OnInit {
             this.nextImage();
         }, 3000);
 
-       this.images = this.inventoryService.getImages();
+        this.images = this.inventoryService.getImages();
 
     }
     nextImage(): void {
@@ -114,14 +116,12 @@ export class InventoryDetailComponent implements OnInit {
 
 
     createComment(inventoryCommentDTO: any, token: string, idInventory: number): void {
-        const commentWithId = {...inventoryCommentDTO, idInventory};
+        const commentWithId = { ...inventoryCommentDTO, idInventory };
 
         this.commentService.createInventoryComment(commentWithId, token)
             .subscribe(
                 response => {
                     this.commentForm.reset();
-
-
                 }
             );
     }
@@ -171,7 +171,6 @@ export class InventoryDetailComponent implements OnInit {
 
         const totalRatingsSum = this.comments.reduce((sum, comment) => sum + comment.qualification, 0);
         this.averageRating = totalRatingsSum / this.comments.length;
-
     }
 
 
