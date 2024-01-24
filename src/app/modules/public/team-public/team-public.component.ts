@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { environment } from 'src/app/environments/environment';
 import { Carrusel } from 'src/app/interface/home/carrusel';
 
+
 @Component({
   selector: 'app-team-public',
   templateUrl: './team-public.component.html',

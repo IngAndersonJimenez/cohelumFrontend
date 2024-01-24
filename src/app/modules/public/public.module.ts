@@ -29,9 +29,10 @@ import { MenubarModule } from 'primeng/menubar';
 import { InventoryDetailComponent } from './inventory-detail/inventory-detail.component';
 import { ImageModule } from 'primeng/image';
 import { UsComponent } from './us/us.component';
-import {SlickCarouselModule} from "ngx-slick-carousel";
+import { SlickCarouselModule } from "ngx-slick-carousel";
 import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { ExtendedWarrantyComponent } from './extended-warranty/extended-warranty.component';
+import { ProjectsGalleryPublicComponent } from './projects-gallery-public/projects-gallery-public.component';
 
 @NgModule({
   declarations: [
@@ -47,34 +48,35 @@ import { ExtendedWarrantyComponent } from './extended-warranty/extended-warranty
     InventoryComponent,
     InventoryDetailComponent,
     UsComponent,
-    ExtendedWarrantyComponent
+    ExtendedWarrantyComponent,
+    ProjectsGalleryPublicComponent
   ],
-    imports: [
-        CommonModule,
-        PublicRoutingModule,
-        CarouselModule,
-        GalleriaModule,
-        MaterialModule,
-        PaginatorModule,
-        ReactiveFormsModule,
-        MultiSelectModule,
-        DropdownModule,
-        MatDialogModule,
-        MatButtonModule,
-        DataViewModule,
-        TagModule,
-        RatingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RadioButtonModule,
-        MenubarModule,
-        ImageModule,
-        SlickCarouselModule,
-        CascadeSelectModule
-    ],
+  imports: [
+    CommonModule,
+    PublicRoutingModule,
+    CarouselModule,
+    GalleriaModule,
+    MaterialModule,
+    PaginatorModule,
+    ReactiveFormsModule,
+    MultiSelectModule,
+    DropdownModule,
+    MatDialogModule,
+    MatButtonModule,
+    DataViewModule,
+    TagModule,
+    RatingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RadioButtonModule,
+    MenubarModule,
+    ImageModule,
+    SlickCarouselModule,
+    CascadeSelectModule
+  ],
   exports: [
     HeaderPublicComponent,
     FooterPublicComponent
-  ] 
+  ]
 })
 export class PublicModule { }
