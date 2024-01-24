@@ -36,7 +36,7 @@ export class LoginService {
     }
 
     getTokenPublic(): Observable<any> {
-        let requestLogin: RequestLogin = { emailUser: 'public@cohelum.com', password: 'figq36L6v2O7DIz' }
+        let requestLogin: RequestLogin = { emailUser: 'prueba@gmail.com', password: '1010' }
         return this.http.post<ResponseLogin>(environment.apiUrl + 'login', requestLogin).pipe(
             map(result => {
                 if (result != null && result.token) {
@@ -47,7 +47,7 @@ export class LoginService {
     }
 
     getTokenPublicS(): Observable<ResponseLogin> {
-        let requestLogin: RequestLogin = { emailUser: 'public@cohelum.com', password: 'figq36L6v2O7DIz' }
+        let requestLogin: RequestLogin = { emailUser: 'prueba@gmail.com', password: '1010' }
         return this.http.post<ResponseLogin>(environment.apiUrl + 'login', requestLogin).pipe(
             map(result => {
                 const responseLogin: ResponseLogin = { token: result.token };

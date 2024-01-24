@@ -38,6 +38,7 @@ export class CreateProductComponent implements OnInit {
   private buildForm() {
     this.productForm = this.formBuilder.group({
       name: ['', Validators.required],
+      reference: ['', Validators.required],
       price: [null, Validators.required],
       unitsAvailable: [null, Validators.required],
       categoryId: [null, Validators.required],
@@ -55,6 +56,7 @@ export class CreateProductComponent implements OnInit {
     if (this.productForm.valid) {
       const formData = new FormData();
       formData.append('name', this.productForm.get('name')?.value);
+      formData.append('reference', this.productForm.get('reference')?.value);
       formData.append('price', this.productForm.get('price')?.value);
       formData.append('unitsAvailable', this.productForm.get('unitsAvailable')?.value);
       formData.append('categoryId', this.productForm.get('categoryId')?.value);

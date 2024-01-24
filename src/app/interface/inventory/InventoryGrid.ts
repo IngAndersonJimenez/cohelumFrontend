@@ -13,11 +13,12 @@ export class InventoryGrid {
     private characteristic: string
     private datasheet: string
     private idInventory: number
+    private reference: string;
 
     constructor(descriptionCategory: string, descriptionInventory: string, price: number,
         unitsAvaible: number, imageInitial: string, imageSecond: string, images: Array<string>, idCategory: number,
         idSubCategory: number,
-        name: string, characteristic: string, datasheet: string, idInventory: number
+        name: string, characteristic: string, datasheet: string, idInventory: number, reference: string
     ) {
         this.descriptionCategory = descriptionCategory
         this.descriptionInventory = descriptionInventory
@@ -32,6 +33,7 @@ export class InventoryGrid {
         this.characteristic = characteristic
         this.datasheet = datasheet
         this.idInventory = idInventory
+        this.reference = reference
     }
 
     public getDescriptionCategory(): string {
@@ -136,6 +138,14 @@ export class InventoryGrid {
 
     public setDatasheet(value: string) {
         this.datasheet = value;
+    }
+
+    public getReference(): string {
+        return this.reference;
+    }
+
+    public setReference(value: string) {
+        this.reference = value;
     }
 
 }
