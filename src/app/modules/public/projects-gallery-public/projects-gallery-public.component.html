@@ -1,0 +1,39 @@
+<section #projectsGallerySeccion id="projectsGallery" class="categories inventory-content">
+    <div class="container">
+        <div class="row">
+            <div class="inventory-subtitle"><b>Nuestros proyectos</b></div>
+        </div>
+        <div class="row">
+            <div class="inventory-title">Galeria cohelum</div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+
+                <p-galleria [value]="images" [responsiveOptions]="responsiveOptions" [numVisible]="5">
+                    <ng-template pTemplate="item" let-item>
+                        <img [src]="item.itemImageSrc" style="width: 100%;" loading="lazy" />
+                    </ng-template>
+                    <ng-template pTemplate="thumbnail" let-item>
+                        <div class="grid grid-nogutter justify-content-center">
+                            <img [src]="item.thumbnailImageSrc" loading="lazy" />
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="caption" let-item>
+                        <h4 style="margin-bottom: .5rem; color: #ffffff;">{{ item.title }}</h4>
+                        <p>{{ item.alt }}</p>
+                    </ng-template>
+                </p-galleria>
+
+            </div>
+            <div class="col-4">
+                <video loop muted controls class="size-video" class="video">
+                    <source src="assets/image/experiences/Video1.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+</section>

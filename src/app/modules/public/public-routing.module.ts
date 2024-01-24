@@ -18,7 +18,7 @@ const routes: Routes = [
         path: 'inventory-detail',
         component: InventoryDetailComponent,
         data: { title: 'Inventory Detail' }
-      },
+      }
     ]
   }
 
