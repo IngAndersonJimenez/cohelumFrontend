@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://178.16.143.124:8088/',
-  sourceImage: ''
+  apiUrl: 'http://localhost:8095/',
+  sourceImage: 'http://localhost:84'
 };
 /*
  * For easier debugging in development mode, you can import the following file

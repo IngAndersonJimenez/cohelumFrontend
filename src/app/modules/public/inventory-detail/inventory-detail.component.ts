@@ -7,12 +7,15 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { LoginService } from "../../../services/login.service";
 import { InventoryComments } from "../../../interface/comment/InventoryComments";
 import { environment } from "../../../environments/environment";
+import {ImageItem} from "../../../interface/products/ImageItem";
 
 @Component({
     selector: 'app-inventory-detail',
     templateUrl: './inventory-detail.component.html',
     styleUrls: ['./inventory-detail.component.scss']
 })
+
+
 export class InventoryDetailComponent implements OnInit {
 
     images: string[] = [];
@@ -36,39 +39,6 @@ export class InventoryDetailComponent implements OnInit {
         }
     }
 
-    positionOptions = [
-        {
-            label: 'Bottom',
-            value: 'bottom'
-        },
-        {
-            label: 'Top',
-            value: 'top'
-        },
-        {
-            label: 'Left',
-            value: 'left'
-        },
-        {
-            label: 'Right',
-            value: 'right'
-        }
-    ];
-
-    responsiveOptions: any[] = [
-        {
-            breakpoint: '1024px',
-            numVisible: 5
-        },
-        {
-            breakpoint: '768px',
-            numVisible: 3
-        },
-        {
-            breakpoint: '560px',
-            numVisible: 1
-        }
-    ];
 
     constructor(private route: ActivatedRoute, private inventoryService: InventoryService, private sanitizer: DomSanitizer,
         private commentService: CommentService, private formBuilder: FormBuilder, private loginService: LoginService) {
@@ -90,8 +60,12 @@ export class InventoryDetailComponent implements OnInit {
         this.buildForm()
         this.categoryId = this.inventoryService.getSelectedCategoryId();
         this.details = this.inventoryService.getSelectedInventoryDetails();
-        console.log("Detalle")
-        console.log(this.details)
+        console.log("Detalle: ",this.details)
+        if (this.details && this.details.image) {
+            this.images = (this.details.image as ImageItem[]).map(item => item.image);
+            console.log("Imágenes:", this.images);
+        }
+
         this.currentIdInventory = this.details.idInventory;
         this.commentService.getComments().subscribe(comments => {
             this.comments = comments;
@@ -102,7 +76,10 @@ export class InventoryDetailComponent implements OnInit {
             this.nextImage();
         }, 3000);
 
-        this.images = this.inventoryService.getImages();
+
+/*        this.images = this.inventoryService.getImages()[this.currentIdInventory] || [];*/
+
+       // console.log('Ruta de la imagen:', this.images);
 
     }
     nextImage(): void {

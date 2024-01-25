@@ -41,7 +41,7 @@
                             currency:'$':'symbol':'1.0-0'}}</div>
                     </div>
                     <p>{{ details.characteristic }}</p>
-                    <a [href]="pdfUrl" target="_blank" download="Ficha técnica.pdf" class="btn btn-primary pdf">
+                    <a [href]="pdfUrl" target="_blank" download="Ficha técnica.pdf" class="btn pdf">
                         <img src="assets/pdf/pdf-svgrepo-com.svg" alt="Icono PDF" class="icono-pdf" loading="lazy" />
                         Ficha técnica
                     </a>
@@ -63,13 +63,14 @@
                     <div class="thumbnail-gallery">
                         <div class="thumbnails-container">
                             <ng-container *ngFor="let image of images; let i = index">
-                                <img [src]="pathImage + image" class="thumbnail" (click)="changeImage(i)"
-                                    loading="lazy" />
+                                <img [src]="pathImage + image" class="thumbnail" (click)="changeImage(i)" loading="lazy" />
                             </ng-container>
                         </div>
                     </div>
-
                 </div>
+
+
+
 
             </div>
         </div>
