@@ -7,6 +7,7 @@ import { environment } from 'src/app/environments/environment';
 import { Category } from 'src/app/interface/products/Category';
 import {CategoryService} from "../../../services/category.service";
 import {LoginService} from "../../../services/login.service";
+import {encryptionKey} from "../../../interface/security/encryptionKey";
 
 @Component({
   selector: 'app-header-public',
@@ -187,10 +188,11 @@ export class HeaderPublicComponent  implements OnInit{
 }
 
     private getTokenPublic() {
-        this.loginService.getTokenPublicS().subscribe(data => {
-            this.getCategories(data.token);
+        this.loginService.getTokenPublicS1().subscribe(encryptedToken => {
+            this.getCategories(encryptedToken);
         });
     }
+
 
     private getCategories(token: string) {
         let response: any;

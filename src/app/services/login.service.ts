@@ -1,11 +1,13 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { RequestLogin } from '../interface/RequestLogin';
-import { BehaviorSubject, Observable, map } from 'rxjs';
-import { environment } from '../environments/environment';
-import { NotificationService } from '../notifications/notification.service';
-import { ResponseLogin } from "../interface/ResponseLogin";
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {RequestLogin} from '../interface/RequestLogin';
+import {BehaviorSubject, map, Observable} from 'rxjs';
+import {environment} from '../environments/environment';
+import {NotificationService} from '../notifications/notification.service';
+import {ResponseLogin} from "../interface/ResponseLogin";
+import * as CryptoJS from 'crypto-js';
+import {encryptionKey} from "../interface/security/encryptionKey";
 
 @Injectable({
     providedIn: 'root'
@@ -55,5 +57,26 @@ export class LoginService {
             })
         );
     }
+
+    getTokenPublicS1(): Observable<string> {
+        let requestLogin: RequestLogin = {
+            emailUser: 'public@cohelum.com',
+            password: 'figq36L6v2O7DIz'
+        };
+
+        const encryptedEmailUser = CryptoJS.AES.encrypt(requestLogin.emailUser.toString(), encryptionKey).toString();
+        const encryptedPassword = CryptoJS.AES.encrypt(requestLogin.password.toString(), encryptionKey).toString();
+        requestLogin = {
+            emailUser: encryptedEmailUser,
+            password: encryptedPassword
+        };
+
+        return this.http.post<ResponseLogin>(environment.apiUrl + 'login', requestLogin).pipe(
+            map(result => {
+                return result.token;
+            })
+        );
+    }
+
 
 }
