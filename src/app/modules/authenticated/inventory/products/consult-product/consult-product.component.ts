@@ -104,7 +104,6 @@ export class ConsultProductComponent implements OnInit {
                             responseDTO.getInventorySubCategoryDTO.idSubCategory,
                             responseDTO.getInventoryDTO.reference
                         );
-                        console.log('El pdf es:', product.datasheet);
                         this.products.push(product);
                         this.getImageByProduct(responseDTO.getInventoryImageDTO);
                     }
@@ -116,10 +115,8 @@ export class ConsultProductComponent implements OnInit {
 
     getImageByProduct(inventory: any) {
         const productName = this.consultForm.get('name')?.value;
-        console.log('Nombre que llega al get: ' , productName)
         for (let iter of inventory) {
             const imageName = iter.image
-            console.log('Esto llega: ',this.pathImage + `${imageName}` )
             const inventoryImage: InventoryImage = {
                 "idInventoryImage": iter.idInventoryImage,
                 "image":this.pathImage + `${imageName}`,
@@ -185,6 +182,8 @@ export class ConsultProductComponent implements OnInit {
             reader.readAsDataURL(this.selectedFile as any);
         }
     }
+
+
 
     onFileSelected1(event: any, type: string): void {
         const input = event.target;
@@ -304,7 +303,6 @@ export class ConsultProductComponent implements OnInit {
             image: '',
             idInventoryImage: ''
         });
-        console.log('Valor de datasheet:', product.datasheet);
         this.inventoryService.getCategory().subscribe(
             (response: any) => {
                 this.categories = response.responseDTO;
@@ -324,35 +322,37 @@ export class ConsultProductComponent implements OnInit {
     }
 
 
-    updateImage() {
-        const formData = new FormData();
-        formData.append('image', this.updateForm.get('image')?.value);
 
+
+    updateImage(): void {
+        const formData = new FormData();
+        const file: File = this.updateForm.get('image')?.value;
         const idInventoryImage = this.updateForm.get('idInventoryImage')?.value;
 
-        this.inventoryService.updateImageProduct(formData, idInventoryImage).subscribe(
-            (data:any) => {
-                this.reloadProductData()
-                this.closeUpdateImageDialog();
-            }
-        );
+        if (file && file instanceof File) {
+            formData.append('image', file);
+            const fileName = file.name;
+
+            this.inventoryService.updateImageProduct(formData, idInventoryImage, fileName).subscribe(
+                (data: any) => {
+                    this.reloadProductData();
+                    this.closeUpdateImageDialog();
+                }
+            );
+        }
     }
 
 
+
+
+    loadImage(event: any): void {
+        const file = event.target.files[0];
+        if (file) {
+            this.updateForm.get('image')?.setValue(file);
+        }
+    }
     closeUpdateImageDialog() {
         this.showUpdateImageDialog = false;
-    }
-
-    loadImage(image: any) {
-        this.selectedFile = image.target.files[0];
-        if (this.selectedFile) {
-            const reader = new FileReader();
-            reader.onload = (e: any) => {
-            };
-            reader.readAsDataURL(this.selectedFile as any);
-            this.updateForm.get('image')?.setValue(this.selectedFile)
-
-        }
     }
 
     subCategoryLoad(event: any) {

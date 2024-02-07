@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { NotificationService } from "../notifications/notification.service";
 import { environment } from "../environments/environment";
 import { Inventory } from "../interface/products/Inventory";
-import { BehaviorSubject, catchError, map, Observable, tap } from "rxjs";
+import {BehaviorSubject, catchError, map, Observable, tap, throwError} from "rxjs";
 import { LoginService } from "./login.service";
 import { InventoryCategory } from "../interface/products/inventoryCategory";
 import { CategoryProducts } from "../interface/products/CategoryProducts";
@@ -168,7 +168,32 @@ export class InventoryService {
             `${environment.apiUrl}api/v1/inventoryImage/create/${idInventory}`, formData, { headers: headers, });
     }
 
-    updateCategory(idCategory: number, statusCategory: boolean, description: string): Observable<any> {
+
+    updateImageProduct(formData: FormData, idInventoryImage: number, fileName: string): Observable<InventoryImage> {
+        const headers = new HttpHeaders({
+            'Authorization': `${this.getToken()}`,
+        });
+
+        // Agrega el nombre del archivo al FormData
+        formData.append('fileName', fileName);
+
+        return this.http.put<InventoryImage>(`${environment.apiUrl}api/v1/inventoryImage/update/${idInventoryImage}`, formData, { headers }).pipe(
+            catchError(error => {
+                console.error('Error en la solicitud:', error);
+                this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
+                return throwError(error);
+            }),
+            map(result => {
+                this.notificationService.showSuccess("Actualización exitoso", "Imagen Actualizada correctamente!");
+                return result;
+            })
+        );
+    }
+
+
+
+
+    updateCategory(idCategory: number, statusCategory: boolean,description:string): Observable<any> {
         const headers = new HttpHeaders({
             'Authorization': this.getToken(),
         });
@@ -228,6 +253,7 @@ export class InventoryService {
             })
         );
     }
+
     updateImageProduct(formData: FormData, idInventoryImage: number): Observable<ProductFull> {
         const headers = new HttpHeaders({
             'Authorization': `${this.getToken()}`,
