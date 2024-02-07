@@ -1,17 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
-import {InventoryGrid} from 'src/app/interface/inventory/InventoryGrid';
-import {InventoryCategory} from 'src/app/interface/products/inventoryCategory';
-import {InventoryService} from 'src/app/services/inventory.service';
-import {LoginService} from 'src/app/services/login.service';
-import {Router} from "@angular/router";
-import {CommentService} from "../../../services/comment.service";
-import {InventoryComments} from "../../../interface/comment/InventoryComments";
-import {environment} from "../../../environments/environment";
-import {CategoryService} from 'src/app/services/category.service';
-import {SubCategory} from 'src/app/interface/products/SubCategory';
-import {CategoryFull} from 'src/app/interface/CategoryFull';
-import {Category} from 'src/app/interface/products/Category';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { InventoryGrid } from 'src/app/interface/inventory/InventoryGrid';
+import { InventoryCategory } from 'src/app/interface/products/inventoryCategory';
+import { InventoryService } from 'src/app/services/inventory.service';
+import { LoginService } from 'src/app/services/login.service';
+import { Router } from "@angular/router";
+import { CommentService } from "../../../services/comment.service";
+import { InventoryComments } from "../../../interface/comment/InventoryComments";
+import { environment } from "../../../environments/environment";
+import { CategoryService } from 'src/app/services/category.service';
+import { SubCategory } from 'src/app/interface/products/SubCategory';
+import { CategoryFull } from 'src/app/interface/CategoryFull';
+import { Category } from 'src/app/interface/products/Category';
 
 interface OptionOrder {
     name: string;
@@ -38,16 +38,17 @@ export class InventoryComponent implements OnInit {
 
 
     constructor(private inventoryService: InventoryService, private loginService: LoginService,
-                private formBuilder: FormBuilder, private router: Router, private commentService: CommentService,
-                private categoryService: CategoryService) {
+        private formBuilder: FormBuilder, private router: Router, private commentService: CommentService,
+        private categoryService: CategoryService) {
+
         this.getTokenPublic();
     }
 
     ngOnInit() {
         this.optionOrder = [
-            {name: 'Alfabeticamente', code: 1},
-            {name: 'Menor a mayor precio', code: 2},
-            {name: 'Mayor a menor precio', code: 3}
+            { name: 'Alfabeticamente', code: 1 },
+            { name: 'Menor a mayor precio', code: 2 },
+            { name: 'Mayor a menor precio', code: 3 }
         ];
 
     }
@@ -71,9 +72,9 @@ export class InventoryComponent implements OnInit {
 
     private getTokenPublic() {
         this.loginService.getTokenPublicS().subscribe(data => {
-                this.getInventoryAll(data.token);
-                this.getCategoryAll(data.token);
-            }
+            this.getInventoryAll(data.token);
+            this.getCategoryAll(data.token);
+        }
         );
     }
 
@@ -97,7 +98,7 @@ export class InventoryComponent implements OnInit {
                         response.getInventoryDetailsDTO.datasheet,
                         response.getInventoryDTO.idInventory,
                         response.getInventoryDTO.reference
-                        );
+                    );
                     this.inventoryService.setImages(response.getInventoryDTO.idInventory, response.getInventoryImageDTO);
                     this.setImages(response.getInventoryImageDTO, inventoryGridInto);
                     this.inventoryGrid.push(inventoryGridInto);
@@ -255,4 +256,6 @@ export class InventoryComponent implements OnInit {
     updateSelectedCategoryDescription(newDescription: string) {
         this.selectedCategoryDescription = newDescription;
     }
+
+
 }

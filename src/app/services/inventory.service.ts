@@ -9,8 +9,8 @@ import { LoginService } from "./login.service";
 import { InventoryCategory } from "../interface/products/inventoryCategory";
 import { CategoryProducts } from "../interface/products/CategoryProducts";
 import { Category } from "../interface/Category";
-import {InventoryImage} from "../interface/InventoryImage";
-import {ProductFull} from "../interface/products/ProductFull";
+import { InventoryImage } from "../interface/InventoryImage";
+import { ProductFull } from "../interface/products/ProductFull";
 
 
 @Injectable({
@@ -21,7 +21,7 @@ export class InventoryService {
 
     private isActiveInventoryMemory = new BehaviorSubject(false);
     public isActiveInventoryCurrent = this.isActiveInventoryMemory.asObservable();
-    private selectedCategoryId: number  | null = null;
+    private selectedCategoryId: number | null = null;
     private selectedInventoryDetails: any | null = null;
     private isActiveUsMemory = new BehaviorSubject(false);
     public isActiveUsCurrent = this.isActiveUsMemory.asObservable();
@@ -156,7 +156,7 @@ export class InventoryService {
     }
 
 
-    createImageProduct(idInventory: number, imageFile: string, fileName:string): Observable<InventoryImage> {
+    createImageProduct(idInventory: number, imageFile: string, fileName: string): Observable<InventoryImage> {
         const formData: FormData = new FormData();
         formData.append('image', imageFile);
         formData.append('fileName', fileName);
@@ -165,10 +165,10 @@ export class InventoryService {
         headers = headers.append('Authorization', this.getToken());
 
         return this.http.post<InventoryImage>(
-            `${environment.apiUrl}api/v1/inventoryImage/create/${idInventory}`, formData, {headers: headers,});
+            `${environment.apiUrl}api/v1/inventoryImage/create/${idInventory}`, formData, { headers: headers, });
     }
 
-    updateCategory(idCategory: number, statusCategory: boolean,description:string): Observable<any> {
+    updateCategory(idCategory: number, statusCategory: boolean, description: string): Observable<any> {
         const headers = new HttpHeaders({
             'Authorization': this.getToken(),
         });
@@ -207,7 +207,7 @@ export class InventoryService {
         return this.http.put(url, formData, { headers });
     }
 
-    updateProduct(formData:FormData, idInventoryId:number):Observable<ProductFull>{
+    updateProduct(formData: FormData, idInventoryId: number): Observable<ProductFull> {
         const headers = new HttpHeaders({
             'Authorization': `${this.getToken()}`,
         });
@@ -228,7 +228,7 @@ export class InventoryService {
             })
         );
     }
-    updateImageProduct(formData:FormData,idInventoryImage: number):Observable<ProductFull>{
+    updateImageProduct(formData: FormData, idInventoryImage: number): Observable<ProductFull> {
         const headers = new HttpHeaders({
             'Authorization': `${this.getToken()}`,
         });
