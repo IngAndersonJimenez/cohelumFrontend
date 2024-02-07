@@ -1,9 +1,9 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Category } from 'src/app/interface/products/Category';
 import { InventoryService } from 'src/app/services/inventory.service';
 import { LoginService } from 'src/app/services/login.service';
-import {environment} from "../../../environments/environment";
-import {CategoryService} from "../../../services/category.service";
+import { environment } from "../../../environments/environment";
+import { CategoryService } from "../../../services/category.service";
 
 @Component({
   selector: 'app-product-public',
@@ -17,7 +17,8 @@ export class ProductPublicComponent implements OnInit {
   category: Array<any> = [];
   pathImage: string = environment.sourceImage;
 
-  constructor(private inventoryService: InventoryService, private loginService: LoginService, private categoryService:CategoryService) { };
+  constructor(private inventoryService: InventoryService, private loginService: LoginService, private categoryService: CategoryService) {
+  };
 
   ngOnInit() {
 
@@ -64,7 +65,7 @@ export class ProductPublicComponent implements OnInit {
     this.inventoryService.activeSectionInventoty(true);
   }
   selectCategory(category: any) {
-    let categorySelected : Category = new Category( '','',0);
+    let categorySelected: Category = new Category('', '', 0);
     categorySelected.setIdCategory(category.getInventoryCategoryDTO.idCategory);
     categorySelected.setDescription(category.getInventoryCategoryDTO.description);
     this.categoryService.setSelectedCategory(categorySelected);
