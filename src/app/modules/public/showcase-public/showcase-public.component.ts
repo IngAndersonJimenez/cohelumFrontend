@@ -64,7 +64,7 @@ export class ShowcasePublicComponent {
   }
 
   private getTokenPublic() {
-    this.loginService.getTokenPublicS().subscribe(data => {
+    this.loginService.getTokenPublic().subscribe(data => {
       this.getItemsArtefacCarrusel(data.token);
     });
   }

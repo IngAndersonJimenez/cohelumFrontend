@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { InventoryGrid } from 'src/app/interface/inventory/InventoryGrid';
 import { InventoryCategory } from 'src/app/interface/products/inventoryCategory';
 import { InventoryService } from 'src/app/services/inventory.service';
@@ -38,7 +37,7 @@ export class InventoryComponent implements OnInit {
 
 
     constructor(private inventoryService: InventoryService, private loginService: LoginService,
-        private formBuilder: FormBuilder, private router: Router, private commentService: CommentService,
+        private router: Router, private commentService: CommentService,
         private categoryService: CategoryService) {
 
         this.getTokenPublic();
@@ -71,7 +70,7 @@ export class InventoryComponent implements OnInit {
 
 
     private getTokenPublic() {
-        this.loginService.getTokenPublicS().subscribe(data => {
+        this.loginService.getTokenPublic().subscribe(data => {
             this.getInventoryAll(data.token);
             this.getCategoryAll(data.token);
         }
@@ -242,7 +241,7 @@ export class InventoryComponent implements OnInit {
             idInventory: idInventory,
             reference: reference
         });
-        this.loginService.getTokenPublicS().subscribe(dataAuth => {
+        this.loginService.getTokenPublic().subscribe(dataAuth => {
             this.commentService.getCommentById(idInventory, dataAuth.token).subscribe(
                 (comment: any) => {
                     this.comments = comment.responseDTO
@@ -256,6 +255,5 @@ export class InventoryComponent implements OnInit {
     updateSelectedCategoryDescription(newDescription: string) {
         this.selectedCategoryDescription = newDescription;
     }
-
 
 }
