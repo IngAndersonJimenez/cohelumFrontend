@@ -254,27 +254,6 @@ export class InventoryService {
         );
     }
 
-    updateImageProduct(formData: FormData, idInventoryImage: number): Observable<ProductFull> {
-        const headers = new HttpHeaders({
-            'Authorization': `${this.getToken()}`,
-        });
-
-        return this.http.put<ProductFull>(`${environment.apiUrl}api/v1/inventoryImage/update/${idInventoryImage}`, formData, { headers }).pipe(
-            catchError(error => {
-                console.error('Error en la solicitud:', error);
-                this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
-                throw error;
-            }),
-            map(result => {
-                if (result != null) {
-                    this.notificationService.showSuccess("Actualización exitoso", "Imagen Actualizada correctamente!");
-                } else {
-                    this.notificationService.showError("Actualización fallido", "Vuelve a intentar");
-                }
-                return result;
-            })
-        );
-    }
 
     setSelectedCategoryId(categoryId: number) {
         this.selectedCategoryId = categoryId;
