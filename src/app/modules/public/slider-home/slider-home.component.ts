@@ -39,7 +39,7 @@ export class SliderHomeComponent implements OnInit {
   }
 
   private getTokenPublic() {
-    this.loginService.getTokenPublicS().subscribe(data => {
+    this.loginService.getTokenPublic().subscribe(data => {
       this.getItemsArtefacCarrusel(data.token);
     });
   }

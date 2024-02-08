@@ -343,8 +343,6 @@ export class ConsultProductComponent implements OnInit {
     }
 
 
-
-
     loadImage(event: any): void {
         const file = event.target.files[0];
         if (file) {

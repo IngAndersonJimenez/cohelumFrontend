@@ -45,7 +45,7 @@ export class ProductPublicComponent implements OnInit {
   }
 
   private getTokenPublic() {
-    this.loginService.getTokenPublicS().subscribe(data => {
+    this.loginService.getTokenPublic().subscribe(data => {
       this.getCategories(data.token);
     }
     );
