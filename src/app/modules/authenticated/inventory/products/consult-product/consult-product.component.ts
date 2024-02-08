@@ -80,10 +80,11 @@ export class ConsultProductComponent implements OnInit {
 
     loadProducts(product: ProductFull) {
         const productName = product.name;
-        if (productName && productName.trim() !== '') {
+        const productReference = product.reference;
+        if (productName && productName.trim() !== '' && productReference && productReference.trim() !== '') {
             this.products = [];
             this.imageList = [];
-            this.inventoryService.getInventoryByName(productName).subscribe(
+            this.inventoryService.getInventoryByNameAndReference(productName,productReference).subscribe(
                 (data: any) => {
                     const responseDTO = data.responseDTO;
 

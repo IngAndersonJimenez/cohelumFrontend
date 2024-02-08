@@ -122,6 +122,28 @@ export class InventoryService {
         );
     }
 
+    getInventoryByNameAndReference(name: string,reference:string): Observable<ProductFull> {
+        const headers = new HttpHeaders({
+            Authorization: `${this.getToken()}`,
+        });
+        const url = `${environment.apiUrl}api/v1/inventory/searchByNameAndReference/${name}/${reference}`;
+
+        return this.http.get<ProductFull>(url, { headers }).pipe(
+            catchError((error) => {
+                console.error('Error en la solicitud:', error);
+                this.notificationService.showError('Error en la solicitud', 'Vuelve a intentar');
+                throw error;
+            }),
+            tap((result) => {
+                if (result != null) {
+                    this.notificationService.showSuccess('Datos del producto', 'Consulta exitosa!');
+                } else {
+                    this.notificationService.showError('Registro fallido', 'Vuelve a intentar');
+                }
+            })
+        );
+    }
+
     createCategoryAndImage(formData: FormData): Observable<Category> {
         let headers = new HttpHeaders();
         headers = headers.append('Authorization', this.getToken());
