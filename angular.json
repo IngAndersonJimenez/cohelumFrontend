@@ -19,7 +19,8 @@
           "options": {
             "allowedCommonJsDependencies": [
               "lodash",
-              "pdfjs-dist"
+              "pdfjs-dist",
+              "crypto-js"
             ],
             "outputPath": "dist/cohelum_frontend",
             "index": "src/index.html",

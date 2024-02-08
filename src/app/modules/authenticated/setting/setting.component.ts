@@ -34,6 +34,8 @@ export class SettingComponent implements OnInit {
 
         const reader = new FileReader();
         reader.onload = (event: any) => {
+
+            this.imageHomeForms[index].imagePreviews = [];
             const imageUrl = event.target.result;
             this.imageHomeForms[index].imagePreviews.push(imageUrl);
             this.imageHomeForms[index].value4 = file;
@@ -41,7 +43,6 @@ export class SettingComponent implements OnInit {
         };
         reader.readAsDataURL(file);
     }
-
 
 
 

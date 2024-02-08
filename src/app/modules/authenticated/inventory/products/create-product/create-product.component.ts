@@ -96,7 +96,7 @@ export class CreateProductComponent implements OnInit {
         return;
       }
 
-      const allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+      const allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif','webp'];
       const allowedPDFExtensions = ['pdf'];
 
       const fileExtension = newFile.name.split('.').pop().toLowerCase();
