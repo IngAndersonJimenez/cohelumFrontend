@@ -1,13 +1,11 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {RequestLogin} from '../interface/RequestLogin';
-import {BehaviorSubject, map, Observable} from 'rxjs';
-import {environment} from '../environments/environment';
-import {NotificationService} from '../notifications/notification.service';
-import {ResponseLogin} from "../interface/ResponseLogin";
-import * as CryptoJS from 'crypto-js';
-import {encryptionKey} from "../interface/security/encryptionKey";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { RequestLogin } from '../interface/RequestLogin';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { environment } from '../environments/environment';
+import { NotificationService } from '../notifications/notification.service';
+import { ResponseLogin } from "../interface/ResponseLogin";
 
 @Injectable({
     providedIn: 'root'
@@ -22,10 +20,16 @@ export class LoginService {
     private userMemoryPublic = new BehaviorSubject(this.responseLoginPubic);
     public userCurrentPublic = this.userMemoryPublic.asObservable();
 
+    private tokenGeneral: ResponseLogin = { token: '' }
+
     constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService) { }
 
     login(requestLogin: RequestLogin): Observable<any> {
-        return this.http.post<any>(environment.apiUrl + 'login', requestLogin).pipe(
+
+        let requestLoginEncry: RequestLogin = 
+        { emailUser: btoa(requestLogin.emailUser.toString()), password: btoa(requestLogin.password.toString()) }
+
+        return this.http.post<any>(environment.apiUrl + 'login', requestLoginEncry).pipe(
             map(result => {
                 if (result != null && result.token) {
                     const responseLogin: ResponseLogin = { token: result.token };
@@ -37,19 +41,10 @@ export class LoginService {
         );
     }
 
-    getTokenPublic(): Observable<any> {
-        let requestLogin: RequestLogin = { emailUser: 'public@cohelum.com', password: 'figq36L6v2O7DIz' }
-        return this.http.post<ResponseLogin>(environment.apiUrl + 'login', requestLogin).pipe(
-            map(result => {
-                if (result != null && result.token) {
-                    const responseLogin: ResponseLogin = { token: result.token };
-                }
-            })
-        );
-    }
 
-    getTokenPublicS(): Observable<ResponseLogin> {
-        let requestLogin: RequestLogin = { emailUser: 'public@cohelum.com', password: 'figq36L6v2O7DIz' }
+    getTokenPublic(): Observable<ResponseLogin> {
+
+        let requestLogin: RequestLogin = { emailUser: btoa('public@cohelum.com'), password: btoa('figq36L6v2O7DIz') }
         return this.http.post<ResponseLogin>(environment.apiUrl + 'login', requestLogin).pipe(
             map(result => {
                 const responseLogin: ResponseLogin = { token: result.token };
@@ -57,26 +52,5 @@ export class LoginService {
             })
         );
     }
-
-    getTokenPublicS1(): Observable<string> {
-        let requestLogin: RequestLogin = {
-            emailUser: 'public@cohelum.com',
-            password: 'figq36L6v2O7DIz'
-        };
-
-        const encryptedEmailUser = CryptoJS.AES.encrypt(requestLogin.emailUser.toString(), encryptionKey).toString();
-        const encryptedPassword = CryptoJS.AES.encrypt(requestLogin.password.toString(), encryptionKey).toString();
-        requestLogin = {
-            emailUser: encryptedEmailUser,
-            password: encryptedPassword
-        };
-
-        return this.http.post<ResponseLogin>(environment.apiUrl + 'login', requestLogin).pipe(
-            map(result => {
-                return result.token;
-            })
-        );
-    }
-
 
 }

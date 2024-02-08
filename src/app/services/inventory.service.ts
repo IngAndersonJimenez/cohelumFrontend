@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { NotificationService } from "../notifications/notification.service";
 import { environment } from "../environments/environment";
 import { Inventory } from "../interface/products/Inventory";
-import {BehaviorSubject, catchError, map, Observable, tap, throwError} from "rxjs";
+import { BehaviorSubject, catchError, map, Observable, tap, throwError } from "rxjs";
 import { LoginService } from "./login.service";
 import { InventoryCategory } from "../interface/products/inventoryCategory";
 import { CategoryProducts } from "../interface/products/CategoryProducts";
@@ -29,9 +29,8 @@ export class InventoryService {
     public inventoryImages$ = this.inventoryImagesSubject.asObservable();
 
 
-    constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService, private loginService: LoginService) {
-
-    }
+    constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService, 
+        private loginService: LoginService) {}
 
     createProduct(formData: FormData): Observable<Inventory> {
         const headers = new HttpHeaders({
@@ -54,9 +53,6 @@ export class InventoryService {
             })
         );
     }
-
-
-
 
     getToken(): string {
         let token: string = '';
@@ -138,7 +134,6 @@ export class InventoryService {
         this.isActiveUsMemory.next(status);
     }
 
-
     getInventoryAll(token?: string): Observable<any> {
         let headers = new HttpHeaders({})
 
@@ -155,7 +150,6 @@ export class InventoryService {
         return this.http.get<CategoryProducts[]>(environment.apiUrl + 'api/v1/inventory', { headers });
     }
 
-
     createImageProduct(idInventory: number, imageFile: string, fileName: string): Observable<InventoryImage> {
         const formData: FormData = new FormData();
         formData.append('image', imageFile);
@@ -167,7 +161,6 @@ export class InventoryService {
         return this.http.post<InventoryImage>(
             `${environment.apiUrl}api/v1/inventoryImage/create/${idInventory}`, formData, { headers: headers, });
     }
-
 
     updateImageProduct(formData: FormData, idInventoryImage: number, fileName: string): Observable<InventoryImage> {
         const headers = new HttpHeaders({
@@ -190,10 +183,19 @@ export class InventoryService {
         );
     }
 
+    updateCategoryImage(idCategory: number, image: string): Observable<any> {
+        const formData: FormData = new FormData();
+        formData.append('image', image);
 
+        const headers = new HttpHeaders({
+            'Authorization': this.getToken(),
+        });
 
+        const url = `${environment.apiUrl}api/v1/categoryImage/update/${idCategory}`;
+        return this.http.put(url, formData, { headers });
+    }
 
-    updateCategory(idCategory: number, statusCategory: boolean,description:string): Observable<any> {
+    updateCategory(idCategory: number, statusCategory: boolean, description: string): Observable<any> {
         const headers = new HttpHeaders({
             'Authorization': this.getToken(),
         });
@@ -218,20 +220,6 @@ export class InventoryService {
         );
     }
 
-    updateCategoryImage(idCategory: number, image: string): Observable<any> {
-        const formData: FormData = new FormData();
-        formData.append('image', image);
-
-        const headers = new HttpHeaders({
-            'Authorization': this.getToken(),
-        });
-
-        const url = `${environment.apiUrl}api/v1/categoryImage/update/${idCategory}`;
-
-
-        return this.http.put(url, formData, { headers });
-    }
-
     updateProduct(formData: FormData, idInventoryId: number): Observable<ProductFull> {
         const headers = new HttpHeaders({
             'Authorization': `${this.getToken()}`,
@@ -254,7 +242,6 @@ export class InventoryService {
         );
     }
 
-
     setSelectedCategoryId(categoryId: number) {
         this.selectedCategoryId = categoryId;
     }
@@ -271,8 +258,6 @@ export class InventoryService {
         return this.selectedInventoryDetails;
     }
 
-
-
     setImages(idInventory: number, images: string[]): void {
         const currentImages = this.inventoryImagesSubject.value;
         currentImages[idInventory] = images;
@@ -282,7 +267,5 @@ export class InventoryService {
     getImages(): { [idInventory: number]: string[] } {
         return this.inventoryImagesSubject.value;
     }
-
-
 
 }

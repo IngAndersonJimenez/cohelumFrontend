@@ -105,7 +105,7 @@ export class InventoryDetailComponent implements OnInit {
 
 
     getTokenPublic() {
-        this.loginService.getTokenPublicS().subscribe(data => {
+        this.loginService.getTokenPublic().subscribe(data => {
             const token = data.token;
             const inventoryCommentDTO = this.commentForm.value;
             const idInventory = this.currentIdInventory;

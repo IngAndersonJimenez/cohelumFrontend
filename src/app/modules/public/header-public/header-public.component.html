@@ -40,21 +40,24 @@
                                         Nosotros
                                     </a>
                                     <ul class="dropdown-menu ">
-                                        <li><a (click)="closeMenu()" [routerLink]="['/Us']"
-                                               fragment="usSection"
-                                                class="dropdown-item"  style="background-color: transparent;">¿Quiénes
+                                        <li><a (click)="closeMenu()" [routerLink]="['/Us']" fragment="usSection"
+                                                class="dropdown-item" style="background-color: transparent;">¿Quiénes
                                                 somos?</a></li>
                                         <li><a (click)="closeMenu()" [routerLink]="['/projects-gallery']"
-                                                class="dropdown-item" style="background-color: transparent;">Proyectos</a></li>
+                                                class="dropdown-item"
+                                                style="background-color: transparent;">Proyectos</a></li>
                                     </ul>
                                 </li>
 
                                 <li class="nav-item1 nav-item dropdown">
-                                    <label class="nav-link puntero nav-link dropdown-toggle" [routerLink]="['/home/content']"
+                                    <label class="nav-link puntero nav-link dropdown-toggle"
+                                        [routerLink]="['/home/content']"
                                         (click)="closeMenu(); goTo('categoriasSeccion')">Productos</label>
                                     <ul class="dropdown-menu ">
                                         <li *ngFor="let category of category" id="option-category">
-                                            <a [routerLink]="['/Inventory']" (click)="selectCategory(category); closeMenu()" fragment="inventorySeccion">
+                                            <a [routerLink]="['/Inventory']"
+                                                (click)="selectCategory(category); closeMenu()"
+                                                fragment="inventorySeccion">
                                                 {{ category.getInventoryCategoryDTO.description }}
                                             </a>
                                         </li>
@@ -67,15 +70,16 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <label class="nav-link puntero"
-                                  (click)="closeMenu()" [routerLink]="['/extended-warranty']">Garantia
+                                    <label class="nav-link puntero" (click)="closeMenu()"
+                                        [routerLink]="['/extended-warranty']">Garantia
                                         Extendida</label>
 
                                 </li>
 
                                 <li class="nav-item">
-                                    <label class="nav-link puntero" title="Cata electrodomésticos" [routerLink]="['/Inventory']" (click)="selectCategoryCata(); closeMenu()"
-                                           fragment="inventorySeccion">Cata</label>
+                                    <label class="nav-link puntero" title="Cata electrodomésticos"
+                                        [routerLink]="['/Inventory']" (click)="selectCategoryCata(); closeMenu()"
+                                        fragment="inventorySeccion">Cata</label>
                                 </li>
                                 <li class="nav-item">
                                     <label class="nav-link puntero " [routerLink]="['/home/content']"
