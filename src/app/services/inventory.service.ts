@@ -286,8 +286,25 @@ export class InventoryService {
         this.inventoryImagesSubject.next(currentImages);
     }
 
-    getImages(): { [idInventory: number]: string[] } {
-        return this.inventoryImagesSubject.value;
+    deleteInventoryImage(idInventoryImage: number): Observable<any> {
+        const headers = new HttpHeaders({
+            'Authorization': `${this.getToken()}`,
+        });
+        return this.http.delete(`${environment.apiUrl}api/v1/inventoryImage/delete/${idInventoryImage}`, {headers}).pipe(
+            catchError(error => {
+                console.error('Error en la solicitud:', error);
+                this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
+                throw error;
+            }),
+            map(result => {
+                if (result != null) {
+                    this.notificationService.showSuccess("Eliminación exitoso", "El producto se ha eliminado correctamente");
+                } else {
+                    this.notificationService.showError("Actualización fallido", "Vuelve a intentar");
+                }
+                return result;
+            })
+        );
     }
 
 }

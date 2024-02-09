@@ -330,7 +330,11 @@ export class ConsultProductComponent implements OnInit {
 
             this.inventoryService.updateImageProduct(formData, idInventoryImage, fileName).subscribe(
                 (data: any) => {
-                    this.reloadProductData();
+                    const index = this.imageList.findIndex(image => image.idInventoryImage === idInventoryImage);
+                    if (index !== -1) {
+                        this.imageList[index].image = this.pathImage + data.responseDTO.image;
+                        this.imageList = [...this.imageList];
+                    }
                     this.closeUpdateImageDialog();
                 }
             );
@@ -382,6 +386,16 @@ export class ConsultProductComponent implements OnInit {
             ));
         }
     }
+
+    deleteImage(idInventoryImage: number) {
+        this.inventoryService.deleteInventoryImage(idInventoryImage).subscribe(
+            data =>{
+                this.imageList = this.imageList.filter(image => image.idInventoryImage !== idInventoryImage);
+            }
+        );
+    }
+
+
 
 
     protected readonly environment = environment;
