@@ -8,16 +8,16 @@
                     <input type="search" placeholder="Nombre del producto" autocomplete="off" formControlName="name">
                 </div>
                 <div class="normal-search">
-                    <input type="search" placeholder="Referencia del producto" autocomplete="off"
-                           formControlName="reference">
+                    <input type="search" placeholder="Referencia del producto" autocomplete="off" formControlName="reference">
                 </div>
-                <button mat-raised-button color="primary" class="buscar" (click)="loadProducts(consultForm.value)">
+                <button mat-raised-button color="primary" class="buscar" [disabled]="consultForm.invalid" (click)="loadProducts(consultForm.value)">
                     BUSCAR
                 </button>
             </div>
         </form>
     </mat-card>
 </div>
+
 <div *ngFor="let product of products">
     <div *ngIf="product.active">
         <div class="card card1">

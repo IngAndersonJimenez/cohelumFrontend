@@ -524,6 +524,9 @@ h1 {
         border-radius: 20px;
         cursor: pointer;
         transition: background-color 0.3s;
+        margin-top: 0.2rem;
+
+
 
         &:hover {
           background-color: #0056b3;
@@ -531,5 +534,11 @@ h1 {
       }
     }
   }
+}
+
+.buscar:disabled {
+  background-color: #c0c0c0 !important; /* Gris */
+  cursor: not-allowed !important;
+  color: #666666 !important;
 }
 

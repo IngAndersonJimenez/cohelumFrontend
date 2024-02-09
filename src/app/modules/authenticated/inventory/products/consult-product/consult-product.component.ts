@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductFull} from "../../../../../interface/products/ProductFull";
 import {InventoryService} from "../../../../../services/inventory.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {NotificationService} from "../../../../../notifications/notification.service";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {InventoryImage} from "../../../../../interface/InventoryImage";
@@ -40,15 +40,9 @@ export class ConsultProductComponent implements OnInit {
     constructor(private fb: FormBuilder, private inventoryService: InventoryService, private sanitizer: DomSanitizer,
                 private notificationService: NotificationService, private categoryService:CategoryService) {
         this.consultForm = this.fb.group({
-            name: [''],
-            reference: [''],
-            price: [''],
-            unitsAvailable: [''],
-            description: [''],
-            characteristic: [''],
-            datasheet: [''],
-            image: [''],
-            descriptionSubCategory:['']
+            name: new FormControl('', Validators.required),
+            reference: new FormControl('', Validators.required),
+
         });
         this.updateForm = this.fb.group({
             name: [''],
