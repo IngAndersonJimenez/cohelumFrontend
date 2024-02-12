@@ -11,6 +11,7 @@ import { CategoryService } from 'src/app/services/category.service';
 import { SubCategory } from 'src/app/interface/products/SubCategory';
 import { CategoryFull } from 'src/app/interface/CategoryFull';
 import { Category } from 'src/app/interface/products/Category';
+import {ViewportScroller} from "@angular/common";
 
 interface OptionOrder {
     name: string;
@@ -38,7 +39,7 @@ export class InventoryComponent implements OnInit {
 
     constructor(private inventoryService: InventoryService, private loginService: LoginService,
         private router: Router, private commentService: CommentService,
-        private categoryService: CategoryService) {
+        private categoryService: CategoryService,private scroller: ViewportScroller) {
 
         this.getTokenPublic();
     }
@@ -49,7 +50,10 @@ export class InventoryComponent implements OnInit {
             { name: 'Menor a mayor precio', code: 2 },
             { name: 'Mayor a menor precio', code: 3 }
         ];
-
+        this.goTo("inventory-subtitle")
+    }
+    goTo(position: any) {
+        this.scroller.scrollToAnchor(position);
     }
 
     filterInventory(selectedCategory: Category) {

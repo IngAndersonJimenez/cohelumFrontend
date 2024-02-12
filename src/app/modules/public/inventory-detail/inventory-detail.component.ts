@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { InventoryService } from "../../../services/inventory.service";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
@@ -8,6 +8,7 @@ import { LoginService } from "../../../services/login.service";
 import { InventoryComments } from "../../../interface/comment/InventoryComments";
 import { environment } from "../../../environments/environment";
 import {ImageItem} from "../../../interface/products/ImageItem";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-inventory-detail',
@@ -16,7 +17,7 @@ import {ImageItem} from "../../../interface/products/ImageItem";
 })
 
 
-export class InventoryDetailComponent implements OnInit {
+export class InventoryDetailComponent implements OnInit  {
 
     images: string[] = [];
     categoryId: number | null = null;
@@ -32,7 +33,7 @@ export class InventoryDetailComponent implements OnInit {
     currentIndex: number = 0;
     intervalId: any;
     position: string = 'bottom';
-
+    private commentsSubscription!: Subscription;
     scrollToReview() {
         if (this.reviewSection && this.reviewSection.nativeElement) {
             this.reviewSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
@@ -68,6 +69,7 @@ export class InventoryDetailComponent implements OnInit {
 
         this.currentIdInventory = this.details.idInventory;
         this.commentService.getComments().subscribe(comments => {
+            console.log("Comentarios actualizados:", comments);
             this.comments = comments;
             this.updateStarRating();
         });
@@ -76,12 +78,8 @@ export class InventoryDetailComponent implements OnInit {
             this.nextImage();
         }, 3000);
 
-
-/*        this.images = this.inventoryService.getImages()[this.currentIdInventory] || [];*/
-
-       // console.log('Ruta de la imagen:', this.images);
-
     }
+
     nextImage(): void {
         this.currentIndex = (this.currentIndex + 1) % this.images.length;
     }
@@ -98,10 +96,15 @@ export class InventoryDetailComponent implements OnInit {
         this.commentService.createInventoryComment(commentWithId, token)
             .subscribe(
                 response => {
+                    const newComment = response.hasOwnProperty('responseDTO') ? response.responseDTO : response;
+                    this.comments.push(newComment);
+                    this.updateStarRating();
                     this.commentForm.reset();
+                    this.scrollToReview();
                 }
             );
     }
+
 
 
     getTokenPublic() {
