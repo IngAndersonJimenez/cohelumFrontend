@@ -52,43 +52,44 @@
                                 <li class="nav-item1 nav-item dropdown">
                                     <label class="nav-link puntero nav-link dropdown-toggle"
                                         [routerLink]="['/home/content']"
+                                        title="Sección productos Cohelum"
                                         (click)="closeMenu(); goTo('categoriasSeccion')">Productos</label>
                                     <ul class="dropdown-menu ">
                                         <li *ngFor="let category of category" id="option-category">
                                             <a [routerLink]="['/Inventory']"
-                                                (click)="selectCategory(category); closeMenu()"
-                                                fragment="inventorySeccion">
-                                                {{ category.getInventoryCategoryDTO.description }}
+                                                (click)="selectCategory(category); closeMenu()">
+                                                {{category.getInventoryCategoryDTO.description == 'Cata Electrodomesticos' ? '': category.getInventoryCategoryDTO.description}}
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
 
                                 <li class="nav-item">
+                                    <label class="nav-link puntero" title="Cata Electrodomesticos"
+                                        [routerLink]="['/Inventory']" (click)="selectCategoryCata(); closeMenu()">Cata</label>
+                                </li>
+
+                                <li class="nav-item">
                                     <label class="nav-link puntero" [routerLink]="['/home/content']" (click)="closeMenu();
-                                    goTo('aliadoSeccion')" title="Cata electrodomésticos">¿Dónde Comprar?</label>
+                                    goTo('aliadoSeccion')" title="¿Dónde Comprar?">¿Dónde Comprar?</label>
                                 </li>
 
                                 <li class="nav-item">
                                     <label class="nav-link puntero" (click)="closeMenu()"
+                                    title="Solicita tu garantía adicional"
                                         [routerLink]="['/extended-warranty']">Garantia
                                         Extendida</label>
 
                                 </li>
 
                                 <li class="nav-item">
-                                    <label class="nav-link puntero" title="Cata electrodomésticos"
-                                        [routerLink]="['/Inventory']" (click)="selectCategoryCata(); closeMenu()"
-                                        fragment="inventorySeccion">Cata</label>
-                                </li>
-                                <li class="nav-item">
                                     <label class="nav-link puntero " [routerLink]="['/home/content']"
+                                    title="Déjanos un mensaje"
                                         (click)="closeMenu(); goTo('contactoSeccion')">Contactanos</label>
                                 </li>
 
                                 <li class="nav-item desplegar">
                                     <label class="nav-link puntero " (click)="navegateLogin()">Corporativo</label>
-
                                 </li>
 
                             </ul>
