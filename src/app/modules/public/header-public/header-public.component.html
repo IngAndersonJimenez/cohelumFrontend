@@ -6,11 +6,9 @@
                 <!-- Container wrapper -->
                 <div class="container">
                     <!-- Navbar brand -->
-                    <a class="navbar-brand me-2">
-
+                    <a class="navbar-brand me-2" (click)="navegate('/home/content'); scrollToSection('sliderHome', 0)">
                         <img [src]='urlLogo' class="logo drop puntero" alt="Logo cohelum" loading="lazy"
-                            title="Logo empresarial cohelum" style="margin-top: -1px;"
-                            [routerLink]="['/home/content']" />
+                            title="Logo empresarial cohelum" style="margin-top: -1px;"/>
                     </a>
 
                     <!-- Toggle button -->
@@ -40,10 +38,12 @@
                                         Nosotros
                                     </a>
                                     <ul class="dropdown-menu ">
-                                        <li><a (click)="closeMenu()" [routerLink]="['/Us']" fragment="usSection"
+                                        <li><a
+                                            (click)="navegate('/Us')"
                                                 class="dropdown-item" style="background-color: transparent;">¿Quiénes
                                                 somos?</a></li>
-                                        <li><a (click)="closeMenu()" [routerLink]="['/projects-gallery']"
+                                        <li><a [routerLink]="['/projects-gallery']"
+                                            (click)="scrollToSection('projectsGallery', 80)"
                                                 class="dropdown-item"
                                                 style="background-color: transparent;">Proyectos</a></li>
                                     </ul>
@@ -51,13 +51,13 @@
 
                                 <li class="nav-item1 nav-item dropdown">
                                     <label class="nav-link puntero nav-link dropdown-toggle"
-                                        [routerLink]="['/home/content']"
+                                        (click)="navegate('/home/content')"
                                         title="Sección productos Cohelum"
-                                        (click)="closeMenu(); goTo('categoriasSeccion')">Productos</label>
+                                        (click)="scrollToSection('categoriasSeccion', 50)">Productos</label>
                                     <ul class="dropdown-menu ">
                                         <li *ngFor="let category of category" id="option-category">
                                             <a [routerLink]="['/Inventory']"
-                                                (click)="selectCategory(category); closeMenu()">
+                                                (click)="selectCategory(category)">
                                                 {{category.getInventoryCategoryDTO.description == 'Cata Electrodomesticos' ? '': category.getInventoryCategoryDTO.description}}
                                             </a>
                                         </li>
@@ -66,16 +66,16 @@
 
                                 <li class="nav-item">
                                     <label class="nav-link puntero" title="Cata Electrodomesticos"
-                                        [routerLink]="['/Inventory']" (click)="selectCategoryCata(); closeMenu()">Cata</label>
+                                        (click)="navegate('/Inventory');selectCategoryCata()">Cata</label>
                                 </li>
 
                                 <li class="nav-item">
-                                    <label class="nav-link puntero" [routerLink]="['/home/content']" (click)="closeMenu();
+                                    <label class="nav-link puntero" [routerLink]="['/home/content']" (click)="
                                     goTo('aliadoSeccion')" title="¿Dónde Comprar?">¿Dónde Comprar?</label>
                                 </li>
 
                                 <li class="nav-item">
-                                    <label class="nav-link puntero" (click)="closeMenu()"
+                                    <label class="nav-link puntero"
                                     title="Solicita tu garantía adicional"
                                         [routerLink]="['/extended-warranty']">Garantia
                                         Extendida</label>
@@ -85,7 +85,7 @@
                                 <li class="nav-item">
                                     <label class="nav-link puntero " [routerLink]="['/home/content']"
                                     title="Déjanos un mensaje"
-                                        (click)="closeMenu(); goTo('contactoSeccion')">Contactanos</label>
+                                        (click)="goTo('contactoSeccion')">Contactanos</label>
                                 </li>
 
                                 <li class="nav-item desplegar">

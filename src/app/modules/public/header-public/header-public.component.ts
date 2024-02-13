@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { InventoryService } from 'src/app/services/inventory.service';
 import { environment } from 'src/app/environments/environment';
@@ -22,39 +22,40 @@ export class HeaderPublicComponent implements OnInit {
     menuVisible = false;
 
     constructor(public router: Router, private scroller: ViewportScroller, private inventoryService: InventoryService,
-        private renderer: Renderer2, private categoryService: CategoryService, private loginService: LoginService, private activatedRoute: ActivatedRoute) {
-        this.router.events.subscribe((event) => {
-            if (event instanceof NavigationEnd) {
-                this.handleFragment();
-            }
-        });
-    }
-    private handleFragment() {
-        this.activatedRoute.fragment.subscribe((fragment) => {
-            if (fragment === 'inventorySeccion') {
-            }
-        });
+        private renderer: Renderer2, private categoryService: CategoryService, private loginService: LoginService) {
     }
 
     navegateLogin() {
         this.router.navigateByUrl('corporate/login');
     }
 
+    navegate(url: string) {
+        this.router.navigateByUrl(url);
+        if (url == '/Us') {
+            this.scrollToSection('usSection', 80)
+        }
+    }
+
     goTo(position: any) {
+        this.scroller.scrollToPosition([0, 0]);
         this.scroller.scrollToAnchor(position);
-        this.activateSectionInventory();
     }
 
-    activateSectionInventory() {
-        this.inventoryService.activeSectionInventoty(false);
+    goToPosition(x: number, y: number) {
     }
 
-    activateSectionUs() {
-        this.inventoryService.activeSectionUs(false);
+    scrollToSection(position: any, variable: number) {
+        const sectionToScrollTo = document.getElementById(position);
+        if (sectionToScrollTo) {
+            const yOffset = sectionToScrollTo.offsetTop - variable;
+            this.scroller.scrollToPosition([0, yOffset]);
+        } else {
+            console.error('Elemento no encontrado');
+        }
     }
-
 
     ngOnInit() {
+        this.scroller.scrollToPosition([0, 0]);
         this.getTokenPublic()
     }
 
@@ -64,7 +65,6 @@ export class HeaderPublicComponent implements OnInit {
         });
     }
 
-
     private getCategories(token: string) {
         let response: any;
         this.inventoryService.getCategoryAll(token).subscribe(data => {
@@ -72,7 +72,6 @@ export class HeaderPublicComponent implements OnInit {
             this.category = response.responseDTO.categoryFullDTOList;
         });
     }
-
 
     selectCategoryCata() {
         const filteredCategory = this.category.find((c: any) =>
@@ -111,13 +110,6 @@ export class HeaderPublicComponent implements OnInit {
         }
 
         this.menuVisible = !this.menuVisible;
-    }
-
-
-    closeMenu() {
-        const navbar = document.getElementById('navbarButtonsExample');
-        this.renderer.removeClass(navbar, 'show'); // Oculta el menú
-        this.menuVisible = false; // Actualiza el estado del menú
     }
 
 }
