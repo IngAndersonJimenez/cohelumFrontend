@@ -31,7 +31,7 @@ export class FooterPublicComponent {
     const formData = new FormData();
     formData.append('nameContact', ' ');
     formData.append('email', this.formSubscribe.get('emailContact')?.value);
-    formData.append('reason', 'CONTACTO_GENERAL');
+    formData.append('reason', 'SUSCRIPCION');
     formData.append('comment', ' ');
     formData.append('cellphone', ' ');
     formData.append('department', ' ');
