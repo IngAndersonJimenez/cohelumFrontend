@@ -169,31 +169,90 @@ a {
 
 
 @media (max-width: 768px) {
-  .logo-footer{
+  .logo-footer {
     width: 117%;
     max-width: none;
   }
-  .fa-facebook{
-    font-size:25px;
+
+  .fa-facebook {
+    font-size: 25px;
   }
-  .fa-instagram{
-    font-size:25px;
+
+  .fa-instagram {
+    font-size: 25px;
   }
 }
+
 #whatsapp {
   position: fixed;
   bottom: 20px;
-  left:20px;
+  left: 20px;
   opacity: 0.8;
 }
+
 svg {
   width: 80px;
-  filter: drop-shadow(0 1px 4px rgba(0,0,0,.4));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, .4));
 }
+
 circle {
   fill: black;
 
 }
+
 path {
   fill: #fff;
+}
+
+
+.popup-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #0F2137;
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+  z-index: 1000;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+
+  p {
+    margin: 10px 0;
+  }
+
+  button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+
+  input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #f8f8f8;
+    color: #333;
+    font-size: 14px;
+    text-align: center;
+    outline: none;
+  }
+
+  .copy-container {
+    display: flex;
+    justify-content: space-between;
+  }
 }
