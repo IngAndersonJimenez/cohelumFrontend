@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
 
 @Component({
@@ -6,11 +6,11 @@ import { ViewportScroller } from '@angular/common';
   templateUrl: './us.component.html',
   styleUrls: ['./us.component.scss']
 })
-export class UsComponent implements OnInit {
+export class UsComponent implements AfterViewInit {
 
-  ngOnInit(): void {
+  ngAfterViewInit() {
     this.scroller.scrollToPosition([0, 0]);
-    this.scrollToSection('usSection', 80)
+    this.scrollToSection('seccionNosotros', 80)
   }
 
   constructor(private scroller: ViewportScroller) {
@@ -19,8 +19,22 @@ export class UsComponent implements OnInit {
   scrollToSection(position: any, variable: number) {
     const sectionToScrollTo = document.getElementById(position);
     if (sectionToScrollTo) {
-      const yOffset = sectionToScrollTo.offsetTop - variable;
+
+      console.log(sectionToScrollTo);
+      console.log('sectionToScrollT.offsetTop');
+      console.log(sectionToScrollTo.offsetTop);
+
+      let yOffset = sectionToScrollTo.offsetTop;
+
+      if (sectionToScrollTo.offsetTop > 536) {
+        yOffset = (sectionToScrollTo.offsetTop - sectionToScrollTo.offsetTop) + 800;
+      } else {
+        yOffset = sectionToScrollTo.offsetTop - variable;
+      }
+
       this.scroller.scrollToPosition([0, yOffset]);
+      console.log('scrollToSection');
+      console.warn('scrollToSection');
     } else {
       console.error('Elemento no encontrado');
     }

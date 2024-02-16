@@ -1,16 +1,16 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NotificationService} from "../../../notifications/notification.service";
-import {ContactService} from "../../../services/contact.service";
-import {catchError, switchMap} from "rxjs";
-import {ReasonEnum} from "../../../interface/Contact";
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { NotificationService } from "../../../notifications/notification.service";
+import { ContactService } from "../../../services/contact.service";
+import { catchError, switchMap } from "rxjs";
+import { ViewportScroller } from '@angular/common';
 
 @Component({
     selector: 'app-extended-warranty',
     templateUrl: './extended-warranty.component.html',
     styleUrls: ['./extended-warranty.component.scss']
 })
-export class ExtendedWarrantyComponent implements OnInit {
+export class ExtendedWarrantyComponent implements OnInit, AfterViewInit {
 
     form!: FormGroup;
     selectedPDFName: string | undefined;
@@ -21,7 +21,8 @@ export class ExtendedWarrantyComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private notificationService: NotificationService,
-        private contactService: ContactService
+        private contactService: ContactService,
+        private scroller: ViewportScroller
     ) {
     }
 
@@ -30,7 +31,7 @@ export class ExtendedWarrantyComponent implements OnInit {
             nameContact: ['', Validators.required],
             typeDocument: ['', Validators.required],
             document: ['', Validators.required],
-            email: ['',Validators.email],
+            email: ['', Validators.email],
             distributor: ['', Validators.required],
             number_bill: ['', Validators.required],
             cellphone: [''],
@@ -38,6 +39,30 @@ export class ExtendedWarrantyComponent implements OnInit {
             product: [''],
             attach: [''],
         });
+    }
+
+    ngAfterViewInit() {
+        //this.scroller.scrollToPosition([0, 0]);
+        this.scrollToSection('garantiaExtendidaSeccion', 80)
+    }
+
+    scrollToSection(position: any, variable: number) {
+        const sectionToScrollTo = document.getElementById(position);
+        if (sectionToScrollTo) {
+
+            let yOffset = sectionToScrollTo.offsetTop;
+            if (sectionToScrollTo.offsetTop > 4150) {
+                yOffset = (sectionToScrollTo.offsetTop - sectionToScrollTo.offsetTop) + 4070;
+            } else {
+                yOffset = sectionToScrollTo.offsetTop - variable;
+                console.log("Bien");
+                console.log(yOffset);
+            }
+
+            this.scroller.scrollToPosition([0, yOffset]);
+        } else {
+            console.error('Elemento no encontrado');
+        }
     }
 
     createWarranty() {
@@ -73,31 +98,31 @@ export class ExtendedWarrantyComponent implements OnInit {
         }
     }
 
-  onFileSelected(event: any, type: string): void {
-    const input = event.target;
-    const newFile = input.files ? input.files[0] : null;
+    onFileSelected(event: any, type: string): void {
+        const input = event.target;
+        const newFile = input.files ? input.files[0] : null;
 
-    if (newFile) {
-      const allowedPDFExtensions = ['pdf'];
-      const fileExtension = newFile.name.split('.').pop().toLowerCase();
+        if (newFile) {
+            const allowedPDFExtensions = ['pdf'];
+            const fileExtension = newFile.name.split('.').pop().toLowerCase();
 
-      if (type === 'pdf' && !allowedPDFExtensions.includes(fileExtension)) {
-        console.error('Solo se permiten archivos PDF.');
-        this.notificationService.showError("Solo se permiten archivos PDF.", "Vuelve a intentar");
-        input.value = null;
-      } else if (type === 'pdf' && newFile !== this.form.get('attach')?.value) {
-        this.selectedPDFName = newFile.name;
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-        };
-        reader.readAsDataURL(newFile);
+            if (type === 'pdf' && !allowedPDFExtensions.includes(fileExtension)) {
+                console.error('Solo se permiten archivos PDF.');
+                this.notificationService.showError("Solo se permiten archivos PDF.", "Vuelve a intentar");
+                input.value = null;
+            } else if (type === 'pdf' && newFile !== this.form.get('attach')?.value) {
+                this.selectedPDFName = newFile.name;
+                const reader = new FileReader();
+                reader.onload = (e: any) => {
+                };
+                reader.readAsDataURL(newFile);
 
-        const formData = new FormData();
-        formData.append('attach', newFile);
-        this.form.patchValue({ attach: formData.get('attach') });
-      }
+                const formData = new FormData();
+                formData.append('attach', newFile);
+                this.form.patchValue({ attach: formData.get('attach') });
+            }
+        }
     }
-  }
     copyToClipboard() {
         const inputElement = this.radicadoInput.nativeElement;
         inputElement.select();
@@ -106,7 +131,7 @@ export class ExtendedWarrantyComponent implements OnInit {
     }
 
     openPopup(idRequestG: number): void {
-        const prefix= 'GE_';
+        const prefix = 'GE_';
         this.radicadoNumber = `${prefix}${idRequestG}`;
         this.showMessage = true;
     }

@@ -31,13 +31,13 @@ export class HeaderPublicComponent implements OnInit {
 
     navegate(url: string) {
         this.router.navigateByUrl(url);
-        if (url == '/Us') {
+        /*if (url == '/Us') {
             this.scrollToSection('usSection', 80)
-        }
+        }*/
     }
 
     goTo(position: any) {
-        this.scroller.scrollToPosition([0, 0]);
+        //this.scroller.scrollToPosition([0, 0]);
         this.scroller.scrollToAnchor(position);
     }
 
@@ -55,7 +55,7 @@ export class HeaderPublicComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.scroller.scrollToPosition([0, 0]);
+        //this.scroller.scrollToPosition([0, 0]);
         this.getTokenPublic()
     }
 

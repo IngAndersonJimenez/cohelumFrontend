@@ -1,11 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
+import { AfterViewInit, Component } from '@angular/core';
 
 @Component({
   selector: 'app-projects-gallery-public',
   templateUrl: './projects-gallery-public.component.html',
   styleUrls: ['./projects-gallery-public.component.scss']
 })
-export class ProjectsGalleryPublicComponent implements OnInit {
+export class ProjectsGalleryPublicComponent implements AfterViewInit {
+
+  ngAfterViewInit() {
+    //this.scroller.scrollToPosition([0, 0]);
+    this.scrollToSection('projectsGallery', 80)
+  }
 
   images: any[] = [];
 
@@ -24,7 +30,7 @@ export class ProjectsGalleryPublicComponent implements OnInit {
     }
   ];
 
-  constructor() {
+  constructor(private scroller: ViewportScroller) {
 
     this.images?.push(
       {
@@ -61,9 +67,14 @@ export class ProjectsGalleryPublicComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  scrollToSection(position: any, variable: number) {
+    const sectionToScrollTo = document.getElementById(position);
+    if (sectionToScrollTo) {
+      const yOffset = sectionToScrollTo.offsetTop - variable;
+      this.scroller.scrollToPosition([0, yOffset]);
+    } else {
+      console.error('Elemento no encontrado');
+    }
   }
-
-
 
 }
