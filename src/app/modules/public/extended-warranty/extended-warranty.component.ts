@@ -42,7 +42,6 @@ export class ExtendedWarrantyComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        //this.scroller.scrollToPosition([0, 0]);
         this.scrollToSection('garantiaExtendidaSeccion', 80)
     }
 
@@ -55,8 +54,6 @@ export class ExtendedWarrantyComponent implements OnInit, AfterViewInit {
                 yOffset = (sectionToScrollTo.offsetTop - sectionToScrollTo.offsetTop) + 4070;
             } else {
                 yOffset = sectionToScrollTo.offsetTop - variable;
-                console.log("Bien");
-                console.log(yOffset);
             }
 
             this.scroller.scrollToPosition([0, yOffset]);
