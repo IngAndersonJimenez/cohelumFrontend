@@ -13,6 +13,50 @@
                         facilitar el proceso de activación y gestión de tu garantía extendida. Nuestro equipo de
                         atención al cliente se pondrá en contacto contigo.</p>
                 </div>
+
+                <div class="row">
+                    <div class="col">
+                        <a [href]="pathImage + '/pdfs/garantia/POLITICA_DE_GARANTÍA_COHELUM.pdf'" target="_blank"
+                            download="Ficha técnica.pdf" class="btn pdf"
+                            style="color: #e6e6e6;font-family: Open Sans, serif;">
+                            <img src="assets/pdf/pdf-svgrepo-com.svg" alt="Política de garantía Cohelum"
+                                class="icono-pdf" loading="lazy" style="width: 100%;"
+                                title="Política de garantía Cohelum" />
+                            Política de garantía Cohelum
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a [href]="pathImage + '/pdfs/garantia/POLITICAS_DE_USO_E_INSTALACION.pdf'" target="_blank"
+                            download="Ficha técnica.pdf" class="btn pdf"
+                            style="color: #e6e6e6;font-family: Open Sans, serif;">
+                            <img src="assets/pdf/pdf-svgrepo-com.svg" alt="Política de uso e instalación Cohelum"
+                                class="icono-pdf" loading="lazy" style="width: 100%;"
+                                title="Política de uso e instalación Cohelum" />
+                            Política de uso e instalación
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a [href]="pathImage + '/pdfs/garantia/MANUAL_DE_GARANTÍA_TRITURADOR_COHELUM_2023.pdf'"
+                            target="_blank" download="Ficha técnica.pdf" class="btn pdf"
+                            style="color: #e6e6e6;font-family: Open Sans, serif;">
+                            <img src="assets/pdf/pdf-svgrepo-com.svg" alt="Manual de garantía triturador Cohelum"
+                                class="icono-pdf" loading="lazy" style="width: 100%;"
+                                title="Manual de garantía triturador Cohelum" />
+                            Manual de garantía triturador Cohelum
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a [href]="pathImage + '/pdfs/garantia/MANUAL_DE_GARANTÍA_GRANITO_COHELUM_11-07-2022.pdf'"
+                            target="_blank" download="Ficha técnica.pdf" class="btn pdf"
+                            style="color: #e6e6e6;font-family: Open Sans, serif;">
+                            <img src="assets/pdf/pdf-svgrepo-com.svg" alt="Manual de garantía granito Cohelum"
+                                title=" Manual de garantía granito Cohelum" class="icono-pdf" loading="lazy"
+                                style="width: 100%;" />
+                            Manual de garantía granito Cohelum
+                        </a>
+                    </div>
+                </div>
+
             </div>
             <div class="col-md-6">
                 <form [formGroup]="form" class="form">
@@ -78,8 +122,8 @@
                             <label for="distributor">
                                 Distribuidor
                                 <span class="info-icon" data-tooltip="El lugar donde realizaste la compra">
-                                        <i class="fas fa-info-circle"></i>
-                                 </span>
+                                    <i class="fas fa-info-circle"></i>
+                                </span>
                             </label>
                             <input type="text" id="distributor" formControlName="distributor" class="form-control">
                         </div>
@@ -93,7 +137,7 @@
                                 <button (click)="copyToClipboard()">Copiar y Cerrar</button>
                             </div>
                             <button type="submit" id="submit" [disabled]="!form.valid" (click)="createWarranty()"
-                                    class="btn btn-primary">Enviar Solicitud
+                                class="btn btn-primary">Enviar Solicitud
                             </button>
                         </div>
                     </div>
