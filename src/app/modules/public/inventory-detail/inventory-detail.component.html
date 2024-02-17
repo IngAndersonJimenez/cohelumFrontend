@@ -40,7 +40,7 @@
                         <div class="regular-price" *ngIf="details.price > 0">{{ details.price |
                             currency:'$':'symbol':'1.0-0'}}</div>
                     </div>
-                    <p>{{ details.characteristic }}</p>
+                    <div [innerHTML]="details.characteristic"></div>
                     <a [href]="pdfUrl" target="_blank" download="Ficha técnica.pdf" class="btn pdf">
                         <img src="assets/pdf/pdf-svgrepo-com.svg" alt="Icono PDF" class="icono-pdf" loading="lazy" />
                         Ficha técnica

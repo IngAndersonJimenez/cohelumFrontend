@@ -20,7 +20,8 @@
             "allowedCommonJsDependencies": [
               "lodash",
               "pdfjs-dist",
-              "crypto-js"
+              "crypto-js",
+              "@ckeditor/ckeditor5-build-classic"
             ],
             "outputPath": "dist/cohelum_frontend",
             "index": "src/index.html",

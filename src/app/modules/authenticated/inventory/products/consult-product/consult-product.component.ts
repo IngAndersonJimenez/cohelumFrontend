@@ -9,6 +9,7 @@ import {InventoryCategory} from "../../../../../interface/products/inventoryCate
 import {SubCategory} from "../../../../../interface/products/SubCategory";
 import {CategoryService} from "../../../../../services/category.service";
 import {environment} from "../../../../../environments/environment";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 
 @Component({
@@ -36,6 +37,7 @@ export class ConsultProductComponent implements OnInit {
     isActiveSubcategories: boolean = false;
     subcategoriesFilter: Array<SubCategory> = [];
     pathImage: string = environment.sourceImage;
+    public Editor = ClassicEditor;
 
     constructor(private fb: FormBuilder, private inventoryService: InventoryService, private sanitizer: DomSanitizer,
                 private notificationService: NotificationService, private categoryService:CategoryService) {
