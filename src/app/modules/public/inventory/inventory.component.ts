@@ -65,6 +65,7 @@ export class InventoryComponent implements OnInit {
             for (let iter of this.inventoryGrid) {
                 if (selectedCategory.getIdCategory() == iter.getIdCategory()) {
                     this.inventoryFilter.push(iter)
+
                 }
             }
         }
@@ -87,7 +88,8 @@ export class InventoryComponent implements OnInit {
 
         this.inventoryService.getInventoryAll(token).subscribe(
             data => {
-
+                console.log('Datos que llegan',data);
+                this.inventoryGrid = [];
                 for (let response of data.responseDTO) {
 
                     inventoryGridInto = new InventoryGrid(response.getInventoryCategoryDTO.description,
@@ -97,19 +99,25 @@ export class InventoryComponent implements OnInit {
                         response.getInventoryCategoryDTO.idCategory,
                         response.getInventorySubCategoryDTO.idSubCategory,
                         response.getInventoryDTO.name,
-                        response.getInventoryDetailsDTO.characteristic,
-                        response.getInventoryDetailsDTO.datasheet,
+                        response.getInventoryDetailsDTO?.characteristic,
+                        response.getInventoryDetailsDTO?.datasheet,
                         response.getInventoryDTO.idInventory,
                         response.getInventoryDTO.reference
                     );
                     this.inventoryService.setImages(response.getInventoryDTO.idInventory, response.getInventoryImageDTO);
                     this.setImages(response.getInventoryImageDTO, inventoryGridInto);
                     this.inventoryGrid.push(inventoryGridInto);
+
                 }
+
+                console.log('Antes size')
+                console.log(this.inventoryGrid)
+
 
                 this.categoryService.selectedCategory$.subscribe(
                     data => {
                         this.filterInventory(data);
+                        console.log('Datos que filtrada',data);
                     }
                 );
 
@@ -185,6 +193,13 @@ export class InventoryComponent implements OnInit {
     }
 
     filterForSubCategory(idCategory: number, idSubCategory: number) {
+
+        console.log('idSubCategory')
+        console.log(idCategory)
+        console.log(idSubCategory)
+
+        console.log( this.inventoryGrid)
+
         if (idCategory == 0 && idSubCategory == 0) {
             this.inventoryFilter = this.inventoryGrid;
             this.updateSelectedCategoryDescription('Galeria completa');
@@ -259,5 +274,7 @@ export class InventoryComponent implements OnInit {
     updateSelectedCategoryDescription(newDescription: string) {
         this.selectedCategoryDescription = newDescription;
     }
+
+
 
 }

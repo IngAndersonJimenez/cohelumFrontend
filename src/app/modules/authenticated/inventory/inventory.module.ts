@@ -24,6 +24,7 @@ import {SharedModule} from "primeng/api";
 import {DialogModule} from "primeng/dialog";
 import {ButtonModule} from "primeng/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 
 
 
@@ -63,6 +64,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         DialogModule,
         ButtonModule,
         MatProgressSpinnerModule,
+        CKEditorModule,
     ]
 })
 export class InventoryModule { }

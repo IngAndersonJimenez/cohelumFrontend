@@ -58,13 +58,8 @@
                                             </div>
                                             <div class="col-sm-12 col-12">
                                                 <div class="mb-0">
-                                                    <label class="form-label">Caracteristicas<span
-                                                            class="text-red">*</span></label>
-                                                    <textarea rows="4" class="form-control"
-                                                        placeholder="Ingrese las características del producto"
-                                                        formControlName="characteristic"
-                                                        (keypress)="validateEnter($event, 'letras')"
-                                                        required></textarea>
+                                                    <label class="form-label">Características<span class="text-red">*</span></label>
+                                                    <ckeditor [editor]="Editor" formControlName="characteristic"></ckeditor>
                                                 </div>
                                             </div>
                                         </div>

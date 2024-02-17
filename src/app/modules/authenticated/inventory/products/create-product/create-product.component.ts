@@ -6,6 +6,8 @@ import { InventoryCategory } from "../../../../../interface/products/inventoryCa
 import { SubCategory } from "../../../../../interface/products/SubCategory";
 import { CategoryService } from "../../../../../services/category.service";
 import {SafeResourceUrl} from "@angular/platform-browser";
+import {Editor} from "primeng/editor";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 @Component({
   selector: 'app-create-product',
@@ -28,7 +30,7 @@ export class CreateProductComponent implements OnInit {
   showProgressBar = false;
   uploadProgress = 0;
   pdfUrl!: SafeResourceUrl;
-
+  public Editor = ClassicEditor;
 
 
   constructor(private notificationService: NotificationService, private inventoryService: InventoryService, private formBuilder: FormBuilder,
@@ -203,5 +205,6 @@ export class CreateProductComponent implements OnInit {
     this.isTextVisible = this.uploadedImages.length === 0;
     this.showProgressBar = false;
   }
+
 
 }

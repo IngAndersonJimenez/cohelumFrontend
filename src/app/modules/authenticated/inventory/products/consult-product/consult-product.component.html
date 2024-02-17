@@ -68,7 +68,7 @@
                         <div class="col-3">
                             <div class="form-field">
                                 <label>Característica:</label>
-                                {{products[0].characteristic}}
+                                <div [innerHTML]="products[0].characteristic"></div>
                             </div>
                         </div>
                         <div class="col-3">
@@ -158,9 +158,9 @@
                                     </option>
                                 </select>
                             </div>
-                            <div class="form-field">
+                            <div class="form-field update-form">
                                 <label for="updateCharacteristic">Nueva Característica:</label>
-                                <input type="text" id="updateCharacteristic" formControlName="characteristic"/>
+                                <ckeditor [editor]="Editor"  id="updateCharacteristic" formControlName="characteristic"></ckeditor>
                             </div>
                             <div class="form-field">
                                 <label for="updateDatasheet">Nuevo Datasheet:</label>
