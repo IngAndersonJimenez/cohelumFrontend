@@ -32,7 +32,7 @@ export class FooterPublicComponent {
     formData.append('nameContact', ' ');
     formData.append('email', this.formSubscribe.get('emailContact')?.value);
     formData.append('reason', 'SUSCRIPCION');
-    formData.append('comment', ' ');
+    formData.append('comment', 'Suscriptor a boletines y novedades');
     formData.append('cellphone', ' ');
     formData.append('department', ' ');
     formData.append('city', ' ');

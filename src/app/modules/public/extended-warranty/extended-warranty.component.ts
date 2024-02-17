@@ -4,6 +4,7 @@ import { NotificationService } from "../../../notifications/notification.service
 import { ContactService } from "../../../services/contact.service";
 import { catchError, switchMap } from "rxjs";
 import { ViewportScroller } from '@angular/common';
+import { environment } from 'src/app/environments/environment';
 
 @Component({
     selector: 'app-extended-warranty',
@@ -17,6 +18,7 @@ export class ExtendedWarrantyComponent implements OnInit, AfterViewInit {
     showMessage: boolean = false;
     radicadoNumber: string | null = null;
     @ViewChild('radicadoInput', { static: false }) radicadoInput!: ElementRef;
+    pathImage: string = environment.sourceImage;
 
     constructor(
         private formBuilder: FormBuilder,

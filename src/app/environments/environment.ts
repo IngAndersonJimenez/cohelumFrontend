@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8095/',
-  sourceImage: 'http://localhost:84'
+  apiUrl: 'https://cohelum.com/api/',
+  sourceImage: ''
 };
 
 /*
