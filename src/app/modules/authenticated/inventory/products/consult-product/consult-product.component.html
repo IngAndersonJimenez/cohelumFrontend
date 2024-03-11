@@ -167,9 +167,7 @@
                                 <input type="file" id="updateDatasheet" formControlName="datasheet"
                                        (change)="onFileSelected1($event,'pdf')"/>
                             </div>
-                            <button mat-raised-button color="accent" class="update-button"
-                                    (click)="submitUpdateForm()">Actualizar
-                            </button>
+                            <button mat-raised-button color="accent" class="update-button" (click)="submitUpdateForm()" [disabled]="!updateForm.valid">Actualizar</button>
                         </form>
 
                         <button class="close-button" (click)="closeUpdateDialog()">Cerrar</button>

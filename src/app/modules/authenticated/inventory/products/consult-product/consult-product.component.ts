@@ -3,7 +3,7 @@ import {ProductFull} from "../../../../../interface/products/ProductFull";
 import {InventoryService} from "../../../../../services/inventory.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {NotificationService} from "../../../../../notifications/notification.service";
-import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {DomSanitizer} from "@angular/platform-browser";
 import {InventoryImage} from "../../../../../interface/InventoryImage";
 import {InventoryCategory} from "../../../../../interface/products/inventoryCategory";
 import {SubCategory} from "../../../../../interface/products/SubCategory";
@@ -47,18 +47,19 @@ export class ConsultProductComponent implements OnInit {
 
         });
         this.updateForm = this.fb.group({
-            name: [''],
-            reference: [''],
-            price: [''],
-            unitsAvailable: [''],
-            idCategory: [null],
+            name: ['', Validators.required],
+            reference: ['', Validators.required],
+            price: ['', [Validators.required, Validators.pattern(/^\d+\.?\d*$/)]],
+            unitsAvailable: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+            idCategory: [null, Validators.required],
             idSubCategory: [null],
             characteristic: [''],
             description: [''],
-            datasheet: [''],
+            datasheet: ['', Validators.required],
             image: [''],
-            idInventoryImage: []
+            idInventoryImage: ['']
         });
+
 
         this.categoryService.getSubcategory().subscribe(
             (response: any) => {
@@ -289,7 +290,7 @@ export class ConsultProductComponent implements OnInit {
 
         this.updateForm.setValue({
             name: product.name,
-            reference: this.updateForm.get('reference')?.value,
+            reference: product.reference,
             price: product.price,
             unitsAvailable: product.unitsAvailable,
             idCategory: product.idCategory,
