@@ -3,7 +3,7 @@ import {ProductFull} from "../../../../../interface/products/ProductFull";
 import {InventoryService} from "../../../../../services/inventory.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {NotificationService} from "../../../../../notifications/notification.service";
-import {DomSanitizer} from "@angular/platform-browser";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {InventoryImage} from "../../../../../interface/InventoryImage";
 import {InventoryCategory} from "../../../../../interface/products/inventoryCategory";
 import {SubCategory} from "../../../../../interface/products/SubCategory";
@@ -38,6 +38,7 @@ export class ConsultProductComponent implements OnInit {
     subcategoriesFilter: Array<SubCategory> = [];
     pathImage: string = environment.sourceImage;
     public Editor = ClassicEditor;
+    showUpdateDatasheetDialog: boolean = false;
 
     constructor(private fb: FormBuilder, private inventoryService: InventoryService, private sanitizer: DomSanitizer,
                 private notificationService: NotificationService, private categoryService:CategoryService) {
@@ -55,7 +56,7 @@ export class ConsultProductComponent implements OnInit {
             idSubCategory: [null],
             characteristic: [''],
             description: [''],
-            datasheet: ['', Validators.required],
+            datasheet: [''],
             image: [''],
             idInventoryImage: ['']
         });
@@ -78,7 +79,7 @@ export class ConsultProductComponent implements OnInit {
     loadProducts(product: ProductFull) {
         const productName = product.name;
         const productReference = product.reference;
-        if (productName && productName.trim() !== '' && productReference && productReference.trim() !== '') {
+        if (productName.trim() !== '' && productReference.trim() !== '') {
             this.products = [];
             this.imageList = [];
             this.inventoryService.getInventoryByNameAndReference(productName,productReference).subscribe(
@@ -117,7 +118,7 @@ export class ConsultProductComponent implements OnInit {
             const imageName = iter.image
             const inventoryImage: InventoryImage = {
                 "idInventoryImage": iter.idInventoryImage,
-                "image":this.pathImage + `${imageName}`,
+                "image":this.pathImage + '/'+ `${imageName}`,
             };
             this.imageList.push(inventoryImage);
         }
@@ -193,14 +194,12 @@ export class ConsultProductComponent implements OnInit {
 
             if (fileSizeInBytes > maxSizeInBytes) {
                 this.notificationService.showError("El archivo excede el tamaño permitido (6 megabytes).", "Vuelve a intentar");
-                input.value = null;
+                input.value = null; // Limpiar la selección del archivo
                 return;
             }
 
-            // Verificar la extensión del archivo
             const allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
             const allowedPDFExtensions = ['pdf'];
-
             const fileExtension = newFile.name.split('.').pop().toLowerCase();
 
             if (type === 'image' && !allowedImageExtensions.includes(fileExtension)) {
@@ -213,22 +212,17 @@ export class ConsultProductComponent implements OnInit {
                 return;
             }
 
-            if (type === 'image' && newFile !== this.updateForm.get('image')?.value) {
+            if (type === 'image') {
                 const reader = new FileReader();
                 reader.onload = (e: any) => {
                     this.selectedImage = e.target.result;
                 };
                 reader.readAsDataURL(newFile);
+                this.updateForm.patchValue({ image: newFile });
+            }
 
-                const formData = new FormData();
-                formData.append('image', newFile);
-                this.updateForm.patchValue({ image: formData.get('image') });
-            } else if (type === 'pdf' && newFile !== this.updateForm.get('datasheet')?.value) {
+            else if (type === 'pdf' && newFile !== this.updateForm.get('datasheet')?.value) {
                 this.selectedPDFName = newFile.name;
-                const reader = new FileReader();
-                reader.onload = (e: any) => {
-                };
-                reader.readAsDataURL(newFile);
 
                 const formData = new FormData();
                 formData.append('datasheet', newFile);
@@ -236,6 +230,7 @@ export class ConsultProductComponent implements OnInit {
             }
         }
     }
+
 
     acceptImage(): void {
         this.addImage();
@@ -259,35 +254,38 @@ export class ConsultProductComponent implements OnInit {
 
 
     submitUpdateForm() {
-        const formdata = this.updateForm.value;
-        this.inventoryService.updateProduct(this.createFormData(formdata),this.products[0].idInventory).subscribe(
-            data =>{
+        const product = this.products[0];
+        const formData = this.createFormData(this.updateForm.value, product);
+
+        this.inventoryService.updateProduct(formData, product.idInventory).subscribe(
+            data => {
                 this.closeUpdateDialog();
-                this.reloadProductData()
+                this.reloadProductData();
             }
-        )
+        );
     }
 
 
-    createFormData(data: any): FormData {
 
+    createFormData(data: any, product?: ProductFull): FormData {
         const formData = new FormData();
+
         formData.append('name', data.name);
         formData.append('reference', data.reference);
         formData.append('price', data.price);
         formData.append('unitsAvailable', data.unitsAvailable);
-        formData.append('idCategory', this.updateForm.get('idCategory')?.value);
-        formData.append('idSubCategory', this.updateForm.get('idSubCategory')?.value);
+        formData.append('idCategory', data.idCategory);
+        formData.append('idSubCategory', data.idSubCategory);
         formData.append('characteristic', data.characteristic);
-        formData.append('datasheet', this.updateForm.get('datasheet')?.value);
-
         return formData;
     }
 
-    openUpdateDialog(product: ProductFull): void {
-        // Reinicia el array subcategoriesFilter
-        this.subcategoriesFilter = [];
 
+
+
+
+    openUpdateDialog(product: ProductFull): void {
+        this.subcategoriesFilter = [];
         this.updateForm.setValue({
             name: product.name,
             reference: product.reference,
@@ -297,20 +295,18 @@ export class ConsultProductComponent implements OnInit {
             idSubCategory: product.idSubCategory || null,
             description: product.description,
             characteristic: product.characteristic,
-            datasheet: product.datasheet,
+            datasheet: '',
             image: '',
             idInventoryImage: ''
         });
-        this.inventoryService.getCategory().subscribe(
-            (response: any) => {
-                this.categories = response.responseDTO;
-                this.showUpdateDialog = true;
-                this.loadingCategories = false;
-                this.subCategoryLoad({ target: { value: this.updateForm.get('idCategory')?.value } });
-            }
-        );
-
+        this.inventoryService.getCategory().subscribe((response: any) => {
+            this.categories = response.responseDTO;
+            this.showUpdateDialog = true;
+            this.loadingCategories = false;
+            this.subCategoryLoad({ target: { value: this.updateForm.get('idCategory')?.value } });
+        });
     }
+
 
 
     openUpdateDialog2(productData: any): void {
@@ -397,6 +393,35 @@ export class ConsultProductComponent implements OnInit {
             }
         );
     }
+
+    openUpdateDatasheetDialog(): void {
+        this.showUpdateDatasheetDialog = true;
+    }
+
+    closeUpdateDatasheetDialog(): void {
+        this.showUpdateDatasheetDialog = false;
+    }
+
+// Función para manejar la actualización del datasheet
+    submitDatasheetUpdate(): void {
+        if (this.updateForm.get('datasheet')?.value) {
+            const datasheetFile = this.updateForm.get('datasheet')?.value;
+            const inventoryId = this.products[0]?.idInventory;
+
+            if (datasheetFile && inventoryId) {
+                this.inventoryService.updatePDF(inventoryId, this.products[0].name, datasheetFile).subscribe(
+                    response => {
+                        this.notificationService.showSuccess("Actualización exitosa", "El datasheet se ha actualizado correctamente");
+                        this.loadProducts(this.products[0]);
+                    }
+                );
+            }
+        }
+        this.closeUpdateDatasheetDialog();
+    }
+
+
+
 
 
 

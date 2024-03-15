@@ -307,4 +307,31 @@ export class InventoryService {
         );
     }
 
+    updatePDF(inventoryId: number,productName: string, pdfFile: File): Observable<any> {
+
+        const headers = new HttpHeaders({
+            'Authorization': `${this.getToken()}`,
+        });
+        const formData = new FormData();
+        formData.append('datasheet', pdfFile);
+        formData.append('productName', productName);
+
+        return this.http.put(`${environment.apiUrl}api/v1/inventory/updateDatasheet/${inventoryId}`, formData, {headers}).pipe(
+            catchError(error => {
+                console.error('Error en la solicitud:', error);
+                this.notificationService.showError("Error en la solicitud", "Vuelve a intentar");
+                throw error;
+            }),
+            map(result => {
+                if (result != null) {
+                    this.notificationService.showSuccess("Actualización exitoso", "El producto se ha actualizado correctamente");
+                } else {
+                    this.notificationService.showError("Actualización fallido", "Vuelve a intentar");
+                }
+                return result;
+            })
+        )
+
+    }
+
 }

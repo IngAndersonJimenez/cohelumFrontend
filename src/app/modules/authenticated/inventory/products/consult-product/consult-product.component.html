@@ -27,6 +27,9 @@
                     <button mat-icon-button (click)=openUpdateDialog(product)>
                         <mat-icon *ngIf="!loadingCategories">update</mat-icon>
                     </button>
+                    <button mat-icon-button (click)="openUpdateDatasheetDialog()">
+                        <mat-icon>picture_as_pdf</mat-icon>
+                    </button>
                 </div>
             </div>
 
@@ -162,11 +165,7 @@
                                 <label for="updateCharacteristic">Nueva Característica:</label>
                                 <ckeditor [editor]="Editor"  id="updateCharacteristic" formControlName="characteristic"></ckeditor>
                             </div>
-                            <div class="form-field">
-                                <label for="updateDatasheet">Nuevo Datasheet:</label>
-                                <input type="file" id="updateDatasheet" formControlName="datasheet"
-                                       (change)="onFileSelected1($event,'pdf')"/>
-                            </div>
+
                             <button mat-raised-button color="accent" class="update-button" (click)="submitUpdateForm()" [disabled]="!updateForm.valid">Actualizar</button>
                         </form>
 
@@ -192,3 +191,18 @@
         </div>
     </div>
 </div>
+
+<div *ngIf="showUpdateDatasheetDialog" class="custom-dialog">
+    <div class="dialog-content">
+        <h2>Actualizar Datasheet</h2>
+        <form [formGroup]="updateForm">
+            <div class="form-field">
+                <label for="updateDatasheet">Nuevo Datasheet:</label>
+                <input type="file" id="updateDatasheet" (change)="onFileSelected1($event, 'pdf')" accept=".pdf"/>
+            </div>
+            <button mat-raised-button color="accent" class="update-button" (click)="submitDatasheetUpdate()">Actualizar</button>
+        </form>
+        <button class="close-button" (click)="closeUpdateDatasheetDialog()">Cerrar</button>
+    </div>
+</div>
+

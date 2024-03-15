@@ -285,6 +285,7 @@ h1 {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 2rem;
 
   .dialog-content {
     overflow-y: auto;
@@ -305,7 +306,8 @@ h1 {
     form {
       display: flex;
       flex-direction: column;
-
+      align-items: stretch;
+      width: 100%;
       .form-field {
         margin-bottom: 15px;
 
@@ -370,7 +372,7 @@ h1 {
       cursor: pointer;
       transition: background-color 0.3s;
       margin-top: 10px;
-      width: 70%;
+      width: 100%;
       box-sizing: border-box;
 
       &:hover {
@@ -561,4 +563,22 @@ h1 {
 }
 .update-form{
   width: 99%;
+}
+.update {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    margin: 0; // Elimina el margen predeterminado del encabezado
+  }
+
+  div {
+    display: flex; // Coloca los botones uno al lado del otro
+    gap: 10px; // Espacio entre botones
+
+    button {
+      margin-left: auto; // Mueve los botones al extremo derecho
+    }
+  }
 }
