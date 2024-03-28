@@ -7,4 +7,5 @@ export interface SettingTP{
     value4:string;
     idSettingTP:number;
     imagePreviews: string[];
+    fileType?: 'image' | 'video';
 }

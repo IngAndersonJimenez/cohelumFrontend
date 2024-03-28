@@ -25,24 +25,55 @@ export class SettingSectionComponent implements OnInit{
 
 
 
+
+/*
   onSelected(fileInput: any, index: number) {
-    const fileSocial = fileInput.files.item(0);
-    console.log('Esto es file', fileSocial);
-    if (!fileSocial) return;
+    const file = fileInput.files.item(0);
+    if (!file) return;
+    const fileType = file.type.startsWith('image') ? 'image' : file.type.startsWith('video') ? 'video' : null;
+    if (!fileType) return;
 
-    const reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.imageHomeForms[index].imagePreviews = [];
-      const imageUrl = event.target.result;
-      this.imageHomeForms[index].imagePreviews.push(imageUrl);
-      this.imageHomeForms[index].value4 = fileSocial;
+    if (fileType === 'image') {
+      const reader = new FileReader();
+      reader.onload = (event: any) => {
+        // Previsualización para imágenes
+        const imageUrl = event.target.result;
+        this.imageHomeForms[index].imagePreviews.push(imageUrl);
+        this.imageHomeForms[index].value4 = file;
+        this.isFormDirty = true;
+      };
+      reader.readAsDataURL(file);
+    } else if (fileType === 'video') {
+      // Previsualización para videos
+      const videoUrl = URL.createObjectURL(file);
+      this.imageHomeForms[index].imagePreviews = [videoUrl];
+      this.imageHomeForms[index].value4 = file;
       this.isFormDirty = true;
-    };
-    reader.readAsDataURL(fileSocial);
+    }
   }
+*/
 
-
-
+  onSelected(fileInput: any, index: number) {
+    const file = fileInput.files.item(0);
+    if (!file) return;
+    const fileType = file.type.startsWith('image') ? 'image' : file.type.startsWith('video') ? 'video' : null;
+    if (!fileType) return;
+    if (fileType === 'image') {
+      const reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.imageHomeForms[index].imagePreviews = [event.target.result];
+        this.imageHomeForms[index].fileType = fileType;
+        this.imageHomeForms[index].value4 = file;
+        this.isFormDirty = true;
+      };
+      reader.readAsDataURL(file);
+    } else if (fileType === 'video') {
+      this.imageHomeForms[index].imagePreviews = [URL.createObjectURL(file)];
+      this.imageHomeForms[index].fileType = fileType;
+      this.imageHomeForms[index].value4 = file;
+      this.isFormDirty = true;
+    }
+  }
 
   onSubmit(index: number) {
     const setting = this.imageHomeForms[index];
@@ -82,13 +113,30 @@ export class SettingSectionComponent implements OnInit{
   getSettingSlide() {
     this.settingService.getSlide("SocialSeccion").subscribe(
         (data: any) => {
+          console.log("Respuesta del backend:", data);
           this.imageHomeForms = data.responseDTO.map((setting: any) => {
-            const value4 = this.pathImage + setting.value4 ?? '';
-            return { ...setting, value4, imagePreviews: [] };
+            const value4 = this.pathImage + (setting.value4 ?? '');
+            const imagePreviews = value4 ? [value4] : [];
+
+            // Determinar fileType basado en la extensión de value4
+            const extension = value4.split('.').pop()!.toLowerCase();
+            const imageExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+            const videoExtensions = ['mp4', 'webm'];
+            let fileType = 'image'; // Default a imagen si no se puede determinar
+            if (imageExtensions.includes(extension)) {
+              fileType = 'image';
+            } else if (videoExtensions.includes(extension)) {
+              fileType = 'video';
+            }
+
+            return { ...setting, value4, imagePreviews, fileType };
           });
+          console.log("Datos procesados para imageHomeForms:", this.imageHomeForms);
         }
     );
   }
+
+
 
 
   updateSettingTP(index: number) {

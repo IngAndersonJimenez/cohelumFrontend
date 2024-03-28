@@ -14,6 +14,7 @@ export class ShowcasePublicComponent {
   pathImage: string = environment.sourceImage;
 
   gallerySocial: Array<ShowCaseGallery> = [];
+  mediaTypes: Array<'image' | 'video'> = [];
 
   activeIndex: number = 0;
 
@@ -58,6 +59,7 @@ export class ShowcasePublicComponent {
         this.gallerySocial.push(
           new ShowCaseGallery(index, this.pathImage + iter.value4, iter.value1, iter.value2));
         index++;
+        this.mediaTypes.push(iter.esVideo ? 'video' : 'image');
       }
       this.changeData(0);
     });

@@ -16,7 +16,6 @@
         <div class="card-group">
             <div class="container">
                 <div class="row">
-                    <!-- Itera sobre los objetos SettingTP dinámicamente -->
                     <div *ngFor="let setting of imageHomeForms; let i = index" class="col-3">
                         <div class="card">
                             <div class="card-body">
@@ -35,20 +34,20 @@
                                         <br>
                                         <div class="row">
                                             <input type="file" (change)="onSelected($event.target, i)"/>
-                                            <img width="100%" *ngFor="let previewUrl of setting?.imagePreviews"
-                                                 [src]="previewUrl" class="image" loading="lazy">
-                                            <ng-container
-                                                    *ngIf="setting?.value4 !== undefined && setting?.value4 !== null">
-                                                <img width="100%" [src]="setting?.value4" class="image" loading="lazy">
-                                            </ng-container>
+                                            <!-- Mostrar previsualización de imagen -->
+                                            <img *ngIf="setting.fileType === 'image'" [src]="setting.imagePreviews[0]" width="100%" loading="lazy">
 
-                                            <button type="button" class="btn btn-warning btn-update other"
-                                                    (click)="updateImage(i)">
+                                            <!-- Mostrar previsualización de vídeo -->
+                                            <video *ngIf="setting.fileType === 'video'" width="100%" controls>
+                                                <source [src]="setting.imagePreviews[0]" type="video/mp4">
+                                                Tu navegador no soporta la etiqueta video.
+                                            </video>
+                                            <button type="button" class="btn btn-warning btn-update other" (click)="updateImage(i)">
                                                 <i class="fas fa-camera"></i> Actualizar Imagen
                                             </button>
                                         </div>
-                                    </div>
 
+                                    </div>
                                     <br>
                                     <div class="button-container">
                                         <button type="button" class="btn btn-warning btn-update" pButton
@@ -97,4 +96,5 @@
             </div>
         </div>
     </div>
+
 </div>

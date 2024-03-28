@@ -22,28 +22,35 @@
                         </div>-->
                     </div>
                 </div>
-            </div>
-            <div class="container-carrusel">
-                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner contenedorSocial">
-                        <div class="carousel-item active">
-                            <img *ngIf="gallerySocial && gallerySocial[activeIndex] !== undefined && gallerySocial[activeIndex] !== null"
-                                 class="d-block w-100 imagenSocial"
-                                 [src]="gallerySocial[activeIndex].getSourceResorce()" alt="First slide" loading="lazy">
-
-                        </div>
+            </div><div class="container-carrusel">
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner contenedorSocial">
+                    <div *ngFor="let item of gallerySocial; let i = index"
+                         class="carousel-item" [class.active]="i === activeIndex">
+                        <img *ngIf="!item.getSourceResorce().endsWith('.mp4')"
+                             class="d-block w-100 imagenSocial"
+                             [src]="item.getSourceResorce()"
+                             [alt]="item.getTitleInfo()"
+                             loading="lazy">
+                        <video *ngIf="item.getSourceResorce().endsWith('.mp4')"
+                               class="d-block w-100 imagenSocial"
+                               controls>
+                            <source [src]="item.getSourceResorce()" type="video/mp4">
+                            Tu navegador no soporta la etiqueta video.
+                        </video>
                     </div>
-                    <a class="carousel-control-prev" role="button" data-slide="prev" (click)="changeDataRest()">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" role="button" data-slide="next" (click)="changeDataSum()">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
                 </div>
-
+                <a class="carousel-control-prev" role="button" data-slide="prev" (click)="changeDataRest()">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" role="button" data-slide="next" (click)="changeDataSum()">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
+        </div>
+
         </div>
     </div>
 </div>
