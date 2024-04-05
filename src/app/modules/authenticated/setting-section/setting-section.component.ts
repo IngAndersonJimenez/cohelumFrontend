@@ -24,35 +24,6 @@ export class SettingSectionComponent implements OnInit{
   }
 
 
-
-
-/*
-  onSelected(fileInput: any, index: number) {
-    const file = fileInput.files.item(0);
-    if (!file) return;
-    const fileType = file.type.startsWith('image') ? 'image' : file.type.startsWith('video') ? 'video' : null;
-    if (!fileType) return;
-
-    if (fileType === 'image') {
-      const reader = new FileReader();
-      reader.onload = (event: any) => {
-        // Previsualización para imágenes
-        const imageUrl = event.target.result;
-        this.imageHomeForms[index].imagePreviews.push(imageUrl);
-        this.imageHomeForms[index].value4 = file;
-        this.isFormDirty = true;
-      };
-      reader.readAsDataURL(file);
-    } else if (fileType === 'video') {
-      // Previsualización para videos
-      const videoUrl = URL.createObjectURL(file);
-      this.imageHomeForms[index].imagePreviews = [videoUrl];
-      this.imageHomeForms[index].value4 = file;
-      this.isFormDirty = true;
-    }
-  }
-*/
-
   onSelected(fileInput: any, index: number) {
     const file = fileInput.files.item(0);
     if (!file) return;
