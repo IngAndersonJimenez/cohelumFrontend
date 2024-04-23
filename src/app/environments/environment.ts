@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://cohelum.com/api/',
-  sourceImage: 'https://www.cohelum.com/'
+  sourceImage: 'https://www.cohelum.com'
 };
 
 /*

@@ -118,7 +118,7 @@ export class ConsultProductComponent implements OnInit {
             const imageName = iter.image
             const inventoryImage: InventoryImage = {
                 "idInventoryImage": iter.idInventoryImage,
-                "image":this.pathImage + '/'+ `${imageName}`,
+                "image":this.pathImage + `${imageName}`,
             };
             this.imageList.push(inventoryImage);
         }
